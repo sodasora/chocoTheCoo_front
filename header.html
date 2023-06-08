@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChocoTheCoo</title>
+    
+    <link rel="stylesheet" href="/static/css/header.css">
+    
+</head>
+
+
+<header>
+    <div class="header" id="header">
+        <!-- 로그인 전 -->
+        <ul id="signup" style="cursor: pointer;" onclick="location.href='signup.html';">회원가입 </ul>
+        <ul id="login" style="cursor: pointer;" onclick="location.href='login.html';"> 로그인 &nbsp; &nbsp; </ul>
+        <!-- 로그인 후 -->
+        <p id ="tokenLifeTime"></p>
+        <img id="cart" style='cursor:pointer' src="static/images/shopping-cart.png" alt="cart" onclick="">
+        <ul id="intro" href="#"> </ul>
+        <ul id="mypage" style='cursor:pointer'  href="#" onclick="location.href='#';"> 마이페이지 </ul>
+        <ul id="logout" style='cursor:pointer' > 로그아웃 &nbsp; &nbsp; </a>
+        </div>
+        <div class="main">
+            ChocoTheCoo
+        </div>
+        <div class="top-category">
+            <nav>
+            <a href="#">Primary</a>
+            <a href="#">Secondary</a>
+            <a href="#" class="is-current">Tertiary</a>
+            <a href="#">Quaternary</a>
+            <a href="#">Quinary</a>
+            <div class="nav-underline"></div>
+        </nav>
+    </div>
+    <a id="upbtn" href="#" class="back-to-top" title="Back to top">↑</a>
+    
+    <script src="/static/js/header.js" type="module"></script>
+    <script src="/static/js/loader.js" type="module"></script>
+</header>
+
+</html>
