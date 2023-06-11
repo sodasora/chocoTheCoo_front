@@ -1,27 +1,160 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, handleLogin } from './api.js'
+import { FRONT_BASE_URL, handleLoginAPI, getVerificationCodeAPI, setUserInformationAPI } from './api.js'
 
-document.getElementById("login").addEventListener("click",handleLoginBtn)
 
-// 로그인 폼 기입 후 로그인 눌렀을 때 실행되는 함수
-async function handleLoginBtn() {
-    const response = await handleLogin();
+async function injectFooter() {
+    // 푸터 html 불러오기
+    fetch("./footer.html")
+        .then((response) => {
+            return response.text();
+        })
+        .then((data) => {
+            document.querySelector("footer").innerHTML = data;
+        })
 
-    if (response.status == 200) {
-        const response_json = await response.json()
+    let headerHtml = await fetch("./footer.html")
+    let data = await headerHtml.text()
+    document.querySelector("footer").innerHTML = data;
+}
 
-        localStorage.setItem("access", response_json.access);
-        localStorage.setItem("refresh", response_json.refresh);
 
-        const base64Url = response_json.access.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+');
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-
-        localStorage.setItem("payload", jsonPayload)
-        alert("환영합니다!")
-        window.location.replace(`${FRONT_BASE_URL}/`)
+export async function handleLogin() {
+    // 로그인 , 토큰 저장
+    const message_box = document.getElementById("message-box")
+    const message = document.getElementById("message")
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    if (email == '' || password == '') {
+        message.textContent = "빈칸 없이 입력해 주세요."
+        message_box.style.display = "flex"
     } else {
-        alert("회원정보가 일치하지 않습니다!")
+
+        const response = await handleLoginAPI();
+        if (response.status == 200) {
+            const response_json = await response.json()
+            localStorage.setItem("access", response_json.access);
+            localStorage.setItem("refresh", response_json.refresh);
+
+            const base64Url = response_json.access.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            localStorage.setItem("payload", jsonPayload)
+            window.location.replace(`${FRONT_BASE_URL}/index.html`)
+
+        } else {
+            message_box.style.display = "flex"
+            if (response.status == 404) {
+                // 찾을 수 없는 계정
+                message.textContent = "가입된 이메일이 없습니다."
+            } else if (response.status == 204) {
+                // 휴면 계정
+                message.textContent = "휴면 계정 입니다."
+            } else if (response.status == 401) {
+                // 비밀번호가 올바르지 않음
+                const response_json = await response.json()
+                console.log(response_json)
+                message.textContent = `비밀번호가 올바르지 않습니다. 남은 시도 회수 ${response_json}`
+            } else if (response.status == 400) {
+                message.textContent = "비밀 번호를 입력해 주세요."
+            } else if (response.status == 424) {
+                message.textContent = "비밀번호를 5회 이상 틀렸습니다. 비밀번호를 재 설정해주세요."
+            }
+        }
+    }
+}
+
+export async function getVerificationCode() {
+    // 인증 코드 발급 받기
+    const message = document.getElementById("message")
+    const email = document.getElementById("email")
+    if (email.value == "") {
+        message.innerText = "이메일을 입력해 주세요."
+    } else {
+        const response = await getVerificationCodeAPI()
+        console.log(response)
+        if (response.status == 200) {
+            message.innerText = "이메일을 발송 했습니다."
+            const hidden_items = document.querySelectorAll(".hidden-box-2");
+            hidden_items.forEach((item) => {
+                item.style.display = "block";
+            });
+            email.readOnly = true
+        } else if (response.status == 405) {
+            message.innerText = "이메일 정보를 찾을 수 없습니다."
+        }
+    }
+}
+
+export async function setUserInformation() {
+    // 비밀번호 재 설정(찾기기능) 및 비활성 게정 활성화
+    const email = document.getElementById("email")
+    const verificationCode = document.getElementById("verificationCode")
+    const password = document.getElementById("password")
+    const password2 = document.getElementById("password2")
+    const message = document.getElementById("message")
+    if (email.value == '' || verificationCode.value == '' || password.value == '' || password2.value == '') {
+        message.innerText = "빈칸 없이 입력해 주세요."
+    } else if (password.value != password2.value) {
+        password.value = ''
+        password2.value = ''
+        message.innerText = "입력하신 두 비밀번호가 같지 않습니다."
+    } else {
+        const response = await setUserInformationAPI()
+        if (response.status == 200) {
+            window.location.reload()
+        } else if (response.status == 405) {
+            message.innerText = "이메일로 가입된 계정이 없습니다."
+        } else if (response.status == 406) {
+            message.innerText = "인증 코드를 발급 받아주세요."
+        } else if (response.status == 401) {
+            verificationCode.value = ''
+            message.innerText = "인증코드가 올바르지 않습니다."
+        } else if (response.status == 400) {
+            password.value = ''
+            password2.value = ''
+            message.innerText = "비밀번호는 대문자,소문자,숫자,특수문자로 이루어져야 합니다."
+        }
+    }
+}
+
+export async function handleEvent() {
+    // 페이지 view 변경
+    const change_items = document.querySelectorAll(".change-item");
+    const message_box = document.getElementById("message-box")
+    const message = document.getElementById("message")
+    const passwordBox = document.getElementById("passwordBox")
+    passwordBox.style.display = "none"
+    message_box.style.display = "flex"
+    message.textContent = "이메일 인증을 받고 비밀번호를 재 설정해주세요."
+    change_items.forEach((item) => {
+        item.style.display = "none";
+    });
+    const hidden_items = document.querySelectorAll(".hidden-box");
+    hidden_items.forEach((item) => {
+        item.style.display = "block";
+    });
+}
+
+
+export async function setEventListener() {
+    // html 요소 이벤트 리스너 추가
+    document.getElementById("loginButton").addEventListener("click", handleLogin)
+    document.getElementById("submitButton").addEventListener("click", setUserInformation)
+    document.getElementById("verificationButton").addEventListener("click", getVerificationCode)
+    var elements = document.getElementsByClassName("change-action");
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].addEventListener("click", handleEvent);
+    }
+}
+
+window.onload = async () => {
+    // 로그인한 사용자만 접근 가능
+    injectFooter();
+    setEventListener();
+    const payload = localStorage.getItem("payload");
+    const payload_parse = JSON.parse(payload)
+    if (payload_parse != null) {
+        window.location.replace(`${FRONT_BASE_URL}/index.html`)
     }
 }

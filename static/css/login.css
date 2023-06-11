@@ -1,0 +1,199 @@
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+    font-size: 5px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+input {
+    border-radius: 3rem;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+button {
+    border-radius: 1.5rem;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+
+}
+
+.container {
+    height: 850px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+}
+
+#leftBox {
+    height: 100%;
+    width: 50%;
+    background-color: #C4A492;
+}
+
+#rightBox {
+    height: 100%;
+    width: 50%;
+    background-image: url("/static/images/login_background_image.jfif");
+    background-color: black;
+    background-size: contain;
+    background-position: center top -20rem;
+    background-repeat: no-repeat;
+}
+
+.title {
+    margin-top: 3%;
+    font-size: 16rem;
+    font-weight: bold;
+}
+
+.left-title {
+    text-align: right;
+    padding-right: 3%;
+}
+
+.right-title {
+    padding-left: 3%;
+}
+
+#formBox {
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 5rem;
+}
+
+.input-box {
+    width: 50%;
+    font-weight: bold;
+}
+
+.input-data {
+    height: 8rem;
+    width: 100%;
+    margin-top: 1.8%;
+    margin-bottom: 3%;
+    background-color: #FFFFFF;
+    font-size: 3.5rem;
+    padding-left: 5%;
+}
+
+
+#submitButton {
+    margin-top: 3%;
+    width: 100%;
+}
+
+#verificationButton {
+    width: 100%;
+}
+
+.custom-button {
+    font-size: 4rem;
+    height: 7rem;
+    width: 15rem;
+    background-color: #FFFFFF;
+    font-weight: bold;
+}
+
+.button-box {
+    margin-top: 1%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#bottomBox {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 5rem;
+}
+
+.social-login-box {
+    height: 60px;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+
+}
+
+
+#kakaoBtn {
+    width: 12rem;
+    height: 12rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("/static/images/kakao-talk.png");
+}
+
+#naverBtn {
+    width: 12rem;
+    height: 12rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("/static/images/naver.png");
+}
+
+#googleBtn {
+    width: 12rem;
+    height: 12rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("/static/images/google.png");
+}
+
+
+
+.item-box {
+
+    margin-top: 5%;
+    height: 80px;
+    width: 70%;
+    display: flex;
+    font-size: 4rem;
+    font-weight: bold;
+    /* justify-content: space-between; */
+}
+
+#leftItem {
+    height: 100%;
+    width: 50%;
+}
+
+#rightItem {
+    width: 50%;
+    height: 100%;
+    text-align: right;
+
+}
+
+#message-box {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 4.5rem;
+    margin-top: 4%;
+    background-color: #FF6666;
+    height: 15rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
