@@ -60,7 +60,11 @@ html {
     }
 }
 
-
+@media (max-width: 325px) {
+    #singupNavItems {
+        font-size: 1.5rem !important;
+    }
+}
 
 a {
     text-decoration: none;
