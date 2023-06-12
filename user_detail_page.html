@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/user_detail_page.css">
+    <title>Edit my information</title>
+</head>
+<header></header>
+
+<body>
+    <div id="container">
+        <div id="leftBox">
+            <div id="containerNavItems">
+                <div class="container-nav-item">
+                    <span>프로필</span>
+                </div>
+                <div class="container-nav-item">
+                    <span>회원 정보</span>
+                </div>
+                <div class="container-nav-item">
+                    <span>주소지 및 통관번호</span>
+                </div>
+                <div class="container-nav-item">
+                    <span>휴대폰 번호</span>
+                </div>
+                <div class="container-nav-item">
+                    <span>판매자 권한 신청</span>
+                </div>
+                <div class="container-nav-item">
+                    <span>회원 탈퇴</span>
+                </div>
+            </div>
+        </div>
+        <div id="rightBox">
+            <div id="contentBox">
+                <!-- 프로필 수정 -->
+                <div id="setProfileView">
+                    <div id="imageBox">
+                        <div id="profileView">
+
+                        </div>
+                        <p id="profileImageText">프로필 이미지</p>
+                        <input type="file" id="profileImageFile">
+                    </div>
+                    <div class="profileInputBox">
+                        <label id="nickNameLabel" class="profileLable">
+                            별명
+                        </label>
+                        <input id="nickName" class="profileInput">
+                    </div>
+                    <div class="profileInputBox">
+                        <label id="BioLabel" class="profileLable">
+                            소개
+                        </label>
+                        <input id="bio" class="profileInput">
+                    </div>
+                    <div class="profileInputBox">
+                        <button type="button" id="profileSubmitButton">제출</button>
+                    </div>
+                </div>
+                <!-- 프로필 수정 끝 -->
+                <!-- 회원 정보 수정 -->
+                <div id="setUserInformationView" style="display: none;">
+                    <div class="profileInputBox">
+                        <label id="EmailLabel" class="profileLable">
+                            Email
+                        </label>
+                        <input id="Email" class="profileInput">
+                    </div>
+                    <div class="profileInputBox">
+                        <label id="EmailLabel" class="profileLable">
+                            기존 비밀번호
+                        </label>
+                        <input id="password" class="profileInput" type="password">
+                    </div>
+                    <div class="profileInputBox">
+                        <label id="EmailLabel" class="profileLable">
+                            새로운 비밀번호
+                        </label>
+                        <input id="newPassword" class="profileInput" type="password">
+                    </div>
+                    <div class="profileInputBox">
+                        <label id="EmailLabel" class="profileLable">
+                            비밀번호 확인
+                        </label>
+                        <input id="newPassword2" class="profileInput" type="password">
+                    </div>
+                    <div class="profileInputBox">
+                        <button type="button" id="userInformationSubmitButton">제출</button>
+                    </div>
+                    <div class="profileInputBox">
+                        <div id="setUserInformationMessageBox">
+                            <span id="setUserInformationMessage">
+                                비밀번호는 영 대소문자, 숫자, 특수문자를 포함시켜 주세요.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 회원 정보 수정 끝 -->
+                <!-- 회원 상세 정보 수정 시작 -->
+                <div id="setUserDetailInformation">
+                    <div class="dropdown">
+                        <button class="dropdown-button">메뉴</button>
+                        <div class="dropdown-content">
+                            <a href="#">항목 1</a>
+                            <a href="#">항목 2</a>
+                            <a href="#">항목 3</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+<footer></footer>
+<script type="module" src="/static/js/api.js"></script>
+<script type="module" src="/static/js/user_detail_page.js"></script>
+<!-- <script src="/static/js/loader.js" type="module"></script> -->
+
+</html>
