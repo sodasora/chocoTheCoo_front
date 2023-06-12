@@ -22,17 +22,20 @@ a {
 
 input {
     border-radius: 3rem;
+    border: none;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 button {
     border-radius: 1.5rem;
+    border: none;
+
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 
 }
 
 .container {
-    height: 850px;
+    height: 900px;
     display: flex;
     justify-content: space-between;
     font-size: 16px;
@@ -47,10 +50,10 @@ button {
 #rightBox {
     height: 100%;
     width: 50%;
-    background-image: url("/static/images/login_background_image.jfif");
+    background-image: url("/static/images/login_background_image.png");
     background-color: black;
     background-size: contain;
-    background-position: center top -20rem;
+    background-position: center;
     background-repeat: no-repeat;
 }
 
@@ -80,6 +83,7 @@ button {
 .input-box {
     width: 50%;
     font-weight: bold;
+    margin-top: 2.5rem;
 }
 
 .input-data {
@@ -105,15 +109,20 @@ button {
 .custom-button {
     font-size: 4rem;
     height: 7rem;
-    width: 15rem;
-    background-color: #FFFFFF;
+    width: 30rem;
+    background-color: white;
+    color: black;
+    border-radius: 5rem;
     font-weight: bold;
+
 }
 
 .button-box {
-    margin-top: 1%;
+    margin-top: 10rem;
+
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+
 }
 
 #bottomBox {

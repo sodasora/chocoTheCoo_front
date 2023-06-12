@@ -19,9 +19,8 @@ export async function handleLoginAPI() {
 	return response;
 }
 
-export async function getVerificationCodeAPI() {
+export async function getVerificationCodeAPI(email) {
 	// 인증 코드 발급 받기
-	const email = document.getElementById("email").value
 	const response = await fetch(`${BACK_BASE_URL}/api/users/get/auth_code/`, {
 		headers: {
 			'content-type': 'application/json',
@@ -47,6 +46,39 @@ export async function setUserInformationAPI() {
 			"email": email,
 			"auth_code": verificationCode,
 			"password": password
+		})
+	})
+	return response
+}
+
+export async function handleSignupAPI(email, nickname, password) {
+	// 회원 가입
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+		headers: {
+			'content-type': 'application/json',
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			"email": email,
+			"nickname": nickname,
+			"password": password
+		})
+	})
+	return response
+
+}
+
+
+export async function VerificationCodeSubmitAPI(email, verificationCode) {
+	// 회원 가입시 이메일 인증
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+		headers: {
+			'content-type': 'application/json',
+		},
+		method: 'PUT',
+		body: JSON.stringify({
+			"email": email,
+			"auth_code": verificationCode,
 		})
 	})
 	return response

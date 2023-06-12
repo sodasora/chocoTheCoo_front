@@ -71,7 +71,7 @@ export async function getVerificationCode() {
     if (email.value == "") {
         message.innerText = "이메일을 입력해 주세요."
     } else {
-        const response = await getVerificationCodeAPI()
+        const response = await getVerificationCodeAPI(email.value)
         console.log(response)
         if (response.status == 200) {
             message.innerText = "이메일을 발송 했습니다."
@@ -149,7 +149,7 @@ export async function setEventListener() {
 }
 
 window.onload = async () => {
-    // 로그인한 사용자만 접근 가능
+    // 로그인 안한 사용자만 접근 가능
     injectFooter();
     setEventListener();
     const payload = localStorage.getItem("payload");

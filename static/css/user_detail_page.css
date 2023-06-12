@@ -1,0 +1,39 @@
+html {
+    font-size: calc(1vh - 1px);
+}
+
+
+/* 테블릿 */
+@media (max-width: 768px) {}
+
+/* 휴대 기기 */
+@media (max-width: 425px) {}
+
+
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+input {
+    border: none;
+
+}
+
+body {
+    background-color: #C4A492;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}

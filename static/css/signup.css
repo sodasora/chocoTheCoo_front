@@ -1,49 +1,304 @@
-main {
-    display: flex;
+html {
+    /* font-size: 1vw; */
+    font-size: calc(1vh - 1px);
 }
 
-.container-login {
-    margin: auto;
+
+/* 테블릿 */
+@media (max-width: 768px) {
+
+
+    #rightBox {
+        width: 100% !important;
+    }
+
+    #container {
+        width: 90% !important;
+    }
+
+    #innerContainer {
+        width: 90% !important;
+    }
+
+    #singupNavItems {
+        font-size: 1.8rem !important;
+    }
+
+    input {
+        font-size: 0.1rem !important;
+    }
 }
 
-.container-signup {
-    margin: 2em auto!important;
-    background-color: rgb(112, 167, 167);
-    border-radius: 1em;
-    padding: 2em;
+/* 휴대 기기 */
+@media (max-width: 425px) {
+    #leftBox {
+        display: none !important;
+    }
+
+    #rightBox {
+        width: 100% !important;
+    }
+
+    #container {
+        width: 90% !important;
+    }
+
+    #innerContainer {
+        width: 90% !important;
+    }
+
+    #contentLeftBox {
+        width: 0% !important;
+    }
+
+    #singupNavItems {
+        font-size: 1.8rem !important;
+    }
+
+    input {
+        font-size: 1rem !important;
+    }
 }
 
-.login-box {
-    background-color: rgb(156, 135, 109);
-    border:double 2px solid;
-    border-color: black;
-    border-radius: 1em;
-    padding: 2em;
+
+
+a {
+    text-decoration: none;
+    color: black;
 }
 
-select option[value=""][disabled] {
-    display: none;
-}
-
-.social-login {
-    display: flex;
-    justify-content: space-around;
-    margin: 2em;
-}
-
-.social-btn {
-    background-color: transparent;
+input {
     border: none;
+
 }
 
-.social-btn-img {
+body {
+    background-color: #C4A492;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+#titleContainer {
+    padding: 2%;
+}
+
+#titleBox {
+    height: 15rem;
+    background-color: #B9937E;
+    display: flex;
+    align-items: center;
+    padding-left: 3%;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    font-size: 5rem;
+    color: #522F18;
+    font-weight: bold;
+}
+
+#container {
+    height: calc(100vh - 150px);
+    margin-left: 5rem;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+
+#innerContainer {
+    width: 60%;
+    height: 100%;
+    display: flex;
+}
+
+#leftBox {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: right;
+    padding-right: 5rem;
+    padding-top: 5%;
+}
+
+#rightBox {
+    margin-top: 3rem;
+    width: 70%;
+    height: 100%;
+}
+
+#signupImageBox {
+    height: 40rem;
+    width: 30rem;
+    background-image: url("/static/images/signupImage_1.png");
+    background-size: 100% 100%;
     background-color: transparent;
-    width: 50px;
-    height: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10%;
+    box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.5);
+
 }
 
-.sign-btn {
-    border-color: rgba(0, 0, 0, 0.6)!important;
-    color: rgba(0, 0, 0, 0.7)!important;
-    background-color: rgba(226, 226, 226, 0.37)!important;
+#innerNav {
+    display: flex;
+    align-items: center;
+    height: 20%;
+    font-family: 'S-CoreDream-3Light';
+}
+
+#singupNavTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    height: 100%;
+    width: 20%;
+    font-weight: 600;
+}
+
+#singupNavItems {
+    height: 100%;
+    width: 65%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.item-group {
+    margin-left: 8%;
+    margin-right: 8%;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.billboard {
+    background-color: #D9D9D9;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10%;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+}
+
+#contentBox {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#contentLeftBox {
+    width: 20%;
+    height: 100%;
+
+}
+
+#contentRightBox {
+    height: 100%;
+    width: 100%;
+}
+
+#line {
+    border: 1px solid #522F18;
+    width: 100%;
+}
+
+.input-data {
+    margin-top: 1rem;
+    height: 4rem;
+    width: 100%;
+    background-color: white;
+    border-radius: 0.3rem;
+    font-size: 1.5rem;
+    padding-left: 5%;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+}
+
+button {
+    background-color: #D9D9D9;
+    height: 3.5rem;
+    width: 15rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 0.3rem;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border: none;
+    background-color: white;
+    color: black;
+}
+
+.signup-form {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+#signupSubmitButtonBox {
+    text-align: right;
+    margin-top: 3vh;
+}
+
+.input-box {
+    margin-top: 2rem;
+    font-size: 2.5rem;
+}
+
+#checkbox {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+#signupMessageBox {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1rem;
+    margin-top: 4%;
+    background-color: #FF6666;
+    height: 4rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+}
+
+
+#loginGuide {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 3rem;
+
+}
+
+.getVerificationCodeBox {
+    font-weight: 900;
+    font-size: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 5rem;
+    height: 1.5rem;
+    border-radius: 0.3rem;
+    color: #522F18;
+}
+
+.input-guide {
+    font-size: 0.5rem;
+    font-weight: bold;
+}
+
+/* 회원 정보 수정 */
+#detailViewBillboard {
+    height: 20rem;
+    width: 10rem;
+    background-color: #FF6666;
 }
