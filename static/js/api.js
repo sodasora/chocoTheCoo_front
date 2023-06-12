@@ -19,7 +19,6 @@ export async function handleLoginAPI() {
 	return response;
 }
 
-<<<<<<< HEAD
 // 날짜에 대한 포인트 기록내역
 export async function getPointView(day) {
 	const response_point = await fetch(`${BACK_BASE_URL}/api/users/points/${day}/`, {
@@ -144,7 +143,8 @@ export async function postSubscribeView() {
 		method: 'POST',
 	})
 	return response_data.status;
-=======
+}
+
 export async function getVerificationCodeAPI(email) {
 	// 인증 코드 발급 받기
 	const response = await fetch(`${BACK_BASE_URL}/api/users/get/auth_code/`, {
@@ -158,6 +158,7 @@ export async function getVerificationCodeAPI(email) {
 	})
 	return response
 }
+
 export async function setUserInformationAPI() {
 	// 비밀번호 수정 및 비활성 계정 활성화
 	const email = document.getElementById("email").value
@@ -208,5 +209,4 @@ export async function VerificationCodeSubmitAPI(email, verificationCode) {
 		})
 	})
 	return response
->>>>>>> c3a2c1b899e70973da298a205053a1342fb43f7b
 }
