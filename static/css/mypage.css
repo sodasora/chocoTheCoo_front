@@ -1,0 +1,223 @@
+@font-face {
+  font-family: '국립박물관문화재단클래식B';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/국립박물관문화재단클래식B.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'S-CoreDream-3Light';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+button {
+  height: 50px;
+  font-size: 20px;
+  margin-top: 10px;
+  background-color: rgba(109, 86, 68, 0.822);
+  color: white;
+  border-radius: 10px;
+}
+
+.section {
+  background-color: #C4A492;
+  height: auto;
+}
+
+.mypage-intro {
+  display: flex;
+  margin-top: 20px;
+}
+
+#myreward {
+  font-family: '국립박물관문화재단클래식B';
+  font-size: 50px;
+  font-weight: bold;
+  padding-left: 40px;
+  color: white;
+}
+
+.card-points {
+  width: 500px;
+  background-color: white;
+  height: fit-content;
+  max-height: 460px;
+  margin-left: 50px;
+  margin-top: 20px;
+  padding: 10px;
+  text-align: center;
+  font-family: 'S-CoreDream-3Light';
+  font-size: 1.5em;
+  font-weight: bold;
+  padding-bottom: 10px;
+  color: rgba(100, 81, 66, 0.822);
+}
+
+.points-list {
+  font-family: 'S-CoreDream-3Light';
+  text-align: left;
+  font-size: 0.8em;
+  font-weight: lighter;
+  padding-bottom: 3px;
+  margin-left: 20px;
+  color: rgba(100, 81, 66, 0.822);
+}
+
+#month-total {
+  font-family: 'S-CoreDream-3Light';
+  font-size: 30px;
+  font-weight: bold;
+  margin-left: 40px;
+  color: white;
+}
+
+#total-reward {
+  font-family: 'S-CoreDream-3Light';
+  font-size: 30px;
+  font-weight: bold;
+  margin-left: 50px;
+  color: white;
+}
+
+#totalpoint {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+td {
+  width: 90px;
+  height: 60px;
+}
+
+.Calendar {
+  text-align: center;
+}
+
+
+.line {
+  border: 2px solid rgba(255, 255, 255, 0.729);
+  width: 97%;
+  margin-left: 30px;
+}
+
+.calendar-section {
+  background-color: white;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 600px;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0px 35px 20px -30px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+}
+
+.Calendar>thead>tr:first-child>td {
+  font-family: 'S-CoreDream-3Light';
+  font-size: 1.7em;
+  font-weight: bold;
+  padding-bottom: 10px;
+  color: rgba(100, 81, 66, 0.822);
+}
+
+.Calendar>thead>tr:last-child>td {
+  font-family: 'S-CoreDream-3Lightd';
+  font-size: 1.5em;
+  background-color: rgba(253, 121, 103, 0.322);
+  color: rgba(61, 52, 45, 0.822);
+}
+
+.Day {
+  cursor: pointer;
+}
+
+.Day.choiceDay {
+  background-color: #3E85EF;
+  font-family: 'MapoFlowerIsland';
+  color: #fff;
+  cursor: pointer;
+}
+
+.point-calender {
+  justify-content: center;
+}
+
+/* section calendar 끝 */
+
+.profile-card {
+  font-family: 'S-CoreDream-3Light';
+  font-size: 1.3em;
+  width: 25vw;
+  height: auto;
+  text-align: center;
+  margin-top: 30px;
+  margin-left: 60px;
+  border: 2px solid white;
+  border-radius: 20px;
+}
+
+.profile {
+  width: 23vw;
+}
+
+.subscription-card {
+  width: 25vw;
+  height: 300px;
+  padding: 20px;
+  text-align: center;
+  margin-top: 30px;
+  margin-left: 60px;
+  margin-bottom: 20px;
+  border: 2px solid white;
+  border-radius: 20px;
+  text-align: center;
+  font-family: 'S-CoreDream-3Light';
+  font-size: 1.4em;
+}
+
+/*프로필 기본 사진*/
+.bigbox {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+#user-edit {
+  cursor: pointer;
+}
+
+#wishitem {
+  padding: 20px;
+  text-align: center;
+  width: 300px;
+  height: 300px;
+  margin-left: 50px;
+  margin-bottom: 50px;
+  border: 2px solid white;
+  border-radius: 20px;
+  font-family: 'S-CoreDream-3Light';
+  font-size: 1.3em;
+}
+
+.wishimage {
+  width: fit-content;
+}
+
+.wishname {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.subscrip-view {
+  font-size: 1em;
+  margin-bottom: 10px;
+  padding: 20px;
+}
+
+.sub-button-section {
+  display: flex;
+  justify-content: end;
+  margin-right: 5vw;
+}

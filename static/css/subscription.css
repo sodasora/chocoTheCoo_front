@@ -1,0 +1,7 @@
+.section {
+    background-color: #C4A492;
+    height: 800px;
+    display: flex;
+    justify-content: center;
+    font-family: 'S-CoreDream-3Light';
+}

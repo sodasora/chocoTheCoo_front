@@ -1,59 +1,91 @@
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="/static/css/signup.css">
-
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
-
-
-    <title>삭제예정 | 로그인</title>
+    <link rel="stylesheet" href="/static/css/login.css">
+    <title>Login</title>
 </head>
 
 <body>
-    <header></header>
-    <main>
-        <div class="container-login w-50">
-            <div class="login-box">
-                <form>
-                    <h2 class="text-center">로그인</h2>
-                    <div class="mb-3">
-                        <label for="Email" class="form-label">이메일</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="이메일">
+    <div class="container">
+        <div id="leftBox">
+            <div class="title left-title">
+                <a href="index.html">
+                    Choco The
+                </a>
+            </div>
+            <form id="formBox">
+                <div class="input-box">
+                    <div>
+                        <label>email</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="Password" class="form-label">비밀번호</label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="비밀번호">
-                    </div>
-                    <div class="text-center mb-3">
-                        <a href="/users/signup.html" style="text-decoration: none;" class="link-primary">회원가입은 여기로!</a>
-                    </div>
-                    <div class="text-center">
-                        <button id='login' type="button" class="sign-btn btn btn-outline-primary"
-                            >로그인</button>
-                    </div>
-                </form>
-                <div class="social-login">
-                    <button class="social-btn" onclick=""><img class="social-btn-img"
-                            src="/static/image/google.png"></button>
-                    <button class="social-btn" onclick=""><img class="social-btn-img"
-                            src="/static/image/kakao.png"></button>
-                    <button class="social-btn" onclick=""><img class=" social-btn-img"
-                            src="/static/image/naver.png"></button>
-                    <!-- <button class="social-btn"><img class="social-btn-img" src="/static/image/github.png"></button> -->
+                    <input class="input-data" id="email" placeholder="example@domain.com">
                 </div>
+                <div class="input-box hidden-box-2" style="display: none;">
+                    <div>
+                        <label>verification code</label>
+                    </div>
+                    <input class="input-data" id="verificationCode" placeholder="Please enter your verification code">
+                </div>
+                <div class="input-box hidden-box-2" id="passwordBox">
+                    <div>
+                        <label>password</label>
+                    </div>
+                    <input class="input-data" id="password" type="password" placeholder="Please enter your password">
+                </div>
+                <div class="input-box hidden-box-2" style="display: none;">
+                    <div>
+                        <label>verify password</label>
+                    </div>
+                    <input class="input-data" id="password2" type="password" placeholder="Please enter your password">
+                </div>
+                <div class="input-box button-box change-item">
+                    <button type="button" class="custom-button" id="loginButton">Login</button>
+                </div>
+                <div class="input-box button-box hidden-box-2" style="display: none;">
+                    <button type="button" class="custom-button" id="submitButton">submit</button>
+                </div>
+                <div class="input-box button-box hidden-box" style="display: none;">
+                    <button type="button" class="custom-button" id="verificationButton">Get verification code</button>
+                </div>
+                <div id="message-box" style="display: none;">
+                    <span id="message"></span>
+                </div>
+            </form>
+            <div id="bottomBox" class="change-item">
+                <div class="social-login-box">
+                    <a href="#">
+                        <div id="kakaoBtn"></div>
+                    </a>
+                    <a href="#" style="margin-left: 7%; margin-right: 7%;">
+                        <div id="naverBtn"></div>
+                    </a>
+                    <a href="#">
+                        <div id="googleBtn"></div>
+                    </a>
+                </div>
+                <div class="item-box">
+                    <div id="leftItem">
+                        <a href="#">Singup</a>
+                    </div>
+                    <div id="rightItem">
+                        <p class="change-item change-action"><a href="#">Forgot password</a></p>
+                        <a href="#" class="change-item change-action">Account activation</a>
+                        <p class="hidden-box" style="display: none;"><a href="#">login view</a></p>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="rightBox">
+            <div class="title right-title">
+                <a href="index.html" style="color: white;">
+                    Coo
+                </a>
             </div>
         </div>
     </main>
