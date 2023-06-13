@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 통계 및 현황 | 판매자</title>
+    <link rel="stylesheet" href="static/css/seller.css">
+</head>
+<header></header>
+
+<body>
+    <div class="seller_nav">
+        <h1>&nbsp;&nbsp;상품 통계 및 현황</h1>
+    </div>
+    <container class="container">
+        <div class="user-box">
+            <div class="status-box">
+
+                <h2>수익</h2>
+                <div class="status-row">
+                    <div class="status">
+                        <div><a>누적수익</a></div>
+                        <br>
+                        <div>
+                            <img style="float:left; width: 150px;" src="static/images/수익.png" alt="수익">
+                            <span style="float:right;">
+                                <text>누적판매금</text>
+                                <text style="font-weight: 900; font-size: 50px;">100</text>
+                                <text style="font-size: 30px;">원</text>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="status">
+                        <div><a>당월수익</a></div>
+                        <br>
+                        <img style="float:left; width: 150px;" src="static/images/월수익.png" alt="수익">
+                        <span style="float:right;">
+                            <text>월수익금</text>
+                            <text style="font-weight: 900; font-size: 50px;">100</text>
+                            <text style="font-size: 30px;">원</text>
+                            <text style="font-size: 24px;letter-spacing:-2px;">(↑5%)</text>
+                        </span>
+                    </div>
+                </div>
+
+                <h2>지출</h2>
+                <div class="status-row">
+                    <div class="status">
+                        <div><a>당월배송비</a></div>
+                        <br>
+                        <div>
+                            <img style="width: 150px;" src="static/images/배송비.png" alt="수익">
+                            <span style="float:right;">
+                                <text>배송비</text>
+                                <text style="font-weight: 900; font-size: 50px;">100,000</text>
+                                <text style="font-size: 30px;">원</text>
+                            </span>
+                        </div>
+                        <div>
+                            <img style="width: 130px;" src="static/images/배송.png" alt="배송">
+                            <span style="float:right;">
+                                <text>당월배송건</text>
+                                <text style="font-weight: 900; font-size: 50px;">100</text>
+                                <text style="font-size: 30px;">건</text>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="status">
+                        <div><a>구독기간</a></div>
+                        <br>
+                        <span>
+                            <text style="font-weight: 900; font-size: 50px;">2023-06-05</text>
+                            <br>
+                            <text
+                                style="font-weight: 900; font-size: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~2023-07-04</text>
+                            <p>
+                                <text style="font-size: 30px;">잔여일: 30일</text>
+                                <button style="float: right; font-size: 20px;">취소예약</button>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="profile-box">
+                <img class="profile" src="static/images/avatar.png" alt="profile">
+                <h2 id="nickname">username</h2>
+                <h2 id="email">email@example.com</h2>
+                <h2>회원정보수정</h2>
+            </div>
+        </div>
+
+        <h2>상품별현황</h2>
+
+        <div class="column-box">
+
+            <div id="sells" class="column">
+                <div class="status">
+                    <div><a>상품 판매량 현황(거래확정)</a></div>
+                    <div class="upper-column">
+                        <br>
+                        <div>
+                            <img style="width: 130px;" src="static/images/누적판매량.png" alt="누적판매량">
+                            <span style="float:right;">
+                                <text>누적판매량</text>
+                                <text id='sales_total_count' style="font-weight: 900; font-size: 50px;">100</text>
+                                <text style="font-size: 30px;">개</text>
+                            </span>
+                        </div>
+                        <div>
+                            <img style="width: 120px;" src="static/images/등록상품.png" alt="등록상품">
+                            <span style="float:right;">
+                                <text>등록상품</text>
+                                <text id='product_total_count' style="font-weight: 900; font-size: 50px;">100</text>
+                                <text style="font-size: 30px;">개</text>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="status">
+                    <text>상품리스트(판매수순)</text>
+                    <span style="float: right; cursor: pointer;" onclick="location.href='/seller_list.html';"><img
+                            src="static/images/button.png" alt="확장버튼"></span>
+                    <div id="sells_under-column-dox">
+                        <!-- ↓ 샘플 html 실제로는 js에서 붙임 ↓ -->
+                        <div class="under-column">
+                            <text>1. 토블론</text>
+                            <img style="width: 50px;" src="static/images/누적판매량.png" alt="상품이미지">
+                            <text style="font-size: 20px; float:inline-end">80개</text>
+                            <div class="graph">
+                                <div>
+                                    <div class="sells bar"></div>
+                                    <text style="font-size: 20px;">100%</text>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="under-column">
+                            <text>1. 토블론</text>
+                            <img style="width: 50px;" src="static/images/누적판매량.png" alt="상품이미지">
+                            <text style="font-size: 20px; float:inline-end">80개</text>
+                            <div class="graph">
+                                <div>
+                                    <div class="sells bar"></div>
+                                    <text style="font-size: 20px;">100%</text>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ↑ 샘플 html 실제로는 js에서 붙임 ↑ -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="orders" class="column">
+                <div class="status">
+                    <div><a>상품 주문량 현황(거래확정전)</a></div>
+                    <div class="upper-column">
+                        <br>
+                        <div>
+                            <img style="width: 120px;" src="static/images/발송완료상품.png" alt="발송완료상품">
+                            <span style="float:right;">
+                                <text>발송완료주문</text>
+                                <text id='sent_order' style="font-weight: 900; font-size: 50px;">150</text>
+                                <text style="font-size: 30px;">개</text>
+                            </span>
+                        </div>
+                        <div>
+                            <img style="width: 100px;" src="static/images/미발송상품.png" alt="미발송상품">
+                            <span style="float:right;">
+                                <text>미발송주문</text>
+                                <text id='unsent_order' style="font-weight: 900; font-size: 50px;">150</text>
+                                <text style="font-size: 30px;">개</text>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="status">
+                    <text>상품리스트(판매수순)</text>
+                    <span style="float: right; cursor: pointer;" onclick="location.href='/seller_list.html';"><img
+                            src="static/images/button.png" alt="확장버튼"></span>
+                    <div id="orders_under-column-dox">
+                        <!-- ↓ 샘플 html 실제로는 js에서 붙임 ↓ -->
+                        <div class="under-column">
+                            <text>1. 토블론</text>
+                            <img style="width: 50px;" src="static/images/누적판매량.png" alt="상품이미지">
+                            <text style="font-size: 20px; float:inline-end">80개</text>
+                            <div class="graph">
+                                <div>
+                                    <div class="sells bar"></div>
+                                    <text style="font-size: 20px;">100%</text>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="under-column">
+                            <text>1. 토블론</text>
+                            <img style="width: 50px;" src="static/images/누적판매량.png" alt="상품이미지">
+                            <text style="font-size: 20px; float:inline-end">80개</text>
+                            <div class="graph">
+                                <div>
+                                    <div class="sells bar"></div>
+                                    <text style="font-size: 20px;">100%</text>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ↑ 샘플 html 실제로는 js에서 붙임 ↑ -->
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="likes" class="column">
+                <div class="status">
+                    <div><a>좋아요(찜)현황</a></div>
+                    <div class="upper-column">
+                        <br>
+                        <div>
+                            <img style="width: 120px;" src="static/images/좋아요.png" alt="누적판매량">
+                            <span style="float:right;">
+                                <text>브랜드 좋아요</text>
+                                <text id='seller_wish' style="font-weight: 900; font-size: 50px;">100</text>
+                                <text style="font-size: 30px;">개</text>
+                            </span>
+                        </div>
+                        <div>
+                            <img style="width: 110px;" src="static/images/상품좋아요.png" alt="상품좋아요">
+                            <span style="float:right;">
+                                <text>상품 총 좋아요</text>
+                                <text id='product_wish' style="font-weight: 900; font-size: 50px;">500</text>
+                                <text style="font-size: 30px;">개</text>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="status">
+                    <text>상품리스트(판매수순)</text>
+                    <span style="float: right; cursor: pointer;" onclick="location.href='/seller_list.html';"><img
+                            src="static/images/button.png" alt="확장버튼"></span>
+                    <div id="likes_under-column-dox">
+                        <!-- ↓ 샘플 html 실제로는 js에서 붙임 ↓ -->
+                        <div class="under-column">
+                            <text>1. 토블론</text>
+                            <img style="width: 50px;" src="static/images/누적판매량.png" alt="상품이미지">
+                            <text style="font-size: 20px; float:inline-end">80개</text>
+                            <div class="graph">
+                                <div>
+                                    <div class="sells bar"></div>
+                                    <text style="font-size: 20px;">100%</text>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="under-column">
+                            <text>1. 토블론</text>
+                            <img style="width: 50px;" src="static/images/누적판매량.png" alt="상품이미지">
+                            <text style="font-size: 20px; float:inline-end">80개</text>
+                            <div class="graph">
+                                <div>
+                                    <div class="sells bar"></div>
+                                    <text style="font-size: 20px;">100%</text>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ↑ 샘플 html 실제로는 js에서 붙임 ↑ -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="stars" class="column">
+                <div class="status">
+                    <div><a>별점현황</a></div>
+                    <div class="upper-column">
+                        <br>
+                        <div>
+                            <img style="width: 150px;" src="static/images/별점.png" alt="별점">
+                            <span style="float:right;">
+                                <text>평균평점</text>
+                                <text id="avg_star" style="font-weight: 900; font-size: 50px;">4.0</text>
+                                <text style="font-size: 30px;">점</text>
+                                <br>
+                                <text>최고평점</text>
+                                <text id="max_star" style="font-weight: 900; font-size: 50px;">4.7</text>
+                                <text style="font-size: 30px;">점</text>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="status">
+                    <text>상품리스트(판매수순)</text>
+                    <span style="float: right; cursor: pointer;" onclick="location.href='/seller_list.html';"><img
+                            src="static/images/button.png" alt="확장버튼"></span>
+                    <div id="stars_under-column-dox">
+                        <!-- ↓ 샘플 html 실제로는 js에서 붙임 ↓ -->
+                        <div class="under-column">
+                            <text>1. 토블론</text>
+                            <img style="width: 50px;" src="static/images/누적판매량.png" alt="상품이미지">
+                            <text style="font-size: 20px; float:inline-end">80개</text>
+                            <div class="graph">
+                                <div>
+                                    <div class="sells bar"></div>
+                                    <text style="font-size: 20px;">100%</text>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="under-column">
+                            <text>1. 토블론</text>
+                            <img style="width: 50px;" src="static/images/누적판매량.png" alt="상품이미지">
+                            <text style="font-size: 20px; float:inline-end">80개</text>
+                            <div class="graph">
+                                <div>
+                                    <div class="sells bar"></div>
+                                    <text style="font-size: 20px;">100%</text>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ↑ 샘플 html 실제로는 js에서 붙임 ↑ -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </container>
+    <!-- script -->
+    <script src="/static/js/api.js" type="module"></script>
+    <script src="/static/js/loader.js" type="module"></script>
+    <script src="/static/js/seller.js" type="module"></script>
+    <footer></footer>
+</body>
+
+
+</html>

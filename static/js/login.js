@@ -5,14 +5,15 @@ document.getElementById("login").addEventListener("click",handleLoginBtn)
 // 로그인 폼 기입 후 로그인 눌렀을 때 실행되는 함수
 async function handleLoginBtn() {
     const response = await handleLogin();
-
+    console.log(response)
+    console.log(response.status)
     if (response.status == 200) {
         const response_json = await response.json()
+        console.log(response_json)
+        localStorage.setItem("access", response_json.access_token);
+        localStorage.setItem("refresh", response_json.refresh_token);
 
-        localStorage.setItem("access", response_json.access);
-        localStorage.setItem("refresh", response_json.refresh);
-
-        const base64Url = response_json.access.split('.')[1];
+        const base64Url = response_json.access_token.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+');
         const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);

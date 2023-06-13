@@ -14,6 +14,12 @@ async function injectHeader() {
     let data = await headerHtml.text()
     document.querySelector("header").innerHTML = data; 
     
+    // 메인 타이틀 클릭 시 홈으로
+    const title = document.getElementById("nav-title")
+    title.addEventListener("click", function(){
+        window.location.replace(`${FRONT_BASE_URL}`)
+    })
+
     const payload = localStorage.getItem("payload");
     // payload가 존재 = 로그인되어있다면
     if (payload) {
@@ -43,6 +49,8 @@ async function injectHeader() {
 }
 }
 injectHeader();
+
+
 
 // 로그아웃
 function handleLogout() {
