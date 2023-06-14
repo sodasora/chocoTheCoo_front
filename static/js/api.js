@@ -1,7 +1,7 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5501"
+export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 
-// 삭제예정
+
 // 로그인
 export async function handleLoginAPI() {
 	const email = document.getElementById("email").value;
@@ -207,6 +207,111 @@ export async function VerificationCodeSubmitAPI(email, verificationCode) {
 			"email": email,
 			"auth_code": verificationCode,
 		})
+	})
+	return response
+}
+
+export async function getUserInformationAPI() {
+	// 사용자 정보 불러오기
+	const access_token = localStorage.getItem("access")
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: 'GET',
+	})
+	return response
+}
+
+export async function updateProfileInformationAPI(information) {
+	// 사용자 프로필 정보 수정
+	const access_token = localStorage.getItem("access")
+	const user_id = information.user_id
+	const nickname = information.nickName
+	const bio = information.bio
+	const profile_image = information.profile_image
+
+	const formdata = new FormData();
+	formdata.append('nickname', nickname)
+	formdata.append('introduction', bio)
+	if (profile_image) {
+		formdata.append('profile_image', profile_image)
+	} else {
+		formdata.append('profile_image', '')
+	}
+	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'PUT',
+		body: formdata
+	})
+	return response
+}
+
+export async function updateUserInformationAPI(information) {
+	// 유저 상세 정보 수정 API
+	const access_token = localStorage.getItem("access")
+	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${information.user_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'PUT',
+		body: JSON.stringify({
+			"email": information.email,
+			"password": information.password,
+			"new_password": information.new_password
+		})
+	})
+	return response
+}
+
+export async function addressSubmitAPI(information) {
+	const access_token = localStorage.getItem("access")
+	const response = await fetch(`${BACK_BASE_URL}/api/users/create/delivery/${information.user_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			recipient: information.recipient,
+			postal_code: information.postcode,
+			address: information.address,
+			detail_address: information.detailAddress
+		})
+	})
+	return response
+}
+
+export async function addressUpdateAPI(information) {
+	const access_token = localStorage.getItem("access")
+	const response = await fetch(`${BACK_BASE_URL}/api/users/delivery/${information.delivery_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'PUT',
+		body: JSON.stringify({
+			recipient: information.recipient,
+			postal_code: information.postcode,
+			address: information.address,
+			detail_address: information.detailAddress
+		})
+	})
+	return response
+}
+
+export async function addressDeleteAPI(delivery_id) {
+	const access_token = localStorage.getItem("access")
+	const response = await fetch(`${BACK_BASE_URL}/api/users/delivery/${delivery_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'DELETE',
 	})
 	return response
 }

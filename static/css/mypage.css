@@ -158,6 +158,10 @@ td {
   border-radius: 20px;
 }
 
+.profile {
+  width: 23vw;
+}
+
 .subscription-card {
   width: 25vw;
   height: 300px;
