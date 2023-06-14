@@ -4,7 +4,7 @@ import { getStatusView, getAllOrderListView, getReviewView, getProductListAPIVie
 async function paginationView_product(product) {
     const contents = document.getElementById("product-list");
     const buttons = document.getElementById("product-buttons");
-    console.log("상품확인", product);
+    // console.log("상품확인", product);
 
     // 페이지네이션 페이지 설정
     const numOfContent = product.length;
@@ -111,7 +111,7 @@ async function paginationView_product(product) {
 async function paginationView_order(order) {
     const contents = document.getElementById("order-list");
     const buttons = document.getElementById("order-buttons");
-    console.log("주문확인", order);
+    // console.log("주문확인", order);
 
     // 페이지네이션 페이지 설정
     const numOfContent = order.length;
@@ -121,7 +121,7 @@ async function paginationView_order(order) {
     let page = 1;
     const makeContent = (id) => {
         if (!order[id].image) {
-            order[id].image = "/static/images/기본상품.png" // 상품이미지 없으면 기본이미지 대체
+            order[id].image = "/static/images/품절.png" // 상품이미지 없으면 기본이미지 대체
         }
         const content = document.createElement("tr");
         content.setAttribute("onclick", `상품정보상세보기로이동함수(${order[id]})`);
@@ -129,10 +129,11 @@ async function paginationView_order(order) {
         <td><text>${order[id].created_at.substr(2, 8)}<br>${order[id].created_at.substr(11, 8)}</text></td>
         <td><text>${order[id].name}</text></td>
         <td><div class="product-img" style="background-image: url(${order[id].image});"></div></td>
-        <td><text>${order[id].status_name}</text></td>
-        <td><text>${order[id].count}</text></td>
+        <td><text>${order[id].order_status.name}</text></td>
+        <td><text>${order[id].amount}</text></td>
         <td><text>${(order[id].price).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })}</text></td>
-        <td><text>${(order[id].count * order[id].price).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })}</text></td>
+        <td><text>${(order[id].amount * order[id].price).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })}</text></td>
+        <td><text>${(order[id].bill.address)}</text></td>
         `;
         return content;
     };
@@ -210,8 +211,6 @@ async function paginationView_order(order) {
     render(page);
 }
 
-// 상품 목록, 주문 목록 가져오기
-// window.onload = async function () {
 
 // ↓상품 목록 가져오기 관련 코드↓ //
 
@@ -221,8 +220,10 @@ const user_id = payload_parse.user_id //로그인한 유저id
 
 // 전체 상품 불러오기
 const all_products = await getProductListAPIView(user_id)
+console.log('all_products',all_products)
 // 전체 주문 불러오기
 const all_orders = await getAllOrderListView()
+console.log('all_orders',all_orders)
 
 
 // 전체 상품에서 로그인한 판매자의 상품만 필터
@@ -233,7 +234,7 @@ console.log('seller_products', seller_products)
 
 // 전체 주문에서 로그인한 판매자의 주문만 필터
 export const seller_orders = all_orders.filter(function (order) {
-    return order.seller === user_id;
+    return order.seller.id === user_id;
 });
 console.log('seller_orders', seller_orders)
 
@@ -259,27 +260,17 @@ for (let i = 0; i < seller_products.length; i++) {
 
     // 상품별 평균 평점 추가
     const reviews = await getReviewView(seller_products[i].id);
-    let stars = 0
-    for (const review of reviews) {
-        stars += review.star
+    if (reviews) {
+        let stars = 0
+        for (const review of reviews) {
+            stars += review.star
+        }
+        const average = stars / reviews.length
+        seller_products[i]['star'] = average;
     }
-    const average = stars / reviews.length
-    seller_products[i]['star'] = average;
 }
-
-// 주문목록 Json 배열에 데이터 추가하기 → 백엔드 시리얼라이저에 추가
-// for (let i = 0; i < seller_orders.length; i++) {
-
-//     // 주문상태명 추가
-//     let status = await getStatusView(seller_orders[i].status)
-//     seller_orders[i]['status_name'] = status.name;
-
-// }
 // ↑상품 목록 가져오기 관련 코드↑ //
-
 
 // 상품 목록, 주문 목록 페이지네이션 실행
 paginationView_product(seller_products)
 paginationView_order(seller_orders)
-// }
-

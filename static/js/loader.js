@@ -39,13 +39,15 @@ async function injectHeader() {
             handleLogout()
         })
     } else {
-    // 비로그인 상태에서 장바구니,마이페이지,로그아웃 숨기기
+    // 비로그인 상태에서 장바구니,마이페이지,판매자페이지,로그아웃 숨기기
     const cart = document.getElementById("cart")
     const mypage = document.getElementById("mypage")
+    const sellerpage = document.getElementById("sellerpage")
 
     cart.style.display = "none"
     mypage.style.display = "none"
     logout.style.display = "none"
+    sellerpage.style.display = "none"
 }
 }
 injectHeader();

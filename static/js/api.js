@@ -300,3 +300,15 @@ export async function getStatusView(status_id) {
 	});
 	return response.json();
 }
+
+// 판매자 정보 조회
+export async function getSellerPermissionAPIView(user_id){
+	let token = localStorage.getItem("access");
+	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/permissions/${user_id}/`, {
+		headers: {
+			Authorization: `Bearer ${token}`
+		},
+		method: "GET",
+	});
+	return response.json();
+}
