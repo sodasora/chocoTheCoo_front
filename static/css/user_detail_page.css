@@ -629,3 +629,17 @@ body {
     border-radius: 0.5rem;
     box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
 }
+
+#sellerMessageBox {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1.8rem;
+    margin-top: 4%;
+    background-color: #760c0c;
+    color: white;
+    height: 6rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+}

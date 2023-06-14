@@ -12,74 +12,82 @@
 <body>
     <div class="container">
         <div id="leftBox">
+            <div id="titleBox" style="display: none;">
+                <a href="index.html" id="mobileTitle">Choco The Coo</a>
+            </div>
             <div class="title left-title">
                 <a href="index.html">
                     Choco The
                 </a>
             </div>
-            <form id="formBox">
-                <div class="input-box">
-                    <div>
-                        <label>email</label>
+            <div id="leftInnerContainer">
+                <form id="formBox">
+                    <div class="input-box">
+                        <div>
+                            <label>email</label>
+                        </div>
+                        <input class="input-data" id="email" placeholder="example@domain.com">
                     </div>
-                    <input class="input-data" id="email" placeholder="example@domain.com">
-                </div>
-                <div class="input-box hidden-box-2" style="display: none;">
-                    <div>
-                        <label>verification code</label>
+                    <div class="input-box hidden-box-2" style="display: none;">
+                        <div>
+                            <label>verification code</label>
+                        </div>
+                        <input class="input-data" id="verificationCode"
+                            placeholder="Please enter your verification code">
                     </div>
-                    <input class="input-data" id="verificationCode" placeholder="Please enter your verification code">
-                </div>
-                <div class="input-box hidden-box-2" id="passwordBox">
-                    <div>
-                        <label>password</label>
+                    <div class="input-box hidden-box-2" id="passwordBox">
+                        <div>
+                            <label>password</label>
+                        </div>
+                        <input class="input-data" id="password" type="password"
+                            placeholder="Please enter your password">
                     </div>
-                    <input class="input-data" id="password" type="password" placeholder="Please enter your password">
-                </div>
-                <div class="input-box hidden-box-2" style="display: none;">
-                    <div>
-                        <label>verify password</label>
+                    <div class="input-box hidden-box-2" style="display: none;">
+                        <div>
+                            <label>verify password</label>
+                        </div>
+                        <input class="input-data" id="password2" type="password"
+                            placeholder="Please enter your password">
                     </div>
-                    <input class="input-data" id="password2" type="password" placeholder="Please enter your password">
-                </div>
-                <div class="input-box button-box change-item">
-                    <button type="button" class="custom-button" id="loginButton">Login</button>
-                </div>
-                <div class="input-box button-box hidden-box-2" style="display: none;">
-                    <button type="button" class="custom-button" id="submitButton">submit</button>
-                </div>
-                <div class="input-box button-box hidden-box" style="display: none;">
-                    <button type="button" class="custom-button" id="verificationButton">Get verification code</button>
-                </div>
-                <div id="message-box" style="display: none;">
-                    <span id="message"></span>
-                </div>
-            </form>
-            <div id="bottomBox" class="change-item">
-                <div class="social-login-box">
-                    <a href="#">
-                        <div id="kakaoBtn"></div>
-                    </a>
-                    <a href="#" style="margin-left: 7%; margin-right: 7%;">
-                        <div id="naverBtn"></div>
-                    </a>
-                    <a href="#">
-                        <div id="googleBtn"></div>
-                    </a>
-                </div>
-                <div class="item-box">
-                    <div id="leftItem">
-                        <a href="#">Singup</a>
+                    <div class="input-box button-box change-item">
+                        <button type="button" class="custom-button" id="loginButton">Login</button>
                     </div>
-                    <div id="rightItem">
-                        <p class="change-item change-action"><a href="#">Forgot password</a></p>
-                        <a href="#" class="change-item change-action">Account activation</a>
-                        <p class="hidden-box" style="display: none;"><a href="#">login view</a></p>
+                    <div class="input-box button-box hidden-box-2" style="display: none;">
+                        <button type="button" class="custom-button" id="submitButton">submit</button>
+                    </div>
+                    <div class="input-box button-box hidden-box" style="display: none;">
+                        <button type="button" class="custom-button" id="verificationButton">Get verification
+                            code</button>
+                    </div>
+                    <div id="message-box" style="display: none;">
+                        <span id="message"></span>
+                    </div>
+                </form>
+                <div id="bottomBox" class="change-item">
+                    <div class="social-login-box">
+                        <a href="#">
+                            <div id="kakaoBtn"></div>
+                        </a>
+                        <a href="#" style="margin-left: 7%; margin-right: 7%;">
+                            <div id="naverBtn"></div>
+                        </a>
+                        <a href="#">
+                            <div id="googleBtn"></div>
+                        </a>
+                    </div>
+                    <div class="item-box">
+                        <div id="leftItem">
+                            <a href="#" id="signupView">Signup</a>
+                        </div>
+                        <div id="rightItem">
+                            <p class="change-item change-action"><a href="#">Forgot password</a></p>
+                            <a href="#" class="change-item change-action ">Account activation</a>
+                            <p class="hidden-box" style="display: none;"><a href="#">login view</a></p>
 
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
         <div id="rightBox">
             <div class="title right-title">
@@ -92,7 +100,7 @@
 
     </div>
 </body>
-<footer></footer>
+<!-- <footer></footer> -->
 <script type="module" src="/static/js/api.js"></script>
 <script type="module" src="/static/js/login.js"></script>
 

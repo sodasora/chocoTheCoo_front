@@ -1,20 +1,20 @@
 import { FRONT_BASE_URL, handleLoginAPI, getVerificationCodeAPI, setUserInformationAPI } from './api.js'
 
 
-async function injectFooter() {
-    // 푸터 html 불러오기
-    fetch("./footer.html")
-        .then((response) => {
-            return response.text();
-        })
-        .then((data) => {
-            document.querySelector("footer").innerHTML = data;
-        })
+// async function injectFooter() {
+//     // 푸터 html 불러오기
+//     fetch("./footer.html")
+//         .then((response) => {
+//             return response.text();
+//         })
+//         .then((data) => {
+//             document.querySelector("footer").innerHTML = data;
+//         })
 
-    let headerHtml = await fetch("./footer.html")
-    let data = await headerHtml.text()
-    document.querySelector("footer").innerHTML = data;
-}
+//     let headerHtml = await fetch("./footer.html")
+//     let data = await headerHtml.text()
+//     document.querySelector("footer").innerHTML = data;
+// }
 
 
 export async function handleLogin() {
@@ -150,7 +150,7 @@ export async function setEventListener() {
 
 window.onload = async () => {
     // 로그인 안한 사용자만 접근 가능
-    injectFooter();
+    // injectFooter();
     setEventListener();
     const payload = localStorage.getItem("payload");
     const payload_parse = JSON.parse(payload)

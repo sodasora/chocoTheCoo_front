@@ -1,7 +1,5 @@
 html {
-    /* font-size: 1vw; */
     font-size: calc(1vh - 1px);
-
 }
 
 @media (min-width: 1440px) {
@@ -132,7 +130,7 @@ body {
 }
 
 #container {
-    height: calc(100vh - px);
+    height: calc(100vh - 10px);
     margin-left: 5rem;
     display: flex;
     justify-content: space-between;
