@@ -3,25 +3,25 @@ import { BACK_BASE_URL, FRONT_BASE_URL } from './api.js'
 /* 헤더 가져오기 */
 async function injectHeader() {
     fetch("./header.html")
-    .then((response) => {
-        return response.text();
-    })
-    .then((data) => {
-        document.querySelector("header").innerHTML = data;
-    })
-    
+        .then((response) => {
+            return response.text();
+        })
+        .then((data) => {
+            document.querySelector("header").innerHTML = data;
+        })
+
     let headerHtml = await fetch("./header.html")
     let data = await headerHtml.text()
-    document.querySelector("header").innerHTML = data; 
-    
+    document.querySelector("header").innerHTML = data;
+
     const payload = localStorage.getItem("payload");
     // payload가 존재 = 로그인되어있다면
     if (payload) {
         const payload_parse = JSON.parse(payload)
-        
+
         const intro = document.getElementById("intro")
-        intro.innerText =`${payload_parse.nickname}님`
-        
+        intro.innerText = `${payload_parse.nickname}님`
+
         // 회원가입과 로그인 버튼 숨기기
         const signup = document.getElementById("signup")
         const login = document.getElementById("login")
@@ -29,49 +29,49 @@ async function injectHeader() {
         login.style.display = "none";
 
         const logout = document.getElementById("logout")
-        logout.addEventListener("click",  function () {
+        logout.addEventListener("click", function () {
             handleLogout()
         })
     } else {
-    // 비로그인 상태에서 장바구니,마이페이지,로그아웃 숨기기
-    const cart = document.getElementById("cart")
-    const mypage = document.getElementById("mypage")
+        // 비로그인 상태에서 장바구니,마이페이지,로그아웃 숨기기
+        const cart = document.getElementById("cart")
+        const mypage = document.getElementById("mypage")
 
-    cart.style.display = "none"
-    mypage.style.display = "none"
-    logout.style.display = "none"
-}
+        cart.style.display = "none"
+        mypage.style.display = "none"
+        logout.style.display = "none"
+    }
 }
 injectHeader();
 
 // 로그아웃
-function handleLogout() {
-	localStorage.removeItem("access");
-	localStorage.removeItem("refresh");
-	localStorage.removeItem("payload");
-	window.location.replace(`${FRONT_BASE_URL}/login.html`);
+export async function handleLogout() {
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+    localStorage.removeItem("payload");
+    window.location.replace(`${FRONT_BASE_URL}/login.html`);
 }
 
 /* 푸터 가져오기 */
 async function injectFooter() {
     fetch("./footer.html")
-    .then((response) => {
-        return response.text();
-    })
-    .then((data) => {
-        document.querySelector("footer").innerHTML = data;
-    })
-    
+        .then((response) => {
+            return response.text();
+        })
+        .then((data) => {
+            document.querySelector("footer").innerHTML = data;
+        })
+
     let headerHtml = await fetch("./footer.html")
     let data = await headerHtml.text()
-    document.querySelector("footer").innerHTML = data; 
+    document.querySelector("footer").innerHTML = data;
 }
 injectFooter();
 
 // 최상위 일 때 back to top 위로 버튼 비활성화
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     const upbtn = document.getElementById("upbtn");
-    if(window.pageYOffset == document.body.scrollTop) {
+    if (window.pageYOffset == document.body.scrollTop) {
         upbtn.classList.remove("show");
     } else {
         upbtn.classList.add("show");

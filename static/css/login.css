@@ -29,13 +29,15 @@ input {
 button {
     border-radius: 1.5rem;
     border: none;
-
+    background-color: bisque;
+    color: #a15e00;
+    cursor: pointer;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 
 }
 
 .container {
-    height: 900px;
+    height: 1000px;
     display: flex;
     justify-content: space-between;
     font-size: 16px;
@@ -44,7 +46,9 @@ button {
 #leftBox {
     height: 100%;
     width: 50%;
-    background-color: #C4A492;
+    /* background-color: #C4A492; */
+    background-color: bisque;
+
 }
 
 #rightBox {
@@ -84,6 +88,7 @@ button {
     width: 50%;
     font-weight: bold;
     margin-top: 2.5rem;
+    color: #a15e00;
 }
 
 .input-data {
@@ -91,7 +96,8 @@ button {
     width: 100%;
     margin-top: 1.8%;
     margin-bottom: 3%;
-    background-color: #FFFFFF;
+    background-color: bisque;
+    color: #a15e00;
     font-size: 3.5rem;
     padding-left: 5%;
 }
@@ -110,8 +116,8 @@ button {
     font-size: 4rem;
     height: 7rem;
     width: 30rem;
-    background-color: white;
-    color: black;
+    /* background-color: white;
+    color: black; */
     border-radius: 5rem;
     font-weight: bold;
 
@@ -198,7 +204,8 @@ button {
     font-family: 'S-CoreDream-3Light';
     font-size: 4.5rem;
     margin-top: 4%;
-    background-color: #FF6666;
+    background-color: #760c0c;
+    color: white;
     height: 15rem;
     width: 100%;
     display: flex;
