@@ -1,21 +1,6 @@
-import { BACK_BASE_URL, FRONT_BASE_URL } from './api.js'
+import { BACK_BASE_URL, FRONT_BASE_URL, getCartList, deleteCartItem, changeCartItemAmount } from './api.js'
 
-async function getCartList() {
-    const response = await fetch(`${BACK_BASE_URL}/api/users/carts/`, {
-        method: 'GET',
-        headers: {
-            "Authorization": "Bearer " + localStorage.getItem("access")
-        }
-    })
 
-    if (response.status == 200) {
-        const response_json = await response.json();
-        // console.log(response_json);
-        return response_json;
-    } else {
-        console.log(response.status);
-    }
-}
 
 async function renderCartList() {
     const cartItems = await getCartList();
@@ -32,6 +17,7 @@ async function renderCartList() {
         checkboxInput.setAttribute("data-cartId", e.id);
         checkboxInput.classList.add('col-2', "check-each");
         checkboxInput.type = 'checkbox';
+        checkboxInput.checked = true;
 
         col1Div.appendChild(checkboxInput);
 
@@ -246,49 +232,6 @@ async function renderTotals() {
     totals.parentNode.appendChild(orderBtn);
 }
 
-
-async function deleteCartItem(cart_item_id) {
-    const response = await fetch(`${BACK_BASE_URL}/api/users/carts/${cart_item_id}/`, {
-        method: 'DELETE',
-        headers: {
-            "Authorization": "Bearer " + localStorage.getItem("access"),
-            "Content-Type": "application/json"
-        }
-    })
-    console.log(response)
-    console.log(response.status)
-    if (response.status == 204) {
-        window.location.reload();
-    }
-    else {
-        console.log(response.status);
-    }
-}
-
-async function changeCartItemAmount(cart_item_id, amount) {
-    console.log(amount);
-    console.log(cart_item_id);
-    const response = await fetch(`${BACK_BASE_URL}/api/users/carts/${cart_item_id}/`, {
-        method: 'PATCH',
-        headers: {
-            "Authorization": "Bearer " + localStorage.getItem("access"),
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            "amount": amount
-        })
-    })
-
-    if (response.status == 200) {
-        const response_json = await response.json();
-        console.log(response_json);
-        window.location.reload();
-        return response_json;
-    }
-    else {
-        console.log(response.status);
-    }
-}
 
 window.onload = async function () {
     renderCartList();

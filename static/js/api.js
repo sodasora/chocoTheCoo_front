@@ -315,3 +315,66 @@ export async function addressDeleteAPI(delivery_id) {
 	})
 	return response
 }
+
+// 장바구니 삭제
+export async function deleteCartItem(cart_item_id) {
+    const response = await fetch(`${BACK_BASE_URL}/api/users/carts/${cart_item_id}/`, {
+        method: 'DELETE',
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("access"),
+            "Content-Type": "application/json"
+        }
+    })
+    console.log(response)
+    console.log(response.status)
+    if (response.status == 204) {
+        window.location.reload();
+    }
+    else {
+        console.log(response.status);
+    }
+}
+
+// 장바구니 상품 수량 변경
+export async function changeCartItemAmount(cart_item_id, amount) {
+    console.log(amount);
+    console.log(cart_item_id);
+    const response = await fetch(`${BACK_BASE_URL}/api/users/carts/${cart_item_id}/`, {
+        method: 'PATCH',
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("access"),
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "amount": amount
+        })
+    })
+
+    if (response.status == 200) {
+        const response_json = await response.json();
+        console.log(response_json);
+        window.location.reload();
+        return response_json;
+    }
+    else {
+        console.log(response.status);
+    }
+}
+
+// 장바구니 목록 조회
+export async function getCartList() {
+    const response = await fetch(`${BACK_BASE_URL}/api/users/carts/`, {
+        method: 'GET',
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("access")
+        }
+    })
+
+    if (response.status == 200) {
+        const response_json = await response.json();
+        // console.log(response_json);
+        return response_json;
+    } else {
+        console.log(response.status);
+    }
+}
