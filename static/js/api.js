@@ -378,3 +378,18 @@ export async function getCartList() {
         console.log(response.status);
     }
 }
+
+// 판매자 스토어에서 등록한 상품 전체 보기
+export async function getProductsAPI(){
+	try {
+		const response = await fetch(`${BACK_BASE_URL}/api/products/`)
+		if (!response.ok) {
+		  throw new Error('불러오는 중에 문제가 발생했습니다.')
+		}
+		return await response.json()
+	  } catch (error) {
+		console.error(error)
+	  }
+	}
+
+	
