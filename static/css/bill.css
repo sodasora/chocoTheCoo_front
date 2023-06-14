@@ -233,7 +233,6 @@ td {
     font-size: 1.2em;
     color: aliceblue;
     margin-bottom: 1em;
-    cursor: pointer;
 }
 
 .pd-info-text {
@@ -242,4 +241,25 @@ td {
     flex-direction: column;
     justify-content: space-between;
     margin: 0.2em 2em;
+    cursor: pointer;
+}
+
+.pd-info-text:hover {
+    text-decoration: underline;
+}
+
+.add-to-cart {
+    display: flex;
+}
+
+.pd-cart-icon{
+    margin-left: auto;
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+}
+
+.pd-cart-icon:hover{
+    width: 2.1em;
+    height: 2.1em;
 }

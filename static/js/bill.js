@@ -24,7 +24,6 @@ async function renderBillList() {
     bills.forEach(e => {
         const pdInfoDiv = document.createElement('div');
         pdInfoDiv.classList.add('pd-info');
-        pdInfoDiv.setAttribute('data-bill-id', `${e.id}`);
 
         const imgDiv = document.createElement('div');
         imgDiv.style.padding = '0';
@@ -42,6 +41,7 @@ async function renderBillList() {
 
         const textDiv = document.createElement('div');
         textDiv.classList.add('pd-info-text');
+        textDiv.setAttribute('data-billId', `${e.id}`);
 
         const firstText = document.createElement('div');
         try {
@@ -63,23 +63,41 @@ async function renderBillList() {
         fourthText.style.display = 'flex';
         fourthText.innerText = `상태: ${e.order_status}`;
 
-        const fifthText = document.createElement('div');
-        fifthText.style.marginLeft = 'auto';
-        fifthText.style.float = 'right';
-        fifthText.innerText = `장바구니 담기`;
-
+        const fifthText = document.createElement('img');
+        fifthText.classList.add('pd-cart-icon');
+        fifthText.src = `/static/images/shopping-cart.png`;
+        
+        const cartDiv = document.createElement('div')
+        cartDiv.classList.add('add-to-cart');
+        
         textDiv.appendChild(firstText);
         textDiv.appendChild(secondText);
         textDiv.appendChild(thirdText);
         textDiv.appendChild(fourthText);
-        firstText.appendChild(fifthText);
-
+        cartDiv.appendChild(fifthText);
+        
         pdInfoDiv.appendChild(imgDiv);
         pdInfoDiv.appendChild(textDiv);
-
+        pdInfoDiv.appendChild(cartDiv);
+        
         billBox.appendChild(pdInfoDiv);
-    });
-}
+        
+        textDiv.addEventListener('click', async function (e) {
+            const billId = e.currentTarget.dataset.billid
+            if (billId) {
+                window.location.href = `${FRONT_BASE_URL}/bill_detail.html?${billId}`;
+            }
+            else {
+                alert('잘못된 요청입니다.');
+            }
+        })
+        fifthText.addEventListener('click', async function (e) {
+            console.log(e);            
+            console.log("여기서 이제 bill_id로 정보를 받아와서 백엔드에 요청하면 될듯?ㅜㅜ");            
+        })
+    })
+};
+
 
 window.onload = async function () {
     renderBillList();
