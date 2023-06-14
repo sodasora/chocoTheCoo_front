@@ -1,74 +1,7 @@
-@font-face {
-    font-family: '국립박물관문화재단클래식B';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/국립박물관문화재단클래식B.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'S-CoreDream-3Light';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
 .section {
     background-color: #C4A492;
     height: 800px;
     display: flex;
     justify-content: center;
     font-family: 'S-CoreDream-3Light';
-}
-
-.front-desc {
-    margin-top: 5rem;
-}
-
-.image {
-    height: 500px;
-    margin-top: 100px;
-    margin-left: 5vw;
-}
-
-.subscriptioncard {
-    width: 80vw;
-    display: flex;
-    background-color: black;
-    height: 700px;
-    color: white;
-}
-
-.subscriptioncard h2 {
-    margin-left: 10vw;
-    color: rgb(232, 175, 29);
-    font-weight: bold;
-    font-size: 2vw;
-}
-
-.subscriptioncard p {
-    margin-left: 10vw;
-    font-size: 1.2rem;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.subscriptiondesc {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.subscription-info {
-    display: flex;
-}
-
-.gosubscription {
-    margin-top: 57px;
-    margin-left: 12px;
-    text-align: center;
-    height: 100px;
-    width: 80vw;
-    background-color: rgb(249, 221, 186);
-    font-size: 30px;
-    font-weight: bold;
-    color: #522F18;
 }
