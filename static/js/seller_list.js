@@ -1,4 +1,4 @@
-import { getStatusView, getAllOrderListView, getReviewView, getProductListAPIView, getWishListAPIView } from './api.js';
+import { getSellerProductListAPIView, getSellerOrderListView, getProductDetailAPIView } from './api.js';
 
 // 상품목록 페이지네이션
 async function paginationView_product(product) {
@@ -16,8 +16,8 @@ async function paginationView_product(product) {
         if (!product[id].image) {
             product[id].image = "/static/images/기본상품.png" // 상품이미지 없으면 기본이미지 대체
         }
-        if (!product[id].star) {
-            product[id].star = "리뷰없음" // 리뷰없으면 표시
+        if (!product[id].stars) {
+            product[id].stars = "리뷰없음" // 리뷰없으면 표시
         }
         const content = document.createElement("tr");
         content.setAttribute("onclick", `상품정보상세보기로이동함수(${product[id]})`);
@@ -27,9 +27,9 @@ async function paginationView_product(product) {
         <td><div class="product-img" style="background-image: url(${product[id].image});"></div></td>
         <td><text>${(product[id].price).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })}</text></td>
         <td><text>${product[id].amount}</text></td>
-        <td><text>${product[id].sales_count}</text></td>
-        <td><text><div id=star-score></div>${product[id].star}</text></td>
-        <td><text>${product[id].wish_count}</text></td>
+        <td><text>${product[id].sales}</text></td>
+        <td><text><div id=star-score></div>${product[id].stars}</text></td>
+        <td><text>${product[id].likes}</text></td>
         `;
         return content;
     };
@@ -129,11 +129,24 @@ async function paginationView_order(order) {
         <td><text>${order[id].created_at.substr(2, 8)}<br>${order[id].created_at.substr(11, 8)}</text></td>
         <td><text>${order[id].name}</text></td>
         <td><div class="product-img" style="background-image: url(${order[id].image});"></div></td>
-        <td><text>${order[id].order_status.name}</text></td>
+        <td>
+        <text>
+        <select onchange="바뀌는함수(this.value)" tabindex="-1">
+            <option value="">${order[id].order_status.name}</option>
+            <option value="2">주문확인중</option>
+            <option value="3">배송준비중</option>
+            <option value="4">배송중</option>
+        </select>
+        </text>
+        </td>
         <td><text>${order[id].amount}</text></td>
-        <td><text>${(order[id].price).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })}</text></td>
+        <td><text>${order[id].price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })}</text></td>
         <td><text>${(order[id].amount * order[id].price).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })}</text></td>
-        <td><text>${(order[id].bill.address)}</text></td>
+        <td>
+        <text>${order[id].bill.address} ${order[id].bill.detail_address}</text>
+        <text>(${order[id].bill.postal_code})</text>
+        <text>${order[id].bill.recipient}</text>
+        </td>
         `;
         return content;
     };
@@ -218,57 +231,21 @@ const payload = localStorage.getItem("payload");
 const payload_parse = JSON.parse(payload);
 const user_id = payload_parse.user_id //로그인한 유저id
 
-// 전체 상품 불러오기
-const all_products = await getProductListAPIView(user_id)
-console.log('all_products',all_products)
-// 전체 주문 불러오기
-const all_orders = await getAllOrderListView()
-console.log('all_orders',all_orders)
-
-
-// 전체 상품에서 로그인한 판매자의 상품만 필터
-export const seller_products = all_products.filter(function (product) {
-    return product.seller === user_id;
-});
+// 로그인한 판매자의 전체 상품 목록 불러오기
+const seller_products = await getSellerProductListAPIView(user_id)
 console.log('seller_products', seller_products)
 
-// 전체 주문에서 로그인한 판매자의 주문만 필터
-export const seller_orders = all_orders.filter(function (order) {
-    return order.seller.id === user_id;
-});
-console.log('seller_orders', seller_orders)
-
-
+// 로그인한 판매자의 전체 주문 목록 불러오기
+const seller_orders = await getSellerOrderListView(user_id)
+console.log('seller_orders',seller_orders)
 
 // 상품목록 Json 배열에 데이터 추가하기
-for (let i = 0; i < seller_products.length; i++) {
-    // 상품별 찜(좋아요) 갯수 추가
-    const wish = await getWishListAPIView(seller_products[i].id);
-    seller_products[i]['wish_count'] = wish.wish_lists_count;
-
-    // 누적판매수 추가
-    // 판매자의 주문(seller_orders)에서 특정 상품의 구매확정 목록(product_orders)가져오기
-    // 주문갯수(sales_counts) 합산(total_sales_count)
-    const product_orders = seller_orders.filter(function (order) {
-        return order.product_id === seller_products[i].id && order.status == 3; //구매확정(order.status == 3)만 가져오기
-    });
-    let total_sales_count = 0
-    for (const product_order of product_orders) {
-        total_sales_count += product_order.count
-    }
-    seller_products[i]['sales_count'] = total_sales_count;
-
-    // 상품별 평균 평점 추가
-    const reviews = await getReviewView(seller_products[i].id);
-    if (reviews) {
-        let stars = 0
-        for (const review of reviews) {
-            stars += review.star
-        }
-        const average = stars / reviews.length
-        seller_products[i]['star'] = average;
-    }
+for (let i = 0; i < seller_orders.length; i++) {
+    // 상품리스트에서 상품이미지 조회 - 상품이미지는 post 요청으로 넘어오지 않으므로 Product 에서 조회
+    const product = await getProductDetailAPIView(seller_orders[i].product_id);
+    seller_orders[i]['image'] = product.image;
 }
+
 // ↑상품 목록 가져오기 관련 코드↑ //
 
 // 상품 목록, 주문 목록 페이지네이션 실행

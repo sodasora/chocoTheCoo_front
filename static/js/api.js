@@ -396,7 +396,7 @@ export async function getProductsAPI() {
 
 // 상품 정보 전체 불러오기
 // # 상품 전체 조회
-export async function getProductListAPIView(product_id) {
+export async function getProductListAPIView() {
 	let token = localStorage.getItem("access");
 	const response = await fetch(`${BACK_BASE_URL}/api/products/`, {
 		headers: {
@@ -406,6 +406,19 @@ export async function getProductListAPIView(product_id) {
 	});
 	return response.json();
 }
+
+// 특정 판매자의 상품 정보 전체 불러오기
+// # 특정 판매자의 상품 전체 조회
+export async function getSellerProductListAPIView(user_id) {
+	let token = localStorage.getItem("access");
+	const response = await fetch(`${BACK_BASE_URL}/api/products/seller/${user_id}`, {
+		headers: {
+			Authorization: `Bearer ${token}`
+		},
+		method: "GET",
+	});
+	return response.json();
+	}
 
 // 상품별 상세 정보 가져오기
 // # 상품 상세 조회
@@ -438,6 +451,19 @@ export async function getAllOrderListView() {
 export async function getOrderListView(product_id) {
 	let token = localStorage.getItem("access");
 	const response = await fetch(`${BACK_BASE_URL}/api/users/orders/products/${product_id}/`, {
+		headers: {
+			Authorization: `Bearer ${token}`
+		},
+		method: "GET",
+	});
+	return response.json();
+}
+
+// 판매자별 주문 목록 불러오기
+// # 판배자별 주문 목록 조회
+export async function getSellerOrderListView(user_id) {
+	let token = localStorage.getItem("access");
+	const response = await fetch(`${BACK_BASE_URL}/api/users/orders/products/seller/${user_id}/`, {
 		headers: {
 			Authorization: `Bearer ${token}`
 		},

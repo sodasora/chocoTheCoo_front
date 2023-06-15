@@ -71,7 +71,7 @@
 }
 
 
-/* 유저프로필 */
+/* 판매자프로필 */
 .profile-card {
     font-family: 'S-CoreDream-3Light';
     font-size: 1.3em;
@@ -84,10 +84,10 @@
     border-radius: 20px;
 }
 
-
 .profile{
     width: 23vw;
-    /* width: 200px; */
+    border-radius: 50%;
+    border: 2px solid white;
 }
 
 /* 상품현황 */
@@ -114,6 +114,7 @@
     width: 22vw;
     font-size: 20px;
     font-size: 1rem;
+    margin-bottom: 20px;
 }
 
 .under-column text,
