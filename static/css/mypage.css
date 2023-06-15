@@ -178,7 +178,6 @@ td {
   margin-bottom: 20px;
   border: 2px solid white;
   border-radius: 20px;
-  text-align: center;
   font-family: 'S-CoreDream-3Light';
   font-size: 1.5vw;
 }
@@ -198,17 +197,20 @@ td {
   cursor: pointer;
 }
 
+
+
 #wishitem {
   padding: 20px;
   text-align: center;
   width: 22vw;
   height: 25vw;
-  margin-left: 50px;
   margin-bottom: 50px;
+  margin-left: 20px;
   border: 2px solid white;
   border-radius: 20px;
   font-family: 'S-CoreDream-3Light';
   font-size: 1.5vw;
+  align-items: center;
 }
 
 .wishfont {

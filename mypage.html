@@ -29,7 +29,7 @@
                         <button class="purchase-list">
                             구매내역
                         </button>
-                        <button class="review-see">
+                        <button class="review-see" onclick="location.href = 'myreview.html'">
                             리뷰보기
                         </button>
                     </div>
@@ -76,7 +76,7 @@
                 <h2 class="wishfont">위시리스트</h2>
                 <hr class="line">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="my-wish-box">
                             <div class="row row-cols-1 row-cols-md-3 g-4" id="my-wish-list">
                                 <!--위시리스트-->
@@ -97,6 +97,7 @@
                         <div class="profile-text">
                             <p>Name: <span id="user-name"></span></p>
                             <p>Email: <span id="user-email"></span></p>
+                            <p>소개글: <span id="user-intro"></span></p>
                             <p>찜한 상품 개수: <span id="user-wish"></span></p>
                             <p>point: <span id="user-point"></span></p>
                             <p id="user-edit" onclick="location.href='/user_detail_page.html';">내 정보 수정</p>
