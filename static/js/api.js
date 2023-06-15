@@ -43,17 +43,6 @@ export async function getPointStaticView(day) {
 }
 
 // 출석포인트
-export async function getPointAttendanceView(day) {
-	const response_point = await fetch(`${BACK_BASE_URL}/api/users/attendance/`, {
-		headers: {
-			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
-		},
-		method: 'GET',
-	})
-	return response_point
-}
-
 export async function postPointAttendanceView() {
 	const response_point = await fetch(`${BACK_BASE_URL}/api/users/attendance/`, {
 		headers: {
@@ -88,6 +77,52 @@ export async function postPhotoPointView() {
 	})
 	return response_point;
 }
+
+// 포인트 충전
+export async function postPointChargeView(order_id) {
+	const response_point = await fetch(`${BACK_BASE_URL}/api/users/points/charge/${order_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": "Bearer " + localStorage.getItem("access")
+		},
+		method: 'POST',
+	})
+	return response_point;
+}
+
+// 포인트 충전 checkoutview
+export async function postPointCheckoutView(amount, type) {
+	const response_point = await fetch(`${BACK_BASE_URL}/api/users/payment/checkout/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": "Bearer " + localStorage.getItem("access")
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			"amount": amount,
+			"type": type
+		})
+	})
+	return response_point.json();
+}
+
+// 포인트 충전 validation
+export async function postPointValidationView(merchant_id, imp_id, amount) {
+	const response_point = await fetch(`${BACK_BASE_URL}/api/users/payment/validation/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": "Bearer " + localStorage.getItem("access")
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			"merchant_id": merchant_id,
+			"imp_id": imp_id,
+			"amount": amount
+		})
+	})
+	return response_point.json();
+}
+
 
 // 프로필 정보 가져오기
 export async function getUserProfileAPIView() {
@@ -142,6 +177,34 @@ export async function postSubscribeView() {
 		method: 'POST',
 	})
 	return response_data.status;
+}
+
+// 구독결제포인트
+export async function postPointServiceView() {
+	const response_data = await fetch(`${BACK_BASE_URL}/api/users/service/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": "Bearer " + localStorage.getItem("access")
+		},
+		method: 'POST',
+	})
+	return response_data.status;
+}
+
+
+// 내가 쓴 리뷰 가져오기
+export async function getMyReviewView() {
+	const payload = localStorage.getItem("payload");
+	const payload_parse = JSON.parse(payload)
+	const user_id = payload_parse.user_id
+	const response_data = await fetch(`${BACK_BASE_URL}/api/products/mypage/reviews/${user_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": "Bearer " + localStorage.getItem("access")
+		},
+		method: 'GET',
+	})
+	return response_data.json();
 }
 
 export async function getVerificationCodeAPI(email) {
@@ -391,9 +454,6 @@ export async function getProductsAPI() {
 	}
 }
 
-
-
-
 // 상품 정보 전체 불러오기
 // # 상품 전체 조회
 export async function getProductListAPIView() {
@@ -418,7 +478,8 @@ export async function getSellerProductListAPIView(user_id) {
 		method: "GET",
 	});
 	return response.json();
-	}
+}
+
 
 // 상품별 상세 정보 가져오기
 // # 상품 상세 조회
@@ -460,7 +521,7 @@ export async function getOrderListView(product_id) {
 }
 
 // 판매자별 주문 목록 불러오기
-// # 판배자별 주문 목록 조회
+// # 판매자별 주문 목록 조회
 export async function getSellerOrderListView(user_id) {
 	let token = localStorage.getItem("access");
 	const response = await fetch(`${BACK_BASE_URL}/api/users/orders/products/seller/${user_id}/`, {
