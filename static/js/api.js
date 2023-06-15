@@ -454,6 +454,20 @@ export async function getProductsAPI() {
 	}
 }
 
+	
+// 상품 디테일 보기
+
+export async function getProductDetailAPI(productId) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
+  
+	if (response.status == 200) {
+	  const responseJson = await response.json()
+	  return responseJson
+	} else {
+	  alert(response.status)
+	}
+  }
+  
 // 상품 정보 전체 불러오기
 // # 상품 전체 조회
 export async function getProductListAPIView() {
