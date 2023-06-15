@@ -24,10 +24,10 @@
                     <span>주소지 및 통관번호</span>
                 </div>
                 <div class="container-nav-item" id="navItemUserPhoneNumber">
-                    <span>휴대폰 번호</span>
+                    <span>연락처</span>
                 </div>
                 <div class="container-nav-item" id="navItemSellerInformation">
-                    <span>판매자 권한 신청</span>
+                    <span id="navSellerInformation">판매자 권한 신청</span>
                 </div>
                 <div class="container-nav-item" id="navItemDeleteUserInformation">
                     <span>회원 탈퇴</span>
@@ -45,6 +45,10 @@
                         <p id="profileImageText">프로필 이미지</p>
                         <input type="file" id="profileImageFile">
                     </div>
+                    <!-- 미개발 -->
+                    <div class="profileInputBox" style="display: none;">
+                        <button id="loadProfileImage">소셜 이미지 불러오기</button>
+                    </div>
                     <div class="profileInputBox">
                         <label id="nickNameLabel" class="profileLable">
                             별명
@@ -57,13 +61,12 @@
                         </label>
                         <input id="bio" class="profileInput">
                     </div>
-                    <div class="profileMessageBox">
-                        <span id="profileMessage"></span>
-                    </div>
-                    <div class="profileInputBox">
-                        <div id="profileMessageBox" style="display: none;">
+                    <div>
+                        <div class="profileMessageBox">
+                            <span id="profileMessage"></span>
                         </div>
-
+                    </div>
+                    <div id="profileMessageBox" style="display: none;">
                     </div>
                     <div class="profileInputBox">
                         <button type="button" id="profileSubmitButton">제출</button>
@@ -172,46 +175,55 @@
                             <label class="sellerInputLable">
                                 대표자 성함
                             </label>
-                            <input class="sellerInputData">
+                            <input class="sellerInputData" id="business_owner_name">
                         </div>
                         <div class="sellerInputBox">
                             <label class="sellerInputLable">
                                 업체 연락처
                             </label>
-                            <input class="sellerInputData">
+                            <input class="sellerInputData" id="contact_number">
                         </div>
                         <div class="sellerInputBox">
                             <label class="sellerInputLable">
                                 업체명
                             </label>
-                            <input class="sellerInputData">
+                            <input class="sellerInputData" id="company_name">
                         </div>
                         <div class="sellerInputBox">
                             <label class="sellerInputLable">
                                 사업자 등록 번호
                             </label>
-                            <input class="sellerInputData">
+                            <input class="sellerInputData" id="business_number">
                         </div>
                         <div class="sellerInputBox">
                             <label class="sellerInputLable">
                                 예금주
                             </label>
-                            <input class="sellerInputData">
+                            <input class="sellerInputData" id="account_holder">
                         </div>
                         <div class="sellerInputBox">
                             <label class="sellerInputLable">
                                 계좌 번호
                             </label>
-                            <input class="sellerInputData">
+                            <input class="sellerInputData" id="account_number">
                         </div>
                         <div class="sellerInputBox">
+                            <label class="sellerInputLable">
+                                은행 명
+                            </label>
+                            <input class="sellerInputData" id="bank_name">
+                        </div>
+                        <div id="sellerMessageBox" style="display: none;">
+
+                        </div>
+                        <div style="margin-top: 5%;">
                             <button class="seller-submit-button" id="createSellerInformationButton">제출</button>
                         </div>
-                        <div class="sellerInputBox">
+                        <div style="margin-top: 5%;">
                             <button class="seller-submit-button" id="updateSellerInformationButton"
                                 style="display: none;">수정</button>
                         </div>
-                        <div class="sellerInputBox">
+                        <div style="margin-top: 5%;">
                             <button class="seller-submit-button" id="deleteSellerInformationButton"
                                 style="display: none;">삭제</button>
                         </div>

@@ -160,7 +160,11 @@ body {
     background-color: #C4A492;
 }
 
-* {
+#container>a,
+div,
+button,
+p,
+input {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -295,6 +299,7 @@ body {
     box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
     border-radius: 0.5rem;
 }
+
 
 #profileSubmitButton {
     margin-top: 2%;
@@ -628,4 +633,30 @@ body {
     font-size: 2rem;
     border-radius: 0.5rem;
     box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+}
+
+#sellerMessageBox {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1.8rem;
+    margin-top: 4%;
+    background-color: #760c0c;
+    color: white;
+    height: 6rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+}
+
+#loadProfileImage {
+    margin-top: 2%;
+    width: 80%;
+    height: 40%;
+    padding-left: 5%;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    background-color: #522F18;
+    color: white;
+    font-size: 1.2rem;
 }

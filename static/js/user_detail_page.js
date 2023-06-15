@@ -15,8 +15,15 @@ import {
     addressUpdateAPI,
     // 사용자 배송지 정보 삭제
     addressDeleteAPI,
+    // 판매자 정보 생성 (권한 신청)
+    createSellerInformationAPI,
+    // 판매자 정보 수정
+    updateSellerInformationAPI,
+    // 판매자 정보 삭제
+    deleteSellerInformationAPI,
+    // 휴면 계정으로 전환
+    deleteUserInformationAPI
 } from './api.js'
-
 import { handleLogout } from './loader.js'
 
 async function getPayloadParse() {
@@ -205,13 +212,121 @@ export async function addressDelete() {
     }
 }
 
+async function getSellerInputData() {
+    // 입력값 불러오기
+    const information = {
+        business_owner_name: document.getElementById("business_owner_name").value,
+        company_name: document.getElementById("company_name").value,
+        contact_number: document.getElementById("contact_number").value,
+        business_number: document.getElementById("business_number").value,
+        bank_name: document.getElementById("bank_name").value,
+        account_holder: document.getElementById("account_holder").value,
+        account_number: document.getElementById("account_number").value,
+    };
+    return information
+}
+
+export async function createSellerInformation() {
+    // 판매자 정보 생성 및 권한 신청
+    const information = await getSellerInputData()
+
+    // 판매자 정보 생성 (권한 신청) API
+    const response = await createSellerInformationAPI(information)
+
+    // 알림 메시지 출력
+    const sellerMessageBox = document.getElementById("sellerMessageBox")
+    sellerMessageBox.style.display = "flex"
+
+    // API 응답 처리
+    if (response.status == 200) {
+        sellerMessageBox.innerText = "판매자 권한을 신청했습니다. 관리자 검증 후 판매 활동을 할 수 있습니다."
+        document.getElementById("createSellerInformationButton").style.display = "block"
+    } else if (response.status == 404) {
+        // 로그인 필요
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else if (response.status == 401) {
+        // 로그인 필요
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else if (response.status == 422) {
+        sellerMessageBox.innerText = "입력값에 오류가 있습니다. 너무 긴 입력값은 없는지 확인해 주세요."
+    } else if (response.status == 400) {
+        sellerMessageBox.innerText = "이미 판매자 정보가 있습니다."
+    }
+}
+
+export async function updateSellerInformation() {
+    // 판매자 정보 수정
+
+    // 입력값 불러오기
+    const information = await getSellerInputData()
+
+    // 판매자 정보 수정 API
+    const response = await updateSellerInformationAPI(information)
+
+    // 알림 메시지 출력
+    const sellerMessageBox = document.getElementById("sellerMessageBox")
+    sellerMessageBox.style.display = "flex"
+
+
+    // API 응답 처리
+    if (response.status == 200) {
+        location.reload();
+    } else if (response.status == 404) {
+        // 로그인 필요
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else if (response.status == 401) {
+        // 로그인 필요
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else if (response.status == 422) {
+        sellerMessageBox.innerText = "입력값에 오류가 있습니다. 너무 긴 입력값은 없는지 확인해 주세요."
+    } else if (response.status == 400) {
+        sellerMessageBox.innerText = "수정할 판매자 정보가 없습니다."
+    }
+}
+
+export async function deleteSellerInformation() {
+    // 판매자 정보 삭제
+    const response = await deleteSellerInformationAPI()
+
+    // 알림 메시지 출력
+    const sellerMessageBox = document.getElementById("sellerMessageBox")
+    sellerMessageBox.style.display = "flex"
+
+    // API 응답 처리
+    if (response.status == 204) {
+        // 삭제 완료
+        location.reload();
+    } else if (response.status == 404) {
+        // 로그인 필요
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else if (response.status == 401) {
+        // 로그인 필요
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else if (response.status == 400) {
+        sellerMessageBox.innerText = "삭제할 판매자 정보가 없습니다."
+    }
+}
 
 
 
 
+export async function deleteUserInformation() {
+    const payload_parse = await getPayloadParse()
+    // 사용자 휴면 계정으로 전환
+    const response = await deleteUserInformationAPI(payload_parse.user_id)
 
-
-
+    // API 응답 처리
+    if (response.status == 200) {
+        // 처리 완료
+        handleLogout()
+        alert("휴면 계정으로 전환되었습니다.")
+        location.reload();
+    } else if (response.status == 400) {
+        // 로그인 필요
+        alert("로그인이 필요합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    }
+}
 
 
 
@@ -433,29 +548,62 @@ async function DeliveryInformation(response_json) {
 }
 
 
-
-
-async function getUserInformation() {
-    // 사용자의 모든 정보 불러오기
-    const response = await getUserInformationAPI()
-    const response_json = await response.json()
-    // console.log(response_json)
-
+async function getUserDetailInformation(response_json) {
     // 프로필 정보 기입
     if (response_json.profile_image == null) {
         document.getElementById('profileView').src = "/static/images/pepe.jpg";
     } else {
         document.getElementById('profileView').setAttribute("src", `${BACK_BASE_URL}${response_json.profile_image}`)
     }
+
     // 프로필 input value 조정
     document.getElementById("nickName").value = response_json.nickname
     document.getElementById("bio").value = response_json.introduction
 
     //  회원 정보 input value 조정
     document.getElementById("email").value = response_json.email
+}
+
+async function getSellerInformation(response_json) {
+    const seller_information = response_json.seller
+    if (seller_information != null) {
+        // 데이터 불러오기
+        document.getElementById("navSellerInformation").innerText = "사업자 정보 수정"
+        document.getElementById("business_owner_name").value = seller_information.business_owner_name
+        document.getElementById("contact_number").value = seller_information.contact_number
+        document.getElementById("company_name").value = seller_information.company_name
+        document.getElementById("business_number").value = seller_information.business_number
+        document.getElementById("account_holder").value = seller_information.account_holder
+        document.getElementById("account_number").value = seller_information.account_number
+        document.getElementById("bank_name").value = seller_information.bank_name
+
+        // 버튼 활성화 및 비활성화
+        document.getElementById("createSellerInformationButton").style.display = "none"
+        document.getElementById("updateSellerInformationButton").style.display = "block"
+        document.getElementById("deleteSellerInformationButton").style.display = "block"
+    }
+}
+
+
+
+async function getUserInformation() {
+    // 사용자의 모든 정보 불러오기
+    const response = await getUserInformationAPI()
+    const response_json = await response.json()
+
+    // 사용자의 상세 정보 input value 조정
+    getUserDetailInformation(response_json)
 
     // 주소지 및 통관번호 input value, drop down item value 조정
     DeliveryInformation(response_json)
+
+    // 판매자 정보 불러오기 및 view 조정
+    getSellerInformation(response_json)
+
+    if (response_json.login_type != "normal") {
+        // 소셜 로그인 계정일 경우
+        document.getElementById("navItemUserInformation").style.display = "none"
+    }
 }
 
 
@@ -472,17 +620,17 @@ export async function setEventListener() {
     document.getElementById("navItemDeleteUserInformation").addEventListener("click", navItemDeleteUserInformationView)
 
     // 드랍 다운 메뉴
-    var dropdownButton = document.querySelector(".dropdown-button");
-    var dropdownContent = document.querySelector(".dropdown-content");
+    const dropdownButton = document.querySelector(".dropdown-button");
+    const dropdownContent = document.querySelector(".dropdown-content");
 
     dropdownButton.addEventListener("click", function () {
         dropdownContent.style.display = dropdownContent.style.display === "none" ? "block" : "none";
     });
 
-    var dropdownItems = document.querySelectorAll(".dropdown-content p");
+    const dropdownItems = document.querySelectorAll(".dropdown-content p");
     dropdownItems.forEach(function (item) {
         item.addEventListener("click", function () {
-            var dropdownContent = item.closest(".dropdown-content");
+            const dropdownContent = item.closest(".dropdown-content");
             dropdownContent.style.display = "none";
         });
     });
@@ -502,9 +650,19 @@ export async function setEventListener() {
     // 불러온 배송지 정보 숨기고, 새로운 배송지 작성하기
     document.getElementById("createAddress").addEventListener("click", changeAddressView)
 
+    // 배송지 정보 생성 , 수정 , 삭제 버튼 이벤트 리스너 할당
     document.getElementById("addressSubmitButton").addEventListener("click", addressSubmit)
     document.getElementById("addressUpdateButton").addEventListener("click", addressUpdate)
     document.getElementById("addressDeleteButton").addEventListener("click", addressDelete)
+
+    // 판매자 정보 생성, 수정 , 삭제 버튼 이벤트 리스너 할당
+    document.getElementById("createSellerInformationButton").addEventListener("click", createSellerInformation)
+    document.getElementById("updateSellerInformationButton").addEventListener("click", updateSellerInformation)
+    document.getElementById("deleteSellerInformationButton").addEventListener("click", deleteSellerInformation)
+
+    // 휴면 계정 전환, 이벤트 리스너 할당
+    document.getElementById("deleteUserInformationButton").addEventListener("click", deleteUserInformation)
+
 }
 
 
@@ -515,6 +673,5 @@ window.onload = async () => {
         window.location.replace(`${FRONT_BASE_URL}/index.html`)
     } else {
         getUserInformation()
-
     }
-}
+}   

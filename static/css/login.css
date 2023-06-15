@@ -1,12 +1,13 @@
+html {
+    font-size: calc(1vh - 1px);
+}
+
+
 @font-face {
     font-family: 'S-CoreDream-3Light';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}
-
-html {
-    font-size: 5px;
 }
 
 * {
@@ -24,6 +25,7 @@ input {
     border-radius: 3rem;
     border: none;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    font-size: 1rem;
 }
 
 button {
@@ -36,11 +38,275 @@ button {
 
 }
 
+
+@media (max-width: 2560px) {
+    #kakaoBtn {
+        width: 9rem !important;
+        height: 9rem !important;
+    }
+
+    #naverBtn {
+        width: 9rem !important;
+        height: 9rem !important;
+    }
+
+    #googleBtn {
+        width: 9rem !important;
+        height: 9rem !important;
+    }
+
+    #leftItem {
+        margin-top: 6rem;
+        font-size: 3rem !important;
+    }
+
+    #rightItem {
+        margin-top: 6rem;
+        font-size: 3rem !important;
+    }
+
+    .title {
+        font-size: 13rem !important;
+    }
+
+    .input-data {
+        height: 6rem !important;
+        font-size: 3rem !important;
+    }
+}
+
+@media (max-width: 1440px) {
+    #leftItem {
+        margin-top: 4rem;
+        font-size: 3rem !important;
+    }
+
+    #rightItem {
+        margin-top: 4rem;
+        font-size: 3rem !important;
+    }
+
+    .title {
+        font-size: 13rem !important;
+    }
+
+    .custom-button {
+        font-size: 3rem !important;
+    }
+
+    #message-box {
+        font-size: 3rem !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    #kakaoBtn {
+        width: 9rem !important;
+        height: 9rem !important;
+    }
+
+    #naverBtn {
+        width: 9rem !important;
+        height: 9rem !important;
+    }
+
+    #googleBtn {
+        width: 9rem !important;
+        height: 9rem !important;
+    }
+
+    #leftItem {
+        margin-top: 4rem;
+        font-size: 2.5rem !important;
+    }
+
+    #rightItem {
+        margin-top: 4rem;
+        font-size: 2.5rem !important;
+    }
+
+    .custom-button {
+        font-size: 3rem !important;
+    }
+
+    #message-box {
+        font-size: 3rem !important;
+    }
+
+    .title {
+        font-size: 10rem !important;
+    }
+
+    .input-data {
+        height: 6rem !important;
+        font-size: 2.3rem !important;
+    }
+
+    #formBox {
+        font-size: 3.5rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+
+    .custom-button {
+        font-size: 2rem !important;
+    }
+
+    #message-box {
+        font-size: 2rem !important;
+    }
+
+    .title {
+        font-size: 7rem !important;
+    }
+
+    .input-data {
+        height: 4rem !important;
+        font-size: 1.6rem !important;
+    }
+
+    #formBox {
+        font-size: 3rem !important;
+    }
+
+    #kakaoBtn {
+        width: 7rem !important;
+        height: 7rem !important;
+    }
+
+    #naverBtn {
+        width: 7rem !important;
+        height: 7rem !important;
+    }
+
+    #googleBtn {
+        width: 7rem !important;
+        height: 7rem !important;
+    }
+}
+
+
+@media (max-width: 425px) {
+
+    /* #leftBox {
+        background-color: black !important;
+    } */
+    .custom-button {
+        font-size: 2rem !important;
+    }
+
+    #message-box {
+        font-size: 2rem !important;
+    }
+
+    #rightBox {
+        background-image: none !important;
+    }
+
+    a {
+        color: bisque;
+    }
+
+    #signupView {
+        color: black !important;
+    }
+
+    #loginButton {
+        margin-top: 1rem !important;
+    }
+
+    .button-box {
+        margin-top: 4rem !important;
+    }
+
+    #kakaoBtn {
+        width: 8rem !important;
+        height: 8rem !important;
+    }
+
+    #naverBtn {
+        width: 8rem !important;
+        height: 8rem !important;
+    }
+
+    #googleBtn {
+        width: 8rem !important;
+        height: 8rem !important;
+    }
+
+    .item-box {
+        font-size: 3rem !important;
+    }
+
+    #rightItem {
+        color: aliceblue !important;
+    }
+
+    .custom-button {
+        height: 6rem !important;
+        font-size: 2rem !important;
+        margin-bottom: 3rem;
+    }
+
+    #leftInnerContainer {
+        padding-top: 10rem !important;
+    }
+
+    #titleBox {
+        display: flex !important;
+        margin-top: 5rem !important;
+        background-color: bisque;
+        border-radius: 3rem;
+        width: 95%;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .title {
+        display: none;
+    }
+
+    .input-data {
+        height: 5rem !important;
+        font-size: 1.5rem !important;
+
+    }
+
+    #formBox {
+        font-size: 2rem !important;
+    }
+
+    #leftInnerContainer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+}
+
+
+
+@media (max-width: 325px) {
+    #titleBox {
+        font-size: 5rem !important;
+    }
+
+    .custom-button {
+        font-size: 1.8rem !important;
+    }
+
+    #message-box {
+        font-size: 1.8rem !important;
+    }
+}
+
+
 .container {
-    height: 1000px;
+    height: 110vh;
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    font-size: 16px;
 }
 
 #leftBox {
@@ -63,7 +329,7 @@ button {
 
 .title {
     margin-top: 3%;
-    font-size: 16rem;
+    font-size: 15rem;
     font-weight: bold;
 }
 
@@ -103,6 +369,8 @@ button {
 }
 
 
+
+
 #submitButton {
     margin-top: 3%;
     width: 100%;
@@ -113,7 +381,7 @@ button {
 }
 
 .custom-button {
-    font-size: 4rem;
+    font-size: 3rem;
     height: 7rem;
     width: 30rem;
     /* background-color: white;
@@ -202,7 +470,7 @@ button {
 
 #message-box {
     font-family: 'S-CoreDream-3Light';
-    font-size: 4.5rem;
+    font-size: 3rem;
     margin-top: 4%;
     background-color: #760c0c;
     color: white;
@@ -212,4 +480,20 @@ button {
     justify-content: center;
     align-items: center;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+#titleBox {
+    font-size: 6rem;
+    position: absolute;
+    height: 10rem;
+    left: 0;
+    right: 0;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+#mobileTitle {
+    color: #a15e00;
 }

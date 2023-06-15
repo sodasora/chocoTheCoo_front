@@ -1,5 +1,6 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5500"
+export const FRONT_BASE_URL = "http://127.0.0.1:5501"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
+export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 
 // 로그인
 export async function handleLoginAPI() {
@@ -299,14 +300,12 @@ export async function updateProfileInformationAPI(information) {
 	formdata.append('introduction', bio)
 	if (profile_image) {
 		formdata.append('profile_image', profile_image)
-	} else {
-		formdata.append('profile_image', '')
 	}
 	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
 		},
-		method: 'PUT',
+		method: 'PATCH',
 		body: formdata
 	})
 	return response
@@ -349,6 +348,7 @@ export async function addressSubmitAPI(information) {
 }
 
 export async function addressUpdateAPI(information) {
+	// 배송 정보 수정 API
 	const access_token = localStorage.getItem("access")
 	const response = await fetch(`${BACK_BASE_URL}/api/users/delivery/${information.delivery_id}/`, {
 		headers: {
@@ -367,6 +367,7 @@ export async function addressUpdateAPI(information) {
 }
 
 export async function addressDeleteAPI(delivery_id) {
+	// 배송 정보 삭제 API
 	const access_token = localStorage.getItem("access")
 	const response = await fetch(`${BACK_BASE_URL}/api/users/delivery/${delivery_id}/`, {
 		headers: {
@@ -378,6 +379,78 @@ export async function addressDeleteAPI(delivery_id) {
 	return response
 }
 
+<<<<<<< HEAD
+export async function createSellerInformationAPI(information) {
+	// 판매자 정보 생성 및 권한 신청
+	const access_token = localStorage.getItem("access")
+	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			business_owner_name: information.business_owner_name,
+			company_name: information.company_name,
+			contact_number: information.contact_number,
+			business_number: information.business_number,
+			bank_name: information.bank_name,
+			account_holder: information.account_holder,
+			account_number: information.account_number,
+		})
+	})
+	return response
+}
+
+export async function updateSellerInformationAPI(information) {
+	// 판매자 정보 수정
+	const access_token = localStorage.getItem("access")
+	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'PUT',
+		body: JSON.stringify({
+			business_owner_name: information.business_owner_name,
+			company_name: information.company_name,
+			contact_number: information.contact_number,
+			business_number: information.business_number,
+			bank_name: information.bank_name,
+			account_holder: information.account_holder,
+			account_number: information.account_number,
+		})
+	})
+	return response
+}
+
+export async function deleteSellerInformationAPI() {
+	// 판매자 정보 삭제
+	const access_token = localStorage.getItem("access")
+	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'DELETE',
+	})
+
+	return response
+}
+
+export async function deleteUserInformationAPI(user_id) {
+	// 판매자 정보 삭제
+	const access_token = localStorage.getItem("access")
+	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'DELETE',
+	})
+
+	return response
+}
+
+=======
 // 장바구니 삭제
 export async function deleteCartItem(cart_item_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/${cart_item_id}/`, {
@@ -597,3 +670,4 @@ export async function getSellerPermissionAPIView(user_id) {
 	});
 	return response.json();
 }
+>>>>>>> d0e68dfb9bca37fb7c0fa6f88bb51bc0e5db8f75
