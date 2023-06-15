@@ -32,6 +32,7 @@ a {
 } */
 
 header {
+    z-index: 99999;
     display: block;
     background-color: #C4A492;
     font-family: '국립박물관문화재단클래식B';

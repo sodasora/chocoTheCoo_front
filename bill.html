@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="static/css/mypage.css" />
+    <link rel="stylesheet" href="static/css/bill.css" />
     <title>ChocoTheCoo</title>
 </head>
 
@@ -21,10 +21,13 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="mypage-intro">
-                    <p id="myreward">나의 리워드</p>
+                    <p id="myreward">구매 내역</p>
                     <div class="button-sets" style="display: inline; margin-left:50px;">
                         <button class="Attendance" id="Attendance">
                             출석인증
+                        </button>
+                        <button class="reward-calendar">
+                            나의 리워드
                         </button>
                         <button class="purchase-list">
                             구매내역
@@ -34,51 +37,16 @@
                         </button>
                     </div>
                 </div>
-                <div class="point-all-view" style="display:flex;">
-                    <p id="month-total"></p>
-                    <p id="total-reward"></p>
-                </div>
                 <hr class="line">
                 <div class="point-calender" style="display:flex;">
-                    <!--달력-->
-                    <div class="calendar-section">
-                        <table class="Calendar">
-                            <thead>
-                                <tr>
-                                    <td id="prevCalendar" style="cursor:pointer;">&#60;</td>
-                                    <td colspan="5">
-                                        <span id="calYear"></span>년
-                                        <span id="calMonth"></span>월
-                                    </td>
-                                    <td id="nextCalendar" style="cursor:pointer;">&#62;</td>
-                                </tr>
-                                <tr>
-                                    <td>일</td>
-                                    <td>월</td>
-                                    <td>화</td>
-                                    <td>수</td>
-                                    <td>목</td>
-                                    <td>금</td>
-                                    <td>토</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-points" id="point-box">
-                        <p>포인트내역 확인하기</p>
-                        <div class="points-list" id="points-list">
-                            <!--포인트내역-->
-                        </div>
+                    <div id="bill-lists">
                     </div>
                 </div>
-                <h2 class="wishfont">위시리스트</h2>
                 <hr class="line">
                 <div class="row">
                     <div class="col-md-8">
                         <div class="my-wish-box">
-                            <div class="row row-cols-1 row-cols-md-3 g-4" id="my-wish-list">
+                            <div class="row row-cols-1 row-cols-md-4 g-4" id="my-wish-list">
                                 <!--위시리스트-->
                             </div>
                         </div>
@@ -90,7 +58,7 @@
                 <div class="profile-section">
                     <div class="profile-card">
                         <div class="bigbox">
-                            <div class="box">
+                            <div class="box" style="margin-top:20px;">
                                 <img id="user-image" class="profile" src="static/images/default.png" />
                             </div>
                         </div>
@@ -99,14 +67,16 @@
                             <p>Email: <span id="user-email"></span></p>
                             <p>찜한 상품 개수: <span id="user-wish"></span></p>
                             <p>point: <span id="user-point"></span></p>
-                            <p id="user-edit" onclick="location.href='/user_detail_page.html';">내 정보 수정</p>
+                            <p id="user-edit" onclick="location.href='#';">내 정보 수정</p>
                         </div>
                     </div>
                 </div>
-                <button class="sub-button" id="sub-button"></button>
                 <div class="subscription-section">
                     <div class="subscription-card" id="subscription-card">
                         <!--구독정보-->
+                    </div>
+                    <div class="sub-button-section">
+                        <button class="sub-button" id="sub-button"></button>
                     </div>
                 </div>
             </div>
@@ -116,7 +86,7 @@
 <!-- footer -->
 <footer></footer>
 <script src="/static/js/api.js" type="module"></script>
-<script src="/static/js/mypage.js" type="module"></script>
+<script src="/static/js/bill.js" type="module"></script>
 <script src="/static/js/loader.js" type="module"></script>
 
 </html>
