@@ -1,0 +1,28 @@
+#product-list{
+    margin-top: 200px;
+}
+
+.section2 {
+    background-color: #C4A492;
+    height: 100%;
+    /* display: flex; */
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 100px;
+}
+.container {
+    width: 100vw;
+}
+.card-text {
+    margin-left: 10px;
+}
+
+.sellerlogo{
+    background-color: #C4A492;
+    height:100px;
+    text-align: center;
+}
+
+#sellerLogo {
+    min-width: 100px;
+}
