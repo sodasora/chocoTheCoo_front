@@ -1,4 +1,4 @@
-import { FRONT_BASE_URL, handleLoginAPI, getVerificationCodeAPI, setUserInformationAPI } from './api.js'
+import { BACK_BASE_URL, REDIRECT_URI, FRONT_BASE_URL, handleLoginAPI, getVerificationCodeAPI, setUserInformationAPI } from './api.js'
 
 
 // async function injectFooter() {
@@ -137,6 +137,44 @@ export async function handleEvent() {
 }
 
 
+
+
+
+async function kakaoLoginBtn() {
+    // 카카오 로그인
+
+    // 백엔드 서버로부터 kakao API 반환
+    const response = await fetch(`${BACK_BASE_URL}/api/users/kakao/login/`, { method: 'GET' })
+    const kakao_id = await response.json()
+    // Resource server와 약속된 REDIRECT URI 설정
+    const redirect_uri = REDIRECT_URI
+    // 요청할 데이터 설정
+    const scope = 'profile_nickname,profile_image,account_email'
+    // 사용자를 Resource Server로 이동
+    // Resource Server는 사용자를 Redirect URI로 안내
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${kakao_id}&redirect_uri=${redirect_uri}&response_type=code&scope=${scope}`
+}
+
+async function googleLoginBtn() {
+    const response = await fetch(`${BACK_BASE_URL}/api/users/google/login/`, { method: 'GET' })
+    console.log(response)
+    const google_id = await response.json()
+    console.log("test")
+    const redirect_uri = REDIRECT_URI
+    const scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
+    const param = `scope=${scope}&include_granted_scopes=true&response_type=token&state=pass-through value&prompt=consent&client_id=${google_id}&redirect_uri=${redirect_uri}`
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${param}`
+}
+
+async function naverLoginBtn() {
+    const response = await fetch(`${BACK_BASE_URL}/api/users/naver/login`, { method: 'GET' });
+    const naver_id = await response.json();
+    const redirect_uri = `${FRONT_BASE_URL}/index.html`;
+    const state = new Date().getTime().toString(36);
+    window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naver_id}&redirect_uri=${redirect_uri}&state=${state}`;
+}
+
+
 export async function setEventListener() {
     // html 요소 이벤트 리스너 추가
     document.getElementById("loginButton").addEventListener("click", handleLogin)
@@ -146,11 +184,13 @@ export async function setEventListener() {
     for (var i = 0; i < elements.length; i++) {
         elements[i].addEventListener("click", handleEvent);
     }
+    document.getElementById("kakaoBtn").addEventListener("click", kakaoLoginBtn)
+    document.getElementById("naverBtn").addEventListener("click", naverLoginBtn)
+    document.getElementById("googleBtn").addEventListener("click", googleLoginBtn)
 }
 
 window.onload = async () => {
     // 로그인 안한 사용자만 접근 가능
-    // injectFooter();
     setEventListener();
     const payload = localStorage.getItem("payload");
     const payload_parse = JSON.parse(payload)

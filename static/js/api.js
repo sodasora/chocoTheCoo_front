@@ -1,5 +1,6 @@
 export const FRONT_BASE_URL = "http://127.0.0.1:5501"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
+export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 
 
 // 로그인
@@ -237,14 +238,12 @@ export async function updateProfileInformationAPI(information) {
 	formdata.append('introduction', bio)
 	if (profile_image) {
 		formdata.append('profile_image', profile_image)
-	} else {
-		formdata.append('profile_image', '')
 	}
 	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
 		},
-		method: 'PUT',
+		method: 'PATCH',
 		body: formdata
 	})
 	return response

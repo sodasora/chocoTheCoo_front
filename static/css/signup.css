@@ -2,6 +2,14 @@ html {
     font-size: calc(1vh - 1px);
 }
 
+
+@media (min-width: 1440px) {
+
+    #titleBox {
+        height: 30rem !important;
+    }
+}
+
 @media (min-width: 1440px) {
 
     #titleBox {

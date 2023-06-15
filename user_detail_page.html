@@ -24,7 +24,7 @@
                     <span>주소지 및 통관번호</span>
                 </div>
                 <div class="container-nav-item" id="navItemUserPhoneNumber">
-                    <span>휴대폰 번호</span>
+                    <span>연락처</span>
                 </div>
                 <div class="container-nav-item" id="navItemSellerInformation">
                     <span id="navSellerInformation">판매자 권한 신청</span>
@@ -45,6 +45,10 @@
                         <p id="profileImageText">프로필 이미지</p>
                         <input type="file" id="profileImageFile">
                     </div>
+                    <!-- 미개발 -->
+                    <div class="profileInputBox" style="display: none;">
+                        <button id="loadProfileImage">소셜 이미지 불러오기</button>
+                    </div>
                     <div class="profileInputBox">
                         <label id="nickNameLabel" class="profileLable">
                             별명
@@ -57,13 +61,12 @@
                         </label>
                         <input id="bio" class="profileInput">
                     </div>
-                    <div class="profileMessageBox">
-                        <span id="profileMessage"></span>
-                    </div>
-                    <div class="profileInputBox">
-                        <div id="profileMessageBox" style="display: none;">
+                    <div>
+                        <div class="profileMessageBox">
+                            <span id="profileMessage"></span>
                         </div>
-
+                    </div>
+                    <div id="profileMessageBox" style="display: none;">
                     </div>
                     <div class="profileInputBox">
                         <button type="button" id="profileSubmitButton">제출</button>

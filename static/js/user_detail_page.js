@@ -590,7 +590,6 @@ async function getUserInformation() {
     // 사용자의 모든 정보 불러오기
     const response = await getUserInformationAPI()
     const response_json = await response.json()
-    console.log(response_json)
 
     // 사용자의 상세 정보 input value 조정
     getUserDetailInformation(response_json)
@@ -600,6 +599,11 @@ async function getUserInformation() {
 
     // 판매자 정보 불러오기 및 view 조정
     getSellerInformation(response_json)
+
+    if (response_json.login_type != "normal") {
+        // 소셜 로그인 계정일 경우
+        document.getElementById("navItemUserInformation").style.display = "none"
+    }
 }
 
 
@@ -669,6 +673,5 @@ window.onload = async () => {
         window.location.replace(`${FRONT_BASE_URL}/index.html`)
     } else {
         getUserInformation()
-
     }
-}
+}   
