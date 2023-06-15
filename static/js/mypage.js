@@ -365,7 +365,7 @@ async function subscription_info() {
                 newcard.appendChild(newsubscriptdate)
 
                 subscription_button.innerText = "구독하기"
-                subscription_button.addEventListener("click", againsub)
+                subscription_button.addEventListener("click", gosubinfo)
             } else {
                 const newsubscriptview = document.createElement("div")
                 newsubscriptview.setAttribute("class", "subscrip-view")
