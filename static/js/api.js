@@ -44,7 +44,7 @@ export async function getPointStaticView(day) {
 }
 
 // 출석포인트
-export async function getPointAttendanceView(day) {
+export async function getPointAttendanceView() {
 	const response_point = await fetch(`${BACK_BASE_URL}/api/users/attendance/`, {
 		headers: {
 			'content-type': 'application/json',
@@ -89,6 +89,55 @@ export async function postPhotoPointView() {
 	})
 	return response_point;
 }
+
+// 포인트 충전
+export async function postPointChargeView(point) {
+	const response_point = await fetch(`${BACK_BASE_URL}/api/users/points/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": "Bearer " + localStorage.getItem("access")
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			"point": point,
+		})
+	})
+	return response_point;
+}
+
+// 포인트 충전 checkoutview
+export async function postPointCheckoutView(amount, type) {
+	const response_point = await fetch(`${BACK_BASE_URL}/api/users/payment/checkout/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": "Bearer " + localStorage.getItem("access")
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			"amount": amount,
+			"type": type
+		})
+	})
+	return response_point.json();
+}
+
+// 포인트 충전 validation
+export async function postPointValidationView(merchant_id, imp_id, amount) {
+	const response_point = await fetch(`${BACK_BASE_URL}/api/users/payment/validation/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": "Bearer " + localStorage.getItem("access")
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			"merchant_id": merchant_id,
+			"imp_id": imp_id,
+			"amount": amount
+		})
+	})
+	return response_point.json();
+}
+
 
 // 프로필 정보 가져오기
 export async function getUserProfileAPIView() {
