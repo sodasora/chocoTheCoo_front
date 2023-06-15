@@ -12,7 +12,13 @@ async function injectHeader() {
 
     let headerHtml = await fetch("./header.html")
     let data = await headerHtml.text()
-    document.querySelector("header").innerHTML = data;
+    document.querySelector("header").innerHTML = data; 
+    
+    // 메인 타이틀 클릭 시 홈으로
+    const title = document.getElementById("nav-title")
+    title.addEventListener("click", function(){
+        window.location.replace(`${FRONT_BASE_URL}`)
+    })
 
     const payload = localStorage.getItem("payload");
     // payload가 존재 = 로그인되어있다면
@@ -33,16 +39,20 @@ async function injectHeader() {
             handleLogout()
         })
     } else {
-        // 비로그인 상태에서 장바구니,마이페이지,로그아웃 숨기기
-        const cart = document.getElementById("cart")
-        const mypage = document.getElementById("mypage")
+    // 비로그인 상태에서 장바구니,마이페이지,판매자페이지,로그아웃 숨기기
+    const cart = document.getElementById("cart")
+    const mypage = document.getElementById("mypage")
+    const sellerpage = document.getElementById("sellerpage")
 
-        cart.style.display = "none"
-        mypage.style.display = "none"
-        logout.style.display = "none"
-    }
+    cart.style.display = "none"
+    mypage.style.display = "none"
+    logout.style.display = "none"
+    sellerpage.style.display = "none"
+}
 }
 injectHeader();
+
+
 
 // 로그아웃
 export async function handleLogout() {

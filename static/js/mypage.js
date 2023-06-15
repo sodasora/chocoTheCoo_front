@@ -1,8 +1,7 @@
 import {
     BACK_BASE_URL, FRONT_BASE_URL, getPointView, getPointStaticView,
-    getPointAttendanceView, postPointAttendanceView, getUserProfileAPIView,
-    getSubscribeView, postSubscribeView, patchSubscribeView,
-    postTextPointView, postPhotoPointView,
+    postPointAttendanceView, getUserProfileAPIView,
+    getSubscribeView, patchSubscribeView,
 } from "./api.js";
 
 // 달력
@@ -105,27 +104,27 @@ async function Choicelist() {
             const point_date = e['created_at'].slice(11, 19)
             const newP = document.createElement("p")
             newP.setAttribute("class", "pointinfo")
-            if (e['point_type'] == 1) {
+            if (e['point_category'] == "출석") {
                 newP.setAttribute("style", "color:blue;")
                 newP.innerText = `${point_date}` + " 출석: " + e['point'] + "p"
             }
-            if (e['point_type'] == 2) {
+            if (e['point_category'] == "텍스트리뷰") {
                 newP.setAttribute("style", "color:blue;")
                 newP.innerText = `${point_date}` + " 텍스트(별점)리뷰: " + e['point'] + "p"
             }
-            if (e['point_type'] == 3) {
+            if (e['point_category'] == "포토리뷰") {
                 newP.setAttribute("style", "color:blue;")
                 newP.innerText = `${point_date}` + " 포토리뷰: " + e['point'] + "p"
             }
-            if (e['point_type'] == 4) {
+            if (e['point_category'] == "구매") {
                 newP.setAttribute("style", "color:blue;")
                 newP.innerText = `${point_date}` + " 구매: " + e['point'] + "p"
             }
-            if (e['point_type'] == 5) {
+            if (e['point_category'] == "충전") {
                 newP.setAttribute("style", "color:blue;")
                 newP.innerText = `${point_date}` + " 충전: " + e['point'] + "p"
             }
-            if (e['point_type'] == 6) {
+            if (e['point_category'] == "구독권이용료") {
                 newP.setAttribute("style", "color:red;")
                 newP.innerText = `${point_date}` + " 구독권이용료: " + e['point'] + "p"
             }
@@ -178,29 +177,29 @@ async function getToday() {
             const point_date = e['created_at'].slice(11, 19)
             const newP = document.createElement("p")
             newP.setAttribute("class", "pointinfo")
-            if (e['point_type'] == 1) {
+            if (e['point_category'] == "출석") {
                 newP.setAttribute("style", "color:blue;")
                 newP.innerText = `${point_date}` + " 출석: " + e['point'] + "p"
             }
-            if (e['point_type'] == 2) {
+            if (e['point_category'] == "텍스트리뷰") {
                 newP.setAttribute("style", "color:blue;")
                 newP.innerText = `${point_date}` + " 텍스트(별점)리뷰: " + e['point'] + "p"
             }
-            if (e['point_type'] == 3) {
+            if (e['point_category'] == "포토리뷰") {
                 newP.setAttribute("style", "color:blue;")
                 newP.innerText = `${point_date}` + " 포토리뷰: " + e['point'] + "p"
             }
-            if (e['point_type'] == 4) {
+            if (e['point_category'] == "구매") {
                 newP.setAttribute("style", "color:blue;")
                 newP.innerText = `${point_date}` + " 구매: " + e['point'] + "p"
             }
-            if (e['point_type'] == 5) {
+            if (e['point_category'] == "충전") {
                 newP.setAttribute("style", "color:blue;")
                 newP.innerText = `${point_date}` + " 충전: " + e['point'] + "p"
             }
-            if (e['point_type'] == 6) {
+            if (e['point_category'] == "구독권이용료") {
                 newP.setAttribute("style", "color:red;")
-                newP.innerText = `${point_date}` + " 사용: " + e['point'] + "p"
+                newP.innerText = `${point_date}` + " 구독권이용료: " + e['point'] + "p"
             }
             newtext.appendChild(newP)
         })
@@ -227,42 +226,31 @@ async function getToday() {
 
     const newmonth_total = document.getElementById("month-total")
     newmonth_total.setAttribute("class", "point-statistic")
+    newmonth_total.setAttribute("style", "font-size:2vw;")
     newmonth_total.innerText = "이번달 총 리워드: " + response_point_statistic_json["month_total_point"] + "p"
 
     const new_total = document.getElementById("total-reward")
     new_total.setAttribute("class", "point-statistic")
+    new_total.setAttribute("style", "font-size:2vw;")
     new_total.innerText = "총 리워드: " + response_point_statistic_json["total_point"] + "p"
 
 }
 
 // 출석인증
 async function attendancePoint() {
-    const nowyear = today.getFullYear()
-    const nowmonth = leftPad(today.getMonth() + 1)
-    const nowdate = leftPad(today.getDate())
-    const nowday = nowyear + '-' + nowmonth + '-' + nowdate
-
-    const attendance_point = await getPointAttendanceView(nowday)
-    const attendance_point_json = await attendance_point.json()
-
-    if (attendance_point_json != "") {
-        alert("이미 출석인증을 하셨습니다.")
+    const response = await postPointAttendanceView()
+    //console.log(response)
+    if (response.status == 201) {
+        alert("인증완료")
+        window.location.reload()
     } else {
-        const response = await postPointAttendanceView()
-        //console.log(response)
-        if (response.status == 201) {
-            alert("인증완료")
-            window.location.reload()
-        } else {
-            alert("인증실패")
-        }
+        alert("인증을 이미 했습니다.")
     }
 }
 
 // 프로필
 async function profile() {
     const profile_data = await getUserProfileAPIView()
-    //console.log(profile_data)
 
     if (profile_data['profile_image'] != null) {
         document.getElementById("user-image").setAttribute("src", `${BACK_BASE_URL}` + profile_data['profile_image'])
@@ -270,6 +258,7 @@ async function profile() {
 
     document.getElementById("user-name").innerText = profile_data["nickname"]
     document.getElementById("user-email").innerText = profile_data["email"]
+    document.getElementById("user-intro").innerText = profile_data["introduction"].slice(0, 13)
     document.getElementById("user-wish").innerText = profile_data["product_wish_list_count"]
     document.getElementById("user-point").innerText = profile_data["total_point"] + "p"
 
@@ -278,10 +267,18 @@ async function profile() {
     profile_data["product_wish_list"].forEach(e => {
         const newCol = document.createElement("div")
         newCol.setAttribute("class", "col")
-        newCol.setAttribute("id", "wishitem")
+
+        const newCard = document.createElement("div")
+        newCard.setAttribute("class", "card")
+        newCard.setAttribute("id", "wishitem")
+
         const newItemImage = document.createElement("img")
         newItemImage.setAttribute("class", "wishimage")
-        newItemImage.setAttribute("src", `${BACK_BASE_URL}${e["image"]}`)
+        if (e["image"] == null) {
+            newItemImage.setAttribute("src", "static/images/기본이미지.gif")
+        } else {
+            newItemImage.setAttribute("src", `${BACK_BASE_URL}${e["image"]}`)
+        }
         const newItemName = document.createElement("div")
         newItemName.setAttribute("class", "wishname")
         newItemName.innerText = "제품명: " + e["name"]
@@ -289,9 +286,10 @@ async function profile() {
         newItemContent.setAttribute("class", "wishtype")
         newItemContent.innerText = "제품설명: " + e["content"].slice(0, 10) + "..."
 
-        newCol.appendChild(newItemImage)
-        newCol.appendChild(newItemName)
-        newCol.appendChild(newItemContent)
+        newCard.appendChild(newItemImage)
+        newCard.appendChild(newItemName)
+        newCard.appendChild(newItemContent)
+        newCol.appendChild(newCard)
         wish_list.appendChild(newCol)
     })
 
@@ -312,11 +310,8 @@ async function againsub() {
     }
 }
 
-async function gosub() {
-    const response = await postSubscribeView();
-    if (response == 200) {
-        window.location.reload();
-    }
+async function gosubinfo() {
+    window.location.href = 'subscriptioninfo.html'
 }
 
 async function subscription_info() {
@@ -370,7 +365,7 @@ async function subscription_info() {
                 newcard.appendChild(newsubscriptdate)
 
                 subscription_button.innerText = "구독하기"
-                subscription_button.addEventListener("click", againsub)
+                subscription_button.addEventListener("click", gosubinfo)
             } else {
                 const newsubscriptview = document.createElement("div")
                 newsubscriptview.setAttribute("class", "subscrip-view")
@@ -392,21 +387,17 @@ async function subscription_info() {
     } else {
         newdesc.innerText = "구독 정보가 없습니다."
         subscription_button.innerText = "구독하기"
-        subscription_button.addEventListener("click", gosub)
+        subscription_button.addEventListener("click", gosubinfo)
     }
 }
 
+
 window.onload = async function () {
     buildCalendar();
-
     document.getElementById("prevCalendar").addEventListener("click", prevCalendar)
     document.getElementById("nextCalendar").addEventListener("click", nextCalendar)
-
     getToday();
-
-    // 오늘날짜의 포인트정보에서 출석리워드가 있으면 막고, 없으면 출석포인트 지급
     document.getElementById("Attendance").addEventListener("click", attendancePoint);
     profile();
-
     subscription_info()
 }  

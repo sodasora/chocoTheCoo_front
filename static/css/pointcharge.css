@@ -1,0 +1,14 @@
+.section {
+    background-color: #C4A492;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    font-family: 'S-CoreDream-3Light';
+}
+
+#card {
+    height: 500px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    width: 40vw;
+}

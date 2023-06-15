@@ -1,0 +1,74 @@
+/* nav bar */
+.seller_nav {
+    display: flex;
+    height: 70px;
+    background: #B9937E;
+    align-items: center;
+}
+
+.seller_nav h1 {
+    font-size: 40px;
+    color: #fff;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 100px;
+    margin: auto;
+    max-width: 1350px;
+    background-color: #C4A492;
+}
+
+.product-img {
+    display: inline-block;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+}
+
+tr,
+td {
+    text-align: center;
+    align-items: center;
+    justify-items: center;
+}
+
+td>text {
+    display: block;
+    margin: 10px 0 10px 0;
+}
+
+
+/* 페이지네이션 관련 CSS */
+
+#product-buttons,
+#order-buttons {
+    position: relative;
+    padding: 1rem 0;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.button_page {
+    padding: 0 1rem;
+    font-size: 1.2rem;
+    color: #333;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+}
+
+.button_page.active,
+.button_page:hover {
+    color: #0b5ed7;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+ion-icon {
+    padding-top: 0.5rem;
+}
