@@ -79,14 +79,17 @@ async function requestPay(price) {
         amount: price,
         buyer_email: email,
         buyer_name: name
-    }, function (rsp) { // callback
+    }, async function (rsp) { // callback
         if (rsp.success) {
             //console.log(rsp);
-
             ImpTrancsacton(rsp.merchant_uid, rsp.imp_uid, rsp.paid_amount)
-
-            alert(`${rsp.paid_amount}원 충전완료`)
-            window.location.replace(`${FRONT_BASE_URL}/mypage.html`)
+            const response_point = await postPointChargeView(rsp.merchant_uid)
+            if (response_point.status == 201) {
+                alert(`${rsp.paid_amount}원 충전완료`)
+                window.location.replace(`${FRONT_BASE_URL}/mypage.html`)
+            } else {
+                alert(`오류발생`)
+            }
         } else {
             alert(rsp.error_msg);
         }
