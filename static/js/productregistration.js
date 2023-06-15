@@ -49,4 +49,8 @@ async function registProduct() {
         console.error(error);
     }
 }
+
+window.onload = async function() {
+    registProduct()
+}
     
