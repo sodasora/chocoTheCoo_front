@@ -85,7 +85,7 @@ async function renderBillList() {
         textDiv.addEventListener('click', async function (e) {
             const billId = e.currentTarget.dataset.billid
             if (billId) {
-                window.location.href = `${FRONT_BASE_URL}/bill_detail.html?${billId}`;
+                window.location.href = `${FRONT_BASE_URL}/bill_detail.html?bill_id=${billId}`;
             }
             else {
                 alert('잘못된 요청입니다.');

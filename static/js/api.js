@@ -1,6 +1,8 @@
 export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
+const access_token = localStorage.getItem("access")
+const token = localStorage.getItem("access")
 
 // 로그인
 export async function handleLoginAPI() {
@@ -426,15 +428,13 @@ export async function deleteUserInformationAPI(user_id) {
 
 // 장바구니 삭제
 export async function deleteCartItem(cart_item_id) {
-	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/${cart_item_id}/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/?cart_id=${cart_item_id}`, {
 		method: 'DELETE',
 		headers: {
 			"Authorization": "Bearer " + localStorage.getItem("access"),
 			"Content-Type": "application/json"
 		}
 	})
-	console.log(response)
-	console.log(response.status)
 	if (response.status == 204) {
 		window.location.reload();
 	}
@@ -443,14 +443,29 @@ export async function deleteCartItem(cart_item_id) {
 	}
 }
 
-// 장바구니 상품 수량 변경
-export async function changeCartItemAmount(cart_item_id, amount) {
-	console.log(amount);
-	console.log(cart_item_id);
-	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/${cart_item_id}/`, {
-		method: 'PATCH',
+// 결제 후 장바구니 삭제
+export async function deleteCartItemAll(queryString, bill_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/?${queryString}`, {
+		method: 'DELETE',
 		headers: {
 			"Authorization": "Bearer " + localStorage.getItem("access"),
+			"Content-Type": "application/json"
+		}
+	})
+	if (response.status == 204) {
+		window.location.href = "/bill_detail.html" + "?ordered=true" + `&bill_id=${bill_id}`;
+	}
+	else {
+		console.log(response.status);
+	}
+}
+
+// 장바구니 상품 수량 변경
+export async function changeCartItemAmount(cart_item_id, amount) {
+	const response = await fetch(`${BACK_BASE_URL} /api/users / carts / ${cart_item_id} /`, {
+		method: 'PATCH',
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify({
@@ -460,7 +475,6 @@ export async function changeCartItemAmount(cart_item_id, amount) {
 
 	if (response.status == 200) {
 		const response_json = await response.json();
-		console.log(response_json);
 		window.location.reload();
 		return response_json;
 	}
@@ -474,32 +488,40 @@ export async function getCartList() {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/`, {
 		method: 'GET',
 		headers: {
-			"Authorization": "Bearer " + localStorage.getItem("access")
+			"Authorization": `Bearer ${access_token}`,
 		}
 	})
 
 	if (response.status == 200) {
 		const response_json = await response.json();
-		// console.log(response_json);
 		return response_json;
 	} else {
 		console.log(response.status);
 	}
 }
 
-// 판매자 스토어에서 등록한 상품 전체 보기
-export async function getProductsAPI() {
-	try {
-		const response = await fetch(`${BACK_BASE_URL}/api/products/`)
-		if (!response.ok) {
-			throw new Error('불러오는 중에 문제가 발생했습니다.')
-		}
-		return await response.json()
-	} catch (error) {
-		console.error(error)
+// 상품 등록하기
+export async function registProductAPIView(formdata) {
+	let token = localStorage.getItem("access");
+	const response = await fetch(`${BACK_BASE_URL}/api/products/`, {
+		method: 'POST',
+		headers: {
+			"Authorization": `Bearer ${token}`
+		},
+		body: formdata
+	});
+	
+	if (response.status === 201) {
+		alert('상품등록 완료!')
+		window.location.replace(`${FRONT_BASE_URL}/sellerpage.html`)
+	} else {
+		alert('상품 등록 실패')
 	}
+	
+	return response.json();
 }
 
+<<<<<<< HEAD
 
 // 상품 디테일 보기
 
@@ -514,6 +536,8 @@ export async function getProductDetailAPI(productId) {
 	}
 }
 
+=======
+>>>>>>> 891d9950bfefca8a876daeed9ac8eea3b9ded7a4
 // 상품 정보 전체 불러오기
 // # 상품 전체 조회
 export async function getProductListAPIView() {
@@ -524,6 +548,7 @@ export async function getProductListAPIView() {
 		},
 		method: "GET",
 	});
+
 	return response.json();
 }
 
@@ -643,3 +668,66 @@ export async function getSellerPermissionAPIView(user_id) {
 	});
 	return response.json();
 }
+<<<<<<< HEAD
+=======
+
+// 체크한 카트 정보만 주문으로 넘겨주기
+export async function getCheckedCart(queryString) {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/?${queryString}`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": "Bearer " + localStorage.getItem("access")
+		},
+		method: 'GET',
+	});
+	if (response.status === 200) {
+		const response_json = response.json();
+		return response_json;
+	}
+	else {
+		alert("잘못된 요청입니다.")
+		window.history.back();
+	}
+}
+
+// 주문내역 생성
+export async function makeBills(delivery_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/bills/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${token}`
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			delivery_id: delivery_id
+		})
+	})
+	const response_json = await response.json();
+	console.log(response_json)
+	return response_json
+}
+
+
+// 주문들 생성
+export async function makeOrders(queryString, bill_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/bills/${bill_id}/orders/?${queryString}`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${token}`
+		},
+		method: 'POST'
+	})
+	if (response.status == 201) {
+		deleteCartItemAll(queryString, bill_id);
+	}
+	else if (response.status == 404) {
+		alert("잘못된 상품 정보입니다.")
+		window.history.back();
+	}
+	else if (response.status == 400) {
+		alert("잘못된 URL입니다. 장바구니부터 다시 시도해주세요.")
+		window.history.back();
+	}
+}
+
+>>>>>>> 891d9950bfefca8a876daeed9ac8eea3b9ded7a4
