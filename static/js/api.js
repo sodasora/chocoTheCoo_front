@@ -81,18 +81,6 @@ export async function postPhotoPointView() {
 	return response_point;
 }
 
-// 포인트 충전
-export async function postPointChargeView(order_id) {
-	const response_point = await fetch(`${BACK_BASE_URL}/api/users/points/charge/${order_id}/`, {
-		headers: {
-			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
-		},
-		method: 'POST',
-	})
-	return response_point;
-}
-
 // 포인트 충전 checkoutview
 export async function postPointCheckoutView(amount, type) {
 	const response_point = await fetch(`${BACK_BASE_URL}/api/users/payment/checkout/`, {
@@ -425,19 +413,6 @@ export async function updateSellerInformationAPI(information) {
 	return response
 }
 
-export async function deleteSellerInformationAPI() {
-	// 판매자 정보 삭제
-	const access_token = localStorage.getItem("access")
-	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`
-		},
-		method: 'DELETE',
-	})
-
-	return response
-}
-
 export async function deleteUserInformationAPI(user_id) {
 	// 판매자 정보 삭제
 	const access_token = localStorage.getItem("access")
@@ -535,15 +510,28 @@ export async function registProductAPIView(formdata) {
 		},
 		body: formdata
 	});
-	
+
 	if (response.status === 201) {
 		alert('상품등록 완료!')
 		window.location.replace(`${FRONT_BASE_URL}/sellerpage.html`)
 	} else {
 		alert('상품 등록 실패')
 	}
-	
+
 	return response.json();
+}
+
+
+// 상품 디테일 보기
+export async function getProductDetailAPI(productId) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
+
+	if (response.status == 200) {
+		const responseJson = await response.json()
+		return responseJson
+	} else {
+		alert(response.status)
+	}
 }
 
 // 상품 정보 전체 불러오기

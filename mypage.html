@@ -39,7 +39,7 @@
                     <p id="total-reward"></p>
                 </div>
                 <hr class="line">
-                <div class="point-calender" style="display:flex;">
+                <div class="point-calender" style="display: flex;">
                     <!--달력-->
                     <div class="calendar-section">
                         <table class="Calendar">
@@ -66,10 +66,15 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="card-points" id="point-box">
-                        <p>포인트내역 확인하기</p>
-                        <div class="points-list" id="points-list">
-                            <!--포인트내역-->
+                    <div class="card-list">
+                        <div class="card-points" id="point-box">
+                            <p id="checkpoint"> 선택한 날짜의 포인트내역 확인하기</p>
+                            <div class="points-list" id="points-list">
+                                <!--포인트내역-->
+                            </div>
+                            <div id="point-buttons"></div>
+                        </div>
+                        <div class="statistic-list" id="statistic-list">
                         </div>
                     </div>
                 </div>
@@ -81,6 +86,7 @@
                             <div class="row row-cols-1 row-cols-md-3 g-4" id="my-wish-list">
                                 <!--위시리스트-->
                             </div>
+                            <div id="wish-buttons"></div>
                         </div>
                     </div>
                 </div>
