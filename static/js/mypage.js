@@ -111,7 +111,7 @@ async function Choicelist() {
         let page = 1;
 
         const Content = (id) => {
-            //"""포인트 종류: 출석(1), 텍스트리뷰(2), 포토리뷰(3), 구매(4), 충전(5), 사용(6)
+            //"""포인트 종류: 출석(1), 텍스트리뷰(2), 포토리뷰(3), 구매(4), 충전(5), 구독권이용료(6), 결제(7)"""
             const point_date = (point[id].created_at).slice(11, 19)
             const newP = document.createElement("p")
             newP.setAttribute("class", "pointinfo")
@@ -138,6 +138,10 @@ async function Choicelist() {
             if (point[id].point_category == "구독권이용료") {
                 newP.setAttribute("style", "color:red;")
                 newP.innerText = `${point_date}` + " 구독권이용료: " + point[id].point + "p"
+            }
+            if (point[id].point_category == "결제") {
+                newP.setAttribute("style", "color:red;")
+                newP.innerText = `${point_date}` + " 결제: " + point[id].point + "p"
             }
             return newP
         }
@@ -271,7 +275,7 @@ async function getToday() {
         let page = 1;
 
         const Content = (id) => {
-            //"""포인트 종류: 출석(1), 텍스트리뷰(2), 포토리뷰(3), 구매(4), 충전(5), 사용(6)
+            //"""포인트 종류: 출석(1), 텍스트리뷰(2), 포토리뷰(3), 구매(4), 충전(5), 구독권이용료(6), 결제(7)"""
             const point_date = (point[id].created_at).slice(11, 19)
             const newP = document.createElement("p")
             newP.setAttribute("class", "pointinfo")
@@ -298,6 +302,10 @@ async function getToday() {
             if (point[id].point_category == "구독권이용료") {
                 newP.setAttribute("style", "color:red;")
                 newP.innerText = `${point_date}` + " 구독권이용료: " + point[id].point + "p"
+            }
+            if (point[id].point_category == "결제") {
+                newP.setAttribute("style", "color:red;")
+                newP.innerText = `${point_date}` + " 결제: " + point[id].point + "p"
             }
             return newP
         }
