@@ -1,14 +1,14 @@
-import { getProductsAPI , BACK_BASE_URL, FRONT_BASE_URL} from './api.js';
+import {  getProductListAPIView , BACK_BASE_URL, FRONT_BASE_URL} from './api.js';
 
 
-async function productDetail(product_id) {
+export async function productDetail(product_id) {
   window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
 }
 
-async function sellerPageAPI() {
+export async function sellerPageAPI() {
   
   try {
-    const products = await getProductsAPI();
+    const products = await  getProductListAPIView();
     console.log(products);
 
     const product_list = document.getElementById("product-list");
@@ -72,5 +72,10 @@ async function sellerPageAPI() {
 window.onload = async function() {
 
   sellerPageAPI()
+  // const payload = localStorage.getItem("payload");
+  // const payload_parse = JSON.parse(payload)
+  //   if (payload_parse != null) {
+  //       window.location.replace(`${FRONT_BASE_URL}/sellerpage.html`)
+  //   }
 
 }

@@ -451,7 +451,6 @@ export async function deleteUserInformationAPI(user_id) {
 	return response
 }
 
-
 // 장바구니 삭제
 export async function deleteCartItem(cart_item_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/?cart_id=${cart_item_id}`, {
@@ -526,31 +525,25 @@ export async function getCartList() {
 	}
 }
 
-// 판매자 스토어에서 등록한 상품 전체 보기
-export async function getProductsAPI() {
-	try {
-		const response = await fetch(`${BACK_BASE_URL}/api/products/`)
-		if (!response.ok) {
-			throw new Error('불러오는 중에 문제가 발생했습니다.')
-		}
-		return await response.json()
-	} catch (error) {
-		console.error(error)
-	}
-}
-
-
-// 상품 디테일 보기
-
-export async function getProductDetailAPI(productId) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
-
-	if (response.status == 200) {
-		const responseJson = await response.json()
-		return responseJson
+// 상품 등록하기
+export async function registProductAPIView(formdata) {
+	let token = localStorage.getItem("access");
+	const response = await fetch(`${BACK_BASE_URL}/api/products/`, {
+		method: 'POST',
+		headers: {
+			"Authorization": `Bearer ${token}`
+		},
+		body: formdata
+	});
+	
+	if (response.status === 201) {
+		alert('상품등록 완료!')
+		window.location.replace(`${FRONT_BASE_URL}/sellerpage.html`)
 	} else {
-		alert(response.status)
+		alert('상품 등록 실패')
 	}
+	
+	return response.json();
 }
 
 // 상품 정보 전체 불러오기
@@ -563,6 +556,7 @@ export async function getProductListAPIView() {
 		},
 		method: "GET",
 	});
+
 	return response.json();
 }
 

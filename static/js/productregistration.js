@@ -1,11 +1,8 @@
-const FRONT_BASE_URL = "http://127.0.0.1:5500"
-const BACK_BASE_URL = "http://127.0.0.1:8000"
+import { BACK_BASE_URL,  FRONT_BASE_URL, registProductAPIView} from './api.js'
 
-//판매자의 상품 등록
-
-async function registProduct() {
+export async function registProduct() {
     
-    
+ 
     const name = document.getElementById("name").value;
     const content = document.getElementById("content").value;
     const image = document.getElementById("formFile").files[0];
@@ -14,6 +11,8 @@ async function registProduct() {
     
     const formdata = new FormData();
 
+    console.log(name, content, price, amount)
+    console.log(image)
     
     formdata.append('name', name)
     formdata.append('content', content)
@@ -28,29 +27,26 @@ async function registProduct() {
     console.log(pair[0] + ':', pair[1]);
     }
     
-    let token = localStorage.getItem("access")
 
     try {
-        const response = await fetch(`${BACK_BASE_URL}/api/products/`, {
-            method: 'POST',
-            headers: {
-                "Authorization": `Bearer ${token}`
-            },
-            body: formdata
-        })
+
+       registProductAPIView(formdata);
         
-        if (response.status === 201) {
-            alert('상품등록 완료!')
-            window.location.replace(`${FRONT_BASE_URL}/sellerpage.html`)
-        } else {
-            alert('상품 등록 실패')
-        }
+        
     } catch (error) {
         console.error(error);
     }
 }
 
+
+export async function setEventListener() {
+    // html 요소 이벤트 리스너 추가
+    document.getElementById("registrate").addEventListener("click", registProduct)
+    // document.getElementById("preview").addEventListener("click", getVerificationCode)
+}
+
+
 window.onload = async function() {
-    registProduct()
+    setEventListener()
 }
     
