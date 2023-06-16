@@ -510,21 +510,19 @@ export async function registProductAPIView(formdata) {
 		},
 		body: formdata
 	});
-	
+
 	if (response.status === 201) {
 		alert('상품등록 완료!')
 		window.location.replace(`${FRONT_BASE_URL}/sellerpage.html`)
 	} else {
 		alert('상품 등록 실패')
 	}
-	
+
 	return response.json();
 }
 
-<<<<<<< HEAD
 
 // 상품 디테일 보기
-
 export async function getProductDetailAPI(productId) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
 
@@ -536,8 +534,6 @@ export async function getProductDetailAPI(productId) {
 	}
 }
 
-=======
->>>>>>> 891d9950bfefca8a876daeed9ac8eea3b9ded7a4
 // 상품 정보 전체 불러오기
 // # 상품 전체 조회
 export async function getProductListAPIView() {
@@ -668,8 +664,6 @@ export async function getSellerPermissionAPIView(user_id) {
 	});
 	return response.json();
 }
-<<<<<<< HEAD
-=======
 
 // 체크한 카트 정보만 주문으로 넘겨주기
 export async function getCheckedCart(queryString) {
@@ -730,4 +724,3 @@ export async function makeOrders(queryString, bill_id) {
 	}
 }
 
->>>>>>> 891d9950bfefca8a876daeed9ac8eea3b9ded7a4
