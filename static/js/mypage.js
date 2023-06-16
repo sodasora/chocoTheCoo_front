@@ -258,13 +258,27 @@ async function profile() {
 
     document.getElementById("user-name").innerText = profile_data["nickname"]
     document.getElementById("user-email").innerText = profile_data["email"]
-    document.getElementById("user-intro").innerText = profile_data["introduction"].slice(0, 13)
+    if (profile_data["introduction"] == "아직 소개글이 없습니다.") {
+        document.getElementById("user-intro").innerText = profile_data["introduction"]
+    } else {
+        document.getElementById("user-intro").innerText = profile_data["introduction"].slice(0, 13) + "..."
+    }
     document.getElementById("user-wish").innerText = profile_data["product_wish_list_count"]
     document.getElementById("user-point").innerText = profile_data["total_point"] + "p"
+}
 
+async function pagination_wish(wish) {
     const wish_list = document.getElementById("my-wish-list")
+    const buttons = document.getElementById("wish-buttons");
 
-    profile_data["product_wish_list"].forEach(e => {
+    // 페이지네이션 페이지 설정
+    const numOfContent = wish.length;
+    const maxContent = 3; //한 페이지에 보이는 수
+    const maxButton = 5; //보이는 최대 버튼 수
+    const maxPage = Math.ceil(numOfContent / maxContent);
+    let page = 1;
+
+    const Content = (id) => {
         const newCol = document.createElement("div")
         newCol.setAttribute("class", "col")
 
@@ -274,26 +288,98 @@ async function profile() {
 
         const newItemImage = document.createElement("img")
         newItemImage.setAttribute("class", "wishimage")
-        if (e["image"] == null) {
+        if (wish[id].image == null) {
             newItemImage.setAttribute("src", "static/images/기본이미지.gif")
         } else {
-            newItemImage.setAttribute("src", `${BACK_BASE_URL}${e["image"]}`)
+            newItemImage.setAttribute("src", `${BACK_BASE_URL}${wish[id].image}`)
         }
         const newItemName = document.createElement("div")
         newItemName.setAttribute("class", "wishname")
-        newItemName.innerText = "제품명: " + e["name"]
+        newItemName.innerText = "제품명: " + wish[id].name
         const newItemContent = document.createElement("div")
         newItemContent.setAttribute("class", "wishtype")
-        newItemContent.innerText = "제품설명: " + e["content"].slice(0, 10) + "..."
+        newItemContent.innerText = "제품설명: " + (wish[id].content).slice(0, 15) + "..."
 
         newCard.appendChild(newItemImage)
         newCard.appendChild(newItemName)
         newCard.appendChild(newItemContent)
         newCol.appendChild(newCard)
-        wish_list.appendChild(newCol)
-    })
+        return newCol;
+    }
 
+    const makeButton = (id) => {
+        const button = document.createElement("button");
+        button.classList.add("button_page");
+        button.dataset.num = id;
+        button.innerText = id;
+        button.addEventListener("click", (e) => {
+            Array.prototype.forEach.call(buttons.children, (button) => {
+                if (button.dataset.num) button.classList.remove("active");
+            });
+            e.target.classList.add("active");
+            renderContent(parseInt(e.target.dataset.num));
+        });
+        return button;
+    }
+
+    const renderContent = (page) => {
+        // 목록 리스트 초기화
+        while (wish_list.hasChildNodes()) {
+            wish_list.removeChild(wish_list.lastChild);
+        }
+        // 글의 최대 개수를 넘지 않는 선에서, 화면에 maxContent개의 글 생성
+        for (let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++) {
+            wish_list.appendChild(Content(id - 1));
+        }
+    };
+
+    const goPrevPage = () => {
+        page -= maxButton;
+        render(page);
+    };
+
+    const goNextPage = () => {
+        page += maxButton;
+        render(page);
+    };
+
+    const prev = document.createElement("button");
+    prev.classList.add("button_page", "prev");
+    prev.innerHTML = `<ion-icon name="chevron-back-outline"></ion-icon>`;
+    prev.addEventListener("click", goPrevPage);
+
+    const next = document.createElement("button");
+    next.classList.add("button_page", "next");
+    next.innerHTML = `<ion-icon name="chevron-forward-outline"></ion-icon>`;
+    next.addEventListener("click", goNextPage);
+
+    const renderButton = (page) => {
+        // 버튼 리스트 초기화
+        while (buttons.hasChildNodes()) {
+            buttons.removeChild(buttons.lastChild);
+        }
+        // 화면에 최대 maxButton개의 페이지 버튼 생성
+        for (let id = page; id < page + maxButton && id <= maxPage; id++) {
+            buttons.appendChild(makeButton(id));
+        }
+        // 첫 버튼 활성화(class="active")
+        buttons.children[0].classList.add("active");
+
+        buttons.prepend(prev);
+        buttons.appendChild(next);
+
+        // 이전, 다음 페이지 버튼이 필요한지 체크
+        if (page - maxButton < 1) buttons.removeChild(prev);
+        if (page + maxButton > maxPage) buttons.removeChild(next);
+    };
+
+    const render = (page) => {
+        renderContent(page);
+        renderButton(page);
+    };
+    render(page);
 }
+
 
 // 구독
 async function nosub() {
@@ -399,5 +485,8 @@ window.onload = async function () {
     getToday();
     document.getElementById("Attendance").addEventListener("click", attendancePoint);
     profile();
+    const profile_data = await getUserProfileAPIView()
+    const wish = profile_data["product_wish_list"]
+    pagination_wish(wish);
     subscription_info()
 }  

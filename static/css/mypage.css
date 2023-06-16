@@ -21,6 +21,20 @@ button {
   border-radius: 10px;
 }
 
+#wish-buttons {
+  position: relative;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.button_page.active,
+.button_page:hover {
+  color: #0b5ed7;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
 .section {
   background-color: #C4A492;
   height: auto;
@@ -204,7 +218,6 @@ td {
   text-align: center;
   width: 22vw;
   height: 25vw;
-  margin-bottom: 50px;
   margin-left: 20px;
   border: 2px solid white;
   border-radius: 20px;
