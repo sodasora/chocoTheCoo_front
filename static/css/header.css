@@ -47,22 +47,42 @@ header {
     /* 겹쳤을 때 항상 최상단으로 */
 }
 
-.header {
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.right-header {
     font-family: 'S-CoreDream-3Light';
     height: 40px;
     justify-content: right;
-    display: flex;
+    display: inline-flex;
     color: rgb(82, 47, 24);
     padding-top: 15px;
     padding-right: 15px;
 }
 
+/* 로그인 남은시간 */
+.left-header{
+    font-family: 'S-CoreDream-3Light';
+    height: 40px;
+    justify-content: left;
+    display: inline-flex;
+    color: rgb(82, 47, 24);
+    padding-top: 15px;
+    padding-left: 15px;
+}
+
+/* 타이틀 관련 */
 .main {
-    color: #522F18;
-    font-size: 60px;
     justify-content: center;
     display: flex;
     height: 30px;
+}
+.main>text{
+    color: #522F18;
+    font-size: 60px!important;
+    cursor: pointer;
 }
 
 .top-category {

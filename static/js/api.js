@@ -45,6 +45,7 @@ export async function getPointStaticView(day) {
 	return response_point
 }
 
+
 // 출석포인트
 export async function postPointAttendanceView() {
 	const response_point = await fetch(`${BACK_BASE_URL}/api/users/attendance/`, {
@@ -401,6 +402,19 @@ export async function updateSellerInformationAPI(information) {
 	return response
 }
 
+export async function deleteSellerInformationAPI() {
+	// 판매자 정보 삭제
+	const access_token = localStorage.getItem("access")
+	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'DELETE',
+	})
+
+	return response
+}
+
 export async function deleteUserInformationAPI(user_id) {
 	// 판매자 정보 삭제
 	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
@@ -506,7 +520,6 @@ export async function registProductAPIView(formdata) {
 
 	return response.json();
 }
-
 
 // 상품 디테일 보기
 export async function getProductDetailAPI(productId) {
@@ -699,4 +712,3 @@ export async function makeOrders(queryString, bill_id) {
 		window.history.back();
 	}
 }
-
