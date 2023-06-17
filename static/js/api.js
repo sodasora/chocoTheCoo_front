@@ -2,7 +2,7 @@ export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 const access_token = localStorage.getItem("access")
-const token = localStorage.getItem("access")
+const payload = JSON.parse(localStorage.getItem("payload"))
 
 // 로그인
 export async function handleLoginAPI() {
@@ -26,7 +26,7 @@ export async function getPointView(day) {
 	const response_point = await fetch(`${BACK_BASE_URL}/api/users/points/${day}/`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'GET',
 	})
@@ -38,7 +38,7 @@ export async function getPointStaticView(day) {
 	const response_point = await fetch(`${BACK_BASE_URL}/api/users/points/${day}/statistic/`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'GET',
 	})
@@ -51,7 +51,7 @@ export async function postPointAttendanceView() {
 	const response_point = await fetch(`${BACK_BASE_URL}/api/users/attendance/`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'POST',
 	})
@@ -63,7 +63,7 @@ export async function postTextPointView() {
 	const response_point = await fetch(`${BACK_BASE_URL}/api/users/text/`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'POST',
 	})
@@ -75,7 +75,7 @@ export async function postPhotoPointView() {
 	const response_point = await fetch(`${BACK_BASE_URL}/api/users/photo/`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'POST',
 	})
@@ -87,7 +87,7 @@ export async function postPointCheckoutView(amount, type) {
 	const response_point = await fetch(`${BACK_BASE_URL}/api/users/payment/checkout/`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'POST',
 		body: JSON.stringify({
@@ -103,7 +103,7 @@ export async function postPointValidationView(merchant_id, imp_id, amount) {
 	const response_point = await fetch(`${BACK_BASE_URL}/api/users/payment/validation/`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'POST',
 		body: JSON.stringify({
@@ -118,13 +118,11 @@ export async function postPointValidationView(merchant_id, imp_id, amount) {
 
 // 프로필 정보 가져오기
 export async function getUserProfileAPIView() {
-	const payload = localStorage.getItem("payload");
-	const payload_parse = JSON.parse(payload)
-	const user_id = payload_parse.user_id
+	const user_id = payload.user_id
 	const response_data = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'GET',
 	})
@@ -136,7 +134,7 @@ export async function getSubscribeView() {
 	const response_data = await fetch(`${BACK_BASE_URL}/api/users/subscribe/`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'GET',
 	})
@@ -152,7 +150,7 @@ export async function patchSubscribeView() {
 	const response_data = await fetch(`${BACK_BASE_URL}/api/users/subscribe/`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'PATCH',
 	})
@@ -164,7 +162,7 @@ export async function postSubscribeView() {
 	const response_data = await fetch(`${BACK_BASE_URL}/api/users/subscribe/`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'POST',
 	})
@@ -176,7 +174,7 @@ export async function postPointServiceView() {
 	const response_data = await fetch(`${BACK_BASE_URL}/api/users/service/`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'POST',
 	})
@@ -186,13 +184,11 @@ export async function postPointServiceView() {
 
 // 내가 쓴 리뷰 가져오기
 export async function getMyReviewView() {
-	const payload = localStorage.getItem("payload");
-	const payload_parse = JSON.parse(payload)
-	const user_id = payload_parse.user_id
+	const user_id = payload.user_id
 	const response_data = await fetch(`${BACK_BASE_URL}/api/products/mypage/reviews/${user_id}/`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'GET',
 	})
@@ -267,7 +263,6 @@ export async function VerificationCodeSubmitAPI(email, verificationCode) {
 
 export async function getUserInformationAPI() {
 	// 사용자 정보 불러오기
-	const access_token = localStorage.getItem("access")
 	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			'content-type': 'application/json',
@@ -280,7 +275,6 @@ export async function getUserInformationAPI() {
 
 export async function updateProfileInformationAPI(information) {
 	// 사용자 프로필 정보 수정
-	const access_token = localStorage.getItem("access")
 	const user_id = information.user_id
 	const nickname = information.nickName
 	const bio = information.bio
@@ -304,7 +298,6 @@ export async function updateProfileInformationAPI(information) {
 
 export async function updateUserInformationAPI(information) {
 	// 유저 상세 정보 수정 API
-	const access_token = localStorage.getItem("access")
 	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${information.user_id}/`, {
 		headers: {
 			'content-type': 'application/json',
@@ -321,7 +314,6 @@ export async function updateUserInformationAPI(information) {
 }
 
 export async function addressSubmitAPI(information) {
-	const access_token = localStorage.getItem("access")
 	const response = await fetch(`${BACK_BASE_URL}/api/users/create/delivery/${information.user_id}/`, {
 		headers: {
 			'content-type': 'application/json',
@@ -340,7 +332,6 @@ export async function addressSubmitAPI(information) {
 
 export async function addressUpdateAPI(information) {
 	// 배송 정보 수정 API
-	const access_token = localStorage.getItem("access")
 	const response = await fetch(`${BACK_BASE_URL}/api/users/delivery/${information.delivery_id}/`, {
 		headers: {
 			'content-type': 'application/json',
@@ -359,7 +350,6 @@ export async function addressUpdateAPI(information) {
 
 export async function addressDeleteAPI(delivery_id) {
 	// 배송 정보 삭제 API
-	const access_token = localStorage.getItem("access")
 	const response = await fetch(`${BACK_BASE_URL}/api/users/delivery/${delivery_id}/`, {
 		headers: {
 			'content-type': 'application/json',
@@ -372,7 +362,6 @@ export async function addressDeleteAPI(delivery_id) {
 
 export async function createSellerInformationAPI(information) {
 	// 판매자 정보 생성 및 권한 신청
-	const access_token = localStorage.getItem("access")
 	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/`, {
 		headers: {
 			'content-type': 'application/json',
@@ -394,7 +383,6 @@ export async function createSellerInformationAPI(information) {
 
 export async function updateSellerInformationAPI(information) {
 	// 판매자 정보 수정
-	const access_token = localStorage.getItem("access")
 	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/`, {
 		headers: {
 			'content-type': 'application/json',
@@ -429,7 +417,6 @@ export async function deleteSellerInformationAPI() {
 
 export async function deleteUserInformationAPI(user_id) {
 	// 판매자 정보 삭제
-	const access_token = localStorage.getItem("access")
 	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
@@ -445,7 +432,7 @@ export async function deleteCartItem(cart_item_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/?cart_id=${cart_item_id}`, {
 		method: 'DELETE',
 		headers: {
-			"Authorization": "Bearer " + localStorage.getItem("access"),
+			"Authorization": `Bearer ${access_token}`,
 			"Content-Type": "application/json"
 		}
 	})
@@ -462,7 +449,7 @@ export async function deleteCartItemAll(queryString, bill_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/?${queryString}`, {
 		method: 'DELETE',
 		headers: {
-			"Authorization": "Bearer " + localStorage.getItem("access"),
+			"Authorization": `Bearer ${access_token}`,
 			"Content-Type": "application/json"
 		}
 	})
@@ -476,7 +463,7 @@ export async function deleteCartItemAll(queryString, bill_id) {
 
 // 장바구니 상품 수량 변경
 export async function changeCartItemAmount(cart_item_id, amount) {
-	const response = await fetch(`${BACK_BASE_URL} /api/users / carts / ${cart_item_id} /`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/${cart_item_id}/`, {
 		method: 'PATCH',
 		headers: {
 			"Authorization": `Bearer ${access_token}`,
@@ -516,11 +503,10 @@ export async function getCartList() {
 
 // 상품 등록하기
 export async function registProductAPIView(formdata) {
-	let token = localStorage.getItem("access");
 	const response = await fetch(`${BACK_BASE_URL}/api/products/`, {
 		method: 'POST',
 		headers: {
-			"Authorization": `Bearer ${token}`
+			"Authorization": `Bearer ${access_token}`,
 		},
 		body: formdata
 	});
@@ -550,10 +536,9 @@ export async function getProductDetailAPI(productId) {
 // 상품 정보 전체 불러오기
 // # 상품 전체 조회
 export async function getProductListAPIView() {
-	let token = localStorage.getItem("access");
 	const response = await fetch(`${BACK_BASE_URL}/api/products/`, {
 		headers: {
-			Authorization: `Bearer ${token}`
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "GET",
 	});
@@ -564,10 +549,9 @@ export async function getProductListAPIView() {
 // 특정 판매자의 상품 정보 전체 불러오기
 // # 특정 판매자의 상품 전체 조회
 export async function getSellerProductListAPIView(user_id) {
-	const token = localStorage.getItem("access");
 	const response = await fetch(`${BACK_BASE_URL}/api/products/seller/${user_id}`, {
 		headers: {
-			Authorization: `Bearer ${token}`
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "GET",
 	});
@@ -578,10 +562,9 @@ export async function getSellerProductListAPIView(user_id) {
 // 상품별 상세 정보 가져오기
 // # 상품 상세 조회
 export async function getProductDetailAPIView(product_id) {
-	let token = localStorage.getItem("access");
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
 		headers: {
-			Authorization: `Bearer ${token}`
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "GET",
 	});
@@ -591,10 +574,9 @@ export async function getProductDetailAPIView(product_id) {
 // 전체 주문 목록 불러오기
 // # 전체 주문 목록 조회
 export async function getAllOrderListView() {
-	let token = localStorage.getItem("access");
 	const response = await fetch(`${BACK_BASE_URL}/api/users/orders/products/`, {
 		headers: {
-			Authorization: `Bearer ${token}`
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "GET",
 	});
@@ -604,10 +586,9 @@ export async function getAllOrderListView() {
 // 상품별 주문 목록 불러오기
 // # 주문 목록 조회
 export async function getOrderListView(product_id) {
-	let token = localStorage.getItem("access");
 	const response = await fetch(`${BACK_BASE_URL}/api/users/orders/products/${product_id}/`, {
 		headers: {
-			Authorization: `Bearer ${token}`
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "GET",
 	});
@@ -617,10 +598,9 @@ export async function getOrderListView(product_id) {
 // 판매자별 주문 목록 불러오기
 // # 판매자별 주문 목록 조회
 export async function getSellerOrderListView(user_id) {
-	let token = localStorage.getItem("access");
 	const response = await fetch(`${BACK_BASE_URL}/api/users/orders/products/seller/${user_id}/`, {
 		headers: {
-			Authorization: `Bearer ${token}`
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "GET",
 	});
@@ -630,10 +610,9 @@ export async function getSellerOrderListView(user_id) {
 // 찜 등록 유저 불러오기
 // # 상품 찜  등록 및 취소, 찜 등록한 유저의 간략한 정보 불러오기
 export async function getWishListAPIView(product_id) {
-	let token = localStorage.getItem("access");
 	const response = await fetch(`${BACK_BASE_URL}/api/users/wish/${product_id}/`, {
 		headers: {
-			Authorization: `Bearer ${token}`
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "GET",
 	});
@@ -643,10 +622,9 @@ export async function getWishListAPIView(product_id) {
 // 특정 상품의 전체 리뷰 불러오기
 // # 리뷰 조회, 생성
 export async function getReviewView(product_id) {
-	let token = localStorage.getItem("access");
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/reviews/`, {
 		headers: {
-			Authorization: `Bearer ${token}`
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "GET",
 	});
@@ -656,10 +634,9 @@ export async function getReviewView(product_id) {
 // 주문상태 이름 조회
 // # 주문 상태 조회
 export async function getStatusView(status_id) {
-	let token = localStorage.getItem("access");
 	const response = await fetch(`${BACK_BASE_URL}/api/users/orders/products/${status_id}/`, {
 		headers: {
-			Authorization: `Bearer ${token}`
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "GET",
 	});
@@ -668,10 +645,9 @@ export async function getStatusView(status_id) {
 
 // 판매자 정보 조회
 export async function getSellerPermissionAPIView(user_id) {
-	let token = localStorage.getItem("access");
 	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/permissions/${user_id}/`, {
 		headers: {
-			Authorization: `Bearer ${token}`
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "GET",
 	});
@@ -683,7 +659,7 @@ export async function getCheckedCart(queryString) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/?${queryString}`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": "Bearer " + localStorage.getItem("access")
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'GET',
 	});
@@ -702,7 +678,7 @@ export async function makeBills(delivery_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/bills/`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": `Bearer ${token}`
+			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'POST',
 		body: JSON.stringify({
@@ -720,7 +696,7 @@ export async function makeOrders(queryString, bill_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/bills/${bill_id}/orders/?${queryString}`, {
 		headers: {
 			'content-type': 'application/json',
-			"Authorization": `Bearer ${token}`
+			"Authorization": `Bearer ${access_token}`
 		},
 		method: 'POST'
 	})
