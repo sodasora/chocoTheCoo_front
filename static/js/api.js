@@ -45,6 +45,7 @@ export async function getPointStaticView(day) {
 	return response_point
 }
 
+
 // 출석포인트
 export async function postPointAttendanceView() {
 	const response_point = await fetch(`${BACK_BASE_URL}/api/users/attendance/`, {
@@ -413,6 +414,19 @@ export async function updateSellerInformationAPI(information) {
 	return response
 }
 
+export async function deleteSellerInformationAPI() {
+	// 판매자 정보 삭제
+	const access_token = localStorage.getItem("access")
+	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'DELETE',
+	})
+
+	return response
+}
+
 export async function deleteUserInformationAPI(user_id) {
 	// 판매자 정보 삭제
 	const access_token = localStorage.getItem("access")
@@ -521,7 +535,6 @@ export async function registProductAPIView(formdata) {
 	return response.json();
 }
 
-
 // 상품 디테일 보기
 export async function getProductDetailAPI(productId) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
@@ -551,7 +564,7 @@ export async function getProductListAPIView() {
 // 특정 판매자의 상품 정보 전체 불러오기
 // # 특정 판매자의 상품 전체 조회
 export async function getSellerProductListAPIView(user_id) {
-	let token = localStorage.getItem("access");
+	const token = localStorage.getItem("access");
 	const response = await fetch(`${BACK_BASE_URL}/api/products/seller/${user_id}`, {
 		headers: {
 			Authorization: `Bearer ${token}`
@@ -723,4 +736,3 @@ export async function makeOrders(queryString, bill_id) {
 		window.history.back();
 	}
 }
-

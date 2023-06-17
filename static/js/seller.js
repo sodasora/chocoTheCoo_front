@@ -6,17 +6,17 @@ const user_id = payload_parse.user_id //로그인한 유저id
 
 // 로그인한 판매자의 전체 상품 목록 불러오기
 const seller_products = await getSellerProductListAPIView(user_id)
-console.log(seller_products)
+// console.log('seller_products',seller_products)
 
 // 로그인한 판매자의 전체 주문 목록 불러오기
 const seller_orders = await getSellerOrderListView(user_id)
-console.log('seller_orders', seller_orders)
+// console.log('seller_orders', seller_orders)
 
 // 로그인한 판매자의 전체 주문 목록에서 발송대기중인 상태 필터
 const seller_orders_unsent = seller_orders.filter(function (order) {
     return 1 < order.order_status.id && order.order_status.id <= 3;
 });
-console.log('seller_orders_unsent', seller_orders_unsent)
+// console.log('seller_orders_unsent', seller_orders_unsent)
 
 // 상품목록 Json 배열에 데이터 추가하기
 for (let i = 0; i < seller_orders.length; i++) {
@@ -27,7 +27,7 @@ for (let i = 0; i < seller_orders.length; i++) {
 
 
 //########## ↓ 정보 정의 ↓ ##########//
-// 1) 누적판매량 total_sales
+// 1) 총 누적판매량 total_sales
 let total_sales = 0
 for (const seller_product of seller_products) {
     total_sales += seller_product.sales
@@ -63,7 +63,7 @@ let max_star_score = Math.max(...is_score_products.map(product => product.star))
 
 
 //########## ↓ 상단-현황박스 정보 입력 ↓ ##########//
-// 1) 누적판매량
+// 1) 총 누적판매량
 const sales_total_count = document.getElementById('sales_total_count')
 sales_total_count.innerText = total_sales
 
@@ -108,6 +108,9 @@ async function sellerProfile() {
     const seller_data = await getSellerPermissionAPIView(user_id)
     console.log("판매자정보", seller_data)
 
+    const firstday= seller_data["created_at"].substr(0,10)
+
+    // 오늘날짜 형식 맞추기 0000-00-00
     let today = new Date();
     let year = today.getFullYear();
     let month = String(today.getMonth() + 1).padStart(2, '0'); //두자리되도록 앞에0채우기
@@ -115,13 +118,20 @@ async function sellerProfile() {
     today = `${year}-${month}-${date}`;
     // console.log("today", today)
 
+    // 판매자등록부터 오늘까지의 일수 차이
+    let startDate = new Date(firstday);
+    let endDate = new Date(today);
+    let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+    const term = Math.ceil(timeDiff / (1000 * 3600 * 24))+1;
+
     document.getElementById("total_profit").innerText = seller_data["total_profit"].toLocaleString({ style: 'currency', currency: 'KRW' })
     document.getElementById("month_profits").innerText = seller_data["month_profits"].toLocaleString({ style: 'currency', currency: 'KRW' })
     document.getElementById("month_growth_rate").innerText = seller_data["month_growth_rate"]
     document.getElementById("month_sent").innerText = seller_data["month_sent"]
     document.getElementById("month_sent_charge").innerText = (seller_data["month_sent"] * 3000).toLocaleString({ style: 'currency', currency: 'KRW' }) //배송비 3000원
-    document.getElementById("created_at").innerText = seller_data["created_at"].substr(0,10)
+    document.getElementById("firstday").innerText = firstday
     document.getElementById("today").innerHTML = `<text id="today" class="status-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~${today}</text>` 
+    document.getElementById("term").innerHTML = `<text  id="term" class="unit-text">초코더쿠와 함께한 기간: ${term}일</text>` 
     
     document.getElementById("unpaid_sent").innerText = seller_data["unpaid_sent"]
     document.getElementById("unsent").innerText = seller_data["unsent"]
@@ -141,7 +151,7 @@ sellerProfile()
 function listView_product(product, type) {
     const contents = document.getElementById(`${type}_under-column-dox`);
     contents.innerHTML = '';
-    // console.log("상품확인", product);
+    console.log("상품확인", product);
     // console.log("type", type);
 
     const makeContent = (id) => {

@@ -2,7 +2,7 @@ import { BACK_BASE_URL, FRONT_BASE_URL, getPointStaticView,getUserProfileAPIView
 
 /* 헤더 가져오기 */
 async function injectHeader() {
-    fetch("./header.html")
+    fetch("./seller_header.html")
         .then((response) => {
             return response.text();
         })
@@ -10,7 +10,7 @@ async function injectHeader() {
             document.querySelector("header").innerHTML = data;
         })
 
-    let headerHtml = await fetch("./header.html")
+    let headerHtml = await fetch("./seller_header.html")
     let data = await headerHtml.text()
     document.querySelector("header").innerHTML = data; 
     
