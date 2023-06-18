@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChocoTheCoo</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/header.css">
+</head>
+
+
+<header>
+    <div class="header">
+        <div class="left-header">
+            <p id="tokenLifeTime"></p>
+            <ul id="point" style='cursor:pointer' onclick="location.href='pointcharge.html';"> 내 포인트 : 10,000 P</ul>
+        </div>
+        <div class="right-header" id="header">
+            <!-- 로그인 전 -->
+            <ul id="signup" style="cursor: pointer;" onclick="location.href='signup.html';">회원가입 </ul>
+            <ul id="login" style="cursor: pointer;" onclick="location.href='login.html';"> 로그인 &nbsp; &nbsp; </ul>
+            <!-- 로그인 후 -->
+            <img id="cart" style='cursor:pointer' src="static/images/shopping-cart.png" alt="cart"
+            onclick="location.href='cart.html'">
+            <ul id="intro" style='cursor:pointer' onclick="location.href='/user_detail_page.html';"> </ul>
+            <ul id="charge" style='cursor:pointer' onclick="location.href='pointcharge.html';"> 포인트충전</ul>
+            <ul id="mypage" style='cursor:pointer' onclick="location.href='mypage.html';"> 마이페이지 </ul>
+            <ul id="sellerpage" style='cursor:pointer' onclick="location.href='seller.html';"> 판매자페이지 </ul>
+            <ul id="logout" style='cursor:pointer'> 로그아웃 &nbsp; &nbsp; </a>
+        </div>
+    </div>
+    <div class="main">
+        <text id="nav-title">ChocoTheCoo</text>
+    </div>
+    <div class="top-category">
+        <nav>
+            <a href="sellerpage.html">Store Page</a>
+            <a href="productregistration.html">Product add</a>
+            <a href="seller.html" class="is-current">Statistics</a>
+            <a href="seller_productlist.html">Product-List</a>
+            <a href="seller_orderlist.html">Order-List</a>
+            <div class="nav-underline"></div>
+        </nav>
+    </div>
+
+    <!-- script -->
+    <script src="/static/js/api.js" type="module"></script>
+</header>
+
+</html>

@@ -1,0 +1,499 @@
+html {
+    font-size: calc(1vh - 1px);
+}
+
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+input {
+    border-radius: 3rem;
+    border: none;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    font-size: 1rem;
+}
+
+button {
+    border-radius: 1.5rem;
+    border: none;
+    background-color: bisque;
+    color: #a15e00;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+
+}
+
+
+@media (max-width: 2560px) {
+    #kakaoBtn {
+        width: 9rem !important;
+        height: 9rem !important;
+    }
+
+    #naverBtn {
+        width: 9rem !important;
+        height: 9rem !important;
+    }
+
+    #googleBtn {
+        width: 9rem !important;
+        height: 9rem !important;
+    }
+
+    #leftItem {
+        margin-top: 6rem;
+        font-size: 3rem !important;
+    }
+
+    #rightItem {
+        margin-top: 6rem;
+        font-size: 3rem !important;
+    }
+
+    .title {
+        font-size: 13rem !important;
+    }
+
+    .input-data {
+        height: 6rem !important;
+        font-size: 3rem !important;
+    }
+}
+
+@media (max-width: 1440px) {
+    #leftItem {
+        margin-top: 4rem;
+        font-size: 3rem !important;
+    }
+
+    #rightItem {
+        margin-top: 4rem;
+        font-size: 3rem !important;
+    }
+
+    .title {
+        font-size: 13rem !important;
+    }
+
+    .custom-button {
+        font-size: 3rem !important;
+    }
+
+    #message-box {
+        font-size: 3rem !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    #kakaoBtn {
+        width: 9rem !important;
+        height: 9rem !important;
+    }
+
+    #naverBtn {
+        width: 9rem !important;
+        height: 9rem !important;
+    }
+
+    #googleBtn {
+        width: 9rem !important;
+        height: 9rem !important;
+    }
+
+    #leftItem {
+        margin-top: 4rem;
+        font-size: 2.5rem !important;
+    }
+
+    #rightItem {
+        margin-top: 4rem;
+        font-size: 2.5rem !important;
+    }
+
+    .custom-button {
+        font-size: 3rem !important;
+    }
+
+    #message-box {
+        font-size: 3rem !important;
+    }
+
+    .title {
+        font-size: 10rem !important;
+    }
+
+    .input-data {
+        height: 6rem !important;
+        font-size: 2.3rem !important;
+    }
+
+    #formBox {
+        font-size: 3.5rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+
+    .custom-button {
+        font-size: 2rem !important;
+    }
+
+    #message-box {
+        font-size: 2rem !important;
+    }
+
+    .title {
+        font-size: 7rem !important;
+    }
+
+    .input-data {
+        height: 4rem !important;
+        font-size: 1.6rem !important;
+    }
+
+    #formBox {
+        font-size: 3rem !important;
+    }
+
+    #kakaoBtn {
+        width: 7rem !important;
+        height: 7rem !important;
+    }
+
+    #naverBtn {
+        width: 7rem !important;
+        height: 7rem !important;
+    }
+
+    #googleBtn {
+        width: 7rem !important;
+        height: 7rem !important;
+    }
+}
+
+
+@media (max-width: 425px) {
+
+    /* #leftBox {
+        background-color: black !important;
+    } */
+    .custom-button {
+        font-size: 2rem !important;
+    }
+
+    #message-box {
+        font-size: 2rem !important;
+    }
+
+    #rightBox {
+        background-image: none !important;
+    }
+
+    a {
+        color: bisque;
+    }
+
+    #signupView {
+        color: black !important;
+    }
+
+    #loginButton {
+        margin-top: 1rem !important;
+    }
+
+    .button-box {
+        margin-top: 4rem !important;
+    }
+
+    #kakaoBtn {
+        width: 8rem !important;
+        height: 8rem !important;
+    }
+
+    #naverBtn {
+        width: 8rem !important;
+        height: 8rem !important;
+    }
+
+    #googleBtn {
+        width: 8rem !important;
+        height: 8rem !important;
+    }
+
+    .item-box {
+        font-size: 3rem !important;
+    }
+
+    #rightItem {
+        color: aliceblue !important;
+    }
+
+    .custom-button {
+        height: 6rem !important;
+        font-size: 2rem !important;
+        margin-bottom: 3rem;
+    }
+
+    #leftInnerContainer {
+        padding-top: 10rem !important;
+    }
+
+    #titleBox {
+        display: flex !important;
+        margin-top: 5rem !important;
+        background-color: bisque;
+        border-radius: 3rem;
+        width: 95%;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .title {
+        display: none;
+    }
+
+    .input-data {
+        height: 5rem !important;
+        font-size: 1.5rem !important;
+
+    }
+
+    #formBox {
+        font-size: 2rem !important;
+    }
+
+    #leftInnerContainer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+}
+
+
+
+@media (max-width: 325px) {
+    #titleBox {
+        font-size: 5rem !important;
+    }
+
+    .custom-button {
+        font-size: 1.8rem !important;
+    }
+
+    #message-box {
+        font-size: 1.8rem !important;
+    }
+}
+
+
+.container {
+    height: 110vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#leftBox {
+    height: 100%;
+    width: 50%;
+    /* background-color: #C4A492; */
+    background-color: bisque;
+
+}
+
+#rightBox {
+    height: 100%;
+    width: 50%;
+    background-image: url("/static/images/login_background_image.png");
+    background-color: black;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.title {
+    margin-top: 3%;
+    font-size: 15rem;
+    font-weight: bold;
+}
+
+.left-title {
+    text-align: right;
+    padding-right: 3%;
+}
+
+.right-title {
+    padding-left: 3%;
+}
+
+#formBox {
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 5rem;
+}
+
+.input-box {
+    width: 50%;
+    font-weight: bold;
+    margin-top: 2.5rem;
+    color: #a15e00;
+}
+
+.input-data {
+    height: 8rem;
+    width: 100%;
+    margin-top: 1.8%;
+    margin-bottom: 3%;
+    background-color: bisque;
+    color: #a15e00;
+    font-size: 3.5rem;
+    padding-left: 5%;
+}
+
+
+
+
+#submitButton {
+    margin-top: 3%;
+    width: 100%;
+}
+
+#verificationButton {
+    width: 100%;
+}
+
+.custom-button {
+    font-size: 3rem;
+    height: 7rem;
+    width: 30rem;
+    /* background-color: white;
+    color: black; */
+    border-radius: 5rem;
+    font-weight: bold;
+
+}
+
+.button-box {
+    margin-top: 10rem;
+
+    display: flex;
+    justify-content: center;
+
+}
+
+#bottomBox {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 5rem;
+}
+
+.social-login-box {
+    height: 60px;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+
+}
+
+
+#kakaoBtn {
+    width: 12rem;
+    height: 12rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("/static/images/kakao-talk.png");
+}
+
+#naverBtn {
+    width: 12rem;
+    height: 12rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("/static/images/naver.png");
+}
+
+#googleBtn {
+    width: 12rem;
+    height: 12rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("/static/images/google.png");
+}
+
+
+
+.item-box {
+
+    margin-top: 5%;
+    height: 80px;
+    width: 70%;
+    display: flex;
+    font-size: 4rem;
+    font-weight: bold;
+    /* justify-content: space-between; */
+}
+
+#leftItem {
+    height: 100%;
+    width: 50%;
+}
+
+#rightItem {
+    width: 50%;
+    height: 100%;
+    text-align: right;
+
+}
+
+#message-box {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 3rem;
+    margin-top: 4%;
+    background-color: #760c0c;
+    color: white;
+    height: 15rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+#titleBox {
+    font-size: 6rem;
+    position: absolute;
+    height: 10rem;
+    left: 0;
+    right: 0;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+#mobileTitle {
+    color: #a15e00;
+}

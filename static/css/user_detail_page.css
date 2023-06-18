@@ -1,0 +1,690 @@
+html {
+    font-size: calc(1vh - 1px);
+}
+
+button {
+    cursor: pointer;
+}
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 노트북 사이즈 이상 */
+@media (min-width: 1024px) {
+    #rightBox {
+        padding-left: 10rem;
+    }
+}
+
+
+/* 노트북 */
+@media (max-width: 1024px) {
+    #imageBox {
+        width: 80% !important;
+    }
+
+    #containerNavItems {
+        width: 50% !important;
+    }
+
+    .container-nav-item {
+        font-size: 3rem !important;
+    }
+}
+
+/* 테블릿 */
+@media (max-width: 768px) {
+    #rightBox {
+        justify-content: center;
+    }
+
+    #containerNavItems {
+        width: 50% !important;
+    }
+
+    .container-nav-item {
+        font-size: 2rem !important;
+    }
+
+    #contentBox {
+        width: 70% !important;
+    }
+}
+
+/* 휴대 기기 */
+@media (max-width: 425px) {
+    #deleteUserInformationButton {
+        width: 80% !important;
+    }
+
+    .dropdown {
+        width: 80% !important;
+    }
+
+    .dropdown-button {
+        font-size: 1rem;
+    }
+
+    #createAddress {
+        font-size: 1rem;
+    }
+
+    #setUserInformationMessage {
+        font-size: 1rem !important;
+    }
+
+    #profileView {
+        width: 25rem !important;
+        height: 25rem !important;
+
+    }
+
+    #containerNavItems {
+        width: 100% !important;
+    }
+
+    .container-nav-item {
+        font-size: 2rem !important;
+    }
+
+    #contentBox {
+        width: 90% !important;
+    }
+
+    #imageBox {
+        width: 100% !important;
+    }
+
+}
+
+@media (max-width: 375px) {
+    #userDetailViewImageBox {
+        height: 25rem !important;
+    }
+}
+
+@media (max-width: 320px) {
+    #userDetailViewImageBox {
+        height: 22rem !important;
+    }
+
+    #deleteUserInformationButton {
+        font-size: 1.5rem !important;
+        width: 80% !important;
+    }
+
+    #deleteUserInformationText {
+        font-size: 2rem !important;
+    }
+
+    #profileView {
+        width: 20rem !important;
+        height: 20rem !important;
+
+    }
+
+    #containerNavItems {
+        width: 100% !important;
+    }
+
+    .container-nav-item {
+        font-size: 1.8rem !important;
+    }
+
+    #imageBox {
+        width: 100% !important;
+    }
+
+    #profileImageFile {
+        margin-top: 30% !important;
+        width: 90% !important;
+    }
+}
+
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+input {
+    border: none;
+
+}
+
+body {
+    background-color: #C4A492;
+}
+
+#container>a,
+div,
+button,
+p,
+input {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+#container {
+    margin-top: 10rem;
+    height: calc(100vh - 150px);
+    width: 100%;
+    display: flex;
+}
+
+#leftBox {
+    height: 100%;
+    width: 40%;
+    display: flex;
+    justify-content: right;
+}
+
+#rightBox {
+    height: 100%;
+    width: 60%;
+    display: flex;
+    align-items: center;
+
+}
+
+#containerNavItems {
+    height: 70%;
+    width: 35%;
+    background-color: #C4A492;
+
+}
+
+.container-nav-item {
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 12%;
+    margin-top: 10%;
+    background-color: #F8ECE0;
+    font-size: 2.5rem;
+    font-weight: bold;
+    /* border: 1px solid black; */
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.container-nav-item:hover {
+    background-color: #7B4242;
+    color: white;
+    cursor: pointer;
+}
+
+
+
+#contentBox {
+    height: 100%;
+    width: 50%;
+
+}
+
+#setProfileView {
+    width: 100%;
+    height: 100%;
+    /* text-align: center; */
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+}
+
+#imageBox {
+    background-color: #B9937E;
+    height: 40rem;
+    width: 40rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10%;
+    border-radius: 1rem;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+#profileView {
+    background-color: #522F18;
+    margin-top: 10%;
+    height: 25rem;
+    width: 25rem;
+    border-radius: 1rem;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+#profileImageText {
+    margin-top: 3%;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+#profileImageFile {
+    width: 80%;
+    display: block;
+    margin-top: 2rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.8rem;
+    font-size: 1rem;
+    background-color: white;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.profileInputBox {
+    height: 10rem;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.profileLable {
+    font-size: 2.5rem;
+}
+
+.profileInput {
+    margin-top: 2%;
+    width: 80%;
+    height: 40%;
+    padding-left: 5%;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+}
+
+
+#profileSubmitButton {
+    margin-top: 2%;
+    width: 80%;
+    height: 40%;
+    padding-left: 5%;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    background-color: #522F18;
+    color: white;
+    font-size: 2rem;
+}
+
+#profileMessageBox {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1.8rem;
+    margin-top: 4%;
+    background-color: #760c0c;
+    color: white;
+    height: 6rem;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+}
+
+
+
+/* 사용자 정보 수정 css */
+
+#userInformationSubmitButton {
+    margin-top: 2%;
+    width: 80%;
+    height: 40%;
+    padding-left: 5%;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    background-color: #522F18;
+    color: white;
+    font-size: 2rem;
+}
+
+#setUserInformationMessageBox {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 2rem;
+    margin-top: 4%;
+    background-color: #760c0c;
+    color: white;
+    height: 6rem;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+}
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* 사용자 상세 정보 수정 css */
+.dropdown {
+    margin-top: 10%;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+
+
+.dropdown-button {
+    background-color: #f1f1f1;
+    padding: 10px;
+    color: #333;
+    padding: 1rem;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+}
+
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+
+.dropdown-content p {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content p:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropdown-button {
+    background-color: #ddd;
+}
+
+#addressBox {
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.address-input-item {
+    height: 3.5rem;
+    margin-top: 1rem;
+    width: 100%;
+    padding-left: 5%;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+}
+
+#addressSubmitButton {
+    margin-top: 5%;
+    width: 100%;
+    height: 3.5rem;
+    padding-left: 5%;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    background-color: #522F18;
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+#addressUpdateButton {
+    margin-top: 5%;
+    width: 100%;
+    height: 3.5rem;
+    padding-left: 5%;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    background-color: #522F18;
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.detailInputLable {
+    color: black;
+    margin-top: 5rem;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+#customsCodeSubmitInput {
+    margin-top: 2%;
+    width: 100%;
+    height: 3.5rem;
+    padding-left: 5%;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+}
+
+#customsCodeSubmitButton {
+    margin-top: 5%;
+    width: 100%;
+    height: 3.5rem;
+    padding-left: 5%;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    background-color: #522F18;
+    color: white;
+    font-size: 2rem;
+}
+
+
+.sellerInputData {
+    margin-top: 1rem;
+    width: 100%;
+    height: 4rem;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+}
+
+.sellerInputLable {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.sellerInputBox {
+    margin-top: 1rem;
+    width: 100%;
+    height: 8rem;
+}
+
+.seller-submit-button {
+    width: 100%;
+    height: 4rem;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    background-color: #522F18;
+    color: white;
+    font-size: 2rem;
+    border: none;
+}
+
+#deleteSellerInformationButton {
+    background-color: #FF6666;
+    color: #333;
+    font-weight: bold;
+    border: none;
+}
+
+#deleteUserInformation {
+    padding-top: 30%;
+}
+
+.deleteUserInformationBox {
+    height: 5rem;
+    width: 100%;
+}
+
+#deleteUserInformationText {
+    font-size: 2.5rem;
+    color: #522F18;
+    font-weight: bold;
+}
+
+
+#deleteUserInformationButton {
+    margin-top: 30%;
+    width: 60%;
+    height: 5rem;
+    padding-left: 5%;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    background-color: #7B4242;
+    color: white;
+    font-size: 2rem;
+    border: none;
+}
+
+#userDetailView {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 5rem;
+}
+
+#userDetailViewImageBox {
+    height: 30rem;
+    width: 30rem;
+    background-image: url("/static/images/user_detail_page.png");
+    background-size: 100% 100%;
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10%;
+    box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.5);
+}
+
+.passwordGuide {
+    color: black;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+
+#addressDeleteButton {
+    margin-top: 5%;
+    width: 100%;
+    height: 3.5rem;
+    padding-left: 5%;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    background-color: #FF6666;
+    color: black;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+#addressMessageBox {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1.8rem;
+    margin-top: 4%;
+    background-color: #760c0c;
+    color: white;
+    height: 6rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    margin-bottom: 1rem;
+}
+
+#createAddress {
+    background-color: #f1f1f1;
+    padding: 10px;
+    color: #333;
+    padding: 1rem;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+}
+
+#sellerMessageBox {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1.8rem;
+    margin-top: 4%;
+    background-color: #760c0c;
+    color: white;
+    height: 6rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+}
+
+#loadProfileImage {
+    margin-top: 2%;
+    width: 80%;
+    height: 40%;
+    padding-left: 5%;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    background-color: #522F18;
+    color: white;
+    font-size: 1.2rem;
+}
+
+/* 연락처 수정 */
+#setUserPhoneNumberInformation{
+    width: 100%;
+    height: fit-content;
+    align-items: center;
+    text-align: center;
+    padding-top: 15vh;
+}
+
+.input-itme-box {
+    display: block;
+    width: 100%;
+}
+
+.input-itme-box>input {
+    display: block;
+    width: 100%;
+    height: 5rem;
+    font-size: 3rem;
+    padding-left: 1rem;
+}
+
+
+.input-text-items{
+    font-size: 3rem;
+    font-weight: bold;
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/signup.css">
+    <title>회원 가입</title>
+</head>
+<header></header>
+
+<body>
+    <!-- <div id="titleContainer"></div> -->
+    <a href="index.html">
+        <div id="titleBox">
+            <img id="titleImage" src="/static/images/signupLogo.gif">
+        </div>
+    </a>
+
+    <div id="container">
+        <div id="innerContainer">
+            <div id="leftBox">
+                <div id="signupImageBox">
+                </div>
+            </div>
+            <div id="rightBox">
+                <div id=signupView>
+                    <div id="innerNav">
+                        <div id="singupNavTitle">
+                        </div>
+                        <div id="singupNavItems">
+                            <div class="item-group">
+                                <div id="signupNavItemOne" class="billboard" style="background-color: #7B4242;"></div>
+                                <span>회원 정보</span>
+                            </div>
+                            <div class="item-group">
+                                <div id="signupNavItemTwo" class="billboard"></div>
+                                <span>계정 인증</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="contentBox">
+                        <div id="contentLeftBox"></div>
+                        <div id="contentRightBox">
+                            <div>
+                                <hr id="line" />
+                                <form class="signup-form">
+                                    <div class="input-box">
+                                        <div class="input-label">
+                                            <label>이메일</label>
+                                        </div>
+                                        <input id="signupEmail" class="input-data" placeholder="example@domain.com">
+                                    </div>
+                                    <div class="input-box signup-item-one">
+                                        <div class="input-label">
+                                            <label>아이디</label>
+                                        </div>
+                                        <input id="signupNickname" class="input-data"
+                                            placeholder="공백 없이 2~9자까지 입력해 주세요.">
+                                    </div>
+                                    <div class="input-box signup-item-one">
+                                        <div class="input-label">
+                                            <label>비밀번호</label>
+                                        </div>
+                                        <input id="signupPassword" class="input-data" type="password"
+                                            placeholder="영 대소문자, 숫자,특수문자로 이루어져야 합니다.">
+                                        <span class="input-guide"></span>
+                                    </div>
+                                    <div class="input-box signup-item-one">
+                                        <div class="input-label">
+                                            <label>비밀번호 확인</label>
+                                        </div>
+                                        <input id="signupPassword2" class="input-data" type="password"
+                                            placeholder="영 대소문자, 숫자,특수문자로 이루어져야 합니다.">
+                                    </div>
+                                    <div class="input-box signup-item-two getVerificationCodeBox"
+                                        style="display: none;">
+                                        <div>
+                                            <a href="#" id="getVerificationCodeBoxTag">
+                                                <p>이메일 인증 코드 발급 받기</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="input-box signup-item-two" style="display: none;">
+                                        <div class="input-label" id="getVerificationCode">
+                                            <label>인증 코드</label>
+                                        </div>
+                                        <input id="signupVerificationCode" class="input-data" type="password"
+                                            placeholder="인증 코드를 입력해 주세요.">
+                                    </div>
+                                    <div class="input-box signup-item-one">
+                                        <div class="input-label">
+                                            <input id="checkbox" type="checkbox">
+                                            <label>개인 정보 수집 이용 동의</label>
+                                        </div>
+                                    </div>
+                                    <div id="signupMessageBox" style="display: none;">
+                                        <span id="signupMessage"></span>
+                                    </div>
+                                    <div class="input-box signup-item-one" id="signupSubmitButtonBox">
+                                        <a href="/signup.html">
+                                            <button type="button" id="signupInformationSubmit">다음 단계로</button>
+                                        </a>
+                                    </div>
+                                    <div class="input-box signup-item-two" id="signupSubmitButtonBox"
+                                        style="display: none;">
+                                        <a href="#">
+                                            <button type="button" id="signupVerificationCodeSubmit">제출</button>
+                                        </a>
+
+                                    </div>
+                                    <div id="loginGuide" class="signup-item-one">
+                                        <a href="./login.html">
+                                            <p>
+                                                이미 초코더쿠 멤버이신가요?
+                                            </p>
+                                            <p>
+                                                로그인 하러 가기
+                                            </p>
+                                        </a>
+                                    </div>
+                                </form>
+                                <div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<footer></footer>
+<script type="module" src="/static/js/api.js"></script>
+<script type="module" src="/static/js/signup.js"></script>
+
+</html>

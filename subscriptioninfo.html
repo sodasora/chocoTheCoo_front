@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="static/css/subscription.css" />
+    <title>ChocoTheCoo</title>
+</head>
+
+<!-- header -->
+<header></header>
+
+<!-- body -->
+
+<body>
+    <div class="section">
+        <img class="image" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+            src="static/images/초코구독안내문.gif">
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">구독안내문</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="good">
+                        <div class="title">
+                            <li>초코더쿠 정기구독의 혜택</li>
+                        </div>
+                        <div class="content">
+                            <li>1. 무료배송</li>
+                            <li>2. 포인트 2배 지급</li>
+                        </div>
+                        <li class="opinion">
+                            추후 의견을 수렴하여 더 많은 혜택을 제공하는 초코더쿠가 되겠습니다😎
+                        </li>
+                        <div class="title">
+                            <li>초코더쿠 정기구독 비용</li>
+                        </div>
+                        <div class="content">
+                            <li>한 달 기준 9900원</li>
+                        </div>
+                    </div>
+                    <div class="alert">
+                        <li> * 본 초코더쿠 정기구독은, 한 달 기준 상품입니다. </li>
+                        <li> * 다음 결제일까지 해지하지 않을 시, 자동갱신됩니다.</li>
+                        <li> * 혜택정보 중 포인트 2배 대상에서 충전포인트와 출석인증포인트는 제외대상입니다.</li>
+                        <li> * 포인트 2배 대상으로는, 구매포인트, 리뷰포인트에 한합니다.</li>
+                        <li> * 구독하기 버튼을 누르면 결제가 됩니다. 신중하게 선택하세요.</li>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="subscriptionbutton">구독하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<!-- footer -->
+<footer></footer>
+<script src="/static/js/api.js" type="module"></script>
+<script src="/static/js/subscription.js" type="module"></script>
+<script src="/static/js/loader.js" type="module"></script>
+
+</html>

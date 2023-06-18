@@ -1,0 +1,250 @@
+@font-face {
+    font-family: '국립박물관문화재단클래식B';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/국립박물관문화재단클래식B.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#areYouSure {
+    font-family: 'S-CoreDream-3Light';
+}
+
+.centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    background-color: #C4A492;
+    height: auto;
+    margin: auto;
+    padding: 5vh 0;
+    justify-content: center;
+    align-items: center;
+    font-family: 'S-CoreDream-3Light';
+}
+
+.address-select>label {
+    background-color: aliceblue;
+}
+
+.address-display {
+    margin: 1em auto 0 auto;
+}
+
+.address-display>label {
+    font-weight: bold;
+}
+
+.address-item {
+    margin: 1em auto;
+    padding-left: 1em;
+    background-color: aliceblue;
+    min-width: 30vw;
+    border-radius: 10px;
+    padding: 0.5vh 1em;
+    /* box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5); */
+    border: none;
+}
+
+.cart-check {
+    background-color: aliceblue;
+    justify-content: space-evenly;
+    min-width: 30vw;
+    display: flex;
+}
+
+.pay-check {
+    position: relative;
+    background-color: aliceblue;
+    border-radius: 1em;
+    min-width: 30vw;
+    /* box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5); */
+}
+
+
+#orderCart {
+    padding-top: 1em;
+    border-radius: 10px;
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    /* box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5); */
+}
+
+.order-cart-label {
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+}
+
+.checked-cart-items {
+    padding: 1vh;
+}
+
+.help-text {
+    position: absolute;
+    float: left;
+    object-fit: cover;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    left: 1vw;
+    z-index: 1;
+}
+
+.dropdown-item {
+    margin-top: 5px;
+    cursor: pointer;
+    color: #333;
+    padding: 5px 16px;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.product-img {
+    position: absolute;
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: cover;
+    display: none;
+    z-index: 1;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    /* box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
+    z-index: 1;
+}
+
+.dropdown-button {
+    width: 100%;
+    background-color: #f1f1f1;
+    padding: 0.5vh;
+    color: #333;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    /* box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5); */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 100%;
+    border-radius: 10px;
+    /* box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
+    z-index: 1;
+}
+
+.dropdown-item:hover {
+    background-color: #ddd;
+}
+
+
+.dropdown:hover .dropdown-button {
+    background-color: #ddd;
+}
+
+.line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgba(255, 255, 255, 0.729);
+    width: 30%;
+    margin: 1em 0;
+}
+
+#getOrderBtn {
+    border: none;
+    border-radius: 1em;
+    background-color: rgba(65, 41, 9, 0.39);
+    color: aliceblue;
+    margin: 2em auto;
+    padding: 0.5em 1em;
+    font-size: large;
+    font-weight: bold;
+}
+
+#recipient {
+    margin-bottom: 0;
+}
+
+#getOrderBtn:hover {
+    background-color: rgba(65, 41, 9, 0.39);
+}
+
+.pay-info-items {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1em;
+    width: 100%;
+}
+
+.pay-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3vh 2vw;
+}
+
+.pay-info-each {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.pay-info-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media screen and (max-width:1750px) {
+    .address-item {
+        min-width: 58vh;
+    }
+
+    .cart-check {
+        min-width: 58vh;
+    }
+
+    .pay-check {
+        min-width: 58vh;
+    }
+}
+
+.modal-btn1 {
+    border: none;
+    border-radius: 1em;
+    background-color: rgba(99, 72, 37, 0.74);
+    color: rgb(228, 228, 228);
+    font-size: large;
+    font-weight: bold;
+}
+
+.modal-btn2 {
+    border: none;
+    border-radius: 1em;
+    background-color: rgba(0, 0, 0, 0.473);
+    color: rgb(255, 255, 255);
+    font-size: large;
+    font-weight: bold;
+}

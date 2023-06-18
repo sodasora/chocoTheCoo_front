@@ -1,0 +1,189 @@
+@font-face {
+    font-family: '국립박물관문화재단클래식B';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/국립박물관문화재단클래식B.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.section {
+    background-color: #C4A492;
+    height: auto;
+    min-height: 60vh;
+    padding: 3em;
+}
+
+#cart {
+    display: flex;
+    flex-direction: column;
+}
+
+.row-type {
+    display: flex;
+    /* justify-content: space-between; */
+    margin: 1em 20rem;
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1.2em;
+    color: aliceblue;
+    text-align: center;
+}
+
+.cart-item {
+    /* background-color: aliceblue; */
+    position: relative;
+    display: flex;
+    /* justify-content: space-between; */
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1.2em;
+    color: aliceblue;
+    text-align: center;
+    margin: 1em 20rem;
+}
+
+.line {
+    border: 2px solid rgba(255, 255, 255, 0.729);
+    width: 75em;
+    margin: auto;
+}
+
+.info-box {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.pd-info {
+    display: flex;
+    justify-content: center;
+}
+
+.pd-info-thumb {
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    box-shadow: 20rem;
+    margin: auto 0;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+}
+
+.pd-amount {
+    width: 3em;
+    height: 1.3em;
+    display: flex;
+    margin: auto 0;
+    border-radius: 5px;
+    text-align: center;
+    align-items: center;
+}
+
+.sum-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pd-deliveryfee {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pd-amount-submit{
+    border-radius: 0.5em;
+    width: 3em;
+    color: aliceblue;
+    background-color: #522F18;
+    font-size: 0.8em;
+}
+
+.cart-total {
+    display: flex;
+    margin: 1em 30rem;
+}
+
+.check-each-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pd-del-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: cover;
+    position: absolute;
+    top: 40%;
+    right: 50%;
+}
+
+.pd-del-btn {
+    width: 1em;
+    height: 1em;
+    cursor: pointer;
+    object-fit:scale-down;
+}
+
+.order-btn {
+    display: flex;
+    margin: 1em auto;
+    background-color: rgba(65, 41, 9, 0.39);
+    border-radius: 10px;
+    width: 6em;
+    color: aliceblue;
+    font-weight: bold;
+    font-size: 1.1em;
+    justify-content: center;
+    box-shadow: 1px 1.5px 1.5px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+@media (max-width: 1480px) {
+    .row-type {
+        margin: 1em 10em;
+    }
+
+    .cart-item {
+        margin: 1em 10em;
+    }
+
+    .cart-total {
+        margin: 1em 10em;
+    }
+}
+
+@media (max-width: 875px) {
+    .row-type {
+        margin: 1em;
+    }
+
+    .cart-item {
+        margin: 1em;
+    }
+
+    .cart-total {
+        margin: 1em;
+    }
+}
+
+@media (max-width: 500px) {
+    .row-type {
+        margin: 1em 0;
+    }
+
+    .cart-item {
+        margin: 1em 0;
+    }
+
+    .cart-total {
+        margin: 1em 0;
+    }
+}
