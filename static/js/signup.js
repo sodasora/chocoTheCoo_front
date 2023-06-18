@@ -101,8 +101,12 @@ export async function VerificationCodeSubmit() {
         signupMessageBox.style.display = "flex"
         if (response.status == 404) {
             signupMessage.innerText = "가입된 이메일 정보를 찾을 수 없습니다."
+        } else if (response.status == 403) {
+            signupMessage.innerText = "소셜 계정으로 가입된 이메일 입니다."
         } else if (response.status == 406) {
             signupMessage.innerText = "인증 코드를 발급 받아 주세요."
+        } else if (response.status == 408) {
+            signupMessage.innerText = "인증 유효기간이 지났습니다."
         } else {
             signupMessage.innerText = "인증 코드가 올바르지 않습니다."
         }

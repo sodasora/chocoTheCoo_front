@@ -268,7 +268,7 @@ export async function VerificationCodeSubmitAPI(email, verificationCode) {
 		method: 'PUT',
 		body: JSON.stringify({
 			"email": email,
-			"auth_code": verificationCode,
+			"verification_code": verificationCode,
 		})
 	})
 	return response
@@ -379,7 +379,7 @@ export async function addressDeleteAPI(delivery_id) {
 	return response
 }
 
-<<<<<<< HEAD
+
 export async function createSellerInformationAPI(information) {
 	// 판매자 정보 생성 및 권한 신청
 	const access_token = localStorage.getItem("access")
@@ -450,7 +450,7 @@ export async function deleteUserInformationAPI(user_id) {
 	return response
 }
 
-=======
+
 // 장바구니 삭제
 export async function deleteCartItem(cart_item_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/${cart_item_id}/`, {
@@ -527,20 +527,20 @@ export async function getProductsAPI() {
 	}
 }
 
-	
+
 // 상품 디테일 보기
 
 export async function getProductDetailAPI(productId) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
-  
+
 	if (response.status == 200) {
-	  const responseJson = await response.json()
-	  return responseJson
+		const responseJson = await response.json()
+		return responseJson
 	} else {
-	  alert(response.status)
+		alert(response.status)
 	}
-  }
-  
+}
+
 // 상품 정보 전체 불러오기
 // # 상품 전체 조회
 export async function getProductListAPIView() {
@@ -670,4 +670,4 @@ export async function getSellerPermissionAPIView(user_id) {
 	});
 	return response.json();
 }
->>>>>>> d0e68dfb9bca37fb7c0fa6f88bb51bc0e5db8f75
+

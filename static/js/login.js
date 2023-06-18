@@ -103,11 +103,15 @@ export async function setUserInformation() {
         const response = await setUserInformationAPI()
         if (response.status == 200) {
             window.location.reload()
-        } else if (response.status == 405) {
+        } else if (response.status == 404) {
             message.innerText = "이메일로 가입된 계정이 없습니다."
+        } else if (response.status == 403) {
+            message.innerText = "소셜 계정으로 가입된 이메일 입니다."
         } else if (response.status == 406) {
-            message.innerText = "인증 코드를 발급 받아주세요."
-        } else if (response.status == 401) {
+            message.innerText = "인증 코드를 발급 받아 주세요."
+        } else if (response.status == 408) {
+            message.innerText = "인증 코드 유효 기간이 지났습니다."
+        } else if (response.status == 409) {
             verificationCode.value = ''
             message.innerText = "인증코드가 올바르지 않습니다."
         } else if (response.status == 400) {
@@ -157,9 +161,7 @@ async function kakaoLoginBtn() {
 
 async function googleLoginBtn() {
     const response = await fetch(`${BACK_BASE_URL}/api/users/google/login/`, { method: 'GET' })
-    console.log(response)
     const google_id = await response.json()
-    console.log("test")
     const redirect_uri = REDIRECT_URI
     const scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
     const param = `scope=${scope}&include_granted_scopes=true&response_type=token&state=pass-through value&prompt=consent&client_id=${google_id}&redirect_uri=${redirect_uri}`
