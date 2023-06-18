@@ -24,8 +24,7 @@ async function gosub() {
 
     if (response_point_statistic_json["total_point"] >= 9900) {
         const response = await postSubscribeView();
-        const response2 = await postPointServiceView();
-        if (response == 200 & response2 == 201) {
+        if (response == 200) {
             alert("결제완료")
             window.location.href = 'mypage.html';
         }

@@ -1,6 +1,6 @@
 import {
     BACK_BASE_URL, FRONT_BASE_URL, getUserProfileAPIView,
-    postPointChargeView, postPointCheckoutView, postPointValidationView,
+    postPointCheckoutView, postPointValidationView,
 } from "./api.js";
 
 async function payment100() {
@@ -83,13 +83,8 @@ async function requestPay(price) {
         if (rsp.success) {
             //console.log(rsp);
             ImpTrancsacton(rsp.merchant_uid, rsp.imp_uid, rsp.paid_amount)
-            const response_point = await postPointChargeView(rsp.merchant_uid)
-            if (response_point.status == 201) {
-                alert(`${rsp.paid_amount}원 충전완료`)
-                window.location.replace(`${FRONT_BASE_URL}/mypage.html`)
-            } else {
-                alert(`오류발생`)
-            }
+            alert(`${rsp.paid_amount}원 충전완료`)
+            window.location.replace(`${FRONT_BASE_URL}/mypage.html`)
         } else {
             alert(rsp.error_msg);
         }

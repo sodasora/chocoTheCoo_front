@@ -88,69 +88,162 @@ async function Choicelist() {
     const day = year + '-' + month + '-' + date
 
     const response_point = await getPointView(day)
-    const response_point_json = await response_point.json()
+    const point = await response_point.json()
     //console.log(response_point_json)
 
     const response_point_statistic = await getPointStaticView(day)
     const response_point_statistic_json = await response_point_statistic.json()
     //console.log(response_point_statistic_json)
 
-    const newtext = document.getElementById('points-list')
+    const newlist = document.getElementById('points-list')
+    const newcheck = document.getElementById('checkpoint')
+    newcheck.innerText = `${day} 포인트내역`
 
-    if (response_point_json != "") {
-        newtext.innerText = `${day} 포인트 내역입니다.`
-        // """포인트 종류: 출석(1), 텍스트리뷰(2), 포토리뷰(3), 구매(4), 충전(5), 구독권이용료(6)"""
-        response_point_json.forEach(e => {
-            const point_date = e['created_at'].slice(11, 19)
+    if (point != "") {
+        const newlist = document.getElementById('points-list');
+        const buttons = document.getElementById("point-buttons");
+
+        // 페이지네이션 페이지 설정
+        const numOfContent = point.length;
+        const maxContent = 5; //한 페이지에 보이는 수
+        const maxButton = 5; //보이는 최대 버튼 수
+        const maxPage = Math.ceil(numOfContent / maxContent);
+        let page = 1;
+
+        const Content = (id) => {
+            //"""포인트 종류: 출석(1), 텍스트리뷰(2), 포토리뷰(3), 구매(4), 충전(5), 구독권이용료(6), 결제(7)"""
+            const point_date = (point[id].created_at).slice(11, 19)
             const newP = document.createElement("p")
             newP.setAttribute("class", "pointinfo")
-            if (e['point_category'] == "출석") {
+            if (point[id].point_category == "출석") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 출석: " + e['point'] + "p"
+                newP.innerText = `${point_date}` + " 출석: " + point[id].point + "p"
             }
-            if (e['point_category'] == "텍스트리뷰") {
+            if (point[id].point_category == "텍스트리뷰") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 텍스트(별점)리뷰: " + e['point'] + "p"
+                newP.innerText = `${point_date}` + " 텍스트(별점)리뷰: " + point[id].point + "p"
             }
-            if (e['point_category'] == "포토리뷰") {
+            if (point[id].point_category == "포토리뷰") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 포토리뷰: " + e['point'] + "p"
+                newP.innerText = `${point_date}` + " 포토리뷰: " + point[id].point + "p"
             }
-            if (e['point_category'] == "구매") {
+            if (point[id].point_category == "구매") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 구매: " + e['point'] + "p"
+                newP.innerText = `${point_date}` + " 구매: " + point[id].point + "p"
             }
-            if (e['point_category'] == "충전") {
+            if (point[id].point_category == "충전") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 충전: " + e['point'] + "p"
+                newP.innerText = `${point_date}` + " 충전: " + point[id].point + "p"
             }
-            if (e['point_category'] == "구독권이용료") {
+            if (point[id].point_category == "구독권이용료") {
                 newP.setAttribute("style", "color:red;")
-                newP.innerText = `${point_date}` + " 구독권이용료: " + e['point'] + "p"
+                newP.innerText = `${point_date}` + " 구독권이용료: " + point[id].point + "p"
             }
-            newtext.appendChild(newP)
-        })
-        const plus_statistic = document.createElement("div")
-        plus_statistic.setAttribute("class", "point-statistic")
-        plus_statistic.setAttribute("id", "totalplus")
-        plus_statistic.innerText = "총 획득포인트: " + response_point_statistic_json["day_plus"] + "p"
-        newtext.appendChild(plus_statistic)
+            if (point[id].point_category == "결제") {
+                newP.setAttribute("style", "color:red;")
+                newP.innerText = `${point_date}` + " 결제: " + point[id].point + "p"
+            }
+            return newP
+        }
 
-        const minus_statistic = document.createElement("div")
-        minus_statistic.setAttribute("class", "point-statistic")
-        minus_statistic.setAttribute("id", "totalminus")
-        minus_statistic.innerText = "총 이용포인트: " + response_point_statistic_json["day_minus"] + "p"
-        newtext.appendChild(minus_statistic)
+        const makeButton = (id) => {
+            const button = document.createElement("button");
+            button.classList.add("button_page");
+            button.dataset.num = id;
+            button.innerText = id;
+            button.addEventListener("click", (e) => {
+                Array.prototype.forEach.call(buttons.children, (button) => {
+                    if (button.dataset.num) button.classList.remove("active");
+                });
+                e.target.classList.add("active");
+                renderContent(parseInt(e.target.dataset.num));
+            });
+            return button;
+        }
 
-        const statistic = document.createElement("div")
-        statistic.setAttribute("class", "point-statistic")
-        statistic.setAttribute("id", "totalpoint")
-        statistic.innerText = "총포인트: " + response_point_statistic_json["day_total_point"] + "p"
-        newtext.appendChild(statistic)
+        const renderContent = (page) => {
+            // 목록 리스트 초기화
+            while (newlist.hasChildNodes()) {
+                newlist.removeChild(newlist.lastChild);
+            }
+            // 글의 최대 개수를 넘지 않는 선에서, 화면에 maxContent개의 글 생성
+            for (let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++) {
+                newlist.appendChild(Content(id - 1));
+            }
+        };
+
+        const goPrevPage = () => {
+            page -= maxButton;
+            render(page);
+        };
+
+        const goNextPage = () => {
+            page += maxButton;
+            render(page);
+        };
+
+        const prev = document.createElement("button");
+        prev.classList.add("button_page", "prev");
+        prev.innerHTML = `<ion-icon name="chevron-back-outline"></ion-icon>`;
+        prev.addEventListener("click", goPrevPage);
+
+        const next = document.createElement("button");
+        next.classList.add("button_page", "next");
+        next.innerHTML = `<ion-icon name="chevron-forward-outline"></ion-icon>`;
+        next.addEventListener("click", goNextPage);
+
+        const renderButton = (page) => {
+            // 버튼 리스트 초기화
+            while (buttons.hasChildNodes()) {
+                buttons.removeChild(buttons.lastChild);
+            }
+            // 화면에 최대 maxButton개의 페이지 버튼 생성
+            for (let id = page; id < page + maxButton && id <= maxPage; id++) {
+                buttons.appendChild(makeButton(id));
+            }
+            // 첫 버튼 활성화(class="active")
+            buttons.children[0].classList.add("active");
+
+            buttons.prepend(prev);
+            buttons.appendChild(next);
+
+            // 이전, 다음 페이지 버튼이 필요한지 체크
+            if (page - maxButton < 1) buttons.removeChild(prev);
+            if (page + maxButton > maxPage) buttons.removeChild(next);
+        };
+
+        const render = (page) => {
+            renderContent(page);
+            renderButton(page);
+        };
+        render(page);
     } else {
-        newtext.innerText = `${day} 포인트 내역이 없습니다.`
+        newlist.innerText = `${day} 포인트 내역이 없습니다.`
     }
+
+    const newstatistic = document.getElementById("statistic-list")
+    newstatistic.innerText = `${day}  포인트 통계`
+
+    const plus_statistic = document.createElement("div")
+    plus_statistic.setAttribute("class", "point-statistic")
+    plus_statistic.setAttribute("id", "totalplus")
+    plus_statistic.innerText = "총 획득포인트: " + response_point_statistic_json["day_plus"] + "p"
+    newstatistic.appendChild(plus_statistic)
+
+    const minus_statistic = document.createElement("div")
+    minus_statistic.setAttribute("class", "point-statistic")
+    minus_statistic.setAttribute("id", "totalminus")
+    minus_statistic.innerText = "총 이용포인트: " + response_point_statistic_json["day_minus"] + "p"
+    newstatistic.appendChild(minus_statistic)
+
+    const statistic = document.createElement("div")
+    statistic.setAttribute("class", "point-statistic")
+    statistic.setAttribute("id", "totalpoint")
+    statistic.innerText = "총포인트: " + response_point_statistic_json["day_total_point"] + "p"
+    newstatistic.appendChild(statistic)
+
 }
+
 
 // 오늘 포인트 정보
 async function getToday() {
@@ -159,70 +252,159 @@ async function getToday() {
     const nowdate = leftPad(today.getDate())
 
     const nowday = nowyear + '-' + nowmonth + '-' + nowdate
-
     const response_point = await getPointView(nowday)
-    const response_point_json = await response_point.json()
-    //console.log(response_point_json)
+    const point = await response_point.json()
 
     const response_point_statistic = await getPointStaticView(nowday)
     const response_point_statistic_json = await response_point_statistic.json()
     //console.log(response_point_statistic_json)
 
-    const newtext = document.getElementById('points-list')
+    const newlist = document.getElementById('points-list')
+    const newcheck = document.getElementById('checkpoint')
+    newcheck.innerText = "오늘의 포인트내역"
 
-    if (response_point_json != "") {
-        newtext.innerText = `${nowday} 오늘의 포인트 내역입니다.`
-        //"""포인트 종류: 출석(1), 텍스트리뷰(2), 포토리뷰(3), 구매(4), 충전(5), 사용(6)
-        response_point_json.forEach(e => {
-            const point_date = e['created_at'].slice(11, 19)
+    if (point != "") {
+        const newlist = document.getElementById('points-list');
+        const buttons = document.getElementById("point-buttons");
+
+        // 페이지네이션 페이지 설정
+        const numOfContent = point.length;
+        const maxContent = 5; //한 페이지에 보이는 수
+        const maxButton = 5; //보이는 최대 버튼 수
+        const maxPage = Math.ceil(numOfContent / maxContent);
+        let page = 1;
+
+        const Content = (id) => {
+            //"""포인트 종류: 출석(1), 텍스트리뷰(2), 포토리뷰(3), 구매(4), 충전(5), 구독권이용료(6), 결제(7)"""
+            const point_date = (point[id].created_at).slice(11, 19)
             const newP = document.createElement("p")
             newP.setAttribute("class", "pointinfo")
-            if (e['point_category'] == "출석") {
+            if (point[id].point_category == "출석") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 출석: " + e['point'] + "p"
+                newP.innerText = `${point_date}` + " 출석: " + point[id].point + "p"
             }
-            if (e['point_category'] == "텍스트리뷰") {
+            if (point[id].point_category == "텍스트리뷰") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 텍스트(별점)리뷰: " + e['point'] + "p"
+                newP.innerText = `${point_date}` + " 텍스트(별점)리뷰: " + point[id].point + "p"
             }
-            if (e['point_category'] == "포토리뷰") {
+            if (point[id].point_category == "포토리뷰") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 포토리뷰: " + e['point'] + "p"
+                newP.innerText = `${point_date}` + " 포토리뷰: " + point[id].point + "p"
             }
-            if (e['point_category'] == "구매") {
+            if (point[id].point_category == "구매") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 구매: " + e['point'] + "p"
+                newP.innerText = `${point_date}` + " 구매: " + point[id].point + "p"
             }
-            if (e['point_category'] == "충전") {
+            if (point[id].point_category == "충전") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 충전: " + e['point'] + "p"
+                newP.innerText = `${point_date}` + " 충전: " + point[id].point + "p"
             }
-            if (e['point_category'] == "구독권이용료") {
+            if (point[id].point_category == "구독권이용료") {
                 newP.setAttribute("style", "color:red;")
-                newP.innerText = `${point_date}` + " 구독권이용료: " + e['point'] + "p"
+                newP.innerText = `${point_date}` + " 구독권이용료: " + point[id].point + "p"
             }
-            newtext.appendChild(newP)
-        })
-        const plus_statistic = document.createElement("div")
-        plus_statistic.setAttribute("class", "point-statistic")
-        plus_statistic.setAttribute("id", "totalplus")
-        plus_statistic.innerText = "오늘 획득포인트: " + response_point_statistic_json["day_plus"] + "p"
-        newtext.appendChild(plus_statistic)
+            if (point[id].point_category == "결제") {
+                newP.setAttribute("style", "color:red;")
+                newP.innerText = `${point_date}` + " 결제: " + point[id].point + "p"
+            }
+            return newP
+        }
 
-        const minus_statistic = document.createElement("div")
-        minus_statistic.setAttribute("class", "point-statistic")
-        minus_statistic.setAttribute("id", "totalminus")
-        minus_statistic.innerText = "오늘 이용포인트: " + response_point_statistic_json["day_minus"] + "p"
-        newtext.appendChild(minus_statistic)
+        const makeButton = (id) => {
+            const button = document.createElement("button");
+            button.classList.add("button_page");
+            button.dataset.num = id;
+            button.innerText = id;
+            button.addEventListener("click", (e) => {
+                Array.prototype.forEach.call(buttons.children, (button) => {
+                    if (button.dataset.num) button.classList.remove("active");
+                });
+                e.target.classList.add("active");
+                renderContent(parseInt(e.target.dataset.num));
+            });
+            return button;
+        }
 
-        const statistic = document.createElement("div")
-        statistic.setAttribute("class", "point-statistic")
-        statistic.setAttribute("id", "totalpoint")
-        statistic.innerText = "오늘 총포인트: " + response_point_statistic_json["day_total_point"] + "p"
-        newtext.appendChild(statistic)
+        const renderContent = (page) => {
+            // 목록 리스트 초기화
+            while (newlist.hasChildNodes()) {
+                newlist.removeChild(newlist.lastChild);
+            }
+            // 글의 최대 개수를 넘지 않는 선에서, 화면에 maxContent개의 글 생성
+            for (let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++) {
+                newlist.appendChild(Content(id - 1));
+            }
+        };
+
+        const goPrevPage = () => {
+            page -= maxButton;
+            render(page);
+        };
+
+        const goNextPage = () => {
+            page += maxButton;
+            render(page);
+        };
+
+        const prev = document.createElement("button");
+        prev.classList.add("button_page", "prev");
+        prev.innerHTML = `<ion-icon name="chevron-back-outline"></ion-icon>`;
+        prev.addEventListener("click", goPrevPage);
+
+        const next = document.createElement("button");
+        next.classList.add("button_page", "next");
+        next.innerHTML = `<ion-icon name="chevron-forward-outline"></ion-icon>`;
+        next.addEventListener("click", goNextPage);
+
+        const renderButton = (page) => {
+            // 버튼 리스트 초기화
+            while (buttons.hasChildNodes()) {
+                buttons.removeChild(buttons.lastChild);
+            }
+            // 화면에 최대 maxButton개의 페이지 버튼 생성
+            for (let id = page; id < page + maxButton && id <= maxPage; id++) {
+                buttons.appendChild(makeButton(id));
+            }
+            // 첫 버튼 활성화(class="active")
+            buttons.children[0].classList.add("active");
+
+            buttons.prepend(prev);
+            buttons.appendChild(next);
+
+            // 이전, 다음 페이지 버튼이 필요한지 체크
+            if (page - maxButton < 1) buttons.removeChild(prev);
+            if (page + maxButton > maxPage) buttons.removeChild(next);
+        };
+
+        const render = (page) => {
+            renderContent(page);
+            renderButton(page);
+        };
+        render(page);
     } else {
-        newtext.innerText = `${nowday} 오늘의 포인트 내역이 없습니다.`
+        newlist.innerText = `${nowday} 오늘의 포인트 내역이 없습니다.`
     }
+
+    const newstatistic = document.getElementById("statistic-list")
+    newstatistic.innerText = `오늘의 포인트 통계`
+
+    const plus_statistic = document.createElement("div")
+    plus_statistic.setAttribute("class", "point-statistic")
+    plus_statistic.setAttribute("id", "totalplus")
+    plus_statistic.innerText = "오늘 획득포인트: " + response_point_statistic_json["day_plus"] + "p"
+    newstatistic.appendChild(plus_statistic)
+
+    const minus_statistic = document.createElement("div")
+    minus_statistic.setAttribute("class", "point-statistic")
+    minus_statistic.setAttribute("id", "totalminus")
+    minus_statistic.innerText = "오늘 이용포인트: " + response_point_statistic_json["day_minus"] + "p"
+    newstatistic.appendChild(minus_statistic)
+
+    const statistic = document.createElement("div")
+    statistic.setAttribute("class", "point-statistic")
+    statistic.setAttribute("id", "totalpoint")
+    statistic.innerText = "오늘 총포인트: " + response_point_statistic_json["day_total_point"] + "p"
+    newstatistic.appendChild(statistic)
 
     const newmonth_total = document.getElementById("month-total")
     newmonth_total.setAttribute("class", "point-statistic")
@@ -258,13 +440,32 @@ async function profile() {
 
     document.getElementById("user-name").innerText = profile_data["nickname"]
     document.getElementById("user-email").innerText = profile_data["email"]
-    document.getElementById("user-intro").innerText = profile_data["introduction"].slice(0, 13)
+    if (profile_data["introduction"] == "아직 소개글이 없습니다.") {
+        document.getElementById("user-intro").innerText = profile_data["introduction"]
+    } else {
+        document.getElementById("user-intro").innerText = profile_data["introduction"].slice(0, 13) + "..."
+    }
     document.getElementById("user-wish").innerText = profile_data["product_wish_list_count"]
     document.getElementById("user-point").innerText = profile_data["total_point"] + "p"
+}
 
+// 위시리스트 상품 상세페이지로 이동
+export async function productDetail(product_id) {
+    window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
+}
+
+async function pagination_wish(wish) {
     const wish_list = document.getElementById("my-wish-list")
+    const buttons = document.getElementById("wish-buttons");
 
-    profile_data["product_wish_list"].forEach(e => {
+    // 페이지네이션 페이지 설정
+    const numOfContent = wish.length;
+    const maxContent = 3; //한 페이지에 보이는 수
+    const maxButton = 5; //보이는 최대 버튼 수
+    const maxPage = Math.ceil(numOfContent / maxContent);
+    let page = 1;
+
+    const Content = (id) => {
         const newCol = document.createElement("div")
         newCol.setAttribute("class", "col")
 
@@ -274,26 +475,101 @@ async function profile() {
 
         const newItemImage = document.createElement("img")
         newItemImage.setAttribute("class", "wishimage")
-        if (e["image"] == null) {
+        if (wish[id].image == null) {
             newItemImage.setAttribute("src", "static/images/기본이미지.gif")
         } else {
-            newItemImage.setAttribute("src", `${BACK_BASE_URL}${e["image"]}`)
+            newItemImage.setAttribute("src", `${BACK_BASE_URL}${wish[id].image}`)
         }
         const newItemName = document.createElement("div")
         newItemName.setAttribute("class", "wishname")
-        newItemName.innerText = "제품명: " + e["name"]
+        newItemName.innerText = "제품명: " + wish[id].name
         const newItemContent = document.createElement("div")
         newItemContent.setAttribute("class", "wishtype")
-        newItemContent.innerText = "제품설명: " + e["content"].slice(0, 10) + "..."
+        newItemContent.innerText = "제품설명: " + (wish[id].content).slice(0, 15) + "..."
 
         newCard.appendChild(newItemImage)
         newCard.appendChild(newItemName)
         newCard.appendChild(newItemContent)
+        newCard.onclick = function () {
+            productDetail(wish[id].id);
+        };
         newCol.appendChild(newCard)
-        wish_list.appendChild(newCol)
-    })
+        return newCol;
+    }
 
+    const makeButton = (id) => {
+        const button = document.createElement("button");
+        button.classList.add("button_page");
+        button.dataset.num = id;
+        button.innerText = id;
+        button.addEventListener("click", (e) => {
+            Array.prototype.forEach.call(buttons.children, (button) => {
+                if (button.dataset.num) button.classList.remove("active");
+            });
+            e.target.classList.add("active");
+            renderContent(parseInt(e.target.dataset.num));
+        });
+        return button;
+    }
+
+    const renderContent = (page) => {
+        // 목록 리스트 초기화
+        while (wish_list.hasChildNodes()) {
+            wish_list.removeChild(wish_list.lastChild);
+        }
+        // 글의 최대 개수를 넘지 않는 선에서, 화면에 maxContent개의 글 생성
+        for (let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++) {
+            wish_list.appendChild(Content(id - 1));
+        }
+    };
+
+    const goPrevPage = () => {
+        page -= maxButton;
+        render(page);
+    };
+
+    const goNextPage = () => {
+        page += maxButton;
+        render(page);
+    };
+
+    const prev = document.createElement("button");
+    prev.classList.add("button_page", "prev");
+    prev.innerHTML = `<ion-icon name="chevron-back-outline"></ion-icon>`;
+    prev.addEventListener("click", goPrevPage);
+
+    const next = document.createElement("button");
+    next.classList.add("button_page", "next");
+    next.innerHTML = `<ion-icon name="chevron-forward-outline"></ion-icon>`;
+    next.addEventListener("click", goNextPage);
+
+    const renderButton = (page) => {
+        // 버튼 리스트 초기화
+        while (buttons.hasChildNodes()) {
+            buttons.removeChild(buttons.lastChild);
+        }
+        // 화면에 최대 maxButton개의 페이지 버튼 생성
+        for (let id = page; id < page + maxButton && id <= maxPage; id++) {
+            buttons.appendChild(makeButton(id));
+        }
+        // 첫 버튼 활성화(class="active")
+        buttons.children[0].classList.add("active");
+
+        buttons.prepend(prev);
+        buttons.appendChild(next);
+
+        // 이전, 다음 페이지 버튼이 필요한지 체크
+        if (page - maxButton < 1) buttons.removeChild(prev);
+        if (page + maxButton > maxPage) buttons.removeChild(next);
+    };
+
+    const render = (page) => {
+        renderContent(page);
+        renderButton(page);
+    };
+    render(page);
 }
+
 
 // 구독
 async function nosub() {
@@ -391,7 +667,6 @@ async function subscription_info() {
     }
 }
 
-
 window.onload = async function () {
     buildCalendar();
     document.getElementById("prevCalendar").addEventListener("click", prevCalendar)
@@ -399,5 +674,8 @@ window.onload = async function () {
     getToday();
     document.getElementById("Attendance").addEventListener("click", attendancePoint);
     profile();
+    const profile_data = await getUserProfileAPIView()
+    const wish = profile_data["product_wish_list"]
+    pagination_wish(wish);
     subscription_info()
 }  

@@ -1,4 +1,4 @@
-import { getProductDetailAPI , BACK_BASE_URL, FRONT_BASE_URL} from './api.js';
+import { getProductDetailAPIView , BACK_BASE_URL, FRONT_BASE_URL} from './api.js';
 
 window.onload = async function () {
     const urlParams = new URLSearchParams(window.location.search);
@@ -6,7 +6,7 @@ window.onload = async function () {
  
     console.log(productId)
 
-    const response = await getProductDetailAPI(productId);
+    const response = await getProductDetailAPIView(productId);
     console.log(response)
 
     const productTitle =document.getElementById("product-title")

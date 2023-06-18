@@ -137,3 +137,17 @@ button {
 .title {
     font-weight: bold;
 }
+
+#review-buttons {
+    position: relative;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.button_page.active,
+.button_page:hover {
+    color: #0b5ed7;
+    font-weight: 600;
+    text-decoration: underline;
+}

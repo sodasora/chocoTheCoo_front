@@ -30,13 +30,18 @@ async function profile() {
 
 }
 
-async function review() {
+async function pagination_review(review) {
     const review_list = document.getElementById("my-review-list")
+    const buttons = document.getElementById("review-buttons");
 
-    const review_data = await getMyReviewView()
-    console.log(review_data)
+    // 페이지네이션 페이지 설정
+    const numOfContent = review.length;
+    const maxContent = 5; //한 페이지에 보이는 수
+    const maxButton = 5; //보이는 최대 버튼 수
+    const maxPage = Math.ceil(numOfContent / maxContent);
+    let page = 1;
 
-    review_data.forEach(e => {
+    const Content = (id) => {
         const newCard = document.createElement("div")
         newCard.setAttribute("class", "card")
         newCard.setAttribute("id", "review")
@@ -50,10 +55,10 @@ async function review() {
         const newItemImage = document.createElement("img")
         newItemImage.setAttribute("class", "productimage")
 
-        if (e["image"] == null) {
+        if (review[id].image == null) {
             newItemImage.setAttribute("src", "static/images/기본이미지.gif")
         } else {
-            newItemImage.setAttribute("src", `${e["image"]}`)
+            newItemImage.setAttribute("src", `${review[id].image}`)
         }
 
         newImageClass.appendChild(newItemImage)
@@ -63,23 +68,23 @@ async function review() {
 
         const newReviewtitle = document.createElement("div")
         newReviewtitle.setAttribute("class", "review-title")
-        newReviewtitle.innerText = e["title"]
+        newReviewtitle.innerText = review[id].title
 
         const newReviewcontent = document.createElement("div")
         newReviewcontent.setAttribute("class", "review-content")
-        newReviewcontent.innerText = e["content"]
+        newReviewcontent.innerText = review[id].content
 
         const newItemTitle = document.createElement("div")
         newItemTitle.setAttribute("class", "title")
-        newItemTitle.innerText = "제품명: " + e["product_name"]
+        newItemTitle.innerText = "제품명: " + review[id].product_name
 
         const newItemStar = document.createElement("div")
         newItemStar.setAttribute("class", "star")
-        newItemStar.innerText = "별점: " + e["product_star"]
+        newItemStar.innerText = "별점: " + review[id].product_star
 
         const newItemDate = document.createElement("div")
         newItemDate.setAttribute("class", "updated")
-        newItemDate.innerText = "최근 수정날짜: " + e["updated_at"].slice(0, 10)
+        newItemDate.innerText = "최근 수정날짜: " + (review[id].updated_at).slice(0, 10)
 
         newItemText.appendChild(newReviewtitle)
         newItemText.appendChild(newReviewcontent)
@@ -91,9 +96,83 @@ async function review() {
         newBody.appendChild(newItemText)
 
         newCard.appendChild(newBody)
-        review_list.appendChild(newCard)
-    })
+
+        return newCard;
+    }
+
+    const makeButton = (id) => {
+        const button = document.createElement("button");
+        button.classList.add("button_page");
+        button.dataset.num = id;
+        button.innerText = id;
+        button.addEventListener("click", (e) => {
+            Array.prototype.forEach.call(buttons.children, (button) => {
+                if (button.dataset.num) button.classList.remove("active");
+            });
+            e.target.classList.add("active");
+            renderContent(parseInt(e.target.dataset.num));
+        });
+        return button;
+    }
+
+    const renderContent = (page) => {
+        // 목록 리스트 초기화
+        while (review_list.hasChildNodes()) {
+            review_list.removeChild(review_list.lastChild);
+        }
+        // 글의 최대 개수를 넘지 않는 선에서, 화면에 maxContent개의 글 생성
+        for (let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++) {
+            review_list.appendChild(Content(id - 1));
+        }
+    };
+
+    const goPrevPage = () => {
+        page -= maxButton;
+        render(page);
+    };
+
+    const goNextPage = () => {
+        page += maxButton;
+        render(page);
+    };
+
+    const prev = document.createElement("button");
+    prev.classList.add("button_page", "prev");
+    prev.innerHTML = `<ion-icon name="chevron-back-outline"></ion-icon>`;
+    prev.addEventListener("click", goPrevPage);
+
+    const next = document.createElement("button");
+    next.classList.add("button_page", "next");
+    next.innerHTML = `<ion-icon name="chevron-forward-outline"></ion-icon>`;
+    next.addEventListener("click", goNextPage);
+
+    const renderButton = (page) => {
+        // 버튼 리스트 초기화
+        while (buttons.hasChildNodes()) {
+            buttons.removeChild(buttons.lastChild);
+        }
+        // 화면에 최대 maxButton개의 페이지 버튼 생성
+        for (let id = page; id < page + maxButton && id <= maxPage; id++) {
+            buttons.appendChild(makeButton(id));
+        }
+        // 첫 버튼 활성화(class="active")
+        buttons.children[0].classList.add("active");
+
+        buttons.prepend(prev);
+        buttons.appendChild(next);
+
+        // 이전, 다음 페이지 버튼이 필요한지 체크
+        if (page - maxButton < 1) buttons.removeChild(prev);
+        if (page + maxButton > maxPage) buttons.removeChild(next);
+    };
+
+    const render = (page) => {
+        renderContent(page);
+        renderButton(page);
+    };
+    render(page);
 }
+
 
 // 구독
 async function nosub() {
@@ -191,9 +270,11 @@ async function subscription_info() {
     }
 }
 
-
 window.onload = async function () {
     profile();
     subscription_info();
-    review();
+
+    const review_data = await getMyReviewView()
+    //console.log(review_data)
+    pagination_review(review_data);
 }  
