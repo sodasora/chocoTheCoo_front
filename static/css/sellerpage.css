@@ -5,8 +5,8 @@
 .section2 {
     background-color: #C4A492;
     height: 100%;
-    /* display: flex; */
-    justify-content: center;
+    /* display: flex;
+    justify-content: left; */
     width: 100%;
     padding-bottom: 100px;
 }
@@ -25,4 +25,34 @@
 
 #sellerLogo {
     min-width: 100px;
+}
+
+/* 판매자프로필 */
+.profile-card {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1.3em;
+    width: 25vw;
+    height: auto;
+    text-align: center;
+    margin-top: 30px;
+    margin-left: 60px;
+    border: 2px solid white;
+    border-radius: 20px;
+}
+
+.profile{
+    width: 23vw;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.left-section {
+    margin-left: 100px;
+    display: inline-block; 
+    
+}
+.right-section {
+    margin-right: 150px;
+    float:right;
+    margin-top:200px;
 }
