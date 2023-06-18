@@ -1,8 +1,19 @@
 .section3 {
     background-color: #C4A492;
     height: 100%;
-    /* display: flex; */
-    justify-content: center;
+    
     width: 100%;
     padding-bottom: 100px;
 }
+
+#post-card {
+    width:660px;
+    /* display: flex;
+    justify-content: center; */
+}
+#profile {
+    /* display: flex;
+    justify-content: center; */
+    width: 600px;
+}
+

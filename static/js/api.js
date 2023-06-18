@@ -520,6 +520,20 @@ export async function registProductAPIView(formdata) {
 	return response.json();
 }
 
+
+// 상품 상세 페이지 수정 하기 
+
+export async function editProductDetailAPIView(formdata) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "PUT",
+		body: formdata
+	});
+	return response.json();
+}
+
 // 상품 디테일 보기
 export async function getProductDetailAPI(productId) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
@@ -618,6 +632,22 @@ export async function getWishListAPIView(product_id) {
 	return response.json();
 }
 
+// 특정 상품의 리뷰 등록하기
+export async function writeReviewAPI(product_id, formdata) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/reviews/`, {
+		method: 'POST',
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		body: formdata
+	});
+	if(response.status == 201){
+		window.location.reload();
+	} else {
+		alert("리뷰 등록 실패!")
+	}
+	return response.json();
+}
 // 특정 상품의 전체 리뷰 불러오기
 // # 리뷰 조회, 생성
 export async function getReviewView(product_id) {

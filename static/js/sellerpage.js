@@ -1,4 +1,4 @@
-import {  getProductListAPIView , BACK_BASE_URL, FRONT_BASE_URL} from './api.js';
+import {  getProductListAPIView , BACK_BASE_URL, FRONT_BASE_URL, getSellerPermissionAPIView} from './api.js';
 
 
 export async function productDetail(product_id) {
@@ -68,6 +68,33 @@ export async function sellerPageAPI() {
 
 // 판매자 스토어에서 등록한 상품 전체 보기
 
+
+// 판매자정보
+async function sellerProfile() {
+  const payload = localStorage.getItem("payload");
+  const payload_parse = JSON.parse(payload);
+  const user_id = payload_parse.user_id //로그인한 유저id
+
+  const seller_data = await getSellerPermissionAPIView(user_id)
+  console.log("판매자정보", seller_data)
+
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = String(today.getMonth() + 1).padStart(2, '0'); //두자리되도록 앞에0채우기
+  let date = String(today.getDate()).padStart(2, '0'); //두자리되도록 앞에0채우기
+  today = `${year}-${month}-${date}`;
+  // console.log("today", today)
+
+  
+
+
+  if (seller_data['company_img']) { //로고 이미지가 존재한다면
+      document.getElementById("company-img").setAttribute("src", `${BACK_BASE_URL}` + seller_data['company_img'])
+  }
+  document.getElementById("company-name").innerText = seller_data["company_name"]
+  document.getElementById("owner-name").innerText = seller_data["business_owner_name"]
+}
+sellerProfile()
 
 window.onload = async function() {
 
