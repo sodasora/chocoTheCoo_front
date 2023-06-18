@@ -15,7 +15,27 @@
     <!-- CSS -->
     <link rel="stylesheet" href="static/css/ordercheck.css">
 </head>
+<div id="areYouSure" class="modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">결제 확인</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>확실해요!??</p>
+            </div>
+            <div id="modalBtnBox" class="modal-footer">
+                <!-- <button type="button" class="modal-btn1 btn btn-primary">결제하기</button> -->
+                <!-- <button type="button" class="modal-btn2 btn btn-secondary" data-bs-dismiss="modal">취소</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
 <header></header>
+<!-- <div id="areYouSure" class="modal-dialog "> -->
+<!-- </div> -->
 
 <body>
     <div class="section">
@@ -38,22 +58,22 @@
                 <label>
                     상세주소
                 </label for="detail_address">
-                <input disabled id="detail_address" class="address-item centered"></input>
+                <input disabled id="detailAddress" class="address-item centered"></input>
                 <label for="postal_code">
                     우편 번호
                 </label>
-                <input disabled id="postal_code" class="address-item centered"></input>
+                <input disabled id="postalCode" class="address-item centered"></input>
                 <label>
                     수령인
                 </label for="recipient">
                 <input disabled id="recipient" class="address-item centered"></input>
-                <input id="orderDeliveryId" hidden id="delivery_id">
+                <input id="orderDeliveryId" hidden>
             </div>
         </div>
         <hr class="line">
         <div id="orderCart">
             <div class="order-cart-label">
-                <img id="helpContext" src="/static/images/helpbtn.png" data-bs-toggle="tooltip"
+                <img class="help-text" src="/static/images/helpbtn.png" data-bs-toggle="tooltip"
                     data-bs-title="상품명에 마우스 커서를 올리면 이미지를 볼 수 있어요!">
                 </img>
                 <div class="col-2 centered">상품명</div>
@@ -64,15 +84,56 @@
         </div>
         <hr class="line">
         <div class="pay-check">
-            <div>**HTML, CSS 추가예정**</div>
-            <div class="pay-info">결제 정보</div>
-            <div class="total-price">총 상품 금액</div>
-            <div class="delevery-fee">총 배송비</div>
-            <div class="total-order">총 결제 금액</div>
-            <div class="pay-type">POINT</div>
+            <div class="pay-info">결제 정보
+                <div class="pay-info-items total-price">
+                    <div>
+                        총 상품금액
+                    </div>
+                    <div class="price-total">
+
+                    </div>
+                </div>
+                <div class="pay-info-items delivery-fee">
+                    <div>
+                        총 배송비
+                    </div>
+                    <div class="delivery-fee-total">
+
+                    </div>
+                </div>
+                <div class="pay-info-items total-order">
+                    <div>
+                        총 결제금액
+                    </div>
+                    <div class="real-total">
+
+                    </div>
+                </div>
+                <div class="centered pay-info-items">
+                    <div class="centered pay-info-top">
+                        현재 포인트
+                    </div>
+                    <div class="pay-info-each" id="pointNow">
+                    </div>
+                </div>
+                <!-- <div class="centered pay-info-items">
+                    <div class="centered pay-info-top">
+                        상품 금액
+                    </div>
+                    <div class="pay-info-each" id="pointMinus">
+                    </div>
+                </div> -->
+                <div class="centered pay-info-items">
+                    <div class="centered pay-info-top">
+                        결제 후 포인트
+                    </div>
+                    <div class="pay-info-each" id="pointAfter">
+                    </div>
+                </div>
+            </div>
         </div>
         <hr class="line">
-        <button id="getOrderBtn">결제하기</button>
+        <button id="getOrderBtn" data-bs-toggle="modal" data-bs-target="#areYouSure">결제하기</button>
     </div>
 </body>
 <footer></footer>

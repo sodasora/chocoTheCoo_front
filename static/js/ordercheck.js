@@ -1,12 +1,20 @@
-import { BACK_BASE_URL, makeBills, makeOrders, getCheckedCart } from "./api.js"
-
+import {
+    BACK_BASE_URL,
+    makeBills,
+    makeOrders,
+    getCheckedCart,
+    payload,
+    access_token,
+    FRONT_BASE_URL,
+    getPointStaticView,
+} from "./api.js"
 
 async function getDeliveryData(element) {
-    const postal_code = document.getElementById("postal_code");
+    const postal_code = document.getElementById("postalCode");
     postal_code.value = element.postal_code;
     const address = document.getElementById("address");
     address.value = element.address;
-    const detail_address = document.getElementById("detail_address");
+    const detail_address = document.getElementById("detailAddress");
     detail_address.value = element.detail_address;
     const recipient = document.getElementById("recipient");
     recipient.value = element.recipient;
@@ -48,18 +56,11 @@ async function getUserDeliveryInformationAPI(user_id) {
     return response;
 }
 
-async function getPayloadParse() {
-    const payload = localStorage.getItem("payload");
-    const payload_parse = JSON.parse(payload);
-    return payload_parse;
-}
-
 async function loadCheckedCart() {
     const url = new URL(window.location.href);
     const queryString = url.search.substring(1);
     const checkedCart = await getCheckedCart(queryString);
     const cartCheck = document.getElementById("orderCart")
-    console.log(checkedCart)
     checkedCart.forEach((e) => {
         const row = document.createElement("div");
         row.classList.add("cart-check", "checked-cart-items");
@@ -79,7 +80,8 @@ async function loadCheckedCart() {
         col2.textContent = e.amount;
 
         const col3 = document.createElement("div");
-        col3.classList.add("col-2", "centered");
+        col3.classList.add("col-2", "centered", "product-price");
+        col3.setAttribute("data-price", e.aggregate_price);
         col3.textContent = e.aggregate_price;
 
         const line = document.createElement("hr");
@@ -103,15 +105,69 @@ async function loadCheckedCart() {
         cartCheck.appendChild(row);
         cartCheck.appendChild(line);
     })
+    return renderPaymentInfo();
+}
+
+
+async function makePurchaseOrder() {
+    const deli = document.getElementById("orderDeliveryId").getAttribute("data-deliveryId");
+    const bill = await makeBills(deli);
+
+    const url = new URL(window.location.href);
+    const queryString = url.search.substring(1);
+    makeOrders(queryString, bill.id);
+}
+
+async function renderPaymentInfo() {
+    const priceEach = document.querySelectorAll(".product-price");
+
+    let priceTotal = 0;
+
+    priceEach.forEach(e => {
+        priceTotal += parseInt(e.getAttribute("data-price"));
+    });
+
+    const priceTotalData = document.querySelector(".price-total");
+    priceTotalData.innerText = priceTotal.toLocaleString();
+
+    const deliveryFee = document.querySelector(".delivery-fee-total");
+    const deliveryFeeData = (priceEach.length * (!payload.subscribe_data) * 3000)
+    deliveryFee.innerText = deliveryFeeData.toLocaleString();
+
+    const totalPrice = document.querySelector(".real-total");
+    totalPrice.innerText = (priceTotal + deliveryFeeData).toLocaleString();
+
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = String(today.getMonth() + 1).padStart(2, '0'); //두자리되도록 앞에0채우기
+    let date = String(today.getDate()).padStart(2, '0'); //두자리되도록 앞에0채우기
+    today = `${year}-${month}-${date}`;
+
+    const pointNow = document.getElementById("pointNow");
+    // const pointMinus = document.getElementById("pointMinus");
+    const pointAfter = document.getElementById("pointAfter");
+
+    const myPoint = await getPointStaticView(today)
+    const mypoint_json = await myPoint.json()
+    pointNow.innerText = mypoint_json.total_point
+
+    const pricePoint = (priceTotal + deliveryFeeData)
+
+    // pointMinus.innerText = pricePoint.toLocaleString();
+    const afterPoint = (mypoint_json.total_point - pricePoint);
+    pointAfter.innerText = afterPoint.toLocaleString()
+    if (afterPoint < 0) {
+        pointAfter.style.color = "red";
+    }
 }
 
 window.onload = async () => {
-    const payload_parse = await getPayloadParse();
-    if (payload_parse == null) {
-        console.log("비 로그인 사용자");
+    loadCheckedCart();
+    if (!access_token) {
+        window.location.href = `${FRONT_BASE_URL}/login`;
     }
     else {
-        const response = await getUserDeliveryInformationAPI(payload_parse.user_id);
+        const response = await getUserDeliveryInformationAPI(payload.user_id);
         const response_json = await response.json();
         DeliveryInformation(response_json);
     }
@@ -126,29 +182,38 @@ window.onload = async () => {
         dropdownContent.style.display = "none";
     });
 
-    loadCheckedCart();
-
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    renderModalBtns()
+}
 
-    const getOrderBtn = document.getElementById("getOrderBtn");
-    getOrderBtn.addEventListener("click", function () {
-        //! 확인창 모달로 변경 예정
-        let do_confirm = confirm("확실해요??")
-        if (do_confirm) {
-            //! 결제 함수 들어갈 자리
-            makePurchaseOrder();
-        }
-        else { }
+
+async function renderModalBtns() {
+    const button1 = document.createElement("button");
+    button1.setAttribute("type", "button");
+    button1.setAttribute("class", "modal-btn1 btn btn-primary");
+    button1.textContent = "결제하기";
+
+    const button2 = document.createElement("button");
+    button2.setAttribute("type", "button");
+    button2.setAttribute("class", "modal-btn2 btn btn-secondary");
+    button2.setAttribute("data-bs-dismiss", "modal");
+    button2.textContent = "취소";
+
+    button1.addEventListener("click", function () {
+        console.log("완")
+        makePurchaseOrder();
     })
+    const modalBtnBox = document.getElementById("modalBtnBox");
+
+
+    const user_agent = navigator.userAgent.toLowerCase();
+
+    if (user_agent.indexOf('mac') !== -1) {
+        modalBtnBox.appendChild(button2);
+        modalBtnBox.appendChild(button1);
+    } else {
+        modalBtnBox.appendChild(button1);
+        modalBtnBox.appendChild(button2);
+    }
 }
-
-async function makePurchaseOrder() {
-    const deli = document.getElementById("orderDeliveryId").getAttribute("data-deliveryId");
-    const bill = await makeBills(deli);
-
-    const url = new URL(window.location.href);
-    const queryString = url.search.substring(1);
-    makeOrders(queryString, bill.id);
-}
-
