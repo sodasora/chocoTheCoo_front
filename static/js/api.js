@@ -1,8 +1,8 @@
 export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
-const access_token = localStorage.getItem("access")
-const payload = JSON.parse(localStorage.getItem("payload"))
+export const access_token = localStorage.getItem("access")
+export const payload = JSON.parse(localStorage.getItem("payload"))
 
 // 로그인
 export async function handleLoginAPI() {
@@ -404,7 +404,6 @@ export async function updateSellerInformationAPI(information) {
 
 export async function deleteSellerInformationAPI() {
 	// 판매자 정보 삭제
-	const access_token = localStorage.getItem("access")
 	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
