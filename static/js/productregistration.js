@@ -39,7 +39,6 @@ export async function registProduct() {
     }
 }
 
-
 export async function setEventListener() {
     // html 요소 이벤트 리스너 추가
     document.getElementById("registrate").addEventListener("click", registProduct)
