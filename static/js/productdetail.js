@@ -1,8 +1,7 @@
-import { getProductDetailAPIView ,writeReviewAPI, getReviewView, editProductDetailAPIView , BACK_BASE_URL, FRONT_BASE_URL} from './api.js';
+import { getProductDetailAPIView ,writeReviewAPI, getReviewView,deletetProductDetailAPIView ,BACK_BASE_URL, FRONT_BASE_URL} from './api.js';
 
 
-
-
+// 상품 정보보기
 export async function viewProductDetail() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('product_id');
@@ -30,6 +29,18 @@ export async function viewProductDetail() {
     }
     
    
+}
+// 상품 삭제하기
+export async function deleteProduct() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('product_id');
+
+    try {
+        deletetProductDetailAPIView(productId);
+        
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 // 후기 작성 
@@ -137,7 +148,7 @@ export async function showReview(){
 export async function setEventListener() {
     // html 요소 이벤트 리스너 추가
     document.getElementById("reviewsubmitbutton").addEventListener("click", writeReview)
-    // document.getElementById("preview").addEventListener("click", getVerificationCode)
+    document.getElementById("delete-btn").addEventListener("click", deleteProduct)
 }
 
 
