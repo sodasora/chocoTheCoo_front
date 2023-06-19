@@ -22,7 +22,13 @@ import {
     // 판매자 정보 삭제
     deleteSellerInformationAPI,
     // 휴면 계정으로 전환
-    deleteUserInformationAPI
+    deleteUserInformationAPI,
+    // 통관 번호 수정
+    setCustomsCodeAPI,
+    // 휴대폰 번호 등록과 수정  및 인증번호 발급
+    getAuthNumberAPI,
+    // 휴대폰 인증 번호 제출
+    submitVerificationNumbersAPI,
 } from './api.js'
 import { handleLogout } from './loader.js'
 
@@ -60,9 +66,11 @@ export async function updateInformation() {
 
         // API 응답
         const response = await updateUserInformationAPI(information)
+        const response_json = await response.json()
+        console.log(response_json)
         //  응답에 따른 프론트 처리
         if (response.status == 200) {
-            handleLogout()
+            // handleLogout()
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else if (response.status == 404) {
             // 사용자 정보를 찾을 수 없음
@@ -142,8 +150,9 @@ export async function addressSubmit() {
         } else if (response.status == 401) {
             // 로그인을 하지 않았거나, 올바르지 않은 접근 방법
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        } else if (response.status == 402) {
+            addressMessageBox.innerText = "핸드폰 정보를 먼저 등록해 주세요."
         } else if (response.status == 400) {
-            console.log("fdsfsd")
             addressMessageBox.innerText = "배송 정보는 다섯개 까지 등록할 수 있습니다."
         } else {
             addressMessageBox.innerText = "배송 정보가 올바르지 않습니다."
@@ -329,14 +338,81 @@ export async function deleteUserInformation() {
 }
 
 
+export async function setCustomsCode() {
+    // 통관 번호 수정
+    const payload_parse = await getPayloadParse()
+    const customs_code = document.getElementById("customsCodeSubmitInput").value
+    const information = {
+        user_id: payload_parse.user_id,
+        customs_code: customs_code
+    }
+    const response = await setCustomsCodeAPI(information)
+    const response_json = await response.json()
 
+    if (response.status == 200) {
+        // 수정 완료
+        location.reload();
+    } else if (response.status == 404) {
+        // 로그인 필요
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else if (response.status == 401) {
+        // 로그인 필요
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else if (response.status == 400) {
+        const addressMessageBox = document.getElementById("addressMessageBox")
+        addressMessageBox.style.display = "flex"
+        addressMessageBox.innerText = "통관 번호가 올바르지 않습니다."
+    }
+}
 
+export async function getAuthNumber() {
+    // 핸드폰 번호 등록 및 수정, 인증번호 발급 받기
+    const phoneNum = document.getElementById("phoneNum")
+    const phone_number = phoneNum.value.replace(/-/g, "")
+    const phoneMessageBox = document.getElementById("phoneMessageBox")
+    const information = {
+        phone_number: phone_number
+    }
+    const response = await getAuthNumberAPI(information)
 
+    if (response.status == 200) {
+        phoneMessageBox.style.display = "none"
+        document.getElementById("phone_auth_box").style.display = "block"
+        document.getElementById("submit_auth_number_button_box").style.display = "block"
 
+    } else {
+        phoneMessageBox.style.display = "flex"
+        if (response.status == 404) {
+            // 로그인 필요
+            window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        } else {
+            const response_json = await response.json()
+            phoneMessageBox.innerText = response_json.err.non_field_errors
+        }
+    }
 
-
-
-
+}
+export async function submitVerificationNumbers() {
+    const verification_numbers = document.getElementById("verification_numbers").value
+    const information = {
+        verification_numbers: verification_numbers
+    }
+    const response = await submitVerificationNumbersAPI(information)
+    if (response.status == 200) {
+        // 인증 완료
+        location.reload();
+    } else {
+        const phoneMessageBox = document.getElementById("phoneMessageBox")
+        phoneMessageBox.style.display = "flex"
+        if (response.status == 404) {
+            // 로그인 필요
+            window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        } else {
+            const response_json = await response.json()
+            phoneMessageBox.innerText = response_json.err
+        }
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -528,23 +604,25 @@ export async function changeAddressView() {
 async function DeliveryInformation(response_json) {
     // 드랍 다운 메뉴 설정
     const dropdown_content = document.querySelector(".dropdown-content");
-    const delivery_data = response_json.delivery
-
+    const deliveries_data = response_json.deliveries_data
+    console.log(response_json)
     // 드랍 다운 메뉴 아이템 추가
-    Object.values(delivery_data).forEach((element) => {
+    deliveries_data.forEach((element) => {
         dropdown_content.innerHTML += `
         <p class="dropdown-item" id="delivery_${element.id}" data-hidden-value =${element}>${element.address}</p>
         `
     });
 
-    // 드랍 다운 메뉴 아이템에 이벤트 리스너 할당
-    Object.values(delivery_data).forEach((element) => {
+    // // 드랍 다운 메뉴 아이템에 이벤트 리스너 할당
+    deliveries_data.forEach((element) => {
         const delivery_information = document.getElementById(`delivery_${element.id}`);
         delivery_information.addEventListener("click", function () {
             getDeliveryData(element);
         });
 
     })
+
+    document.getElementById("customsCodeSubmitInput").value = response_json.customs_code
 }
 
 
@@ -565,7 +643,8 @@ async function getUserDetailInformation(response_json) {
 }
 
 async function getSellerInformation(response_json) {
-    const seller_information = response_json.seller
+    const seller_information = response_json.user_seller
+    console.log(seller_information)
     if (seller_information != null) {
         // 데이터 불러오기
         document.getElementById("navSellerInformation").innerText = "사업자 정보 수정"
@@ -604,8 +683,10 @@ async function getUserInformation() {
         // 소셜 로그인 계정일 경우
         document.getElementById("navItemUserInformation").style.display = "none"
     }
+    if (response_json.phone_number != null) {
+        document.getElementById("phoneNum").value = response_json.phone_number
+    }
 }
-
 
 
 export async function setEventListener() {
@@ -663,8 +744,50 @@ export async function setEventListener() {
     // 휴면 계정 전환, 이벤트 리스너 할당
     document.getElementById("deleteUserInformationButton").addEventListener("click", deleteUserInformation)
 
+    // 통관번호
+    document.getElementById("customsCodeSubmitButton").addEventListener("click", setCustomsCode)
+
+    // 휴대폰 인증 번호 발급 받기
+    document.getElementById("getAuthNumber").addEventListener("click", getAuthNumber)
+    // 휴대폰 인증 번호 제출
+    document.getElementById("submitPhoneNumber").addEventListener("click", submitVerificationNumbers)
 }
 
+var autoHypenPhone = function (str) {
+    str = str.replace(/[^0-9]/g, '');
+    var tmp = '';
+    if (str.length < 4) {
+        return str;
+    } else if (str.length < 7) {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3);
+        return tmp;
+    } else if (str.length < 11) {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 3);
+        tmp += '-';
+        tmp += str.substr(6);
+        return tmp;
+    } else {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 4);
+        tmp += '-';
+        tmp += str.substr(7);
+        return tmp;
+    }
+
+    return str;
+}
+
+
+var phoneNum = document.getElementById('phoneNum');
+
+phoneNum.onkeyup = function () {
+    this.value = autoHypenPhone(this.value);
+}
 
 window.onload = async () => {
     setEventListener()

@@ -23,8 +23,8 @@ if (localStorage.getItem("payload")) {
 // 받아온 토큰을 로컬 스토리지에 저장
 // 에러 발생 시, 에러 문구를 띄워주고 이전 페이지(로그인페이지)로
 async function setLocalStorage(response) {
+    const response_json = await response.json();
     if (response.status === 200) {
-        const response_json = await response.json();
         localStorage.setItem("access", response_json.access);
         localStorage.setItem("refresh", response_json.refresh);
         const base64Url = response_json.access.split(".")[1];

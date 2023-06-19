@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5500"
+export const FRONT_BASE_URL = "http://127.0.0.1:5501"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
@@ -221,7 +221,7 @@ export async function setUserInformationAPI() {
 		method: 'PATCH',
 		body: JSON.stringify({
 			"email": email,
-			"auth_code": verificationCode,
+			"verification_code": verificationCode,
 			"password": password
 		})
 	})
@@ -255,7 +255,7 @@ export async function VerificationCodeSubmitAPI(email, verificationCode) {
 		method: 'PUT',
 		body: JSON.stringify({
 			"email": email,
-			"auth_code": verificationCode,
+			"verification_code": verificationCode,
 		})
 	})
 	return response
@@ -303,7 +303,7 @@ export async function updateUserInformationAPI(information) {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
 		},
-		method: 'PUT',
+		method: 'PATCH',
 		body: JSON.stringify({
 			"email": information.email,
 			"password": information.password,
@@ -359,6 +359,7 @@ export async function addressDeleteAPI(delivery_id) {
 	})
 	return response
 }
+
 
 export async function createSellerInformationAPI(information) {
 	// 판매자 정보 생성 및 권한 신청
@@ -520,6 +521,26 @@ export async function registProductAPIView(formdata) {
 	return response.json();
 }
 
+<<<<<<< HEAD
+// 상품 디테일 보기
+// export async function getProductDetailAPI(productId) {
+// 	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
+
+// 	if (response.status == 200) {
+// 		const responseJson = await response.json()
+// 		return responseJson
+// 	} else {
+// 		alert(response.status)
+// 	}
+// }
+
+
+// 상품 디테일 보기
+
+export async function getProductDetailAPI(productId) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
+=======
+>>>>>>> 7a45e3c69a197e7785475b1155c8aa2234f04c5d
 
 // 상품 상세 페이지 수정 하기 
 
@@ -702,6 +723,7 @@ export async function getSellerPermissionAPIView(user_id) {
 	return response.json();
 }
 
+
 // 체크한 카트 정보만 주문으로 넘겨주기
 export async function getCheckedCart(queryString) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/?${queryString}`, {
@@ -759,4 +781,53 @@ export async function makeOrders(queryString, bill_id) {
 		alert("잘못된 URL입니다. 장바구니부터 다시 시도해주세요.")
 		window.history.back();
 	}
+}
+
+export async function setCustomsCodeAPI(information) {
+	// 통관번호 등록 및 수정
+	const user_id = information.user_id
+	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'PATCH',
+		body: JSON.stringify({
+			customs_code: information.customs_code
+
+		})
+	})
+	return response
+}
+
+
+export async function getAuthNumberAPI(information) {
+	// 휴대폰 번호 등록과 수정 및 인증 번호 발급 받기
+	const response = await fetch(`${BACK_BASE_URL}/api/users/phone/verification/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'PUT',
+		body: JSON.stringify({
+			phone_number: information.phone_number
+
+		})
+	})
+	return response
+}
+export async function submitVerificationNumbersAPI(information) {
+	// 휴대폰 인증 번호 제출
+	const response = await fetch(`${BACK_BASE_URL}/api/users/phone/verification/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'PATCH',
+		body: JSON.stringify({
+			verification_numbers: information.verification_numbers
+
+		})
+	})
+	return response
 }
