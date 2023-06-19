@@ -667,6 +667,17 @@ export async function getReviewView(product_id) {
 	});
 	return response.json();
 }
+// 특정 상품의 전체 리뷰 불러오기
+// # 리뷰 수정
+export async function editReviewView(product_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/reviews/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "PUT",
+	});
+	return response.json();
+}
 
 // 주문상태 이름 조회
 // # 주문 상태 조회
