@@ -1,8 +1,12 @@
-import { BACK_BASE_URL,  FRONT_BASE_URL, registProductAPIView} from './api.js'
+import { BACK_BASE_URL,  FRONT_BASE_URL, registProductAPIView, getSellerPermissionAPIView} from './api.js'
+
 
 export async function registProduct() {
+    const payload = localStorage.getItem("payload");
+    const payload_parse = JSON.parse(payload);
+    const seller_id = payload_parse.user_id //로그인한 유저id
     
- 
+
     const name = document.getElementById("name").value;
     const content = document.getElementById("content").value;
     const image = document.getElementById("formFile").files[0];
@@ -18,7 +22,7 @@ export async function registProduct() {
     formdata.append('content', content)
     formdata.append('price', price)
     formdata.append('amount', amount)
-
+    formdata.append('seller_id', seller_id)
     if(image){
         formdata.append('image', image)
     }
@@ -38,13 +42,39 @@ export async function registProduct() {
     }
 }
 
-
 export async function setEventListener() {
     // html 요소 이벤트 리스너 추가
     document.getElementById("registrate").addEventListener("click", registProduct)
     // document.getElementById("preview").addEventListener("click", getVerificationCode)
 }
 
+
+// 판매자정보
+async function sellerProfile() {
+    const payload = localStorage.getItem("payload");
+    const payload_parse = JSON.parse(payload);
+    const user_id = payload_parse.user_id //로그인한 유저id
+
+    const seller_data = await getSellerPermissionAPIView(user_id)
+    console.log("판매자정보", seller_data)
+
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = String(today.getMonth() + 1).padStart(2, '0'); //두자리되도록 앞에0채우기
+    let date = String(today.getDate()).padStart(2, '0'); //두자리되도록 앞에0채우기
+    today = `${year}-${month}-${date}`;
+    // console.log("today", today)
+
+    
+
+
+    if (seller_data['company_img']) { //로고 이미지가 존재한다면
+        document.getElementById("company-img").setAttribute("src", `${BACK_BASE_URL}` + seller_data['company_img'])
+    }
+    document.getElementById("company-name").innerText = seller_data["company_name"]
+    document.getElementById("owner-name").innerText = seller_data["business_owner_name"]
+}
+sellerProfile()
 
 window.onload = async function() {
     setEventListener()

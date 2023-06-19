@@ -1,4 +1,4 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, getCartList, deleteCartItem, changeCartItemAmount } from './api.js'
+import { BACK_BASE_URL, FRONT_BASE_URL, getCartList, deleteCartItem, changeCartItemAmount, payload } from './api.js'
 
 
 
@@ -105,14 +105,16 @@ async function renderCartList() {
         col3Div.classList.add('col-2', 'sum-price');
         col3Div.textContent = `${e.aggregate_price.toLocaleString()} 원`;
         col3Div.setAttribute('data-price', e.aggregate_price);
-
-        const col4Div = document.createElement('div');
-        col4Div.classList.add('col-1', 'pd-deliveryfee');
-        col4Div.textContent = '3,000원';
         col3Div.setAttribute('data-deliveryFee', '3000');
 
+        const col4Div = document.createElement('div');
+        const feeData = ((!payload.subscribe_data) * 3000).toLocaleString()
+        col4Div.classList.add('col-2', 'pd-deliveryfee');
+
+        col4Div.textContent = `${feeData} 원`
+
         const col5Div = document.createElement('div');
-        col5Div.classList.add('col-1', 'pd-del-box');
+        col5Div.classList.add('pd-del-box');
         const delBtn = document.createElement('img');
         delBtn.classList.add('pd-del-btn', 'col-1');
         delBtn.src = "/static/images/cross.png";
@@ -120,11 +122,11 @@ async function renderCartList() {
 
         col5Div.appendChild(delBtn);
 
+        cartItemDiv.appendChild(col5Div);
         cartItemDiv.appendChild(col1Div);
         cartItemDiv.appendChild(col2Div);
         cartItemDiv.appendChild(col3Div);
         cartItemDiv.appendChild(col4Div);
-        cartItemDiv.appendChild(col5Div);
 
 
         cartBox.appendChild(cartItemDiv);

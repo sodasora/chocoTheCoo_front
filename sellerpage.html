@@ -13,15 +13,34 @@
 <header></header>
 <body>
     
-    <div class="section2">   
-        <div class="sellerlogo">
-            <img id="sellerLogo" src="static/images/sellerlogo.gif"  >
-        </div>
-        
-        <div class="container">
-            <div class="row row-cols-1 row-cols-md-3 g-4" id="product-list">
+    <div class="section2">
+        <div class="left-section">  
+            <div class="sellerlogo">
+                <img id="sellerLogo" src="static/images/sellerlogo.gif"  >
+            </div>
+            
+            <div class="container">
+                <div class="row row-cols-1 row-cols-md-3 g-4" id="product-list">
+                </div>
+            </div>
+        </div> 
+        <div class="right-section">
+            <div class="profile-section">
+                <div class="profile-card">
+                    <div class="bigbox">
+                        <div class="box" style="margin-top:20px;">
+                            <img id="company-img" class="profile" src="static/images/store.gif" alt="company-img">
+                        </div>
+                    </div>
+                    <div class="profile-text">
+                        <p>회사: <span id="company-name"></span></p>
+                        <p>대표: <span id="owner-name"></span></p>
+                        <p id="user-edit" onclick="location.href='#';">회원정보수정</p>
+                    </div>
+                </div>
             </div>
         </div>
+        
     </div> 
 
     

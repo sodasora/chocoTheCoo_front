@@ -405,7 +405,6 @@ export async function updateSellerInformationAPI(information) {
 
 export async function deleteSellerInformationAPI() {
 	// 판매자 정보 삭제
-	const access_token = localStorage.getItem("access")
 	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
@@ -522,6 +521,7 @@ export async function registProductAPIView(formdata) {
 	return response.json();
 }
 
+<<<<<<< HEAD
 // 상품 디테일 보기
 // export async function getProductDetailAPI(productId) {
 // 	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
@@ -539,14 +539,23 @@ export async function registProductAPIView(formdata) {
 
 export async function getProductDetailAPI(productId) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
+=======
+>>>>>>> 7a45e3c69a197e7785475b1155c8aa2234f04c5d
 
-	if (response.status == 200) {
-		const responseJson = await response.json()
-		return responseJson
-	} else {
-		alert(response.status)
-	}
+// 상품 상세 페이지 수정 하기 
+
+export async function editProductDetailAPIView(product_id, formdata) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "PUT",
+		body: formdata
+	});
+	return response.json();
 }
+
+
 
 // 상품 정보 전체 불러오기
 // # 상품 전체 조회
@@ -583,6 +592,24 @@ export async function getProductDetailAPIView(product_id) {
 		},
 		method: "GET",
 	});
+	return response.json();
+}
+
+//  싱픔뱔 상세 정보 가져오기
+// # 상품 삭제하기
+export async function deletetProductDetailAPIView(product_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "DELETE",
+	});
+	if(response.status == 204){
+		alert("상품 삭제 완료!")
+		window.location.href="sellerpage.html";
+	} else {
+		alert("상품 삭제 실패!")
+	}
 	return response.json();
 }
 
@@ -634,6 +661,22 @@ export async function getWishListAPIView(product_id) {
 	return response.json();
 }
 
+// 특정 상품의 리뷰 등록하기
+export async function writeReviewAPI(product_id, formdata) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/reviews/`, {
+		method: 'POST',
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		body: formdata
+	});
+	if(response.status == 201){
+		window.location.reload();
+	} else {
+		alert("리뷰 등록 실패!")
+	}
+	return response.json();
+}
 // 특정 상품의 전체 리뷰 불러오기
 // # 리뷰 조회, 생성
 export async function getReviewView(product_id) {
@@ -642,6 +685,17 @@ export async function getReviewView(product_id) {
 			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "GET",
+	});
+	return response.json();
+}
+// 특정 상품의 전체 리뷰 불러오기
+// # 리뷰 수정
+export async function editReviewView(product_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/reviews/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "PUT",
 	});
 	return response.json();
 }

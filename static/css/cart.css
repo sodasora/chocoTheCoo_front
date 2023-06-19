@@ -24,11 +24,6 @@
     flex-direction: column;
 }
 
-/* input { */
-/* width: auto; */
-/* vertical-align: middle; */
-/* } */
-
 .row-type {
     display: flex;
     /* justify-content: space-between; */
@@ -41,8 +36,9 @@
 
 .cart-item {
     /* background-color: aliceblue; */
+    position: relative;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     font-family: 'S-CoreDream-3Light';
     font-size: 1.2em;
     color: aliceblue;
@@ -124,6 +120,9 @@
     justify-content: center;
     align-items: center;
     object-fit: cover;
+    position: absolute;
+    top: 40%;
+    right: 50%;
 }
 
 .pd-del-btn {
