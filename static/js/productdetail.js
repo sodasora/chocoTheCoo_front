@@ -28,8 +28,12 @@ export async function viewProductDetail() {
         productImage.appendChild(newImage)
     }
     
+    const updateButton = document.getElementById("edit-btn")
+    updateButton.setAttribute("onclick", "editProductDetail(productId)")
    
 }
+
+
 // 상품 삭제하기
 export async function deleteProduct() {
     const urlParams = new URLSearchParams(window.location.search);

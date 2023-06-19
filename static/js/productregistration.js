@@ -2,8 +2,11 @@ import { BACK_BASE_URL,  FRONT_BASE_URL, registProductAPIView, getSellerPermissi
 
 
 export async function registProduct() {
+    const payload = localStorage.getItem("payload");
+    const payload_parse = JSON.parse(payload);
+    const seller_id = payload_parse.user_id //로그인한 유저id
     
- 
+
     const name = document.getElementById("name").value;
     const content = document.getElementById("content").value;
     const image = document.getElementById("formFile").files[0];
@@ -19,7 +22,7 @@ export async function registProduct() {
     formdata.append('content', content)
     formdata.append('price', price)
     formdata.append('amount', amount)
-
+    formdata.append('seller_id', seller_id)
     if(image){
         formdata.append('image', image)
     }
