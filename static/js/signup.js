@@ -53,11 +53,16 @@ export async function handleSignup() {
             const signupNavItemTwo = document.getElementById("signupNavItemTwo")
             signupNavItemTwo.style.backgroundColor = "#7B4242";
             signupMessageBox.style.display = "none"
-        } else if (response.status == 400) {
+        } else {
             signupMessageBox.style.display = "flex"
             password.value = ''
             password2.value = ''
-            signupMessage.innerText = "이미 가입한 계정이 있거나 입력값이 올바르지 않습니다."
+            const response_json = await response.json()
+            if (response_json.err.non_field_errors == null) {
+                signupMessage.innerText = '이미 등록된 이메일 계정이거나, 이메일 정보가 올바르지 않습니다.'
+            } else {
+                signupMessage.innerText = response_json.err.non_field_errors
+            }
         }
     }
 
@@ -84,6 +89,8 @@ export async function getVerificationCode() {
             email.readOnly = true
         } else if (response.status == 405) {
             signupMessage.innerText = "가입된 이메일 정보를 찾을 수 없습니다."
+        } else if (response.status == 403) {
+            signupMessage.innerText = "소셜 계정으로 가입된 이메일입니다."
         }
     }
 }
@@ -101,14 +108,9 @@ export async function VerificationCodeSubmit() {
         signupMessageBox.style.display = "flex"
         if (response.status == 404) {
             signupMessage.innerText = "가입된 이메일 정보를 찾을 수 없습니다."
-        } else if (response.status == 403) {
-            signupMessage.innerText = "소셜 계정으로 가입된 이메일 입니다."
-        } else if (response.status == 406) {
-            signupMessage.innerText = "인증 코드를 발급 받아 주세요."
-        } else if (response.status == 408) {
-            signupMessage.innerText = "인증 유효기간이 지났습니다."
         } else {
-            signupMessage.innerText = "인증 코드가 올바르지 않습니다."
+            const response_json = await response.json()
+            signupMessage.innerText = response_json.err
         }
     }
 }

@@ -160,15 +160,29 @@
                 <div id="setUserPhoneNumberInformation" style="display: none;" class="view-items">
                     <div class="input-itme-box">
                         <label class="input-text-items">
-                            성함
-                        </label>
-                        <input class="input-items">
-                    </div>
-                    <div class="input-itme-box">
-                        <label class="input-text-items">
                             휴대폰 번호
                         </label>
-                        <input class="input-items">
+                        <div class="phoneNumberBox">
+                            <input type="text" id="phoneNum" maxlength="13" class="phone_number_input_items">
+                        </div>
+                    </div>
+                    <div class="input-itme-box" style="display: none;" id="phone_auth_box">
+                        <label class="input-text-items">
+                            인증 번호
+                        </label>
+                        <div class="phoneNumberBox">
+                            <input type="text" id="verification_numbers" class="phone_number_input_items"
+                                placeholder="인증 번호를 입력해 주세요">
+                        </div>
+                    </div>
+                    <div class="input-itme-box">
+                        <button id="getAuthNumber"> 인증 번호 발급 받기 </button>
+                    </div>
+                    <div class="input-itme-box" style="display: none;" id="submit_auth_number_button_box">
+                        <button id="submitPhoneNumber"> 인증 번호 제출 </button>
+                    </div>
+                    <div id="phoneMessageBox" style="display: none;">
+
                     </div>
                 </div>
                 <!-- 회원 휴대폰 번호 정보 수정 끝 -->
@@ -248,6 +262,8 @@
                     </div>
                 </div>
                 <!-- 회원 탈퇴 끝 -->
+                <!-- userDetailView
+                    userDetailViewImageBox -->
                 <div id="userDetailView" class="view-items">
                     <div id="userDetailViewImageBox">
                     </div>
