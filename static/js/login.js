@@ -178,6 +178,11 @@ export async function setEventListener() {
     document.getElementById("kakaoBtn").addEventListener("click", kakaoLoginBtn)
     document.getElementById("naverBtn").addEventListener("click", naverLoginBtn)
     document.getElementById("googleBtn").addEventListener("click", googleLoginBtn)
+    document.getElementById("password").addEventListener("keydown", (event) => {
+        if (event.key == "Enter") {
+            handleLogin()
+        }
+    })
 }
 
 window.onload = async () => {
