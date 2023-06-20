@@ -584,9 +584,9 @@ export async function deletetProductDetailAPIView(product_id) {
 		},
 		method: "DELETE",
 	});
-	if(response.status == 204){
+	if (response.status == 204) {
 		alert("상품 삭제 완료!")
-		window.location.href="sellerpage.html";
+		window.location.href = "sellerpage.html";
 	} else {
 		alert("상품 삭제 실패!")
 	}
@@ -650,7 +650,7 @@ export async function writeReviewAPI(product_id, formdata) {
 		},
 		body: formdata
 	});
-	if(response.status == 201){
+	if (response.status == 201) {
 		window.location.reload();
 	} else {
 		alert("리뷰 등록 실패!")
@@ -815,57 +815,57 @@ export async function submitVerificationNumbersAPI(information) {
 
 export async function getBillDetail(bill_id) {
 	// 구매 내역 상세 조회
-    const response = await fetch(`${BACK_BASE_URL}/api/users/bills/${bill_id}/`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            "Authorization": "Bearer " + localStorage.getItem("access")
-        },
-    })
+	const response = await fetch(`${BACK_BASE_URL}/api/users/bills/${bill_id}/`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": "Bearer " + localStorage.getItem("access")
+		},
+	})
 
-    if (response.status == 200) {
-        const response_json = await response.json();
-        console.log(response_json);
-        return response_json;
-    } else {
-        console.log(response.status);
-    }
+	if (response.status == 200) {
+		const response_json = await response.json();
+		console.log(response_json);
+		return response_json;
+	} else {
+		console.log(response.status);
+	}
 }
 
 export async function getBillList() {
 	// 구매 내역 목록 조회
-    const response = await fetch(`${BACK_BASE_URL}/api/users/bills/`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            "Authorization": "Bearer " + localStorage.getItem("access")
-        }
-    })
+	const response = await fetch(`${BACK_BASE_URL}/api/users/bills/`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": "Bearer " + localStorage.getItem("access")
+		}
+	})
 
-    if (response.status == 200) {
-        const response_json = await response.json();
-        console.log(response_json);
-        return response_json;
-    } else {
-        console.log(response.status);
-    }
+	if (response.status == 200) {
+		const response_json = await response.json();
+		console.log(response_json);
+		return response_json;
+	} else {
+		console.log(response.status);
+	}
 }
 
 export async function billToCart(orderItem) {
 	// 구매내역에서 장바구니 추가하기
-    const response = await fetch(`${BACK_BASE_URL}/api/users/bills/cart/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            "Authorization": `Bearer ${access_token}`
-        },
-        body: JSON.stringify({
-            order_items: orderItem
-        })
-    })
-    if (response.status == 200) {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/bills/cart/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		body: JSON.stringify({
+			order_items: orderItem
+		})
+	})
+	if (response.status == 200) {
 		const response_json = await response.json();
-        console.log(response.status);
-        console.log(response_json);
-    }
+		console.log(response.status);
+		console.log(response_json);
+	}
 }

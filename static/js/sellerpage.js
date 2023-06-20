@@ -99,10 +99,4 @@ sellerProfile()
 window.onload = async function() {
 
   sellerPageAPI()
-  // const payload = localStorage.getItem("payload");
-  // const payload_parse = JSON.parse(payload)
-  //   if (payload_parse != null) {
-  //       window.location.replace(`${FRONT_BASE_URL}/sellerpage.html`)
-  //   }
-
 }
