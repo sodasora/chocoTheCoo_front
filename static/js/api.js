@@ -521,27 +521,6 @@ export async function registProductAPIView(formdata) {
 	return response.json();
 }
 
-<<<<<<< HEAD
-// 상품 디테일 보기
-// export async function getProductDetailAPI(productId) {
-// 	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
-
-// 	if (response.status == 200) {
-// 		const responseJson = await response.json()
-// 		return responseJson
-// 	} else {
-// 		alert(response.status)
-// 	}
-// }
-
-
-// 상품 디테일 보기
-
-export async function getProductDetailAPI(productId) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
-=======
->>>>>>> 7a45e3c69a197e7785475b1155c8aa2234f04c5d
-
 // 상품 상세 페이지 수정 하기 
 
 export async function editProductDetailAPIView(product_id, formdata) {

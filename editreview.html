@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/header.css">
+    <link rel="stylesheet" href="static/css/footer.css">
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/editreview.css">
+    <title>Document</title>
+</head>
+<header></header>
+<body>
+    <div class="section">
+        <div class = "review-box">
+            <div class="input-group mb-3" >
+                <span class="input-group-text" id="inputGroup-sizing-default">제목</span>
+                <input type="text" class="form-control" id="update-title" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <select class="form-select" id="give-star" aria-label="Default select example">
+                <option selected>상품 별점 주기</option>
+                <option value="1">⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="5">⭐⭐⭐⭐⭐</option>
+            </select>
+
+            <div class="input-group mb-3" >
+                <span class="input-group-text" id="inputGroup-sizing-default">내용</span>
+                <input type="text" class="form-control" id="update-content" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="file" id="formFileMultiple" multiple>
+            </div>
+            <button type="button" class="submitbutton" id="update-submit">수정하기</button>
+        </div>  
+        
+
+
+    </div>
+    
+</body>
+<footer></footer>
+<script src="/static/js/loader.js" type="module"></script>
+<script src="/static/js/editreview.js" type="module"></script>
+</html>
