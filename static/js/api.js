@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5501"
+export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
@@ -521,26 +521,6 @@ export async function registProductAPIView(formdata) {
 	return response.json();
 }
 
-<<<<<<< HEAD
-// 상품 디테일 보기
-// export async function getProductDetailAPI(productId) {
-// 	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
-
-// 	if (response.status == 200) {
-// 		const responseJson = await response.json()
-// 		return responseJson
-// 	} else {
-// 		alert(response.status)
-// 	}
-// }
-
-
-// 상품 디테일 보기
-
-export async function getProductDetailAPI(productId) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
-=======
->>>>>>> 7a45e3c69a197e7785475b1155c8aa2234f04c5d
 
 // 상품 상세 페이지 수정 하기 
 
@@ -830,4 +810,62 @@ export async function submitVerificationNumbersAPI(information) {
 		})
 	})
 	return response
+}
+
+
+export async function getBillDetail(bill_id) {
+	// 구매 내역 상세 조회
+    const response = await fetch(`${BACK_BASE_URL}/api/users/bills/${bill_id}/`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer " + localStorage.getItem("access")
+        },
+    })
+
+    if (response.status == 200) {
+        const response_json = await response.json();
+        console.log(response_json);
+        return response_json;
+    } else {
+        console.log(response.status);
+    }
+}
+
+export async function getBillList() {
+	// 구매 내역 목록 조회
+    const response = await fetch(`${BACK_BASE_URL}/api/users/bills/`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer " + localStorage.getItem("access")
+        }
+    })
+
+    if (response.status == 200) {
+        const response_json = await response.json();
+        console.log(response_json);
+        return response_json;
+    } else {
+        console.log(response.status);
+    }
+}
+
+export async function billToCart(orderItem) {
+	// 구매내역에서 장바구니 추가하기
+    const response = await fetch(`${BACK_BASE_URL}/api/users/bills/cart/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${access_token}`
+        },
+        body: JSON.stringify({
+            order_items: orderItem
+        })
+    })
+    if (response.status == 200) {
+		const response_json = await response.json();
+        console.log(response.status);
+        console.log(response_json);
+    }
 }
