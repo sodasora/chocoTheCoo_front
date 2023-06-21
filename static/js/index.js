@@ -1,81 +1,146 @@
-import { BACK_BASE_URL, FRONT_BASE_URL } from './api.js'
+import { BACK_BASE_URL, FRONT_BASE_URL, getProductListAPIView } from './api.js'
 
+export async function productDetail(product_id) {
+    window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
+}
 
-// 로그인 되어있다면(localstorage에 토큰이 있다면) 로그인 되어있으므로 pass
-// 토큰이 없고, url에 파라미터가 있다면, 해당 값을 판별해서 해당하는 함수를 호출
-if (localStorage.getItem("payload")) {
-} else if (location.href.split("=")[1]) {
-    const code = new URLSearchParams(window.location.search).get("code");
-    const state = new URLSearchParams(window.location.search).get("state");
-    const hashParams = new URLSearchParams(window.location.hash.substr(1));
-    const google_token = hashParams.get("access_token");
-    if (code) {
-        if (state) {
-            getNaverToken(code, state);
-        } else {
-            getKakaoToken(code);
+window.onload = async function () {
+    const product = await getProductListAPIView();
+    console.log(product)
+    const list = document.getElementById("product-content")
+    const buttons = document.getElementById("product-buttons");
+
+    if (product != "") {
+        // 페이지네이션 페이지 설정
+        const numOfContent = product.length;
+        const maxContent = 6; //한 페이지에 보이는 수
+        const maxButton = 5; //보이는 최대 버튼 수
+        const maxPage = Math.ceil(numOfContent / maxContent);
+        let page = 1;
+
+        const Content = (id) => {
+            const newCol = document.createElement("div");
+            newCol.setAttribute("class", "col");
+
+            const newCard = document.createElement("div");
+            newCard.setAttribute("class", "card");
+            newCard.setAttribute("id", product[id].id);
+
+            newCard.onclick = function () {
+                productDetail(product[id].id);
+            };
+
+            const img = document.createElement("img");
+            img.setAttribute("class", "card-img-top");
+
+            if (product[id].image) {
+                img.setAttribute(
+                    "src",
+                    `${product[id].image}`
+                );
+            } else {
+                img.setAttribute("src", '/static/images/기본이미지.gif')
+            }
+
+            newCard.appendChild(img);
+
+            const newCardBody = document.createElement("div");
+            newCardBody.setAttribute("class", "card-body");
+            newCard.appendChild(newCardBody);
+
+            const newCardTitle = document.createElement("h5");
+            newCardTitle.setAttribute("class", "card-title");
+            newCardTitle.innerText = product[id].name;
+            newCardBody.appendChild(newCardTitle);
+
+            const newCardText = document.createElement("p");
+            newCardText.setAttribute("class", "card-text");
+            newCardText.innerText = "상품가격 : " + product[id].price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
+            newCard.appendChild(newCardText)
+
+            const newCardFooter = document.createElement("p");
+            newCardFooter.setAttribute("class", "card-footer");
+            newCardFooter.innerText = "상품수량 : " + product[id].amount + "개";
+            newCard.appendChild(newCardFooter)
+            newCol.appendChild(newCard);
+            return newCol;
         }
-    } else if (google_token) {
-        getGoogleToken(google_token);
-    }
-}
 
-// 받아온 토큰을 로컬 스토리지에 저장
-// 에러 발생 시, 에러 문구를 띄워주고 이전 페이지(로그인페이지)로
-async function setLocalStorage(response) {
-    const response_json = await response.json();
-    if (response.status === 200) {
-        localStorage.setItem("access", response_json.access);
-        localStorage.setItem("refresh", response_json.refresh);
-        const base64Url = response_json.access.split(".")[1];
-        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        const jsonPayload = decodeURIComponent(
-            atob(base64)
-                .split("")
-                .map(function (c) {
-                    return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-                })
-                .join("")
-        );
-        localStorage.setItem("payload", jsonPayload);
-        window.location.reload();
+        const makeButton = (id) => {
+            const button = document.createElement("button");
+            button.classList.add("button_page");
+            button.dataset.num = id;
+            button.innerText = id;
+            button.addEventListener("click", (e) => {
+                Array.prototype.forEach.call(buttons.children, (button) => {
+                    if (button.dataset.num) button.classList.remove("active");
+                });
+                e.target.classList.add("active");
+                renderContent(parseInt(e.target.dataset.num));
+            });
+            return button;
+        }
+
+        const renderContent = (page) => {
+            // 목록 리스트 초기화
+            while (list.hasChildNodes()) {
+                list.removeChild(list.lastChild);
+            }
+            // 글의 최대 개수를 넘지 않는 선에서, 화면에 maxContent개의 글 생성
+            for (let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++) {
+                list.appendChild(Content(id - 1));
+            }
+        };
+
+        const goPrevPage = () => {
+            page -= maxButton;
+            render(page);
+        };
+
+        const goNextPage = () => {
+            page += maxButton;
+            render(page);
+        };
+
+        const prev = document.createElement("button");
+        prev.classList.add("button_page", "prev");
+        prev.innerHTML = `<ion-icon name="chevron-back-outline"></ion-icon>`;
+        prev.addEventListener("click", goPrevPage);
+
+        const next = document.createElement("button");
+        next.classList.add("button_page", "next");
+        next.innerHTML = `<ion-icon name="chevron-forward-outline"></ion-icon>`;
+        next.addEventListener("click", goNextPage);
+
+        const renderButton = (page) => {
+            // 버튼 리스트 초기화
+            while (buttons.hasChildNodes()) {
+                buttons.removeChild(buttons.lastChild);
+            }
+            // 화면에 최대 maxButton개의 페이지 버튼 생성
+            for (let id = page; id < page + maxButton && id <= maxPage; id++) {
+                buttons.appendChild(makeButton(id));
+            }
+            // 첫 버튼 활성화(class="active")
+            buttons.children[0].classList.add("active");
+
+            buttons.prepend(prev);
+            buttons.appendChild(next);
+
+            // 이전, 다음 페이지 버튼이 필요한지 체크
+            if (page - maxButton < 1) buttons.removeChild(prev);
+            if (page + maxButton > maxPage) buttons.removeChild(next);
+        };
+
+        const render = (page) => {
+            renderContent(page);
+            renderButton(page);
+        };
+        render(page);
+
     } else {
-        alert(response_json["error"]);
-        window.history.back();
+        list.innerText = "정보가 없습니다."
     }
-}
 
-// 각각 해당하는 url로 데이터를 실어서 요청을 보내고 액세스 토큰을 받아오는 함수
-async function getKakaoToken(kakao_code) {
-    // Resource Server로부터 응답받은 accesstoken을 백엔드 서버로 발송
-    const response = await fetch(`${BACK_BASE_URL}/api/users/kakao/login/`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ code: kakao_code })
-    });
-    setLocalStorage(response);
-}
 
-async function getGoogleToken(google_token) {
-    const response = await fetch(`${BACK_BASE_URL}/api/users/google/login/`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ access_token: google_token })
-    });
-    setLocalStorage(response);
-}
-
-async function getNaverToken(naver_code, state) {
-    const response = await fetch(`${BACK_BASE_URL}/api/users/naver/login/`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ naver_code: naver_code, state: state })
-    });
-    setLocalStorage(response);
 }
