@@ -1,0 +1,41 @@
+.review-box {
+    width: 60%;
+    height:80%;
+    margin: 70PX 0 30PX 0;
+    border-radius: 10px;
+    border: 1px solid white;
+}
+.section {
+    display: flex;
+    justify-content: center;
+}
+
+#update-title {
+    width:90%;
+    margin: 40PX 0 30PX 0;
+}
+
+#update-content {
+    width:90%;
+    height: 400px;
+}
+
+#formFileMultiple{
+    width:90%;
+    margin-left: 5%;
+}
+
+#update-submit {
+    width:10%;
+    height:5%;
+    margin: 15px 0 0 450px;
+    border-radius: 10px;
+    background-color: brown;
+    color:white;
+}
+
+#give-star {
+    width:93%;
+    margin: 0 0 20px 40px;
+    height:5%;
+}

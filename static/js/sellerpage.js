@@ -5,6 +5,7 @@ export async function productDetail(product_id) {
   window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
 }
 
+//등록한 상품들 전체 보기
 export async function sellerPageAPI() {
   
   try {
@@ -66,8 +67,6 @@ export async function sellerPageAPI() {
 }
 
 
-// 판매자 스토어에서 등록한 상품 전체 보기
-
 
 // 판매자정보
 async function sellerProfile() {
@@ -99,10 +98,4 @@ sellerProfile()
 window.onload = async function() {
 
   sellerPageAPI()
-  // const payload = localStorage.getItem("payload");
-  // const payload_parse = JSON.parse(payload)
-  //   if (payload_parse != null) {
-  //       window.location.replace(`${FRONT_BASE_URL}/sellerpage.html`)
-  //   }
-
 }
