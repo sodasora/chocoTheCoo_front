@@ -2,12 +2,12 @@
 #1 main front
 #2 mypage front
 #3 user front
-#4 결제와 구독 front
+#4 subscription and payment front
 #5 review front
 #6 cart front
 #15 bill front
 #16 seller front
-
+#19 product front
 
 # :sparkles:Feat: 새로운 기능 추가
 # :bug:Fix: 버그 수정

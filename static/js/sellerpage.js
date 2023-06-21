@@ -5,6 +5,7 @@ export async function productDetail(product_id) {
   window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
 }
 
+//등록한 상품들 전체 보기
 export async function sellerPageAPI() {
   
   try {
@@ -65,8 +66,6 @@ export async function sellerPageAPI() {
   }
 }
 
-
-// 판매자 스토어에서 등록한 상품 전체 보기
 
 
 // 판매자정보

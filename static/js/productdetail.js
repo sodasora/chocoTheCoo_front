@@ -4,6 +4,8 @@ import { getProductDetailAPIView ,writeReviewAPI, getReviewView, deletetProductD
 export async function goEditReview(product_id, review_id) {
     window.location.href = `${FRONT_BASE_URL}/editreview.html?product_id=${product_id}&review_id=${review_id}`;
   }
+
+
 // 상품 정보보기
 export async function viewProductDetail() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -31,11 +33,17 @@ export async function viewProductDetail() {
         productImage.appendChild(newImage)
     }
     
-    const updateButton = document.getElementById("edit-btn")
-    updateButton.setAttribute("onclick", "editProductDetail(productId)")
+    
    
 }
 
+// 상품 수정하기
+export async function goEditProduct(product_id) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('product_id');
+
+    window.location.href = `${FRONT_BASE_URL}/productregistration.html?product_id=${productId}`;
+  }
 
 // 상품 삭제하기
 export async function deleteProduct() {
@@ -187,6 +195,7 @@ export async function setEventListener() {
     // html 요소 이벤트 리스너 추가
     document.getElementById("reviewsubmitbutton").addEventListener("click", writeReview)
     document.getElementById("delete-btn").addEventListener("click", deleteProduct)
+    document.getElementById("edit-btn").addEventListener("click",goEditProduct)
 }
 
 
