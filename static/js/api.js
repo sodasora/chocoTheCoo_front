@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5501"
+export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
@@ -521,26 +521,6 @@ export async function registProductAPIView(formdata) {
 	return response.json();
 }
 
-<<<<<<< HEAD
-// 상품 디테일 보기
-// export async function getProductDetailAPI(productId) {
-// 	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
-
-// 	if (response.status == 200) {
-// 		const responseJson = await response.json()
-// 		return responseJson
-// 	} else {
-// 		alert(response.status)
-// 	}
-// }
-
-
-// 상품 디테일 보기
-
-export async function getProductDetailAPI(productId) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
-=======
->>>>>>> 7a45e3c69a197e7785475b1155c8aa2234f04c5d
 
 // 상품 상세 페이지 수정 하기 
 
@@ -604,9 +584,9 @@ export async function deletetProductDetailAPIView(product_id) {
 		},
 		method: "DELETE",
 	});
-	if(response.status == 204){
+	if (response.status == 204) {
 		alert("상품 삭제 완료!")
-		window.location.href="sellerpage.html";
+		window.location.href = "sellerpage.html";
 	} else {
 		alert("상품 삭제 실패!")
 	}
@@ -670,7 +650,7 @@ export async function writeReviewAPI(product_id, formdata) {
 		},
 		body: formdata
 	});
-	if(response.status == 201){
+	if (response.status == 201) {
 		window.location.reload();
 	} else {
 		alert("리뷰 등록 실패!")
@@ -816,6 +796,8 @@ export async function getAuthNumberAPI(information) {
 	})
 	return response
 }
+
+
 export async function submitVerificationNumbersAPI(information) {
 	// 휴대폰 인증 번호 제출
 	const response = await fetch(`${BACK_BASE_URL}/api/users/phone/verification/`, {
@@ -830,4 +812,83 @@ export async function submitVerificationNumbersAPI(information) {
 		})
 	})
 	return response
+}
+
+
+//채팅방 만들기
+export async function postChatindexAPI(name, desc) {
+	const response = await fetch(`${BACK_BASE_URL}/chat/room/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			"name": name,
+			"desc": desc
+		})
+	})
+	return response.status
+}
+
+//모든 채팅방 정보 가져오기
+export async function getChatindexAPI() {
+	const response = await fetch(`${BACK_BASE_URL}/chat/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'GET',
+	})
+	return response.json()
+}
+
+//채팅방 내용 불러오기
+export async function getChatroom(room_id) {
+	const response = await fetch(`${BACK_BASE_URL}/chat/room/${room_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'DELETE',
+	})
+	return response.status
+}
+
+
+// 채팅방 삭제하기
+export async function deleteChatroom(room_id) {
+	const response = await fetch(`${BACK_BASE_URL}/chat/room/${room_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'DELETE',
+	})
+	return response.status
+}
+
+
+// 채팅방 속 채팅 기록 가져오기
+export async function getChatLogAPI(id) {
+	const response = await fetch(`${BACK_BASE_URL}/chat/${id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'GET',
+	})
+	return response.json()
+}
+
+// 채팅방 삭제하기
+export async function getChatroominfo(room_id) {
+	const response = await fetch(`${BACK_BASE_URL}/chat/room/${room_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'GET',
+	})
+	return response.json()
 }
