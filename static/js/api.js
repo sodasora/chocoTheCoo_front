@@ -553,7 +553,7 @@ export async function getProductListAPIView() {
 // 특정 판매자의 상품 정보 전체 불러오기
 // # 특정 판매자의 상품 전체 조회
 export async function getSellerProductListAPIView(user_id) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/seller/${user_id}`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/seller/${user_id}/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`,
 		},
