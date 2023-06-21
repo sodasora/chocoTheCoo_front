@@ -5,6 +5,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('product_id');
 const reviewId = urlParams.get('review_id');
 
+// 이전 리뷰들 불러오기 : showReviewDetailViewAPI에서 정보 받아오기
 export async function loadDefault(){
     const review = await showReviewDetailViewAPI(productId, reviewId);
     
@@ -17,7 +18,7 @@ export async function loadDefault(){
     star.value = review.star;
 
 }
-
+// 수정한 리뷰 api.js의 editReviewAPI에 전송
 export async function editReview() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('product_id');
@@ -27,13 +28,8 @@ export async function editReview() {
     console.log(review.content)
     
     const title = document.getElementById("update-title").value;
-    // title = review.title;
-
     const content = document.getElementById("update-content").value;
-    // content = review.content;
-    
     const star = document.getElementById("give-star").value;
-    // star = review.star;
     
     const image = document.getElementById("formFileMultiple").files[0];
     
@@ -55,10 +51,8 @@ export async function editReview() {
     console.log(formdata);
 
 
-    // const submitButton = document.getElementById("update-submit");
-    // submitButton.addEventListener("click", async function () {
     try {
-        editReviewViewAPI(productId, reviewId, formdata);
+        const response = await editReviewViewAPI(productId, reviewId, formdata);
         
     } catch (error) {
         console.error(error);
@@ -69,7 +63,6 @@ export async function editReview() {
 export async function setEventListener() {
     // html 요소 이벤트 리스너 추가
     document.getElementById("update-submit").addEventListener("click", editReview)
-    // document.getElementById("preview").addEventListener("click", getVerificationCode)
 }
 
 window.onload = async function () {
