@@ -8,6 +8,7 @@
 #15 bill front
 #16 seller front
 #19 product front
+#43 chatting
 
 # :sparkles:Feat: 새로운 기능 추가
 # :bug:Fix: 버그 수정

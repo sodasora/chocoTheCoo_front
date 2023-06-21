@@ -520,6 +520,22 @@ export async function registProductAPIView(formdata) {
 	return response.json();
 }
 
+
+// 상품 상세 페이지 수정 하기 
+
+export async function editProductDetailAPIView(product_id, formdata) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "PUT",
+		body: formdata
+	});
+	return response.json();
+}
+
+
+
 // 상품 정보 전체 불러오기
 // # 상품 전체 조회
 export async function getProductListAPIView() {
@@ -693,9 +709,9 @@ export async function editReviewViewAPI(product_id, review_id, formdata) {
 		method: "PUT",
 		body: formdata
 	});
-	if(response.status == 200){
+	if (response.status == 200) {
 		alert("리뷰 수정 성공!")
-		window.location.href=`${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`;
+		window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`;
 	} else {
 		alert("리뷰 수정 실패!")
 	}
@@ -818,6 +834,8 @@ export async function getAuthNumberAPI(information) {
 	})
 	return response
 }
+
+
 export async function submitVerificationNumbersAPI(information) {
 	// 휴대폰 인증 번호 제출
 	const response = await fetch(`${BACK_BASE_URL}/api/users/phone/verification/`, {
@@ -832,6 +850,85 @@ export async function submitVerificationNumbersAPI(information) {
 		})
 	})
 	return response
+}
+
+
+//채팅방 만들기
+export async function postChatindexAPI(name, desc) {
+	const response = await fetch(`${BACK_BASE_URL}/chat/room/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			"name": name,
+			"desc": desc
+		})
+	})
+	return response.status
+}
+
+//모든 채팅방 정보 가져오기
+export async function getChatindexAPI() {
+	const response = await fetch(`${BACK_BASE_URL}/chat/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'GET',
+	})
+	return response.json()
+}
+
+//채팅방 내용 불러오기
+export async function getChatroom(room_id) {
+	const response = await fetch(`${BACK_BASE_URL}/chat/room/${room_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'DELETE',
+	})
+	return response.status
+}
+
+
+// 채팅방 삭제하기
+export async function deleteChatroom(room_id) {
+	const response = await fetch(`${BACK_BASE_URL}/chat/room/${room_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'DELETE',
+	})
+	return response.status
+}
+
+
+// 채팅방 속 채팅 기록 가져오기
+export async function getChatLogAPI(id) {
+	const response = await fetch(`${BACK_BASE_URL}/chat/${id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'GET',
+	})
+	return response.json()
+}
+
+// 채팅방 삭제하기
+export async function getChatroominfo(room_id) {
+	const response = await fetch(`${BACK_BASE_URL}/chat/room/${room_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'GET',
+	})
+	return response.json()
 }
 
 
