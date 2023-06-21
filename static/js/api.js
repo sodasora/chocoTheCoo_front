@@ -201,7 +201,7 @@ export async function getVerificationCodeAPI(email) {
 		headers: {
 			'content-type': 'application/json',
 		},
-		method: 'PUT',
+		method: 'POST',
 		body: JSON.stringify({
 			"email": email,
 		})
@@ -214,7 +214,7 @@ export async function setUserInformationAPI() {
 	const email = document.getElementById("email").value
 	const verificationCode = document.getElementById("verificationCode").value
 	const password = document.getElementById("password").value
-	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/get/auth_code/`, {
 		headers: {
 			'content-type': 'application/json',
 		},
@@ -248,7 +248,7 @@ export async function handleSignupAPI(email, nickname, password) {
 
 export async function VerificationCodeSubmitAPI(email, verificationCode) {
 	// 회원 가입시 이메일 인증
-	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/get/auth_code/`, {
 		headers: {
 			'content-type': 'application/json',
 		},
@@ -286,7 +286,7 @@ export async function updateProfileInformationAPI(information) {
 	if (profile_image) {
 		formdata.append('profile_image', profile_image)
 	}
-	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
 		},
@@ -298,14 +298,13 @@ export async function updateProfileInformationAPI(information) {
 
 export async function updateUserInformationAPI(information) {
 	// 유저 상세 정보 수정 API
-	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${information.user_id}/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
 		},
-		method: 'PATCH',
+		method: 'PUT',
 		body: JSON.stringify({
-			"email": information.email,
 			"password": information.password,
 			"new_password": information.new_password
 		})
@@ -415,9 +414,9 @@ export async function deleteSellerInformationAPI() {
 	return response
 }
 
-export async function deleteUserInformationAPI(user_id) {
+export async function deleteUserInformationAPI() {
 	// 판매자 정보 삭제
-	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
 		},
@@ -521,27 +520,6 @@ export async function registProductAPIView(formdata) {
 	return response.json();
 }
 
-<<<<<<< HEAD
-// 상품 디테일 보기
-// export async function getProductDetailAPI(productId) {
-// 	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
-
-// 	if (response.status == 200) {
-// 		const responseJson = await response.json()
-// 		return responseJson
-// 	} else {
-// 		alert(response.status)
-// 	}
-// }
-
-
-// 상품 디테일 보기
-
-export async function getProductDetailAPI(productId) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/${productId}/`)
-=======
->>>>>>> 7a45e3c69a197e7785475b1155c8aa2234f04c5d
-
 // 상품 상세 페이지 수정 하기 
 
 export async function editProductDetailAPIView(product_id, formdata) {
@@ -604,9 +582,9 @@ export async function deletetProductDetailAPIView(product_id) {
 		},
 		method: "DELETE",
 	});
-	if(response.status == 204){
+	if (response.status == 204) {
 		alert("상품 삭제 완료!")
-		window.location.href="sellerpage.html";
+		window.location.href = "sellerpage.html";
 	} else {
 		alert("상품 삭제 실패!")
 	}
@@ -670,7 +648,7 @@ export async function writeReviewAPI(product_id, formdata) {
 		},
 		body: formdata
 	});
-	if(response.status == 201){
+	if (response.status == 201) {
 		window.location.reload();
 	} else {
 		alert("리뷰 등록 실패!")
@@ -785,16 +763,14 @@ export async function makeOrders(queryString, bill_id) {
 
 export async function setCustomsCodeAPI(information) {
 	// 통관번호 등록 및 수정
-	const user_id = information.user_id
-	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
 		},
 		method: 'PATCH',
 		body: JSON.stringify({
-			customs_code: information.customs_code
-
+			customs_code: information.customs_code,
 		})
 	})
 	return response
@@ -816,6 +792,7 @@ export async function getAuthNumberAPI(information) {
 	})
 	return response
 }
+
 export async function submitVerificationNumbersAPI(information) {
 	// 휴대폰 인증 번호 제출
 	const response = await fetch(`${BACK_BASE_URL}/api/users/phone/verification/`, {
@@ -831,3 +808,37 @@ export async function submitVerificationNumbersAPI(information) {
 	})
 	return response
 }
+
+
+export async function getEmailVerificationCodeAPI(email) {
+	// 이메일 수정
+	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			email: email
+		})
+	})
+	return response
+}
+
+export async function submitChangeEamilInformationAPI(information) {
+	// 이메일 수정
+	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'PUT',
+		body: JSON.stringify({
+			email: information.email,
+			verification_code: information.verification_code
+		})
+	})
+	return response
+}
+
+

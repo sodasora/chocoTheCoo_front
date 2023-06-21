@@ -95,15 +95,12 @@ export async function setUserInformation() {
         const response = await setUserInformationAPI()
         if (response.status == 200) {
             window.location.reload()
-        } else {
+        } else if (response.status == 404) {
+            message.innerText = '가입된 이메일 정보를 찾을 수 없습니다.'
+        }
+        else {
             const response_json = await response.json()
-            if (response_json.non_field_errors == null) {
-                message.innerText = response_json.err
-            } else {
-                message.innerText = response_json.non_field_errors
-            }
-            password.value = ''
-            password2.value = ''
+            message.innerText = response_json.non_field_errors
         }
     }
 }
