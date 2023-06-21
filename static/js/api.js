@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5500"
+export const FRONT_BASE_URL = "http://127.0.0.1:5501"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
@@ -518,21 +518,6 @@ export async function registProductAPIView(formdata) {
 
 	return response.json();
 }
-
-
-// 상품 상세 페이지 수정 하기 
-
-export async function editProductDetailAPIView(product_id, formdata) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
-		method: "PUT",
-		body: formdata
-	});
-	return response.json();
-}
-
 
 
 // 상품 정보 전체 불러오기
