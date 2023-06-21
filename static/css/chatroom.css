@@ -1,0 +1,44 @@
+@font-face {
+    font-family: '국립박물관문화재단클래식B';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/국립박물관문화재단클래식B.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body {
+    background-color: #C4A492;
+}
+
+.card {
+    margin-top: 30px;
+}
+
+.chat-message>div {
+    background-color: #3b3b3b;
+    color: #e1e1e1;
+    border-radius: 0.8em;
+    padding: 0.4em;
+    margin: 0.4em 0;
+    display: inline-block;
+    white-space: pre-wrap;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.chat-message.me {
+    text-align: right;
+}
+
+.chat-message.me>div {
+    background-color: #1f8cff;
+    color: #fff;
+    text-align: left;
+}

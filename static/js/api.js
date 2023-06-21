@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5501"
+export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
@@ -509,7 +509,6 @@ export async function registProductAPIView(formdata) {
 		},
 		body: formdata
 	});
-
 	if (response.status === 201) {
 		alert('상품등록 완료!')
 		window.location.replace(`${FRONT_BASE_URL}/sellerpage.html`)
@@ -519,6 +518,7 @@ export async function registProductAPIView(formdata) {
 
 	return response.json();
 }
+
 
 // 상품 상세 페이지 수정 하기 
 
@@ -551,7 +551,7 @@ export async function getProductListAPIView() {
 // 특정 판매자의 상품 정보 전체 불러오기
 // # 특정 판매자의 상품 전체 조회
 export async function getSellerProductListAPIView(user_id) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/seller/${user_id}`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/seller/${user_id}/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`,
 		},
@@ -572,6 +572,26 @@ export async function getProductDetailAPIView(product_id) {
 	});
 	return response.json();
 }
+
+// 상품별 상세 정보 가져오기
+// 상품 수정 하기 
+export async function editProductDetailAPIView(product_id, formdata) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "PUT",
+		body: formdata
+	});
+	if (response.status == 200) {
+		alert('상품 수정 완료!')
+		window.location.href = `${FRONT_BASE_URL}/sellerpage.html`;
+	} else {
+		alert('상품 수정 실패')
+	}
+	return response.json();
+}
+
 
 //  싱픔뱔 상세 정보 가져오기
 // # 상품 삭제하기
@@ -666,15 +686,34 @@ export async function getReviewView(product_id) {
 	});
 	return response.json();
 }
-// 특정 상품의 전체 리뷰 불러오기
+// 특정 상품의 특정 리뷰 불러 오기
+// 이전 리뷰 불러오기
+
+export async function showReviewDetailViewAPI(product_id, review_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/reviews/${review_id}/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "GET",
+	});
+	return response.json();
+}
+// 특정 상품의 특정 리뷰 불러오기
 // # 리뷰 수정
-export async function editReviewView(product_id) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/reviews/`, {
+export async function editReviewViewAPI(product_id, review_id, formdata) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/reviews/${review_id}/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "PUT",
+		body: formdata
 	});
+	if (response.status == 200) {
+		alert("리뷰 수정 성공!")
+		window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`;
+	} else {
+		alert("리뷰 수정 실패!")
+	}
 	return response.json();
 }
 
@@ -793,6 +832,7 @@ export async function getAuthNumberAPI(information) {
 	return response
 }
 
+
 export async function submitVerificationNumbersAPI(information) {
 	// 휴대폰 인증 번호 제출
 	const response = await fetch(`${BACK_BASE_URL}/api/users/phone/verification/`, {
@@ -808,7 +848,6 @@ export async function submitVerificationNumbersAPI(information) {
 	})
 	return response
 }
-
 
 export async function getEmailVerificationCodeAPI(email) {
 	// 이메일 수정
@@ -841,4 +880,143 @@ export async function submitChangeEamilInformationAPI(information) {
 	return response
 }
 
+//채팅방 만들기
+export async function postChatindexAPI(name, desc) {
+	const response = await fetch(`${BACK_BASE_URL}/chat/room/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			"name": name,
+			"desc": desc
+		})
+	})
+	return response.status
+}
+
+
+
+
+
+//모든 채팅방 정보 가져오기
+export async function getChatindexAPI() {
+	const response = await fetch(`${BACK_BASE_URL}/chat/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'GET',
+	})
+	return response.json()
+}
+
+//채팅방 내용 불러오기
+export async function getChatroom(room_id) {
+	const response = await fetch(`${BACK_BASE_URL}/chat/room/${room_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'DELETE',
+	})
+	return response.status
+}
+
+
+// 채팅방 삭제하기
+export async function deleteChatroom(room_id) {
+	const response = await fetch(`${BACK_BASE_URL}/chat/room/${room_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'DELETE',
+	})
+	return response.status
+}
+
+
+// 채팅방 속 채팅 기록 가져오기
+export async function getChatLogAPI(id) {
+	const response = await fetch(`${BACK_BASE_URL}/chat/${id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'GET',
+	})
+	return response.json()
+}
+
+// 채팅방 삭제하기
+export async function getChatroominfo(room_id) {
+	const response = await fetch(`${BACK_BASE_URL}/chat/room/${room_id}/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'GET',
+	})
+	return response.json()
+}
+
+
+export async function getBillDetail(bill_id) {
+	// 구매 내역 상세 조회
+	const response = await fetch(`${BACK_BASE_URL}/api/users/bills/${bill_id}/`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": "Bearer " + localStorage.getItem("access")
+		},
+	})
+
+	if (response.status == 200) {
+		const response_json = await response.json();
+		console.log(response_json);
+		return response_json;
+	} else {
+		console.log(response.status);
+	}
+}
+
+export async function getBillList() {
+	// 구매 내역 목록 조회
+	const response = await fetch(`${BACK_BASE_URL}/api/users/bills/`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": "Bearer " + localStorage.getItem("access")
+		}
+	})
+
+	if (response.status == 200) {
+		const response_json = await response.json();
+		console.log(response_json);
+		return response_json;
+	} else {
+		console.log(response.status);
+	}
+}
+
+export async function billToCart(orderItem) {
+	// 구매내역에서 장바구니 추가하기
+	const response = await fetch(`${BACK_BASE_URL}/api/users/bills/cart/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		body: JSON.stringify({
+			order_items: orderItem
+		})
+	})
+	if (response.status == 200) {
+		const response_json = await response.json();
+		console.log(response.status);
+		console.log(response_json);
+	}
+}
 

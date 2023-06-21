@@ -676,6 +676,11 @@ window.onload = async function () {
     profile();
     const profile_data = await getUserProfileAPIView()
     const wish = profile_data["product_wish_list"]
-    pagination_wish(wish);
+    if (wish == "") {
+        const wish_list = document.getElementById("my-wish-list")
+        wish_list.innerText = "찜한 상품이 없습니다."
+    } else {
+        pagination_wish(wish);
+    }
     subscription_info()
 }  

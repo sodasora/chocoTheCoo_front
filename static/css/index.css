@@ -47,11 +47,41 @@ input {
   float: left;
   text-align: left;
   justify-content: left;
-  width: 60px;
+  width: 40px;
   margin-right: 300px;
 }
 
 .section {
   background-color: #C4A492;
-  height: 800px;
+  height: auto;
+}
+
+#product-content {
+  margin-top: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+
+button {
+  height: 4vh;
+  font-size: 1vw;
+  margin-top: 1.2vw;
+  background-color: rgba(109, 86, 68, 0.822);
+  color: white;
+  border-radius: 10px;
+}
+
+#product-buttons {
+  position: relative;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.button_page.active,
+.button_page:hover {
+  color: #0b5ed7;
+  font-weight: 600;
+  text-decoration: underline;
 }

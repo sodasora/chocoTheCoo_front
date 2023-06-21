@@ -1,4 +1,9 @@
-import { getProductDetailAPIView ,writeReviewAPI, getReviewView,deletetProductDetailAPIView ,BACK_BASE_URL, FRONT_BASE_URL} from './api.js';
+import { getProductDetailAPIView ,writeReviewAPI, getReviewView, deletetProductDetailAPIView ,BACK_BASE_URL, FRONT_BASE_URL} from './api.js';
+// import { editReview } from './editreview.js';
+
+export async function goEditReview(product_id, review_id) {
+    window.location.href = `${FRONT_BASE_URL}/editreview.html?product_id=${product_id}&review_id=${review_id}`;
+  }
 
 
 // 상품 정보보기
@@ -28,11 +33,17 @@ export async function viewProductDetail() {
         productImage.appendChild(newImage)
     }
     
-    const updateButton = document.getElementById("edit-btn")
-    updateButton.setAttribute("onclick", "editProductDetail(productId)")
+    
    
 }
 
+// 상품 수정하기
+export async function goEditProduct(product_id) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('product_id');
+
+    window.location.href = `${FRONT_BASE_URL}/productregistration.html?product_id=${productId}`;
+  }
 
 // 상품 삭제하기
 export async function deleteProduct() {
@@ -53,20 +64,20 @@ export async function writeReview(){
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('product_id');
 
+    
     const name = document.getElementById("review-title").value;
     const star = document.getElementById("give-star").value;
     const image = document.getElementById("formFile").files[0];
     const content = document.getElementById("review-content").value;
-    
-    
+
     const formdata = new FormData();
 
 
-    
+
     formdata.append('title', name)
     formdata.append('content', content)
     formdata.append('star', star)
-    
+    console.log(formdata)
     if(image){
         formdata.append('image', image)
     }
@@ -75,32 +86,39 @@ export async function writeReview(){
     console.log(pair[0] + ':', pair[1]);
     }
     
-
     try {
         writeReviewAPI(productId, formdata);
         
     } catch (error) {
         console.error(error);
     }
-}
+    
+    }
+
+    
+
 
 // 후기 조회
 export async function showReview(){
     try {
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('product_id');
+        
         const reviews = await getReviewView(productId);
+        
         console.log(reviews);
     
         const review_list = document.getElementById("review-List");
         console.log(review_list);
         reviews.forEach((review) => {
+
           const newCol = document.createElement("div");
           newCol.setAttribute("class", "col");
+          newCol.setAttribute("id", "review-card");
           
           const newCard = document.createElement("div");
           newCard.setAttribute("class", "card");
-          newCard.setAttribute("id", review.id);
+          newCard.setAttribute("id", "review-info");
           
           newCard.onclick = function() {
             getReviewView(review.id);
@@ -127,20 +145,42 @@ export async function showReview(){
     
           const newCardTitle = document.createElement("h5");
           newCardTitle.setAttribute("class", "card-title");
-          newCardTitle.innerText = review.name;
+          newCardTitle.setAttribute("id", "review-title");
+          newCardTitle.innerText = review.title;
           newCardBody.appendChild(newCardTitle);
     
           const newCardText = document.createElement("p");
           newCardText.setAttribute("class", "card-text");
+          newCardText.setAttribute("id", "review-star");
           newCardText.innerText ="별점 : "+ review.star;
           newCard.appendChild(newCardText)
           
           const newCardFooter = document.createElement("p");
           newCardFooter.setAttribute("class", "card-footer");
+          newCardFooter.setAttribute("id", "review-content");
           newCardFooter.innerText = review.content;
           newCard.appendChild(newCardFooter)
           newCol.appendChild(newCard);
-        });
+          
+          const payload = localStorage.getItem("payload");
+          const payload_parse = JSON.parse(payload);
+          const user_id = payload_parse.user_id //로그인한 유저id
+          
+          if(review.user == user_id) {
+            // 수정하기 버튼 생성
+                const editReviewButton = document.createElement('button')
+                editReviewButton.innerHTML = "수정하기"
+                editReviewButton.setAttribute("id",`${review.id}th-item-update-button`)
+                editReviewButton.addEventListener("click", function(){
+                    goEditReview(productId, review.id);
+                })
+                newCard.appendChild(editReviewButton)
+                newCol.appendChild(newCard);
+            }
+
+        }
+        );
+        
       } catch (error) {
         console.error(error)
       }
@@ -149,10 +189,13 @@ export async function showReview(){
 }
 
 
+
+
 export async function setEventListener() {
     // html 요소 이벤트 리스너 추가
     document.getElementById("reviewsubmitbutton").addEventListener("click", writeReview)
     document.getElementById("delete-btn").addEventListener("click", deleteProduct)
+    document.getElementById("edit-btn").addEventListener("click",goEditProduct)
 }
 
 
