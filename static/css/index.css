@@ -16,7 +16,6 @@
   border-radius: 20px;
 }
 
-
 .search {
   position: relative;
   width: 300px;
@@ -29,13 +28,6 @@ input {
   border-radius: 8px;
   padding: 10px 12px;
   font-size: 14px;
-}
-
-.slide {
-  float: center;
-  text-align: center;
-  justify-content: center;
-
 }
 
 .menu {
@@ -63,7 +55,14 @@ input {
   text-align: center;
 }
 
+#product-buttons {
+  position: relative;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+}
 
+/* 
 button {
   height: 4vh;
   font-size: 1vw;
@@ -73,19 +72,12 @@ button {
   border-radius: 10px;
 }
 
-#product-buttons {
-  position: relative;
-  padding: 1rem 0;
-  display: flex;
-  justify-content: center;
-}
-
 .button_page.active,
 .button_page:hover {
   color: #0b5ed7;
   font-weight: 600;
   text-decoration: underline;
-}
+} */
 
 #chocobanner {
   height: 30vh;
@@ -95,5 +87,20 @@ button {
 }
 
 .card-img-top {
-  height: 150px;
+  height: 200px;
+}
+
+.card {
+  font-family: 'S-CoreDream-3Light';
+  height: 38vh;
+  width: 20vw;
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+.col-md-9 {
+  padding: 3%;
+  width: 70vw;
 }

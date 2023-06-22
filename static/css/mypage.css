@@ -251,10 +251,8 @@ td {
 
 #my-wish-list {
   margin-top: 5px;
-  margin-left: 40px;
   font-family: 'S-CoreDream-3Light';
   font-size: 1.5vw;
-  color: white;
   font-weight: bold;
 }
 
@@ -262,7 +260,6 @@ td {
   font-family: 'S-CoreDream-3Light';
   font-weight: bold;
   padding-left: 40px;
-  color: white;
   margin-top: 20px;
   font-size: 2vw;
 }
