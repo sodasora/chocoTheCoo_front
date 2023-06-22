@@ -1,8 +1,7 @@
-import { getProductDetailAPIView ,writeReviewAPI, getReviewView, deletetProductDetailAPIView ,BACK_BASE_URL, FRONT_BASE_URL} from './api.js';
-// import { editReview } from './editreview.js';
+import { getProductDetailAPIView , getReviewView, deletetProductDetailAPIView ,BACK_BASE_URL, FRONT_BASE_URL} from './api.js';
 
 export async function goEditReview(product_id, review_id) {
-    window.location.href = `${FRONT_BASE_URL}/editreview.html?product_id=${product_id}&review_id=${review_id}`;
+    window.location.href = `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}&review_id=${review_id}`;
   }
 
 
@@ -10,20 +9,21 @@ export async function goEditReview(product_id, review_id) {
 export async function viewProductDetail() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('product_id');
- 
-    console.log(productId)
-
     const response = await getProductDetailAPIView(productId);
     console.log(response)
 
     const productTitle =document.getElementById("product-title")
     const productImage =document.getElementById("product-image")
+    const productPrice = document.getElementById("product-price")
+    const productAmount = document.getElementById("product-amount");
     const productContent =document.getElementById("product-content")
 
     productTitle.innerText = response.name
     productContent.innerText = response.content
-
+    productPrice.innerText = response.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
+    productAmount.innerText = "수량:  " +response.amount+" 개";
     const newImage = document.createElement("img");
+    newImage.setAttribute('id', 'imagePut')
 
     if(response.image != null){
         newImage.setAttribute("src", `${response.image}`)
@@ -43,7 +43,7 @@ export async function goEditProduct(product_id) {
     const productId = urlParams.get('product_id');
 
     window.location.href = `${FRONT_BASE_URL}/productregistration.html?product_id=${productId}`;
-  }
+}
 
 // 상품 삭제하기
 export async function deleteProduct() {
@@ -57,45 +57,6 @@ export async function deleteProduct() {
         console.error(error);
     }
 }
-
-// 후기 작성 
-export async function writeReview(){
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('product_id');
-
-    
-    const name = document.getElementById("review-title").value;
-    const star = document.getElementById("give-star").value;
-    const image = document.getElementById("formFile").files[0];
-    const content = document.getElementById("review-content").value;
-
-    const formdata = new FormData();
-
-
-
-    formdata.append('title', name)
-    formdata.append('content', content)
-    formdata.append('star', star)
-    console.log(formdata)
-    if(image){
-        formdata.append('image', image)
-    }
-    
-    for (const pair of formdata.entries()) {
-    console.log(pair[0] + ':', pair[1]);
-    }
-    
-    try {
-        writeReviewAPI(productId, formdata);
-        
-    } catch (error) {
-        console.error(error);
-    }
-    
-    }
-
-    
 
 
 // 후기 조회
@@ -193,7 +154,6 @@ export async function showReview(){
 
 export async function setEventListener() {
     // html 요소 이벤트 리스너 추가
-    document.getElementById("reviewsubmitbutton").addEventListener("click", writeReview)
     document.getElementById("delete-btn").addEventListener("click", deleteProduct)
     document.getElementById("edit-btn").addEventListener("click",goEditProduct)
 }

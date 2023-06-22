@@ -29,6 +29,10 @@ import {
     getAuthNumberAPI,
     // 휴대폰 인증 번호 제출
     submitVerificationNumbersAPI,
+    // 이메일 정보 수정
+    getEmailVerificationCodeAPI,
+    // 변경 이메일 인증 코드 발급
+    submitChangeEamilInformationAPI,
 } from './api.js'
 import { handleLogout } from './loader.js'
 
@@ -40,51 +44,34 @@ async function getPayloadParse() {
 
 export async function updateInformation() {
     // 이메일, 비밀번호 변경
-    const payload_parse = await getPayloadParse()
-    const user_id = payload_parse.user_id
-    const email = document.getElementById("email").value
     const password = document.getElementById("password").value
     const newPassword = document.getElementById("newPassword").value
     const newPassword2 = document.getElementById("newPassword2").value
 
     const setUserInformationMessageBox = document.getElementById("setUserInformationMessageBox")
     setUserInformationMessageBox.style.display = "flex"
-    if (password == '' || email == '' || newPassword == '' || newPassword2 == '') {
+    if (password == '' || newPassword == '' || newPassword2 == '') {
         // 입력값이 비어 있는 경우
         setUserInformationMessageBox.innerText = "빈칸 없이 입력해 주세요."
     } else if (newPassword != newPassword2) {
         // 변경하고자 하는 두 비밀번호의 입력값이 다를 경우
-        setUserInformationMessageBox.innerText = "빈칸 없이 입력해 주세요."
+        setUserInformationMessageBox.innerText = "입력하신 두 비밀번호가 같지 않습니다."
     } else {
         // 전달할 데이터 준비
         const information = {
-            user_id: user_id,
-            email: email,
             password: password,
             new_password: newPassword
         };
 
         // API 응답
         const response = await updateUserInformationAPI(information)
-        const response_json = await response.json()
-        console.log(response_json)
         //  응답에 따른 프론트 처리
         if (response.status == 200) {
-            // handleLogout()
+            handleLogout()
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
-        } else if (response.status == 404) {
-            // 사용자 정보를 찾을 수 없음
-            window.location.replace(`${FRONT_BASE_URL}/login.html`)
-        } else if (response.status == 401) {
-            // 권한이 없슴 (로그인이 필요 하거나 올바르지 않은 접근 방법)
-            window.location.replace(`${FRONT_BASE_URL}/login.html`)
-        } else if (response.status == 400) {
-            // 입력 양식이 잘 못됨
-            setUserInformationMessageBox.innerText = "이메일 또는 비밀번호 양식이 올바르지 않습니다."
-        } else if (response.status == 422) {
-            setUserInformationMessageBox.innerText = "비밀번호를 변경하기 위한 정보가 부족합니다."
-        } else if (response.status == 409) {
-            setUserInformationMessageBox.innerText = "회원 정보에 저장된 비밀번호와 같지 않습니다."
+        } else {
+            const response_json = await response.json()
+            setUserInformationMessageBox.innerText = response_json.non_field_errors
         }
     }
 }
@@ -92,13 +79,10 @@ export async function updateInformation() {
 
 export async function updateProfileInformation() {
     // 사용자 프로필 정보 수정
-    const payload_parse = await getPayloadParse()
-    const user_id = payload_parse.user_id
     const nickName = document.getElementById("nickName").value
     const bio = document.getElementById("bio").value
     const profile_image = document.getElementById("profileImageFile").files[0]
     const information = {
-        user_id: user_id,
         nickName: nickName,
         bio: bio,
         profile_image: profile_image
@@ -110,9 +94,6 @@ export async function updateProfileInformation() {
         location.reload();
     } else if (response.status == 404) {
         // 사용자 정보를 찾을 수 없음
-        window.location.replace(`${FRONT_BASE_URL}/login.html`)
-    } else if (response.status == 401) {
-        // 권한이 없슴 (로그인이 필요 하거나 올바르지 않은 접근 방법)
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 400) {
         // 입력 양식이 잘 못됨
@@ -176,9 +157,7 @@ export async function addressUpdate() {
     };
 
     const response = await addressUpdateAPI(information)
-    console.log(response)
     const response_json = await response.json()
-    console.log(response_json)
     if (response.status == 200) {
         // 배송 정보 수정 완료
         location.reload();
@@ -343,7 +322,6 @@ export async function setCustomsCode() {
     const payload_parse = await getPayloadParse()
     const customs_code = document.getElementById("customsCodeSubmitInput").value
     const information = {
-        user_id: payload_parse.user_id,
         customs_code: customs_code
     }
     const response = await setCustomsCodeAPI(information)
@@ -353,9 +331,6 @@ export async function setCustomsCode() {
         // 수정 완료
         location.reload();
     } else if (response.status == 404) {
-        // 로그인 필요
-        window.location.replace(`${FRONT_BASE_URL}/login.html`)
-    } else if (response.status == 401) {
         // 로그인 필요
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 400) {
@@ -374,7 +349,7 @@ export async function getAuthNumber() {
         phone_number: phone_number
     }
     const response = await getAuthNumberAPI(information)
-
+    const response_json = await response.json()
     if (response.status == 200) {
         phoneMessageBox.style.display = "none"
         document.getElementById("phone_auth_box").style.display = "block"
@@ -387,12 +362,13 @@ export async function getAuthNumber() {
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else {
             const response_json = await response.json()
-            phoneMessageBox.innerText = response_json.err.non_field_errors
+            phoneMessageBox.innerText = response_json.non_field_errors
         }
     }
-
 }
+
 export async function submitVerificationNumbers() {
+    // 휴대폰 인증
     const verification_numbers = document.getElementById("verification_numbers").value
     const information = {
         verification_numbers: verification_numbers
@@ -413,6 +389,60 @@ export async function submitVerificationNumbers() {
         }
     }
 }
+
+
+
+export async function getEmailVerificationCode() {
+    // 변경할 이메일로 인증 코드 발급 받기
+    const email = document.getElementById("email").value
+    const phoneMessageBox = document.getElementById("phoneMessageBox")
+    phoneMessageBox.style.display = "flex"
+    phoneMessageBox.innerText = "인증 코드를 발급 중 입니다. 잠시만 기다려 주세요."
+
+    const response = await getEmailVerificationCodeAPI(email)
+    if (response.status == 200) {
+        document.getElementById("verificationCodeBox").style.display = "block"
+        document.getElementById("submitChangeEamilInformationBox").style.display = "block"
+        phoneMessageBox.innerText = "인증 코드를 발급 했습니다."
+
+    } else {
+
+        if (response.status == 404) {
+            // 로그인 필요
+            window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        } else {
+            const response_json = await response.json()
+            phoneMessageBox.innerText = response_json.err
+        }
+    }
+}
+export async function submitChangeEamilInformation() {
+    const email = document.getElementById("email").value
+    const verificationCode = document.getElementById("verificationCode").value
+
+    const information = {
+        email: email,
+        verification_code: verificationCode
+    }
+
+    const response = await submitChangeEamilInformationAPI(information)
+    if (response.status == 200) {
+        // 인증 완료
+        location.reload();
+    } else {
+        const phoneMessageBox = document.getElementById("phoneMessageBox")
+        phoneMessageBox.style.display = "flex"
+        if (response.status == 404) {
+            // 로그인 필요
+            window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        } else {
+            const response_json = await response.json()
+            phoneMessageBox.innerText = response_json.non_field_errors
+        }
+    }
+}
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -605,7 +635,6 @@ async function DeliveryInformation(response_json) {
     // 드랍 다운 메뉴 설정
     const dropdown_content = document.querySelector(".dropdown-content");
     const deliveries_data = response_json.deliveries_data
-    console.log(response_json)
     // 드랍 다운 메뉴 아이템 추가
     deliveries_data.forEach((element) => {
         dropdown_content.innerHTML += `
@@ -637,14 +666,10 @@ async function getUserDetailInformation(response_json) {
     // 프로필 input value 조정
     document.getElementById("nickName").value = response_json.nickname
     document.getElementById("bio").value = response_json.introduction
-
-    //  회원 정보 input value 조정
-    document.getElementById("email").value = response_json.email
 }
 
 async function getSellerInformation(response_json) {
     const seller_information = response_json.user_seller
-    console.log(seller_information)
     if (seller_information != null) {
         // 데이터 불러오기
         document.getElementById("navSellerInformation").innerText = "사업자 정보 수정"
@@ -751,6 +776,11 @@ export async function setEventListener() {
     document.getElementById("getAuthNumber").addEventListener("click", getAuthNumber)
     // 휴대폰 인증 번호 제출
     document.getElementById("submitPhoneNumber").addEventListener("click", submitVerificationNumbers)
+
+    // 변경 이메일 인증 번호 발급 받기
+    document.getElementById("getEmailVerificationCode").addEventListener("click", getEmailVerificationCode)
+    // 변경 이메일 인증 번호 인증 하기
+    document.getElementById("submitChangeEamilInformation").addEventListener("click", submitChangeEamilInformation)
 }
 
 var autoHypenPhone = function (str) {

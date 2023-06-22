@@ -52,37 +52,31 @@
                 </div>
 
                 <div class="mb-3">
-                    <textarea class="form-control" id="content" rows="3" placeholder="상품 설명을 적어주세요!"></textarea>
+                    <textarea class="form-control" id="content" rows="3" placeholder="상품 설명을 적어주세요!">
+                    </textarea>
                 </div>
+
                 <div class="mb-3">
                     <input class="form-control" type="file" id="formFile">
                 </div>
 
 
-                <div class="submit">
-                    <button class="editbutton" type="button" id="edit">수정하기</button>
-                    
-                    <img id="profileView">
-               
+                <div class="submit">               
                     <button class="submitbutton" type="button" id="registrate">제출하기</button>
+                    <button class="editbutton" type="button" id="edit">수정하기</button>
                 </div>
             </div>
         </form>
 
-        <div class="profile-section">
-            <div class="profile-card">
-                <div class="bigbox">
-                    <div class="box" style="margin-top:20px;">
-                        <img id="company-img" class="profile" src="static/images/store.gif" alt="company-img">
-                    </div>
-                </div>
-                <div class="profile-text">
-                    <p>회사: <span id="company-name"></span></p>
-                    <p>대표: <span id="owner-name"></span></p>
-                    <p id="user-edit" onclick="location.href='#';">회원정보수정</p>
-                </div>
+        <div class="preview-section">
+            <div class="preview-card">
+                <img id="profileView">
             </div>
         </div>
+            
+
+        </div>
+
     </div>
     
 </body>

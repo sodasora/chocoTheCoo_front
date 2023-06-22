@@ -16,6 +16,7 @@
   border-radius: 20px;
 }
 
+
 .search {
   position: relative;
   width: 300px;
@@ -38,7 +39,7 @@ input {
 }
 
 .menu {
-  margin-left: 150px;
+  margin-left: 50px;
 }
 
 .category {
@@ -91,4 +92,8 @@ button {
   width: 50vw;
   margin-top: 20px;
   cursor: pointer;
+}
+
+.card-img-top {
+  height: 150px;
 }

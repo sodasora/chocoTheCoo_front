@@ -18,51 +18,33 @@
 
 <body>
     <div class="section3">
-        <div class="container text-center" id="post-card">
+        <div class="productSection" id="post-card">
+            <img src="/static/images/상품상단.png" id="top-image">
+            <div class="imageBox" id="product-image"></div>
             <h1 id="product-title">게시글 제목</h1>
-            <div class="row row-cols-1 row-cols-md-2" id="product">
-
-                <div class="col" id="product-image"></div>
-                <div class="col" id="product-content">상품 설명</div>
-            </div>
-
+            <div class="amountbox" id="product-amount">수량</div>
+            <div class="priceBox" id="product-price">상품 가격</div>
+            <div class="contentBox" id="product-content">상품 설명</div>
+            
             <div class="button-area">
-                <button id="edit-btn" type="button" class="btn btn-dark"
-                        style="--bs-btn-padding-y: 0.7rem; --bs-btn-padding-x: 1.7rem; --bs-btn-font-size: 1.5rem;">수정하기</button>
-                <button id="delete-btn" type="button" class="btn btn-dark"
-                        style="--bs-btn-padding-y: 0.7rem; --bs-btn-padding-x: 1.7rem; --bs-btn-font-size: 1.5rem;">삭제하기</button>
+                <button id="edit-btn" type="button" class="btn btn-dark">수정하기</button>
+                <button id="delete-btn" type="button" class="btn btn-dark">삭제하기</button>
             </div>
         </div>
-        <h3>상품 후기</h3>
-        <form>
-            <fieldset class="postField container" name="postField" id="postField2">
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="review-title" placeholder="제목">
-                </div>
-                <select class="form-select" id="give-star" aria-label="Default select example">
-                    <option selected>상품 별점 주기</option>
-                    <option value="1">⭐</option>
-                    <option value="2">⭐⭐</option>
-                    <option value="3">⭐⭐⭐</option>
-                    <option value="4">⭐⭐⭐⭐</option>
-                    <option value="5">⭐⭐⭐⭐⭐</option>
-                </select>
-                <div class="mb-3">
-                    <input class="form-control" type="file" id="formFile">
-                </div>
-                <div class="input-group">
-                    <span class="input-group-text">내용</span>
-                    <textarea class="form-control" aria-label="With textarea" id="review-content"></textarea>
-                    <button type="button" class="btn btn-secondary" id="reviewsubmitbutton"
-                        style="--bs-btn-padding-y: 0.7rem; --bs-btn-padding-x: 1.7rem; --bs-btn-font-size: 1.5rem;">작성하기</button>
-                </div>
-            </fieldset>
-        </form>
 
-            <div id="review-List">
-             <!--댓글 불러오는 공간-->
-                   
-            </div>
+        <!-- 상품 디테일 navbar 따로 만들겠습니다! -->
+        <div class="top-category">
+            <nav>
+                <a id="detailView" style='cursor:pointer' onclick="location.href='#';">상품상세보기/a>
+                <a id="reviewView" style='cursor:pointer' onclick="location.href='#';">상품후기</a>
+                <a id="sellerpage" style='cursor:pointer' onclick="location.href='#';">판매자정보</a>
+                <div class="nav-underline"></div>
+            </nav>
+        </div>
+        <div id="review-List">
+            <!--댓글 불러오는 공간-->
+                
+        </div>
         
     </div>
     
