@@ -70,6 +70,5 @@ export async function sellerPageAPI() {
 }
 
 window.onload = async function() {
-
   sellerPageAPI()
 }
