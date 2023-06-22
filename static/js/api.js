@@ -521,31 +521,12 @@ export async function registProductAPIView(formdata) {
 }
 
 
-// 상품 상세 페이지 수정 하기 
-
-export async function editProductDetailAPIView(product_id, formdata) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
-		method: "PUT",
-		body: formdata
-	});
-	return response.json();
-}
-
-
-
 // 상품 정보 전체 불러오기
 // # 상품 전체 조회
 export async function getProductListAPIView() {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
 		method: "GET",
 	});
-
 	return response.json();
 }
 

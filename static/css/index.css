@@ -85,3 +85,10 @@ button {
   font-weight: 600;
   text-decoration: underline;
 }
+
+#chocobanner {
+  height: 30vh;
+  width: 50vw;
+  margin-top: 20px;
+  cursor: pointer;
+}
