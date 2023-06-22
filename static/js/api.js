@@ -202,7 +202,7 @@ export async function getVerificationCodeAPI(email) {
 		headers: {
 			'content-type': 'application/json',
 		},
-		method: 'POST',
+		method: 'PUT',
 		body: JSON.stringify({
 			"email": email,
 		})
@@ -215,7 +215,7 @@ export async function setUserInformationAPI() {
 	const email = document.getElementById("email").value
 	const verificationCode = document.getElementById("verificationCode").value
 	const password = document.getElementById("password").value
-	const response = await fetch(`${BACK_BASE_URL}/api/users/get/auth_code/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			'content-type': 'application/json',
 		},
@@ -249,7 +249,7 @@ export async function handleSignupAPI(email, nickname, password) {
 
 export async function VerificationCodeSubmitAPI(email, verificationCode) {
 	// 회원 가입시 이메일 인증
-	const response = await fetch(`${BACK_BASE_URL}/api/users/get/auth_code/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			'content-type': 'application/json',
 		},
@@ -287,7 +287,7 @@ export async function updateProfileInformationAPI(information) {
 	if (profile_image) {
 		formdata.append('profile_image', profile_image)
 	}
-	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
 		},
@@ -299,13 +299,14 @@ export async function updateProfileInformationAPI(information) {
 
 export async function updateUserInformationAPI(information) {
 	// 유저 상세 정보 수정 API
-	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${information.user_id}/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
 		},
-		method: 'PUT',
+		method: 'PATCH',
 		body: JSON.stringify({
+			"email": information.email,
 			"password": information.password,
 			"new_password": information.new_password
 		})
@@ -415,9 +416,9 @@ export async function deleteSellerInformationAPI() {
 	return response
 }
 
-export async function deleteUserInformationAPI() {
+export async function deleteUserInformationAPI(user_id) {
 	// 판매자 정보 삭제
-	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
 		},
@@ -521,12 +522,31 @@ export async function registProductAPIView(formdata) {
 }
 
 
+// 상품 상세 페이지 수정 하기 
+
+// export async function editProductDetailAPIView(product_id, formdata) {
+// 	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
+// 		headers: {
+// 			"Authorization": `Bearer ${access_token}`,
+// 		},
+// 		method: "PUT",
+// 		body: formdata
+// 	});
+// 	return response.json();
+// }
+
+
+
 // 상품 정보 전체 불러오기
 // # 상품 전체 조회
 export async function getProductListAPIView() {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
 		method: "GET",
 	});
+
 	return response.json();
 }
 
@@ -651,7 +671,7 @@ export async function writeReviewAPI(product_id, formdata) {
 		body: formdata
 	});
 	if (response.status == 201) {
-		window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`;
+		window.location.reload();
 	} else {
 		alert("리뷰 등록 실패!")
 	}
@@ -784,14 +804,16 @@ export async function makeOrders(queryString, bill_id) {
 
 export async function setCustomsCodeAPI(information) {
 	// 통관번호 등록 및 수정
-	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+	const user_id = information.user_id
+	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
 		},
 		method: 'PATCH',
 		body: JSON.stringify({
-			customs_code: information.customs_code,
+			customs_code: information.customs_code
+
 		})
 	})
 	return response
@@ -831,36 +853,6 @@ export async function submitVerificationNumbersAPI(information) {
 	return response
 }
 
-export async function getEmailVerificationCodeAPI(email) {
-	// 이메일 수정
-	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
-		headers: {
-			'content-type': 'application/json',
-			"Authorization": `Bearer ${access_token}`
-		},
-		method: 'POST',
-		body: JSON.stringify({
-			email: email
-		})
-	})
-	return response
-}
-
-export async function submitChangeEamilInformationAPI(information) {
-	// 이메일 수정
-	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
-		headers: {
-			'content-type': 'application/json',
-			"Authorization": `Bearer ${access_token}`
-		},
-		method: 'PUT',
-		body: JSON.stringify({
-			email: information.email,
-			verification_code: information.verification_code
-		})
-	})
-	return response
-}
 
 //채팅방 만들기
 export async function postChatindexAPI(name, desc) {
@@ -877,10 +869,6 @@ export async function postChatindexAPI(name, desc) {
 	})
 	return response.status
 }
-
-
-
-
 
 //모든 채팅방 정보 가져오기
 export async function getChatindexAPI() {
@@ -1161,4 +1149,44 @@ window.pageMove = async function (move) {
                             </li>`
 	// 페이지 이동했으니 다시 다음페이지 게시글 로드하기
 	viewProductslist(product);
+}
+
+// 카테고리 조회 
+export async function getCategoryView() {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/categories/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "GET",
+	});
+	return response.json();
+}
+
+export async function addToCartAPI(product, amount) {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		body: JSON.stringify({
+			product: product,
+			amount: amount
+		})
+	})
+	if (response.status == 200) {
+		const response_json = await response.json()
+		return response_json
+	}
+}
+
+export async function addToLikeAPI(productId) {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/wish/${productId}/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+	})
+	return response
 }
