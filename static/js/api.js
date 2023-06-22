@@ -1001,3 +1001,13 @@ export async function billToCart(orderItem) {
 	}
 }
 
+// 카테고리 조회 
+export async function getCategoryView() {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/categories/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "GET",
+	});
+	return response.json();
+}

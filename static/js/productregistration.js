@@ -1,20 +1,36 @@
-import { BACK_BASE_URL,  FRONT_BASE_URL, registProductAPIView, getProductDetailAPIView, editProductDetailAPIView, getSellerPermissionAPIView} from './api.js'
+import { BACK_BASE_URL,  FRONT_BASE_URL, getCategoryView, registProductAPIView, getProductDetailAPIView, editProductDetailAPIView, getSellerPermissionAPIView} from './api.js'
 
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('product_id');
 
+
+
+
+export async function categoryview(){
+    const categories = await getCategoryView();
+
+    const categorySelect = document.getElementById(`category-select`);
+
+    categories.forEach( category => {
+        const option = document.createElement(`option`);
+        option.value = category.id ;
+        option.textContent = category.name;
+        // option.setAttribute(`id`, );
+        categorySelect.appendChild(option);
+    });
+}
 // 상품등록하기
 export async function registProduct() {
     const payload = localStorage.getItem("payload");
     const payload_parse = JSON.parse(payload);
     const seller_id = payload_parse.user_id //로그인한 유저id
     
-
     const name = document.getElementById("name").value;
     const content = document.getElementById("content").value;
     const image = document.getElementById("formFile").files[0];
     const price = document.getElementById("price").value;
     const amount = document.getElementById("amount").value;
+    const category = document.getElementById("category-select").value;
     
     const formdata = new FormData();
 
@@ -26,6 +42,7 @@ export async function registProduct() {
     formdata.append('price', price)
     formdata.append('amount', amount)
     formdata.append('seller_id', seller_id)
+    formdata.append('category', category)
     if(image){
         formdata.append('image', image)
     }
@@ -141,6 +158,7 @@ window.onload = async function() {
         loadDefault()
     }
     setEventListener()
+    categoryview()
 
 }
     
