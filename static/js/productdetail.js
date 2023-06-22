@@ -160,7 +160,7 @@ async function addToCart() {
     const itemsCount = document.getElementById("cartCount").value
     console.log(itemsCount)
     const response = await addToCartAPI(productId, itemsCount)
-    alert(`${response.msg}`)
+    alert("장바구니에 추가되었습니다.")
 }
 
 async function addToLike() {
