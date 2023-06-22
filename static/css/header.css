@@ -18,7 +18,8 @@ body {
 }
 
 a {
-    color: #333;
+    /* color: #333; */
+    color:#522F18;
     text-decoration: none;
 }
 
@@ -47,7 +48,7 @@ header {
     /* 겹쳤을 때 항상 최상단으로 */
 }
 
-.header{
+.header {
     display: flex;
     justify-content: space-between;
 }
@@ -63,7 +64,7 @@ header {
 }
 
 /* 로그인 남은시간 */
-.left-header{
+.left-header {
     font-family: 'S-CoreDream-3Light';
     height: 40px;
     justify-content: left;
@@ -79,14 +80,16 @@ header {
     display: flex;
     height: 30px;
 }
-.main>text{
+
+.main>text {
     color: #522F18;
-    font-size: 60px!important;
+    font-size: 60px !important;
     cursor: pointer;
 }
 
 .top-category {
     display: flex;
+    color:#522F18;
 }
 
 nav {
@@ -100,7 +103,7 @@ nav a {
     display: block;
     width: 20%;
     padding: .75em 0;
-    color: #333;
+    color: #522F18;
     text-decoration: none;
     text-align: center;
 }
@@ -111,7 +114,7 @@ nav a {
     bottom: -2px;
     width: 20%;
     height: 2px;
-    background: #333;
+    background: #522F18;
     transition: all .3s ease-in-out;
 }
 
@@ -168,7 +171,7 @@ nav a:nth-child(5):hover~.nav-underline {
     height: 32px;
     text-align: center;
     line-height: 30px;
-    background: #f5f5f5;
+    background: white;
     color: #444;
     cursor: pointer;
     border: 0;

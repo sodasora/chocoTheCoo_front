@@ -38,6 +38,11 @@ button {
 
 }
 
+/* @media (min-width: 1440px) {
+    .container {
+        height: 160vh !important;
+    }
+} */
 
 @media (max-width: 2560px) {
     #kakaoBtn {
@@ -263,6 +268,8 @@ button {
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     }
 
+
+
     .title {
         display: none;
     }
@@ -485,7 +492,6 @@ button {
 #titleBox {
     font-size: 6rem;
     position: absolute;
-    height: 10rem;
     left: 0;
     right: 0;
     margin: auto;
@@ -494,6 +500,11 @@ button {
     font-weight: bold;
 }
 
+
 #mobileTitle {
     color: #a15e00;
+}
+
+#passwordGuide {
+    font-size: 2rem;
 }

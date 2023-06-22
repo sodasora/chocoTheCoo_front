@@ -1,20 +1,20 @@
 import { BACK_BASE_URL, REDIRECT_URI, FRONT_BASE_URL, handleLoginAPI, getVerificationCodeAPI, setUserInformationAPI } from './api.js'
 
 
-// async function injectFooter() {
-//     // 푸터 html 불러오기
-//     fetch("./footer.html")
-//         .then((response) => {
-//             return response.text();
-//         })
-//         .then((data) => {
-//             document.querySelector("footer").innerHTML = data;
-//         })
+async function injectFooter() {
+    // 푸터 html 불러오기
+    fetch("./footer.html")
+        .then((response) => {
+            return response.text();
+        })
+        .then((data) => {
+            document.querySelector("footer").innerHTML = data;
+        })
 
-//     let headerHtml = await fetch("./footer.html")
-//     let data = await headerHtml.text()
-//     document.querySelector("footer").innerHTML = data;
-// }
+    let headerHtml = await fetch("./footer.html")
+    let data = await headerHtml.text()
+    document.querySelector("footer").innerHTML = data;
+}
 
 
 export async function handleLogin() {
@@ -43,22 +43,13 @@ export async function handleLogin() {
             window.location.replace(`${FRONT_BASE_URL}/index.html`)
 
         } else {
+            const response_json = await response.json()
             message_box.style.display = "flex"
             if (response.status == 404) {
                 // 찾을 수 없는 계정
                 message.textContent = "가입된 이메일이 없습니다."
-            } else if (response.status == 204) {
-                // 휴면 계정
-                message.textContent = "휴면 계정 입니다."
-            } else if (response.status == 401) {
-                // 비밀번호가 올바르지 않음
-                const response_json = await response.json()
-                console.log(response_json)
-                message.textContent = `비밀번호가 올바르지 않습니다. 남은 시도 회수 ${response_json}`
-            } else if (response.status == 400) {
-                message.textContent = "비밀 번호를 입력해 주세요."
-            } else if (response.status == 424) {
-                message.textContent = "비밀번호를 5회 이상 틀렸습니다. 비밀번호를 재 설정해주세요."
+            } else {
+                message.textContent = response_json.non_field_errors[0]
             }
         }
     }
@@ -93,6 +84,7 @@ export async function setUserInformation() {
     const password = document.getElementById("password")
     const password2 = document.getElementById("password2")
     const message = document.getElementById("message")
+    message.innerText = ''
     if (email.value == '' || verificationCode.value == '' || password.value == '' || password2.value == '') {
         message.innerText = "빈칸 없이 입력해 주세요."
     } else if (password.value != password2.value) {
@@ -103,17 +95,12 @@ export async function setUserInformation() {
         const response = await setUserInformationAPI()
         if (response.status == 200) {
             window.location.reload()
-        } else if (response.status == 405) {
-            message.innerText = "이메일로 가입된 계정이 없습니다."
-        } else if (response.status == 406) {
-            message.innerText = "인증 코드를 발급 받아주세요."
-        } else if (response.status == 401) {
-            verificationCode.value = ''
-            message.innerText = "인증코드가 올바르지 않습니다."
-        } else if (response.status == 400) {
-            password.value = ''
-            password2.value = ''
-            message.innerText = "비밀번호는 대문자,소문자,숫자,특수문자로 이루어져야 합니다."
+        } else if (response.status == 404) {
+            message.innerText = '가입된 이메일 정보를 찾을 수 없습니다.'
+        }
+        else {
+            const response_json = await response.json()
+            message.innerText = response_json.non_field_errors
         }
     }
 }
@@ -134,6 +121,9 @@ export async function handleEvent() {
     hidden_items.forEach((item) => {
         item.style.display = "block";
     });
+    if (window.innerWidth >= 1440) {
+        document.querySelector(".container").style.height = "160vh";
+    }
 }
 
 
@@ -157,9 +147,7 @@ async function kakaoLoginBtn() {
 
 async function googleLoginBtn() {
     const response = await fetch(`${BACK_BASE_URL}/api/users/google/login/`, { method: 'GET' })
-    console.log(response)
     const google_id = await response.json()
-    console.log("test")
     const redirect_uri = REDIRECT_URI
     const scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
     const param = `scope=${scope}&include_granted_scopes=true&response_type=token&state=pass-through value&prompt=consent&client_id=${google_id}&redirect_uri=${redirect_uri}`
@@ -187,11 +175,17 @@ export async function setEventListener() {
     document.getElementById("kakaoBtn").addEventListener("click", kakaoLoginBtn)
     document.getElementById("naverBtn").addEventListener("click", naverLoginBtn)
     document.getElementById("googleBtn").addEventListener("click", googleLoginBtn)
+    document.getElementById("password").addEventListener("keydown", (event) => {
+        if (event.key == "Enter") {
+            handleLogin()
+        }
+    })
 }
 
 window.onload = async () => {
     // 로그인 안한 사용자만 접근 가능
     setEventListener();
+    // injectFooter();
     const payload = localStorage.getItem("payload");
     const payload_parse = JSON.parse(payload)
     if (payload_parse != null) {

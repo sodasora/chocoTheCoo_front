@@ -2,8 +2,14 @@ html {
     font-size: calc(1vh - 1px);
 }
 
+button {
+    cursor: pointer;
+}
 
 @media (min-width: 1440px) {
+    #getVerificationCodeBoxTag {
+        font-size: 2rem !important;
+    }
 
     #titleBox {
         height: 30rem !important;
@@ -88,6 +94,10 @@ html {
 }
 
 @media (max-width: 325px) {
+    #getVerificationCodeBoxTag {
+        font-size: 2rem !important;
+    }
+
     #singupNavItems {
         font-size: 1.5rem !important;
     }
@@ -333,4 +343,8 @@ button {
     height: 20rem;
     width: 10rem;
     background-color: #FF6666;
+}
+
+#getVerificationCodeBoxTag {
+    font-size: 3rem;
 }

@@ -1,24 +1,24 @@
 
 .section1 {
     background-color: #C4A492;
-    height: 1200px;
+    height: 100%;
     display: flex;
     justify-content: center;
+    padding-bottom: 60px;
 }
 
-.box {
+.productBox {
     width:1100px;
-    height:900px;
+    height:1000px;
     background-color: antiquewhite;
     border: 1px solid #412d1f;
     border-radius: 10px;
     margin-top: 200px;
-    
 }
 
 .form-select {
     margin: 70px 0 0 50px;
-    width:1000px;
+    width:982px;
     height:40px;
     font-size: 20px;
 }
@@ -43,16 +43,17 @@
 .form-control{
     margin: 20px 0 0 50px;
     width:980px;
-    height:20px;
+    height:40px;
 }
 .submitbutton {
     border-radius: 10px;
-    width:150px;
-    height: 60px;
-    margin: 50px 0 0 0px;
+    border: 1px solid #3a271b;
+    width:100px;
+    height: 50px;
+    margin: 0 0 0 460px;
     font-size: 20px;
-    background-color: #3a271b;
-    color:white;
+    background-color: white;
+    color: #3a271b;
 }
 
 .previewbutton{
@@ -60,8 +61,57 @@
     border: 1px solid #3a271b;
     width:150px;
     height: 60px;
-    margin: 50px 0 0 400px;
+    margin: 0 0 0 400px;
     font-size: 20px;
     background-color: white;
     color: #3a271b;
+}
+.editbutton{
+    border-radius: 10px;
+    border: 1px solid #3a271b;
+    width:100px;
+    height: 50px;
+    margin: 0 0 0 460px;
+    font-size: 20px;
+    background-color: white;
+    color: #3a271b;
+}
+#content {
+    margin: 20px 0 0 50px;
+    width:980px;
+    height:400px;
+}
+
+.sellerlogo{
+    background-color: #C4A492;
+    height:100px;
+    text-align: center;
+}
+
+#sellerLogo {
+    min-width: 100px;
+    margin-left: 500px;
+}
+
+#profileView{
+    min-width: 500px;
+    min-height: 500px;
+    max-width: 500px;
+    max-height: 500px;
+}
+.preview-card {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1.3em;
+    width: 630px;
+    height: 600px;
+    text-align: center;
+    margin: 300px 0 0 0;
+    border-radius: 20px;
+}
+.preview-section{
+    border-radius: 10px;
+    height: 1000px;
+    width:630px;
+    margin: 300px 0 0 40px;
+    background-image: url('/static/images/미리보기배경.png');
 }

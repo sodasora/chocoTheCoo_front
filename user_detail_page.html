@@ -82,12 +82,6 @@
                     <form style="width: 100%;">
                         <div class="profileInputBox">
                             <label class="profileLable">
-                                Email
-                            </label>
-                            <input id="email" class="profileInput">
-                        </div>
-                        <div class="profileInputBox">
-                            <label class="profileLable">
                                 기존 비밀번호
                             </label>
                             <input id="password" class="profileInput" type="password" autocomplete="on">
@@ -160,15 +154,54 @@
                 <div id="setUserPhoneNumberInformation" style="display: none;" class="view-items">
                     <div class="input-itme-box">
                         <label class="input-text-items">
-                            성함
-                        </label>
-                        <input class="input-items">
-                    </div>
-                    <div class="input-itme-box">
-                        <label class="input-text-items">
                             휴대폰 번호
                         </label>
-                        <input class="input-items">
+                        <div class="phoneNumberBox">
+                            <input type="text" id="phoneNum" maxlength="13" class="phone_number_input_items">
+                        </div>
+                    </div>
+                    <div class="input-itme-box" style="display: none;" id="phone_auth_box">
+                        <label class="input-text-items">
+                            인증 번호
+                        </label>
+                        <div class="phoneNumberBox">
+                            <input type="text" id="verification_numbers" class="phone_number_input_items"
+                                placeholder="인증 번호를 입력해 주세요">
+                        </div>
+                    </div>
+                    <div class="input-itme-box">
+                        <button id="getAuthNumber"> 핸드폰 인증 번호 발급 받기 </button>
+                    </div>
+                    <div class="input-itme-box" style="display: none;" id="submit_auth_number_button_box">
+                        <button id="submitPhoneNumber"> 핸드폰 인증 번호 제출 </button>
+                    </div>
+                    <div id="phoneMessageBox" style="display: none;">
+                    </div>
+
+                    <div class="input-itme-box" style="margin-top: 3%;" id="emailBox">
+                        <label class="input-text-items">
+                            이메일
+                        </label>
+                        <div class="phoneNumberBox">
+                            <input type="text" class="phone_number_input_items" id="email">
+                        </div>
+                    </div>
+
+                    <div class="input-itme-box" style="margin-top: 3%; display: none;" id="verificationCodeBox">
+                        <label class="input-text-items">
+                            인증 코드
+                        </label>
+                        <div class="phoneNumberBox">
+                            <input type="text" class="phone_number_input_items" id="verificationCode">
+                        </div>
+                    </div>
+                    <div class="input-itme-box">
+                        <button class="change-email-information-button" id="getEmailVerificationCode"> 이메일 인증 번호 발급
+                        </button>
+                    </div>
+                    <div class="input-itme-box" style="display: none;" id="submitChangeEamilInformationBox">
+                        <button class="change-email-information-button" id="submitChangeEamilInformation"> 이메일 인증 번호 제출
+                        </button>
                     </div>
                 </div>
                 <!-- 회원 휴대폰 번호 정보 수정 끝 -->
@@ -248,6 +281,8 @@
                     </div>
                 </div>
                 <!-- 회원 탈퇴 끝 -->
+                <!-- userDetailView
+                    userDetailViewImageBox -->
                 <div id="userDetailView" class="view-items">
                     <div id="userDetailViewImageBox">
                     </div>

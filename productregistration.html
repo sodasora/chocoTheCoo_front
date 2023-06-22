@@ -13,17 +13,21 @@
     <link rel="stylesheet" href="static/css/header.css">
     <link rel="stylesheet" href="static/css/footer.css">
     <link rel="stylesheet" href="static/css/productregistration.css">
+    <link rel="stylesheet" href="static/css/seller.css">
 </head>
 <header></header>
 
 <body>
     <div class="section1">
         <form>
-            <div class="box">
+            <div class="sellerlogo">
+                <img id="sellerLogo" src="static/images/sellerlogo.gif"  >
+            </div>
+            <div class="productBox">
 
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select" id="category-select" aria-label="Default select example">
                     <option selected>카테고리</option>
-                    <option value="1">1</option>
+                    <!-- 카테고리 불러오는 부분 -->
                 </select>
 
                 <div class="row mb-3">
@@ -48,37 +52,36 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label"></label>
-                    <textarea class="form-control" id="content" rows="3" placeholder="상품 설명을 적어주세요!"></textarea>
+                    <textarea class="form-control" id="content" rows="3" placeholder="상품 설명을 적어주세요!">
+                    </textarea>
                 </div>
+
                 <div class="mb-3">
-                    <label for="formFile" class="form-label" id="productimagefont">상품사진 등록</label>
                     <input class="form-control" type="file" id="formFile">
                 </div>
 
 
-                <div class="submit">
-                    <button class="previewbutton" type="button" id="preview">미리보기</button>
+                <div class="submit">               
                     <button class="submitbutton" type="button" id="registrate">제출하기</button>
+                    <button class="editbutton" type="button" id="edit">수정하기</button>
                 </div>
             </div>
         </form>
+
+        <div class="preview-section">
+            <div class="preview-card">
+                <img id="profileView">
+            </div>
+        </div>
+            
+
+        </div>
+
     </div>
-
-
-
-    <!-- <script src="/static/js/productregistration.js" type="module"></script> -->
-    <!-- <script>
-        import { registProduct } from './api.js';
-        
-        // 가져온 모듈의 함수 사용 예시
-        registProduct();
-    </script> -->
-    <script src="static/js/productregistration.js" type="module"></script>
-    <script src="static/js/api.js" type="module"></script>
-    <script src="/static/js/seller_loader.js" type="module"></script>
     
 </body>
 <footer></footer>
-
+<script src="static/js/productregistration.js" type="module"></script>
+<script src="/static/js/api.js" type="module"></script>
+<script src="static/js/loader.js" type="module"></script>
 </html>
