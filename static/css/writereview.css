@@ -1,0 +1,37 @@
+.section2{
+    background-color: #C4A492;
+    height: 850px;
+}
+form {
+    padding-top: 50px;
+}
+
+.title-box{
+    margin-bottom: 20px;
+    width : 1080px;
+}
+#give-star{
+    margin-bottom: 20px;
+}
+#reviewBox {
+    height:200px;
+}
+#top-image {
+    margin-left: 180px;
+    margin-bottom: 60px;
+}
+
+#postField2{
+    padding: 30px 30px 30px 30px;
+    border: 1px solid antiquewhite;
+    border-radius: 10px;
+    background-color: antiquewhite;
+}
+
+#reviewsubmitbutton {
+    margin: 20px 0 0 480px;
+    --bs-btn-padding-y: 0.7rem; 
+    --bs-btn-padding-x: 1.7rem; 
+    --bs-btn-font-size: 1.5rem;
+    background-color: #522F18;
+}
