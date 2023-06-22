@@ -654,7 +654,7 @@ export async function writeReviewAPI(product_id, formdata) {
 		body: formdata
 	});
 	if (response.status == 201) {
-		window.location.reload();
+		window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`;
 	} else {
 		alert("리뷰 등록 실패!")
 	}

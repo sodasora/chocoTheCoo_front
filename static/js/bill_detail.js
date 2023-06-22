@@ -1,4 +1,4 @@
-import { BACK_BASE_URL, getBillDetail, getSubscribeView, getUserProfileAPIView } from './api.js'
+import {FRONT_BASE_URL, BACK_BASE_URL, getBillDetail, getSubscribeView, getUserProfileAPIView } from './api.js'
 
 window.onload = async function () {
     renderBillDetails();
@@ -39,6 +39,10 @@ async function renderBillDetails() {
     renderBillOrders(bill);
 }
 
+export async function gowritereview(product_id) {
+    window.location.href = `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}`
+  }
+  
 async function renderBillOrders(bill) {
     const orderListBox = document.getElementById("orderLists")
     const orderItemList = bill.order_items
@@ -80,12 +84,23 @@ async function renderBillOrders(bill) {
         fifthText.src = `/static/images/shopping-cart.png`;
         fifthText.setAttribute('data-orderItem', `${e.order_items}`)
 
+        const productId = e.product_id;
+        
+        // 리뷰 작성 가기
+        const goreview = document.createElement('button');
+        goreview.innerText = `리뷰쓰기`;
+        goreview.setAttribute(`id`, 'reviewbutton');
+        goreview.onclick = function() {
+            gowritereview(productId)
+        }
+
         const textDiv = document.createElement('div');
         textDiv.classList.add('order-context')
         textDiv.appendChild(firstText)
         textDiv.appendChild(secondText)
         textDiv.appendChild(thirdText);
         textDiv.appendChild(fourthText)
+        textDiv.appendChild(goreview);
 
         orderList.appendChild(imgDiv);
         orderList.appendChild(textDiv);
