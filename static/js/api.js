@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5500"
+export const FRONT_BASE_URL = "http://127.0.0.1:5501"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
@@ -201,7 +201,7 @@ export async function getVerificationCodeAPI(email) {
 		headers: {
 			'content-type': 'application/json',
 		},
-		method: 'PUT',
+		method: 'POST',
 		body: JSON.stringify({
 			"email": email,
 		})
@@ -214,7 +214,7 @@ export async function setUserInformationAPI() {
 	const email = document.getElementById("email").value
 	const verificationCode = document.getElementById("verificationCode").value
 	const password = document.getElementById("password").value
-	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/get/auth_code/`, {
 		headers: {
 			'content-type': 'application/json',
 		},
@@ -248,7 +248,7 @@ export async function handleSignupAPI(email, nickname, password) {
 
 export async function VerificationCodeSubmitAPI(email, verificationCode) {
 	// 회원 가입시 이메일 인증
-	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/get/auth_code/`, {
 		headers: {
 			'content-type': 'application/json',
 		},
@@ -286,7 +286,7 @@ export async function updateProfileInformationAPI(information) {
 	if (profile_image) {
 		formdata.append('profile_image', profile_image)
 	}
-	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
 		},
@@ -298,14 +298,13 @@ export async function updateProfileInformationAPI(information) {
 
 export async function updateUserInformationAPI(information) {
 	// 유저 상세 정보 수정 API
-	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${information.user_id}/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
 		},
-		method: 'PATCH',
+		method: 'PUT',
 		body: JSON.stringify({
-			"email": information.email,
 			"password": information.password,
 			"new_password": information.new_password
 		})
@@ -415,9 +414,9 @@ export async function deleteSellerInformationAPI() {
 	return response
 }
 
-export async function deleteUserInformationAPI(user_id) {
+export async function deleteUserInformationAPI() {
 	// 판매자 정보 삭제
-	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
 		},
@@ -519,21 +518,6 @@ export async function registProductAPIView(formdata) {
 
 	return response.json();
 }
-
-
-// 상품 상세 페이지 수정 하기 
-
-export async function editProductDetailAPIView(product_id, formdata) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
-		method: "PUT",
-		body: formdata
-	});
-	return response.json();
-}
-
 
 
 // 상품 정보 전체 불러오기
@@ -803,16 +787,14 @@ export async function makeOrders(queryString, bill_id) {
 
 export async function setCustomsCodeAPI(information) {
 	// 통관번호 등록 및 수정
-	const user_id = information.user_id
-	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
 		},
 		method: 'PATCH',
 		body: JSON.stringify({
-			customs_code: information.customs_code
-
+			customs_code: information.customs_code,
 		})
 	})
 	return response
@@ -852,6 +834,36 @@ export async function submitVerificationNumbersAPI(information) {
 	return response
 }
 
+export async function getEmailVerificationCodeAPI(email) {
+	// 이메일 수정
+	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			email: email
+		})
+	})
+	return response
+}
+
+export async function submitChangeEamilInformationAPI(information) {
+	// 이메일 수정
+	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'PUT',
+		body: JSON.stringify({
+			email: information.email,
+			verification_code: information.verification_code
+		})
+	})
+	return response
+}
 
 //채팅방 만들기
 export async function postChatindexAPI(name, desc) {
@@ -868,6 +880,10 @@ export async function postChatindexAPI(name, desc) {
 	})
 	return response.status
 }
+
+
+
+
 
 //모든 채팅방 정보 가져오기
 export async function getChatindexAPI() {
@@ -988,3 +1004,4 @@ export async function billToCart(orderItem) {
 		console.log(response_json);
 	}
 }
+

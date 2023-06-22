@@ -87,10 +87,11 @@ export async function getVerificationCode() {
                 item.style.display = "block";
             });
             email.readOnly = true
-        } else if (response.status == 405) {
+        } else if (response.status == 404) {
             signupMessage.innerText = "가입된 이메일 정보를 찾을 수 없습니다."
-        } else if (response.status == 403) {
-            signupMessage.innerText = "소셜 계정으로 가입된 이메일입니다."
+        } else {
+            const response_json = await response.json()
+            signupMessage.innerText = response_json.err
         }
     }
 }
