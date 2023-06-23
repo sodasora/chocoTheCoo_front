@@ -1,5 +1,24 @@
 import { BACK_BASE_URL, FRONT_BASE_URL, getPointStaticView, getUserProfileAPIView } from './api.js'
 
+
+// 현재 내 포인트 확인 함수
+async function getPoint() {
+
+    // 오늘 날짜 형식맞추기 0000-00-00
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = String(today.getMonth() + 1).padStart(2, '0'); //두자리되도록 앞에0채우기
+    let date = String(today.getDate()).padStart(2, '0'); //두자리되도록 앞에0채우기
+    today = `${year}-${month}-${date}`;
+
+    const mypoint = await getPointStaticView(today)
+    const mypoint_json = await mypoint.json()
+
+    const point = document.getElementById("point")
+    point.innerText = `내 포인트 : ${mypoint_json.total_point.toLocaleString({ style: 'currency' })} P`
+}
+
+
 /* 헤더 가져오기 */
 async function injectHeader() {
     fetch("./header.html")
@@ -39,6 +58,8 @@ async function injectHeader() {
             handleLogout()
         })
 
+        getPoint()
+
         // console.log(payload_parse)
         // 판매자가 아니라면 판매자페이지 숨기기
         if (!payload_parse.is_seller) {
@@ -59,18 +80,25 @@ async function injectHeader() {
         const sellerpage = document.getElementById("sellerpage")
         const point = document.getElementById("point")
         const charge = document.getElementById("charge")
+        const chats = document.getElementById("chatting")
+        const CBTI = document.getElementById("CBTI")
+        const onlyseller = document.getElementById("seller")
 
-        cart.style.display = "none"
-        mypage.style.display = "none"
         logout.style.display = "none"
-        sellerpage.style.display = "none"
-        point.style.display = "none"
-        charge.style.display = "none"
+        point.remove()
+        sellerpage.remove()
+        cart.remove()
 
-        const chats = document.getElementById("chats")
-        chats.addEventListener("click", function () {
+        function login() {
             window.location.href = "login.html"
-        })
+        }
+
+        mypage.addEventListener("click", login)
+        charge.addEventListener("click", login)
+        chats.addEventListener("click", login)
+        CBTI.addEventListener("click", login)
+        onlyseller.addEventListener("click", login)
+
     }
 }
 injectHeader();
@@ -154,21 +182,5 @@ function init() {
 init();
 
 
-// 현재 내 포인트 확인 함수
-async function getPoint() {
 
-    // 오늘 날짜 형식맞추기 0000-00-00
-    let today = new Date();
-    let year = today.getFullYear();
-    let month = String(today.getMonth() + 1).padStart(2, '0'); //두자리되도록 앞에0채우기
-    let date = String(today.getDate()).padStart(2, '0'); //두자리되도록 앞에0채우기
-    today = `${year}-${month}-${date}`;
-
-    const mypoint = await getPointStaticView(today)
-    const mypoint_json = await mypoint.json()
-
-    const point = document.getElementById("point")
-    point.innerText = `내 포인트 : ${mypoint_json.total_point.toLocaleString({ style: 'currency' })} P`
-}
-getPoint()
 
