@@ -541,9 +541,6 @@ export async function registProductAPIView(formdata) {
 // # 상품 전체 조회
 export async function getProductListAPIView() {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
 		method: "GET",
 	});
 
@@ -680,10 +677,8 @@ export async function writeReviewAPI(product_id, formdata) {
 // 특정 상품의 전체 리뷰 불러오기
 // # 리뷰 조회, 생성
 export async function getReviewView(product_id) {
+	console.log(product_id)
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/reviews/`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
 		method: "GET",
 	});
 	return response.json();

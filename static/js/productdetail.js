@@ -1,42 +1,22 @@
-<<<<<<< HEAD
-import {
-    BACK_BASE_URL,
-    FRONT_BASE_URL,
-    getProductDetailAPIView,
-    getReviewView,
-    deletetProductDetailAPIView,
-    getSellerInformationAPI,
-} from './api.js';
-=======
 import { getProductDetailAPIView, getReviewView, deletetProductDetailAPIView, addToCartAPI, addToLikeAPI, BACK_BASE_URL, FRONT_BASE_URL } from './api.js';
->>>>>>> 7112b5ebd7af01b7e736584f0b6953898baae4a6
 
 export async function goEditReview(product_id, review_id) {
-    window.location.href = `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}&review_id=${review_id}`;
+    console.log(product_id, review_id)
+    window.location.href = await `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}&review_id=${review_id}`;
 }
-<<<<<<< HEAD
-
-=======
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('product_id');
->>>>>>> 7112b5ebd7af01b7e736584f0b6953898baae4a6
 
 // 상품 정보보기
 export async function viewProductDetail() {
     const response = await getProductDetailAPIView(productId);
     console.log(response)
 
-<<<<<<< HEAD
-=======
     const productStar = document.getElementById('productStar');
->>>>>>> 7112b5ebd7af01b7e736584f0b6953898baae4a6
     const productTitle = document.getElementById("product-title")
     const productImage = document.getElementById("product-image")
     const productPrice = document.getElementById("product-price")
     const productAmount = document.getElementById("product-amount");
-<<<<<<< HEAD
-    const productContent = document.getElementById("product-content")
-=======
     // const productContent = document.getElementById("product-content")
     const productLike = document.getElementById("productLike")
     const star = response.product_information.stars
@@ -52,7 +32,6 @@ export async function viewProductDetail() {
         productLike.innerText = likes
     }
     else { productLike.innerText = 0 }
->>>>>>> 7112b5ebd7af01b7e736584f0b6953898baae4a6
 
     productTitle.innerText = response.name
     // productContent.innerText = response.content
@@ -68,12 +47,6 @@ export async function viewProductDetail() {
         newImage.setAttribute("src", "/static/images/기본이미지.gif");
         productImage.appendChild(newImage)
     }
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 7112b5ebd7af01b7e736584f0b6953898baae4a6
 }
 
 // 상품 수정하기
@@ -85,14 +58,10 @@ export async function goEditProduct() {
 export async function deleteProduct() {
 
     try {
-<<<<<<< HEAD
-        deletetProductDetailAPIView(productId);
-=======
         const deleteConfirm = confirm("정말 삭제하시겠습니까?")
         if (deleteConfirm) {
             deletetProductDetailAPIView(productId);
         }
->>>>>>> 7112b5ebd7af01b7e736584f0b6953898baae4a6
 
     } catch (error) {
         console.error(error);
@@ -101,16 +70,8 @@ export async function deleteProduct() {
 
 
 // 후기 조회
-<<<<<<< HEAD
-export async function showReview() {
-    try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('product_id');
-
-=======
 export async function showReview(productId) {
     try {
->>>>>>> 7112b5ebd7af01b7e736584f0b6953898baae4a6
         const reviews = await getReviewView(productId);
 
         console.log(reviews);
@@ -242,27 +203,15 @@ export async function setEventListener() {
     // html 요소 이벤트 리스너 추가
     document.getElementById("delete-btn").addEventListener("click", deleteProduct)
     document.getElementById("edit-btn").addEventListener("click", goEditProduct)
-<<<<<<< HEAD
-    // document.getElementById("detailView").addEventListener("click", detailView)
-    document.getElementById("reviewView").addEventListener("click", reviewView)
-    document.getElementById("sellerpage").addEventListener("click", sellerpage)
-=======
     document.getElementById("addToLike").addEventListener("click", addToLike)
     document.getElementById("addToCart").addEventListener("click", addToCart)
 
->>>>>>> 7112b5ebd7af01b7e736584f0b6953898baae4a6
 }
 
 
 
 window.onload = async function () {
     viewProductDetail()
-<<<<<<< HEAD
+    showReview(productId)
     setEventListener()
-    showReview()
-    getSellerInformation()
-=======
-    showReview()
-    setEventListener()
->>>>>>> 7112b5ebd7af01b7e736584f0b6953898baae4a6
 }
