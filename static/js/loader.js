@@ -46,10 +46,10 @@ async function injectHeader() {
             sellerpage.style.display = "none"
         }
 
-        const chats = document.getElementById("chats")
-        chats.addEventListener("click", function () {
-            window.location.href = "chatindex.html"
-        })
+        // const chats = document.getElementById("chats")
+        // chats.addEventListener("click", function () {
+        //     window.location.href = "chatindex.html"
+        // })
 
     } else {
         // 비로그인 상태에서 장바구니,마이페이지,판매자페이지,로그아웃 숨기기

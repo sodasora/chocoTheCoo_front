@@ -17,8 +17,10 @@
 <header></header>
 
 <body>
-    <div class="section3">
+    <div class="section3 centered">
+        <img src="/static/images/상품상단.png" id="top-image">
         <div class="productSection" id="post-card">
+<<<<<<< HEAD
             <img src="/static/images/상품상단.png" id="top-image">
             <div class="imageBox" id="product-image"></div>
             <h1 id="product-title">게시글 제목</h1>
@@ -29,15 +31,51 @@
             <div class="button-area">
                 <button id="edit-btn" type="button" class="btn btn-dark">수정하기</button>
                 <button id="delete-btn" type="button" class="btn btn-dark">삭제하기</button>
+=======
+            <div class="imageBox centered" id="product-image"></div>
+            <div class="centered text-box">
+                <div class="col-centered text-box-first">
+                    <div id="product-title">게시글 제목</div>
+                    <div class="amountbox" id="product-amount">수량</div>
+                    <div class="priceBox" id="product-price">상품 가격</div>
+                    <div class="contentBox" id="product-content"></div>
+                </div>
+                <div class="col-2 text-box-second">
+                    <div class="star-box">
+                        <div id="avgStar"></div>
+                        <div id="productStar"></div>
+                    </div>
+                    <div class="like-box">
+                        <div id="productLike"></div>
+                        <img id="addToLike" class="icons" src="/static/images/좋아요.png" alt="">
+                    </div>
+                    <div class="cart-box">
+                        <input id="cartCount" type="number" value="1" min="1">
+                        <button id="addToCart" class="btn btn-primary">장바구니 담기</button>
+                    </div>
+                    <!-- <img class="cart-img" src="static/images/shopping-cart.png" alt=""> -->
+                </div>
+>>>>>>> 7112b5ebd7af01b7e736584f0b6953898baae4a6
             </div>
+        </div>
+        <div class="button-area centered">
+            <button id="edit-btn" type="button" class="btn btn-dark">수정하기</button>
+            <button id="delete-btn" type="button" class="btn btn-dark">삭제하기</button>
         </div>
 
         <!-- 상품 디테일 navbar 따로 만들겠습니다! -->
         <div class="top-category">
+<<<<<<< HEAD
             <nav>
                 <!-- <a id="detailView" style='cursor:pointer'>상품상세보기</a> -->
                 <a id="reviewView" style='cursor:pointer'>상품후기</a>
                 <a id="sellerpage" style='cursor:pointer'>판매자정보</a>
+=======
+            <nav class="product-nav">
+                <a id="detailView" style='cursor:pointer' onclick="location.href='#';">상품상세보기</a>
+                <a id="reviewView" style='cursor:pointer' onclick="location.href='#';">상품후기</a>
+                <a id="sellerpage" style='cursor:pointer' onclick="location.href='#';">판매자정보</a>
+>>>>>>> 7112b5ebd7af01b7e736584f0b6953898baae4a6
                 <div class="nav-underline"></div>
             </nav>
         </div>
