@@ -1156,6 +1156,18 @@ export async function getCategoryView() {
 	return response.json();
 }
 
+// 동일 카테고리 상품 조회
+export async function sameCategoryProductView(category_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/?category=${category_id}`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "GET",
+	});
+	return response.json();
+}
+
+
 export async function addToCartAPI(product, amount) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/`, {
 		method: 'POST',

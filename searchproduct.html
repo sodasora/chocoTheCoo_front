@@ -25,21 +25,26 @@
                 <div class="category">
                     <div class="search">
                         <input type="text" id="search-keyword" placeholder="검색어 입력🔍">
-                        <button type="button" class="btn btn-light" id="search-btn">🔍</button>
+                        <button type="button" class="btn btn-light" id="search-btn">검색</button>
                     </div>
                     <div class="menu" id="categorymenu"> 
                         <p>category</p>
                     </div>
+                    <!-- <img src="static/images/logo.png" height="100px" float="left"> -->
+                    <!-- <img src="static/images/logo.png" height="100px" float="left">
+                    <img src="static/images/logo.png" height="100px" float="left">
+                    <img src="static/images/logo.png" height="100px" float="left">
+                    <img src="static/images/logo.png" height="100px" float="left"> -->
                 </div>
             </div>
             <div class="col-md-9" style="text-align:center;">
                 <img src="static/images/초코구독배너.gif" id="chocobanner">
-                <div class="row row-cols-1 row-cols-md-3 g-4" id="product-content">
-                    <!--상품정보-->
-                </div>
-                <div id="product-buttons">
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-md-3 g-4" id="product-list">
+                    </div>
                 </div>
             </div>
+            
         </div>
     </div>
 </body>
@@ -48,7 +53,7 @@
 <!-- script -->
 <script src="/static/js/api.js" type="module"></script>
 <script src="/static/js/loader.js" type="module"></script>
-<script src="/static/js/index.js" type="module"></script>
+<script src="/static/js/searchproduct.js" type="module"></script>
 
 </html>
 
