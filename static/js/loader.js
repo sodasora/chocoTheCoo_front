@@ -84,16 +84,16 @@ async function injectHeader() {
         const CBTI = document.getElementById("CBTI")
         const onlyseller = document.getElementById("seller")
 
-        cart.style.display = "none"
         logout.style.display = "none"
         point.remove()
+        sellerpage.remove()
+        cart.remove()
 
         function login() {
             window.location.href = "login.html"
         }
 
         mypage.addEventListener("click", login)
-        sellerpage.addEventListener("click", login)
         charge.addEventListener("click", login)
         chats.addEventListener("click", login)
         CBTI.addEventListener("click", login)
