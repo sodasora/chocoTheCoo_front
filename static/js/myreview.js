@@ -275,6 +275,8 @@ window.onload = async function () {
     subscription_info();
 
     const review_data = await getMyReviewView()
-    //console.log(review_data)
-    pagination_review(review_data);
+    console.log(review_data)
+    if (review_data != "") {
+        pagination_review(review_data);
+    }
 }  

@@ -201,6 +201,7 @@ td {
   margin-left: 60px;
   border: 2px solid white;
   border-radius: 20px;
+  color: white;
 }
 
 .profile {
@@ -219,6 +220,8 @@ td {
   border-radius: 20px;
   font-family: 'S-CoreDream-3Light';
   font-size: 1.5vw;
+  color: white;
+  font-weight: bold;
 }
 
 /*프로필 기본 사진*/
@@ -247,6 +250,7 @@ td {
   font-family: 'S-CoreDream-3Light';
   font-size: 1.5vw;
   align-items: center;
+  color: black;
 }
 
 #my-wish-list {
@@ -254,6 +258,13 @@ td {
   font-family: 'S-CoreDream-3Light';
   font-size: 1.5vw;
   font-weight: bold;
+  color: white;
+}
+
+.my-wish-none {
+  margin-left: 30px;
+  color: white;
+  font-family: 'S-CoreDream-3Light';
 }
 
 .wishfont {
@@ -262,6 +273,7 @@ td {
   padding-left: 40px;
   margin-top: 20px;
   font-size: 2vw;
+  color: white;
 }
 
 .wishimage {

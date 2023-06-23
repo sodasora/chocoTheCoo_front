@@ -541,9 +541,6 @@ export async function registProductAPIView(formdata) {
 // # 상품 전체 조회
 export async function getProductListAPIView() {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
 		method: "GET",
 	});
 
@@ -567,9 +564,6 @@ export async function getSellerProductListAPIView(user_id) {
 // # 상품 상세 조회
 export async function getProductDetailAPIView(product_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
 		method: "GET",
 	});
 	return response.json();
