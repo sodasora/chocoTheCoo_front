@@ -12,7 +12,7 @@ import {
 
 
 export async function goEditReview(product_id, review_id) {
-    window.location.href = await `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}&review_id=${review_id}`;
+    window.location.href = `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}&review_id=${review_id}`;
 }
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -27,7 +27,7 @@ export async function viewProductDetail() {
     const productImage = document.getElementById("product-image")
     const productPrice = document.getElementById("product-price")
     const productAmount = document.getElementById("product-amount");
-    // const productContent = document.getElementById("product-content")
+    const productContent = document.getElementById("productContent")
     const productLike = document.getElementById("productLike")
     const star = response.product_information.stars
     if (star) {
@@ -44,7 +44,7 @@ export async function viewProductDetail() {
     else { productLike.innerText = 0 }
 
     productTitle.innerText = response.name
-    // productContent.innerText = response.content
+    productContent.innerText = response.content
     productPrice.innerText = response.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
     productAmount.innerText = "수량:  " + response.amount + " 개";
     const newImage = document.createElement("img");
@@ -217,6 +217,7 @@ export async function getReviewDetailData(element) {
     }
 
 
+
     const review_image = element.image == null ? '/static/images/store.gif' : element.image
     const profile_image = element.user.profile_image == null ? '/static/images/avatar.png' : element.user.profile_image
     const like_image = element.is_like == false ? '/static/images/좋아요x.png' : '/static/images/좋아요.png'
@@ -272,7 +273,7 @@ export async function getReviewDetailData(element) {
         if (payload.user_id == element.user.id) {
             const editReviewInformation = document.getElementById(`editReviewInformation_${element.id}`);
             editReviewInformation.addEventListener("click", async function () {
-                window.location.href = `${FRONT_BASE_URL}/writereview.html?review_id=${element.id}`;
+                goEditReview(element.product, element.id)
             });
         } else {
             document.getElementById(`editReviewInformation_${element.id}`).style.display = "none"
@@ -349,6 +350,9 @@ async function addToLike() {
     }
 }
 
+export async function reviewView() {
+    document.getElementById("review-List").style.display = "block"
+}
 
 export async function setEventListener() {
     // html 요소 이벤트 리스너 추가
@@ -356,7 +360,7 @@ export async function setEventListener() {
     document.getElementById("edit-btn").addEventListener("click", goEditProduct)
     document.getElementById("addToLike").addEventListener("click", addToLike)
     document.getElementById("addToCart").addEventListener("click", addToCart)
-
+    document.getElementById("reviewView").addEventListener("click", reviewView)
 }
 
 
