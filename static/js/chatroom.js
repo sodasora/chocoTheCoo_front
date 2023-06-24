@@ -1,5 +1,5 @@
 import {
-    access_token, getChatLogAPI, getChatroominfo, payload
+    access_token, getChatLogAPI, getChatroominfo, payload, BACK_BASE_URL
 } from "./api.js";
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -43,7 +43,8 @@ async function get_chat_log(roomId) {
 
 let chatSocket
 let nowPage = 1
-let backurl = "127.0.0.1:8000"
+let backurl = BACK_BASE_URL.substring(7,)
+console.log(backurl)
 function socketSwap(roomId) {
     if (chatSocket) {
         chatSocket.close()

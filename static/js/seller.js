@@ -1,12 +1,12 @@
-import { BACK_BASE_URL, getSellerProductListAPIView, getSellerOrderListView, getSellerPermissionAPIView, getProductDetailAPIView } from './api.js';
+import { BACK_BASE_URL, getAllProductListAPIView, getSellerOrderListView, getSellerPermissionAPIView, getProductDetailAPIView } from './api.js';
 
 const payload = localStorage.getItem("payload");
 const payload_parse = JSON.parse(payload);
 const user_id = payload_parse.user_id //로그인한 유저id
 
 // 로그인한 판매자의 전체 상품 목록 불러오기
-const seller_products = await getSellerProductListAPIView(user_id)
-// console.log('seller_products',seller_products)
+const seller_products = await getAllProductListAPIView(user_id)
+console.log('seller_products',seller_products)
 
 // 로그인한 판매자의 전체 주문 목록 불러오기
 const seller_orders = await getSellerOrderListView(user_id)
@@ -74,7 +74,7 @@ product_total_count.innerText = total_product_count
 
 // 5) 브랜드 좋아요(찜) - 미구현, 필드 추가 필요
 const seller_wish = document.getElementById('seller_wish')
-seller_wish.innerText = "X"
+seller_wish.innerText = "0"
 
 // 6) 상품 총 좋아요(찜)
 const product_wish = document.getElementById('product_wish')

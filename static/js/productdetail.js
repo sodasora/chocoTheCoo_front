@@ -107,6 +107,7 @@ export async function showReview(reviews) {
         await reviews.forEach((element) => {
             console.log(element.is_like)
 
+
             let star = '';
             for (let i = 0; i < element.star; i++) {
                 star += '<img class="review-star" src="/static/images/별점.png">';
