@@ -36,8 +36,8 @@ body {
 
 .top-category {
     width: 100%;
-}
 
+}
 
 #post-card {
     font-size: 2em;
@@ -142,4 +142,55 @@ body {
 .like-box {
     display: flex;
     justify-content: space-evenly;
+}
+
+.product-nav {
+    justify-content: center;
+    position: relative;
+    display: flex;
+    width: 640px;
+    margin: 4em auto;
+}
+
+.nav-underline {
+    position: absolute;
+    left: 20%;
+    bottom: -2px;
+    width: 20%;
+    height: 2px;
+    background: #522F18;
+    transition: all .3s ease-in-out;
+}
+
+.product-nav a {
+    display: block;
+    width: 20%;
+    padding: .75em 0;
+    color: #522F18;
+    text-decoration: none;
+    text-align: center;
+}
+
+nav a:nth-child(1).is-current~.nav-underline {
+    left: 20%;
+} 
+ 
+nav a:nth-child(2).is-current~.nav-underline {
+    left: 40%;
+}
+
+nav a:nth-child(3).is-current~.nav-underline {
+    left: 60%;
+}
+
+nav a:nth-child(1):hover~.nav-underline {
+    left: 20%;
+}
+
+nav a:nth-child(2):hover~.nav-underline {
+    left: 40%;
+}
+
+nav a:nth-child(3):hover~.nav-underline {
+    left: 60%;
 }

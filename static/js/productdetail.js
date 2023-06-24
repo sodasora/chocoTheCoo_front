@@ -69,10 +69,9 @@ export async function deleteProduct() {
 
 
 // 후기 조회
-export async function showReview(productId) {
+export async function showReview() {
     try {
         const reviews = await getReviewView(productId);
-
         console.log(reviews);
 
         const review_list = document.getElementById("review-List");

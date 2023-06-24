@@ -186,8 +186,7 @@ export async function postPointServiceView() {
 
 // 내가 쓴 리뷰 가져오기
 export async function getMyReviewView() {
-	const user_id = payload.user_id
-	const response_data = await fetch(`${BACK_BASE_URL}/api/products/mypage/reviews/${user_id}/`, {
+	const response_data = await fetch(`${BACK_BASE_URL}/api/products/mypage/reviews/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`,
