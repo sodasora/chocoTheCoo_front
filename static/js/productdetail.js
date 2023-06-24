@@ -1,7 +1,17 @@
-import { getProductDetailAPIView, getReviewView, deletetProductDetailAPIView, addToCartAPI, addToLikeAPI, BACK_BASE_URL, FRONT_BASE_URL } from './api.js';
+import {
+    getProductDetailAPIView,
+    getReviewView,
+    deletetProductDetailAPIView,
+    addToCartAPI,
+    addToLikeAPI,
+    BACK_BASE_URL,
+    FRONT_BASE_URL,
+    payload,
+    reviewLikeAPI,
+} from './api.js';
 
 export async function goEditReview(product_id, review_id) {
-    window.location.href = `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}&review_id=${review_id}`;
+    window.location.href = await `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}&review_id=${review_id}`;
 }
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('product_id');
@@ -9,7 +19,6 @@ const productId = urlParams.get('product_id');
 // 상품 정보보기
 export async function viewProductDetail() {
     const response = await getProductDetailAPIView(productId);
-    console.log(response)
 
     const productStar = document.getElementById('productStar');
     const productTitle = document.getElementById("product-title")
@@ -46,6 +55,8 @@ export async function viewProductDetail() {
         newImage.setAttribute("src", "/static/images/기본이미지.gif");
         productImage.appendChild(newImage)
     }
+    // 리뷰 정보 불러오기
+    await showReview(response.product_reviews)
 }
 
 // 상품 수정하기
@@ -68,84 +79,130 @@ export async function deleteProduct() {
 }
 
 
+
+
+export async function reviewLike(review) {
+
+    const response = await reviewLikeAPI(review.id)
+    if (response.status == 404) {
+        alert("리뷰글이 삭제되었거나, 로그인이 필요합니다.")
+    } else if (response.status == 401) {
+        alert("로그인이 필요합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+
+    } else {
+        const like_image = response.status == 200 ? '/static/images/좋아요x.png' : '/static/images/좋아요.png';
+        document.getElementById(`reviewLikeButton_${review.id}`).style.backgroundImage = `url(${like_image})`;
+        const response_json = await response.json()
+        console.log(response_json)
+        document.getElementById(`reviewLikeCount_${review.id}`).innerText = response_json.liking_people
+    }
+}
+
 // 후기 조회
-export async function showReview() {
+export async function showReview(reviews) {
     try {
-        const reviews = await getReviewView(productId);
-        console.log(reviews);
+        const review_list = document.getElementById("review-List")
 
-        const review_list = document.getElementById("review-List");
-        console.log(review_list);
-        reviews.forEach((review) => {
+        await reviews.forEach((element) => {
+            console.log(element.is_like)
 
-            const newCol = document.createElement("div");
-            newCol.setAttribute("class", "col");
-            newCol.setAttribute("id", "review-card");
 
-            const newCard = document.createElement("div");
-            newCard.setAttribute("class", "card");
-            newCard.setAttribute("id", "review-info");
-
-            newCard.onclick = function () {
-                getReviewView(review.id);
-            };
-
-            const img = document.createElement("img");
-            img.setAttribute("class", "card-img-top");
-
-            if (review.image) {
-                img.setAttribute(
-                    "src",
-                    `${review.image}`
-                );
-            } else {
-                img.setAttribute("src", '/static/images/기본이미지.gif')
+            let star = '';
+            for (let i = 0; i < element.star; i++) {
+                star += '<img class="review-star" src="/static/images/별점.png">';
             }
 
-            newCard.appendChild(img);
-            review_list.appendChild(newCol);
 
-            const newCardBody = document.createElement("div");
-            newCardBody.setAttribute("class", "card-body");
-            newCard.appendChild(newCardBody);
+            const review_image = element.image == null ? '/static/images/store.gif' : element.image
+            const profile_image = element.user.profile_image == null ? '/static/images/avatar.png' : element.user.profile_image
+            const like_image = element.is_like == false ? '/static/images/좋아요x.png' : '/static/images/좋아요.png'
 
-            const newCardTitle = document.createElement("h5");
-            newCardTitle.setAttribute("class", "card-title");
-            newCardTitle.setAttribute("id", "review-title");
-            newCardTitle.innerText = review.title;
-            newCardBody.appendChild(newCardTitle);
+            review_list.innerHTML += `
+            <div class="review-items">
+                <div class="review-left-box">
+                    <img src="${review_image}" class="review-image-tag">
+                </div>
+                <div class="review-right-box">
+                    <div class="review-owner-box">
+                    <div class="review-owner-image" style="background-image: url(${profile_image});">
+                    </div>
+                        <span class="review-owenr-nick-name">
+                            ${element.user.nickname}
+                        </span>
+                        <div class="review-like-box">
+                            <span class="review-like-count" id=reviewLikeCount_${element.id} >${element.review_liking_people_count}</span>
+                            <div class="review-like-button" style="background-image: url(${like_image});" id=reviewLikeButton_${element.id}>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-content-box">
+                        <div class="review-content-left-box">
+                            <input class="review-title" type="text" value="${element.title}" readonly id="reviewTitle_${element.id}">
+                            <input  type="hidden" value="${element.id}" readonly id="reviewHidden_${element.id}">
+                        </div>
+                        <div class="review-content-right-box">
+                            <div class="review-star-box">
+                                ${star}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-information-box">
+                        <span class="review-create-at">${element.updated_at}</span>
+                        <button type="button" class="review-detail-button" id=reviewDetail_${element.id}> 상세보기 </button>
+                    </div>
+                </div>
+            </div>
+            `
 
-            const newCardText = document.createElement("p");
-            newCardText.setAttribute("class", "card-text");
-            newCardText.setAttribute("id", "review-star");
-            newCardText.innerText = "별점 : " + review.star;
-            newCard.appendChild(newCardText)
+        });
 
-            const newCardFooter = document.createElement("p");
-            newCardFooter.setAttribute("class", "card-footer");
-            newCardFooter.setAttribute("id", "review-content");
-            newCardFooter.innerText = review.content;
-            newCard.appendChild(newCardFooter)
-            newCol.appendChild(newCard);
+        await reviews.forEach((element) => {
+            const reviewLikeButton = document.getElementById(`reviewLikeButton_${element.id}`);
+            reviewLikeButton.addEventListener("click", function () {
+                reviewLike(element);
+            });
+        })
 
-            const payload = localStorage.getItem("payload");
-            const payload_parse = JSON.parse(payload);
-            const user_id = payload_parse.user_id //로그인한 유저id
+        await reviews.forEach((element, index) => {
+            const reviewDetailButton = document.getElementById(`reviewDetail_${element.id}`);
+            console.log(reviewDetailButton)
+            reviewDetailButton.addEventListener("click", function () {
+                const reviewStars = "".padStart(element.star, '<img class="review-detail-star" src="/static/images/별점.png">'); // 별점 이미지 생성
+                const reviewDetailInnerHTML = `
+            <div class="reviewDetailContainer">
+              <div class="reviewDetailTopContainer">
+                <div class="reviewDetailImageBox"></div>
+                <div class="reviewDetailTitleContainer">
+                  <div class="reviewDetailOwnerInformationBox">
+                    <div class="reviewDetailProfileGroup">
+                      <div class="reviewDetailProfileImage"></div>
+                      <span class="reviewDetailNickname">${element.user.nickname}</span>
+                    </div>
+                    <div class="reviewDetailLikeGroup">
+                      <span class="reviewDetailLikeCount">${element.review_liking_people_count}</span>
+                      <div class="reviewDetailLikeButton"></div>
+                    </div>
+                  </div>
+                  <div class="reviewDetailTitleBox">
+                    <input class="reviewDetailTitle" readonly value="${element.title}">
+                  </div>
+                  <div class="reviewDetailStarBox">
+                    ${reviewStars}
+                  </div>
+                  <span class="reviewDetailCreated_at">${element.created_at}</span>
+                </div>
+              </div>
+              <div class="reviewDetailMiddleContainer"></div>
+              <div class="reviewDetailBottomContainer"></div>
+            </div>
+          `;
 
-            if (review.user == user_id) {
-                // 수정하기 버튼 생성
-                const editReviewButton = document.createElement('button')
-                editReviewButton.innerHTML = "수정하기"
-                editReviewButton.setAttribute("id", `${review.id}th-item-update-button`)
-                editReviewButton.addEventListener("click", function () {
-                    goEditReview(productId, review.id);
-                })
-                newCard.appendChild(editReviewButton)
-                newCol.appendChild(newCard);
-            }
+                const reviewItem = document.querySelector(`#reviewList > div:nth-child(${index + 1})`);
+                reviewItem.innerHTML = reviewDetailInnerHTML;
+            });
+        });
 
-        }
-        );
 
     } catch (error) {
         console.error(error)
@@ -155,9 +212,19 @@ export async function showReview() {
 }
 
 
+export async function getSellerInformation() {
+    const response = await getSellerInformationAPI()
+    if (response.status == 200) {
+
+    }
+}
+
+export async function sellerpage() {
+
+}
+
 async function addToCart() {
     const itemsCount = document.getElementById("cartCount").value
-    console.log(itemsCount)
     const response = await addToCartAPI(productId, itemsCount)
     alert("장바구니에 추가되었습니다.")
 }
@@ -192,9 +259,7 @@ export async function setEventListener() {
 }
 
 
-
 window.onload = async function () {
     viewProductDetail()
-    showReview()
     setEventListener()
 }

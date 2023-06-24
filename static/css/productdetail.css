@@ -144,6 +144,295 @@ body {
     justify-content: space-evenly;
 }
 
+.option-container {
+    width: 100%;
+}
+
+
+.review-items {
+    height: 10rem;
+    width: 100%;
+    display: flex;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 3rem;
+}
+
+.review-left-box {
+    width: 30%;
+    height: 100%;
+}
+
+.review-right-box {
+    width: 70%;
+    height: 100%;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    padding: 1% 1% 1% 1%;
+}
+
+.review-image-tag {
+    width: 80%;
+    height: 100%;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.review-owner-box {
+    height: 25%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.review-content-box {
+    height: 50%;
+    width: 100%;
+    display: flex;
+}
+
+.review-content-left-box {
+    height: 100%;
+    width: 70%;
+}
+
+.review-content-right-box {
+    height: 100%;
+    width: 30%;
+    display: flex;
+    align-items: center;
+}
+
+.review-star-box {
+    width: 100%;
+    height: 30%;
+    text-align: center;
+}
+
+.review-star {
+    height: 100%;
+    width: 15%;
+}
+
+.review-information-box {
+    height: 25%;
+}
+
+.review-owner-image {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.review-owenr-nick-name {
+    margin-left: 5%;
+}
+
+.review-like-box {
+    height: 100%;
+    width: 30%;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.review-like-count {
+    margin-left: auto;
+}
+
+.review-like-button {
+    height: 100%;
+    width: 30%;
+    cursor: pointer;
+    margin-left: auto;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("/static/images/좋아요x.png");
+}
+
+.review-title {
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    border-color: transparent;
+    border: none;
+    text-align: center;
+}
+
+.review-content {
+    height: 60%;
+    width: 100%;
+    text-align: center;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.review-information-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.review-create-at {
+    margin-right: auto;
+}
+
+
+
+.review-control-button {
+    height: 100%;
+    width: 4rem;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    background-color: transparent;
+    border-radius: 3rem;
+    border: none;
+}
+
+.reviewDetailContainer {
+    height: 30rem;
+    width: 100%;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.reviewDetailTopContainer {
+    height: 30%;
+    width: 100%;
+    display: flex;
+}
+
+
+.reviewDetailBottomContainer {
+    height: 60%;
+    width: 100%;
+    padding: 3% 3% 3% 3%;
+}
+
+.reviewDetailControlContainer {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    padding: 1% 3% 1% 1%;
+
+}
+
+.reviewDetailImageBox {
+    height: 100%;
+    width: 35%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("/static/images/좋아요x.png");
+}
+
+.reviewDetailTitleContainer {
+    height: 100%;
+    width: 65%;
+    padding: 1% 1% 1% 1%;
+}
+
+
+.reviewDetailOwnerInformationBox {
+    width: 100%;
+    height: 20%;
+    display: flex;
+}
+
+.reviewDetailTitleBox {
+    width: 100%;
+    height: 50%;
+}
+
+.reviewDetailStarBox {
+    width: 100%;
+    height: 30%;
+    display: flex;
+}
+
+.review-control-box {
+    margin-left: auto;
+}
+
+
+
+.reviewDetailCreated_at {
+    margin-left: auto;
+}
+
+.review-detail-star {
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+}
+
+.reviewDetailTitle {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+}
+
+.reviewDetailProfileGroup {
+    display: flex;
+    height: 100%;
+    width: 50%;
+}
+
+.reviewDetailLikeGroup {
+    display: flex;
+    height: 100%;
+    width: 50%;
+}
+
+.reviewDetailProfileImage {
+    width: 2rem;
+    height: 2rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("/static/images/google.png");
+}
+
+.reviewDetailNickname {
+    height: 100%;
+    width: 10%;
+    margin-left: 5%;
+}
+
+.reviewDetailLikeCount {
+    height: 100%;
+    width: 10%;
+    margin-left: 60%;
+}
+
+.reviewDetailLikeButton {
+    margin-left: auto;
+    width: 2rem;
+    height: 2rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("/static/images/좋아요x.png");
+}
+
+.reviewDetailContext {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    background-color: bisque;
+}
+
+.review-detail-button {
+    height: 100%;
+    width: 8rem;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    background-color: transparent;
+    border-radius: 3rem;
+    border: none;
+}
+
 .product-nav {
     justify-content: center;
     position: relative;
@@ -173,8 +462,8 @@ body {
 
 nav a:nth-child(1).is-current~.nav-underline {
     left: 20%;
-} 
- 
+}
+
 nav a:nth-child(2).is-current~.nav-underline {
     left: 40%;
 }

@@ -507,7 +507,7 @@ export function readURL(input) {
         };
         reader.readAsDataURL(input.files[0]);
     } else {
-        document.getElementById('profileView').src = "/static/images/pepe.jpg";
+        document.getElementById('profileView').src = "/static/images/image_199.png";
     }
 }
 
@@ -658,7 +658,7 @@ async function DeliveryInformation(response_json) {
 async function getUserDetailInformation(response_json) {
     // 프로필 정보 기입
     if (response_json.profile_image == null) {
-        document.getElementById('profileView').src = "/static/images/pepe.jpg";
+        document.getElementById('profileView').src = "/static/images/image_199.png";
     } else {
         document.getElementById('profileView').setAttribute("src", `${BACK_BASE_URL}${response_json.profile_image}`)
     }
