@@ -25,18 +25,20 @@
   font-size: 20px;
   margin-top: 10px;
 }
-#search-btn{
+
+#search-btn {
   background-color: transparent;
-  border:none;
-  height:40px;
+  border: none;
+  height: 40px;
 }
+
 input {
   width: 100%;
   border: 1px solid #bbb;
   border-radius: 8px;
   padding: 10px 12px;
   font-size: 14px;
-  height:40px;
+  height: 40px;
 }
 
 .menu {
@@ -114,4 +116,21 @@ button {
 .col-md-9 {
   padding: 3%;
   width: 70vw;
+}
+
+
+button {
+  height: 4vh;
+  font-size: 1vw;
+  background-color: rgba(109, 86, 68, 0.822);
+  color: white;
+  border-radius: 10px;
+}
+
+#previous-buttons {
+  margin-right: 10px;
+}
+
+#next-buttons {
+  margin-left: 10px;
 }
