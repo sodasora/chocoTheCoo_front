@@ -1,5 +1,6 @@
 export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
+// export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
@@ -551,6 +552,18 @@ export async function getProductListAPIView() {
 // # 특정 판매자의 상품 전체 조회
 export async function getSellerProductListAPIView(user_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/seller/${user_id}/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "GET",
+	});
+	return response.json();
+}
+
+// 특정 판매자의 상품 정보 페이지네이션 없이 전체 불러오기
+// # 특정 판매자의 상품 페이지네이션 없이 전체 조회
+export async function getAllProductListAPIView(user_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/seller/${user_id}/all/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`,
 		},
