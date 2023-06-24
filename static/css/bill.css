@@ -190,6 +190,10 @@ button {
     text-decoration: underline;
 }
 
+.sub-button {
+    margin-left: 24vw;
+}
+
 @media screen and (max-width:1080px) {
 
     #sectionBox {
