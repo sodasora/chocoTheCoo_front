@@ -30,6 +30,11 @@ async function profile() {
 
 }
 
+// 리뷰수정
+export async function goEditReview(product_id, review_id) {
+    window.location.href = `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}&review_id=${review_id}`;
+}
+
 async function pagination_review(review) {
     const review_list = document.getElementById("my-review-list")
     const buttons = document.getElementById("review-buttons");
@@ -46,13 +51,16 @@ async function pagination_review(review) {
         newCard.setAttribute("class", "card")
         newCard.setAttribute("id", "review")
 
-        // const neweditbutton = document.createElement("div")
-        // neweditbutton.setAttribute("class","button")
-        // neweditbutton.innerText = "수정하기"
-        // neweditbutton.addEventListener("click", )
-
         const newBody = document.createElement("div")
         newBody.setAttribute("class", "card-body")
+
+        const neweditbutton = document.createElement("button")
+        neweditbutton.setAttribute("class", "button")
+        neweditbutton.setAttribute("id", "button-review")
+        neweditbutton.innerText = "수정하기"
+        neweditbutton.addEventListener("click", function () {
+            goEditReview(review[id].product, review[id].id)
+        })
 
         const newImageClass = document.createElement("div")
         newImageClass.setAttribute("class", "image")
@@ -99,6 +107,7 @@ async function pagination_review(review) {
 
         newBody.appendChild(newImageClass)
         newBody.appendChild(newItemText)
+        newBody.appendChild(neweditbutton);
 
         newCard.appendChild(newBody)
 
@@ -273,7 +282,6 @@ window.onload = async function () {
     subscription_info();
 
     const review_data = await getMyReviewView()
-    console.log(review_data)
     if (review_data != "") {
         pagination_review(review_data);
     }

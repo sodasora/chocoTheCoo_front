@@ -149,6 +149,11 @@ button {
     justify-content: center;
 }
 
+#button-review {
+    margin-top: 0px;
+    margin-left: auto;
+}
+
 .button_page.active,
 .button_page:hover {
     color: #0b5ed7;
