@@ -435,7 +435,7 @@ async function profile() {
     const profile_data = await getUserProfileAPIView()
 
     if (profile_data['profile_image'] != null) {
-        document.getElementById("user-image").setAttribute("src", `${BACK_BASE_URL}` + profile_data['profile_image'])
+        document.getElementById("user-image").setAttribute("src", profile_data['profile_image'])
     }
 
     document.getElementById("user-name").innerText = profile_data["nickname"]

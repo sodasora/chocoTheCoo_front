@@ -660,7 +660,7 @@ async function getUserDetailInformation(response_json) {
     if (response_json.profile_image == null) {
         document.getElementById('profileView').src = "/static/images/image_199.png";
     } else {
-        document.getElementById('profileView').setAttribute("src", `${BACK_BASE_URL}${response_json.profile_image}`)
+        document.getElementById('profileView').setAttribute("src", response_json.profile_image)
     }
 
     // 프로필 input value 조정
