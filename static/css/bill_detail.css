@@ -13,7 +13,7 @@
 }
 
 button {
-    height: 3vw;
+    height: 4vh;
     font-size: 1vw;
     margin-top: 1.2vw;
     background-color: rgba(109, 86, 68, 0.822);
@@ -127,42 +127,21 @@ button {
     cursor: pointer;
 }
 
+
 .pd-cart-icon:hover {
     width: 2.1em;
     height: 2.1em;
 }
 
-.profile-card {
-    font-family: 'S-CoreDream-3Light';
-    font-size: 1.3em;
-    width: 25vw;
-    height: auto;
-    text-align: center;
-    margin-top: 30px;
-    border: 2px solid white;
-    border-radius: 20px;
-}
 
-.subscription-card {
-    width: 25vw;
-    height: 300px;
-    padding: 20px;
-    text-align: center;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    border: 2px solid white;
-    border-radius: 20px;
-    text-align: center;
-    font-family: 'S-CoreDream-3Light';
-    font-size: 1.4em;
+#button-content {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5em;
+    margin-left: auto;
 }
 
 /*프로필 기본 사진*/
-.bigbox {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-}
 
 #user-edit {
     cursor: pointer;
@@ -172,6 +151,51 @@ button {
     font-size: 1em;
     margin-bottom: 10px;
     padding: 20px;
+}
+
+
+.profile-card {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1.5vw;
+    width: 25vw;
+    height: auto;
+    text-align: center;
+    margin-top: 30px;
+    margin-left: 60px;
+    border: 2px solid white;
+    border-radius: 20px;
+    color: white;
+}
+
+.profile {
+    width: 23vw;
+}
+
+.subscription-card {
+    width: 25vw;
+    height: 18vw;
+    padding: 20px;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 60px;
+    margin-bottom: 20px;
+    border: 2px solid white;
+    border-radius: 20px;
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1.5vw;
+    color: white;
+    font-weight: bold;
+}
+
+/*프로필 기본 사진*/
+.bigbox {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.box {
+    margin-top: 20px;
 }
 
 .sub-button-section {
@@ -185,6 +209,10 @@ button {
     flex-direction: column;
     text-align: center;
     align-items: center;
+}
+
+.sub-button {
+    margin-left: 24vw;
 }
 
 @media screen and (max-width: 1280px) {

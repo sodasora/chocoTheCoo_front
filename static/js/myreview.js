@@ -46,6 +46,11 @@ async function pagination_review(review) {
         newCard.setAttribute("class", "card")
         newCard.setAttribute("id", "review")
 
+        // const neweditbutton = document.createElement("div")
+        // neweditbutton.setAttribute("class","button")
+        // neweditbutton.innerText = "수정하기"
+        // neweditbutton.addEventListener("click", )
+
         const newBody = document.createElement("div")
         newBody.setAttribute("class", "card-body")
 
@@ -175,14 +180,7 @@ async function pagination_review(review) {
 
 
 // 구독
-async function nosub() {
-    const response = await patchSubscribeView();
-    if (response.status == 200) {
-        window.location.reload();
-    }
-}
-
-async function againsub() {
+async function changesub() {
     const response = await patchSubscribeView();
     if (response.status == 200) {
         window.location.reload();
@@ -222,7 +220,7 @@ async function subscription_info() {
             newcard.appendChild(newsubscriptdate)
 
             subscription_button.innerText = "구독 해지"
-            subscription_button.addEventListener("click", nosub)
+            subscription_button.addEventListener("click", changesub)
         } else {
             const nowyear = today.getFullYear()
             const nowmonth = leftPad(today.getMonth() + 1)
@@ -244,7 +242,7 @@ async function subscription_info() {
                 newcard.appendChild(newsubscriptdate)
 
                 subscription_button.innerText = "구독하기"
-                subscription_button.addEventListener("click", againsub)
+                subscription_button.addEventListener("click", gosubinfo)
             } else {
                 const newsubscriptview = document.createElement("div")
                 newsubscriptview.setAttribute("class", "subscrip-view")
@@ -260,7 +258,7 @@ async function subscription_info() {
                 newcard.appendChild(newsubscriptdate)
 
                 subscription_button.innerText = "구독하기"
-                subscription_button.addEventListener("click", againsub)
+                subscription_button.addEventListener("click", changesub)
             }
         }
     } else {
