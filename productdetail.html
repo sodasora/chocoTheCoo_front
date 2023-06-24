@@ -53,16 +53,56 @@
         <!-- 상품 디테일 navbar 따로 만들겠습니다! -->
         <div class="top-category">
             <nav class="product-nav">
-                <a id="detailView" style='cursor:pointer' onclick="location.href='#';">상품상세보기</a>
-                <a id="reviewView" style='cursor:pointer' onclick="location.href='#';">상품후기</a>
-                <a id="sellerpage" style='cursor:pointer' onclick="location.href='#';">판매자정보</a>
+                <a id="detailView" style='cursor:pointer'>상품상세보기</a>
+                <a id="reviewView" style='cursor:pointer'>상품후기</a>
+                <a id="sellerpage" style='cursor:pointer'>판매자정보</a>
                 <div class="nav-underline"></div>
             </nav>
         </div>
-        <div id="review-List" style="display: none;">
+        <div id="review-List" class="option-container">
             <!--댓글 불러오는 공간-->
 
         </div>
+
+        <!-- <div class="reviewDetailContainer">
+            <div class="reviewDetailTopContainer">
+                <div class="reviewDetailImageBox">
+                </div>
+                <div class="reviewDetailTitleContainer">
+                    <div class="reviewDetailOwnerInformationBox">
+                        <div class="reviewDetailProfileGroup">
+                            <div class="reviewDetailProfileImage"></div>
+                            <span class="reviewDetailNickname">Rumor</span>
+                        </div>
+                        <div class="reviewDetailLikeGroup">
+                            <span class="reviewDetailLikeCount"> 1</span>
+                            <div class="reviewDetailLikeButton"></div>
+                        </div>
+                    </div>
+                    <div class="reviewDetailTitleBox">
+                        <input class="reviewDetailTitle" type="text" readonly value="초콜릿 폼 미쳤다">
+                    </div>
+                    <div class="reviewDetailStarBox">
+                        <img class="review-detail-star" src="/static/images/별점.png">
+                        <img class="review-detail-star" src="/static/images/별점.png">
+                        <img class="review-detail-star" src="/static/images/별점.png">
+                        <img class="review-detail-star" src="/static/images/별점.png">
+                        <img class="review-detail-star" src="/static/images/별점.png">
+                        <span class="reviewDetailCreated_at">2023-06-24</span>
+                    </div>
+                </div>
+            </div>
+            <div class="reviewDetailBottomContainer">
+                <input class="reviewDetailContext">
+            </div>
+            <div class="reviewDetailControlContainer">
+                <div class="review-control-box">
+                    <button class="review-control-button">수정</button>
+                    <button class="review-control-button">삭제</button>
+                    <button class="review-control-button">접기</button>
+                </div>
+            </div>
+        </div> -->
 
     </div>
 

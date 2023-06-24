@@ -196,6 +196,37 @@ export async function getMyReviewView() {
 	return response_data.json();
 }
 
+export async function getEmailVerificationCodeAPI(email) {
+	// 이메일 수정
+	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			email: email
+		})
+	})
+	return response
+}
+
+export async function submitChangeEamilInformationAPI(information) {
+	// 이메일 수정
+	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'PUT',
+		body: JSON.stringify({
+			email: information.email,
+			verification_code: information.verification_code
+		})
+	})
+	return response
+}
+
 export async function getVerificationCodeAPI(email) {
 	// 인증 코드 발급 받기
 	const response = await fetch(`${BACK_BASE_URL}/api/users/get/auth_code/`, {
@@ -563,9 +594,21 @@ export async function getSellerProductListAPIView(user_id) {
 // 상품별 상세 정보 가져오기
 // # 상품 상세 조회
 export async function getProductDetailAPIView(product_id) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
-		method: "GET",
-	});
+	let response = ''
+	if (access_token == null) {
+		response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
+			method: "GET",
+		});
+	} else {
+		response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
+			headers: {
+				"Authorization": `Bearer ${access_token}`,
+			},
+			method: "GET",
+		});
+	}
+
+
 	return response.json();
 }
 
@@ -674,7 +717,6 @@ export async function writeReviewAPI(product_id, formdata) {
 // 특정 상품의 전체 리뷰 불러오기
 // # 리뷰 조회, 생성
 export async function getReviewView(product_id) {
-	console.log(product_id)
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/reviews/`, {
 		method: "GET",
 	});
@@ -1187,6 +1229,18 @@ export async function addToCartAPI(product, amount) {
 
 export async function addToLikeAPI(productId) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/wish/${productId}/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+	})
+	return response
+}
+
+
+export async function reviewLikeAPI(review_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/review/${review_id}/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
