@@ -7,8 +7,8 @@ export async function goEditReview(keyword) {
 export async function categoryview() {
     const categories = await getCategoryView();
     const categorySelect = document.getElementById("categorymenu");
-   
-    categories.forEach( category => {
+
+    categories.forEach(category => {
         categorySelect.innerHTML += `<a id=${category.id} href='index.html?category_id=${category.id}'>\n${category.name}</a>`;
     });
 }
@@ -27,25 +27,25 @@ export async function showSameCategory() {
 
     const product = response.results;
     if ((product.next == null) & (product.previous == null)) {
-      viewProductslist(response)
-  } else {
-      getProductslist(response)
-  }
+        viewProductslist(response)
+    } else {
+        getProductslist(response)
+    }
 
 }
 
-export async function showSearchKeywordProduct(){
-  const urlParams = new URLSearchParams(window.location.search);
-  const keyword = urlParams.get('search');
-  const products = await searchProductAPI(keyword);
-  const product = products.results;
+export async function showSearchKeywordProduct() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const keyword = urlParams.get('search');
+    const products = await searchProductAPI(keyword);
+    const product = products.results;
 
-  console.log(product)
-  if ((product.next == null) & (product.previous == null)) {
-    viewProductslist(products)
-} else {
-    getProductslist(products)
-}
+    console.log(product)
+    if ((product.next == null) & (product.previous == null)) {
+        viewProductslist(products)
+    } else {
+        getProductslist(products)
+    }
 
 
 }
@@ -54,10 +54,12 @@ export async function showSearchKeywordProduct(){
 export async function setEventListener() {
     document.getElementById("search-btn").addEventListener("click", keywordSeachView)
 }
+
 window.onload = async function () {
     categoryview()
     setEventListener()
     const product = await getProductListAPIView();
+    // console.log(product)
     const choco = document.getElementById("chocobanner")
     choco.addEventListener("click", function () {
         window.location.href = "subscriptioninfo.html";
@@ -66,23 +68,13 @@ window.onload = async function () {
     const urlParams = new URLSearchParams(window.location.search);
     const categoryId = urlParams.get('category_id');
     const search = urlParams.get('search');
-    if(categoryId){
+    if (categoryId) {
         showSameCategory()
-    }else if(search){
+    } else if (search) {
         showSearchKeywordProduct()
-    }else if((product.next == null) & (product.previous == null)){
+    } else if ((product.next == null) & (product.previous == null)) {
         viewProductslist(product);
     } else {
         getProductslist(product);
     }
-    
-
-    // if ((product.next == null) & (product.previous == null)) {
-    //     viewProductslist(product);
-    // } else {
-    //     getProductslist(product);
-    // }
-    
-
-
 }

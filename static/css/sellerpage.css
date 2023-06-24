@@ -58,3 +58,19 @@
     display: flex;
     justify-content: center;
 }
+
+button {
+    height: 4vh;
+    font-size: 1vw;
+    background-color: rgba(109, 86, 68, 0.822);
+    color: white;
+    border-radius: 10px;
+}
+
+#previous-buttons {
+    margin-right: 10px;
+}
+
+#next-buttons {
+    margin-left: 10px;
+}
