@@ -31,7 +31,8 @@ async function renderCartList() {
         const img = document.createElement('img');
         img.classList.add('pd-info-thumb');
         if (e.product.image) {
-            img.src = `${BACK_BASE_URL}` + `${e.product.image}`
+            // img.src = `${BACK_BASE_URL}` + `${e.product.image}`
+            img.src = `${e.product.image}`
         }
         else {
             img.src = `/static/images/초콜릿.jpg`
