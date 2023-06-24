@@ -687,8 +687,8 @@ export async function getOrderListView(product_id) {
 
 // 판매자별 주문 목록 불러오기
 // # 판매자별 주문 목록 조회
-export async function getSellerOrderListView(user_id) {
-	const response = await fetch(`${BACK_BASE_URL}/api/users/orders/products/seller/${user_id}/`, {
+export async function getSellerOrderListView() {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/orders/products/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`,
 		},
@@ -1197,7 +1197,7 @@ export async function viewProductslist(product) {
 
 		product.results.forEach(e => {
 			const newCol = document.createElement("div");
-			newCol.setAttribute("class", "col");
+			newCol.setAttribute("class", "col-4");
 
 			const newCard = document.createElement("div");
 			newCard.setAttribute("class", "card");
