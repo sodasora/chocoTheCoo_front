@@ -1,5 +1,6 @@
 export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
+// export const BACK_BASE_URL = "https://backend.chocothecoo.com"
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
 export const payload = JSON.parse(localStorage.getItem("payload"))
@@ -201,7 +202,7 @@ export async function getVerificationCodeAPI(email) {
 		headers: {
 			'content-type': 'application/json',
 		},
-		method: 'POST',
+		method: 'PUT',
 		body: JSON.stringify({
 			"email": email,
 		})
@@ -214,7 +215,7 @@ export async function setUserInformationAPI() {
 	const email = document.getElementById("email").value
 	const verificationCode = document.getElementById("verificationCode").value
 	const password = document.getElementById("password").value
-	const response = await fetch(`${BACK_BASE_URL}/api/users/get/auth_code/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			'content-type': 'application/json',
 		},
@@ -248,7 +249,7 @@ export async function handleSignupAPI(email, nickname, password) {
 
 export async function VerificationCodeSubmitAPI(email, verificationCode) {
 	// 회원 가입시 이메일 인증
-	const response = await fetch(`${BACK_BASE_URL}/api/users/get/auth_code/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			'content-type': 'application/json',
 		},
@@ -286,7 +287,7 @@ export async function updateProfileInformationAPI(information) {
 	if (profile_image) {
 		formdata.append('profile_image', profile_image)
 	}
-	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
 		},
@@ -298,13 +299,14 @@ export async function updateProfileInformationAPI(information) {
 
 export async function updateUserInformationAPI(information) {
 	// 유저 상세 정보 수정 API
-	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${information.user_id}/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
 		},
-		method: 'PUT',
+		method: 'PATCH',
 		body: JSON.stringify({
+			"email": information.email,
 			"password": information.password,
 			"new_password": information.new_password
 		})
@@ -414,9 +416,9 @@ export async function deleteSellerInformationAPI() {
 	return response
 }
 
-export async function deleteUserInformationAPI() {
+export async function deleteUserInformationAPI(user_id) {
 	// 판매자 정보 삭제
-	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
 		},
@@ -520,12 +522,28 @@ export async function registProductAPIView(formdata) {
 }
 
 
+// 상품 상세 페이지 수정 하기 
+
+// export async function editProductDetailAPIView(product_id, formdata) {
+// 	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
+// 		headers: {
+// 			"Authorization": `Bearer ${access_token}`,
+// 		},
+// 		method: "PUT",
+// 		body: formdata
+// 	});
+// 	return response.json();
+// }
+
+
+
 // 상품 정보 전체 불러오기
 // # 상품 전체 조회
 export async function getProductListAPIView() {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/`, {
 		method: "GET",
 	});
+
 	return response.json();
 }
 
@@ -546,9 +564,6 @@ export async function getSellerProductListAPIView(user_id) {
 // # 상품 상세 조회
 export async function getProductDetailAPIView(product_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
 		method: "GET",
 	});
 	return response.json();
@@ -650,7 +665,7 @@ export async function writeReviewAPI(product_id, formdata) {
 		body: formdata
 	});
 	if (response.status == 201) {
-		window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`;
+		window.location.reload();
 	} else {
 		alert("리뷰 등록 실패!")
 	}
@@ -783,14 +798,16 @@ export async function makeOrders(queryString, bill_id) {
 
 export async function setCustomsCodeAPI(information) {
 	// 통관번호 등록 및 수정
-	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+	const user_id = information.user_id
+	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
 		},
 		method: 'PATCH',
 		body: JSON.stringify({
-			customs_code: information.customs_code,
+			customs_code: information.customs_code
+
 		})
 	})
 	return response
@@ -830,36 +847,6 @@ export async function submitVerificationNumbersAPI(information) {
 	return response
 }
 
-export async function getEmailVerificationCodeAPI(email) {
-	// 이메일 수정
-	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
-		headers: {
-			'content-type': 'application/json',
-			"Authorization": `Bearer ${access_token}`
-		},
-		method: 'POST',
-		body: JSON.stringify({
-			email: email
-		})
-	})
-	return response
-}
-
-export async function submitChangeEamilInformationAPI(information) {
-	// 이메일 수정
-	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
-		headers: {
-			'content-type': 'application/json',
-			"Authorization": `Bearer ${access_token}`
-		},
-		method: 'PUT',
-		body: JSON.stringify({
-			email: information.email,
-			verification_code: information.verification_code
-		})
-	})
-	return response
-}
 
 //채팅방 만들기
 export async function postChatindexAPI(name, desc) {
@@ -876,10 +863,6 @@ export async function postChatindexAPI(name, desc) {
 	})
 	return response.status
 }
-
-
-
-
 
 //모든 채팅방 정보 가져오기
 export async function getChatindexAPI() {
@@ -1001,6 +984,167 @@ export async function billToCart(orderItem) {
 	}
 }
 
+// 상품 상세내역으로 가기
+async function productDetail(product_id) {
+	window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
+}
+
+//페이지네이션 : 리스트 가져오기
+export async function getProductslist(product) {
+	console.log(product)
+	let pageSize = 9;
+
+	const product_count = product.count
+	const page_count = parseInt(product_count / pageSize) + 1
+	const page_num = product.next.substr(-1) - 1
+	const pre_page = 1
+	const next_page = page_num + 1
+	const paginate = document.getElementById('product-buttons')
+
+	if (product_count <= 9) {
+		paginate.remove();
+	} else {
+		paginate.innerHTML = `<li class="gw-pagebtn">
+                                    <a id="page_item_pre" class="gw-pagenum gw-p-move" onclick="pageMove(${pre_page})" data-page="${pre_page}">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="gw-pagebtn">
+                                    <a id="gw-pagenum">${page_num} / ${page_count}</a>
+                                </li>
+                                <li class="gw-pagebtn">
+                                    <a id="page_item_next" class="gw-pagenum gw-p-move" onclick="pageMove(${next_page})" data-page="${next_page}">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>`
+	}
+	viewProductslist(product)
+}
+
+// 페이지네이션: 상품정보가져오기
+export async function viewProductslist(product) {
+	const list = document.getElementById("product-content");
+
+	if (product.result != "") {
+		//초기화
+		while (list.hasChildNodes()) {
+			list.removeChild(list.lastChild);
+		}
+
+		product.results.forEach(e => {
+			const newCol = document.createElement("div");
+			newCol.setAttribute("class", "col");
+
+			const newCard = document.createElement("div");
+			newCard.setAttribute("class", "card");
+			newCard.setAttribute("id", e.id);
+
+			newCard.onclick = function () {
+				productDetail(e.id);
+			};
+
+			const img = document.createElement("img");
+			img.setAttribute("class", "card-img-top");
+
+			if (e.image) {
+				img.setAttribute(
+					"src",
+					`${e.image}`
+				);
+			} else {
+				img.setAttribute("src", '/static/images/기본이미지.gif')
+			}
+
+			newCard.appendChild(img);
+
+			const newCardBody = document.createElement("div");
+			newCardBody.setAttribute("class", "card-body");
+			newCard.appendChild(newCardBody);
+
+			const newCardTitle = document.createElement("h5");
+			newCardTitle.setAttribute("class", "card-title");
+			newCardTitle.innerText = e.name;
+			newCardBody.appendChild(newCardTitle);
+
+			const newCardStar = document.createElement("div");
+			newCardStar.setAttribute("class", "card-star")
+
+			if (e.stars == null) {
+				newCardStar.innerText = "아직 리뷰별점이 없습니다."
+			} else {
+				newCardStar.innerText = "⭐" + e.stars + "점"
+			}
+			newCard.appendChild(newCardStar);
+
+			const newCardText = document.createElement("p");
+			newCardText.setAttribute("class", "card-text");
+			newCardText.innerText = "상품가격 : " + e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
+			newCard.appendChild(newCardText)
+
+			const newCardFooter = document.createElement("p");
+			newCardFooter.setAttribute("class", "card-footer");
+			newCardFooter.innerText = "상품수량 : " + e.amount + "개";
+			newCard.appendChild(newCardFooter)
+			newCol.appendChild(newCard);
+			list.appendChild(newCol);
+		})
+	} else {
+		list.innerText = "상품 정보가 없습니다."
+	}
+}
+
+//페이지네이션
+// 페이지 이동 시 함수 response에서 받아온 next url로 현재 페이지 찾기.
+// 이전이나 다음이 각각 첫페이지나 마지막 페이지면 예외 처리.
+window.pageMove = async function (move) {
+	let pageSize = 9;
+
+	const url = `${BACK_BASE_URL}/api/products/?page=${move}`
+	const response = await fetch(url, {
+		method: 'GET',
+	})
+	const product = await response.json()
+	const page_count = parseInt(product.count / pageSize) + 1
+
+	let page_num = 0
+	let pre_page = 0
+	let next_page = 0
+
+	if (product.previous == null) {
+		page_num = 1
+		pre_page = 1
+		next_page = 2
+
+	} else if (product.next == null) {
+		page_num = page_count
+		pre_page = page_num - 1
+		next_page = page_count
+
+	} else {
+		page_num = product.next.substr(-1) - 1
+		pre_page = page_num - 1
+		next_page = page_num + 1
+	}
+
+	// 페이지 박스 번호 갱신하기
+	const paginate = document.getElementById('product-buttons')
+	paginate.innerHTML = `<li class="gw-pagebtn">
+                                <a id="page_item_pre" class="gw-pagenum gw-p-move" onclick="pageMove(${pre_page})" data-page="${pre_page}">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="gw-pagebtn">
+                                <a id="gw-pagenum">${page_num} / ${page_count}</a>
+                            </li>
+                            <li class="gw-pagebtn">
+                                <a id="page_item_next" class="gw-pagenum gw-p-move" onclick="pageMove(${next_page})" data-page="${next_page}">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>`
+	// 페이지 이동했으니 다시 다음페이지 게시글 로드하기
+	viewProductslist(product);
+}
+
 // 카테고리 조회 
 export async function getCategoryView() {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/categories/`, {
@@ -1010,4 +1154,45 @@ export async function getCategoryView() {
 		method: "GET",
 	});
 	return response.json();
+}
+
+// 동일 카테고리 상품 조회
+export async function sameCategoryProductView(category_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/?category=${category_id}`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "GET",
+	});
+	return response.json();
+}
+
+
+export async function addToCartAPI(product, amount) {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		body: JSON.stringify({
+			product: product,
+			amount: amount
+		})
+	})
+	if (response.status == 200) {
+		const response_json = await response.json()
+		return response_json
+	}
+}
+
+export async function addToLikeAPI(productId) {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/wish/${productId}/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+	})
+	return response
 }
