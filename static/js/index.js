@@ -37,18 +37,19 @@ export async function showSameCategory() {
 export async function showSearchKeywordProduct() {
     const urlParams = new URLSearchParams(window.location.search);
     const keyword = urlParams.get('search');
-    const response = await searchProductAPI(keyword);
-    const product = response.results;
+    const products = await searchProductAPI(keyword);
+    const product = products.results;
 
     console.log(product)
     if ((product.next == null) & (product.previous == null)) {
-        viewProductslist(response)
+        viewProductslist(products)
     } else {
-        getProductslist(response)
+        getProductslist(products)
     }
 
 
 }
+
 
 export async function setEventListener() {
     document.getElementById("search-btn").addEventListener("click", keywordSeachView)

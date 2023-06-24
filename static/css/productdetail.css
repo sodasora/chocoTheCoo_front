@@ -485,3 +485,60 @@ nav a:nth-child(2):hover~.nav-underline {
 nav a:nth-child(3):hover~.nav-underline {
     left: 60%;
 }
+
+.productContentBox {
+    width: 100%;
+    height: 30rem;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 1rem;
+    padding: 2% 2% 2% 2%;
+}
+
+.product-content {
+    width: 100%;
+    height: 100%;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    background-color: antiquewhite;
+    border-radius: 1rem;
+    font-size: 2rem;
+    padding: 5% 5% 5% 5%;
+}
+
+#sellerInformationContainer {
+    height: 30rem;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    background-color: blanchedalmond;
+    border-radius: 3rem;
+}
+
+.seller-top-box {
+    height: 40%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.seller-bottom-box {
+    height: 60%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.seller-logo-image {
+    height: 100%;
+    width: 30%;
+    border-radius: 50%;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    background-color: #522F18;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}

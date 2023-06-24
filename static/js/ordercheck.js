@@ -73,7 +73,8 @@ async function loadCheckedCart() {
 
         if (e.product.image) {
             col1image.classList.add("product-img");
-            col1image.setAttribute("src", `${BACK_BASE_URL}/${e.product.image}`);
+            // col1image.setAttribute("src", `${BACK_BASE_URL}/${e.product.image}`);
+            col1image.setAttribute("src", `${e.product.image}`);
         }
         const col2 = document.createElement("div");
         col2.classList.add("col-2", "centered");
@@ -82,7 +83,7 @@ async function loadCheckedCart() {
         const col3 = document.createElement("div");
         col3.classList.add("col-2", "centered", "product-price");
         col3.setAttribute("data-price", e.aggregate_price);
-        col3.textContent = e.aggregate_price;
+        col3.textContent = `${e.aggregate_price.toLocaleString()}원`
 
         const line = document.createElement("hr");
 
@@ -128,14 +129,14 @@ async function renderPaymentInfo() {
     });
 
     const priceTotalData = document.querySelector(".price-total");
-    priceTotalData.innerText = priceTotal.toLocaleString();
+    priceTotalData.innerText = `${priceTotal.toLocaleString()}원`;
 
     const deliveryFee = document.querySelector(".delivery-fee-total");
     const deliveryFeeData = (priceEach.length * (!payload.subscribe_data) * 3000)
-    deliveryFee.innerText = deliveryFeeData.toLocaleString();
+    deliveryFee.innerText = `${deliveryFeeData.toLocaleString()}원`;
 
     const totalPrice = document.querySelector(".real-total");
-    totalPrice.innerText = (priceTotal + deliveryFeeData).toLocaleString();
+    totalPrice.innerText = `${(priceTotal + deliveryFeeData).toLocaleString()}원`;
 
     let today = new Date();
     let year = today.getFullYear();
@@ -149,13 +150,13 @@ async function renderPaymentInfo() {
 
     const myPoint = await getPointStaticView(today)
     const mypoint_json = await myPoint.json()
-    pointNow.innerText = mypoint_json.total_point
+    pointNow.innerText = `${mypoint_json.total_point.toLocaleString()} P`;
 
     const pricePoint = (priceTotal + deliveryFeeData)
 
     // pointMinus.innerText = pricePoint.toLocaleString();
     const afterPoint = (mypoint_json.total_point - pricePoint);
-    pointAfter.innerText = afterPoint.toLocaleString()
+    pointAfter.innerText = `${afterPoint.toLocaleString()} P`;
     if (afterPoint < 0) {
         pointAfter.style.color = "red";
     }
