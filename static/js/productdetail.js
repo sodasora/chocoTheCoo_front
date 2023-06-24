@@ -10,9 +10,11 @@ import {
     reviewLikeAPI,
 } from './api.js';
 
+
 export async function goEditReview(product_id, review_id) {
     window.location.href = await `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}&review_id=${review_id}`;
 }
+
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('product_id');
 

@@ -1261,3 +1261,13 @@ export async function reviewLikeAPI(review_id) {
 	})
 	return response
 }
+
+export async function searchProductAPI(keyword) { 
+	const response = await fetch(`${BACK_BASE_URL}/api/products/?search=${keyword}`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "GET",
+	});
+	return response.json();
+}
