@@ -1,4 +1,4 @@
-import { getSellerProductListAPIView, getSellerOrderListView, getProductDetailAPIView } from './api.js';
+import { getAllProductListAPIView, getSellerOrderListView, getProductDetailAPIView } from './api.js';
 
 // 상품목록 페이지네이션
 async function paginationView_product(product) {
@@ -90,7 +90,6 @@ async function paginationView_product(product) {
             buttons.appendChild(makeButton(id));
         }
         // 첫 버튼 활성화(class="active")
-        console.log(buttons,"여기여기")
         buttons.children[0].classList.add("active");
 
         buttons.prepend(prev);
@@ -233,9 +232,8 @@ const payload_parse = JSON.parse(payload);
 const user_id = payload_parse.user_id //로그인한 유저id
 
 
-
 // 로그인한 판매자의 전체 상품 목록 불러오기
-const seller_products = await getSellerProductListAPIView(user_id)
+const seller_products = await getAllProductListAPIView(user_id)
 console.log('seller_products', seller_products)
 
 // 로그인한 판매자의 전체 주문 목록 불러오기

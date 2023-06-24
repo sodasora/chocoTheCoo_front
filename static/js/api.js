@@ -1,5 +1,6 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5500"
+export const FRONT_BASE_URL = "http://127.0.0.1:5501"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
+// export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
@@ -185,8 +186,7 @@ export async function postPointServiceView() {
 
 // 내가 쓴 리뷰 가져오기
 export async function getMyReviewView() {
-	const user_id = payload.user_id
-	const response_data = await fetch(`${BACK_BASE_URL}/api/products/mypage/reviews/${user_id}/`, {
+	const response_data = await fetch(`${BACK_BASE_URL}/api/products/mypage/reviews/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`,
@@ -194,6 +194,37 @@ export async function getMyReviewView() {
 		method: 'GET',
 	})
 	return response_data.json();
+}
+
+export async function getEmailVerificationCodeAPI(email) {
+	// 이메일 수정
+	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			email: email
+		})
+	})
+	return response
+}
+
+export async function submitChangeEamilInformationAPI(information) {
+	// 이메일 수정
+	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
+		headers: {
+			'content-type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		method: 'PUT',
+		body: JSON.stringify({
+			email: information.email,
+			verification_code: information.verification_code
+		})
+	})
+	return response
 }
 
 export async function getVerificationCodeAPI(email) {
@@ -559,13 +590,37 @@ export async function getSellerProductListAPIView(user_id) {
 	return response.json();
 }
 
+// 특정 판매자의 상품 정보 페이지네이션 없이 전체 불러오기
+// # 특정 판매자의 상품 페이지네이션 없이 전체 조회
+export async function getAllProductListAPIView(user_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/seller/${user_id}/all/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "GET",
+	});
+	return response.json();
+}
+
 
 // 상품별 상세 정보 가져오기
 // # 상품 상세 조회
 export async function getProductDetailAPIView(product_id) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
-		method: "GET",
-	});
+	let response = ''
+	if (access_token == null) {
+		response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
+			method: "GET",
+		});
+	} else {
+		response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
+			headers: {
+				"Authorization": `Bearer ${access_token}`,
+			},
+			method: "GET",
+		});
+	}
+
+
 	return response.json();
 }
 
@@ -675,9 +730,6 @@ export async function writeReviewAPI(product_id, formdata) {
 // # 리뷰 조회, 생성
 export async function getReviewView(product_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/reviews/`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
 		method: "GET",
 	});
 	return response.json();
@@ -984,6 +1036,7 @@ export async function billToCart(orderItem) {
 	}
 }
 
+
 // 상품 상세내역으로 가기
 async function productDetail(product_id) {
 	window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
@@ -1188,6 +1241,18 @@ export async function addToCartAPI(product, amount) {
 
 export async function addToLikeAPI(productId) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/wish/${productId}/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+	})
+	return response
+}
+
+
+export async function reviewLikeAPI(review_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/review/${review_id}/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
