@@ -9,7 +9,7 @@ const seller_products = await getAllProductListAPIView(user_id)
 console.log('seller_products',seller_products)
 
 // 로그인한 판매자의 전체 주문 목록 불러오기
-const seller_orders = await getSellerOrderListView(user_id)
+const seller_orders = await getSellerOrderListView()
 // console.log('seller_orders', seller_orders)
 
 // 로그인한 판매자의 전체 주문 목록에서 발송대기중인 상태 필터
@@ -55,10 +55,9 @@ let is_score_products = seller_products.filter(function (product) {
 for (const is_score_product of is_score_products) {
     total_star_score += is_score_product.stars
 }
-let avg_star_score = total_star_score / is_score_products.length
-
+let avg_star_score = Math.round((total_star_score / is_score_products.length)*10)/10
 // 8) 최고평점
-let max_star_score = Math.max(...is_score_products.map(product => product.star));
+let max_star_score = Math.max(...is_score_products.map(product => product.stars)).toFixed(1);
 //########## ↑ 정보 정의 ↑ ##########//
 
 
