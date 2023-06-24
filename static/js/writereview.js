@@ -104,9 +104,18 @@ export async function editReview() {
 
 
 export async function setEventListener() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const reviewId = urlParams.get('review_id');
     // html 요소 이벤트 리스너 추가
-    document.getElementById("reviewsubmitbutton").addEventListener("click", writeReview)
-    document.getElementById("update-submit").addEventListener("click", editReview)
+    
+    if(reviewId){
+        document.getElementById("update-submit").addEventListener("click", editReview)
+        document.getElementById("reviewsubmitbutton").style.visibility = "hidden"
+    } else {
+        document.getElementById("reviewsubmitbutton").addEventListener("click", writeReview)
+        document.getElementById("update-submit").style.visibility= "hidden"
+    }
+    
     }
     
 window.onload = async function () {
