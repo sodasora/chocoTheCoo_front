@@ -1,92 +1,180 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, getSubscribeView, getUserProfileAPIView, getBillList, billToCart } from './api.js'
+import { BACK_BASE_URL, FRONT_BASE_URL, patchSubscribeView, getSubscribeView, getUserProfileAPIView, getBillList, billToCart } from './api.js'
 
 
 async function renderBillList() {
     const bills = await getBillList();
     const billBox = document.getElementById('billLists');
-    bills.forEach(e => {
-        const pdInfoDiv = document.createElement('div');
-        pdInfoDiv.classList.add('pd-info');
+    const buttons = document.getElementById("bill-buttons");
 
-        const imgDiv = document.createElement('div');
-        imgDiv.style.padding = '0';
-        imgDiv.style.margin = '0';
+    if (bills != "") {
 
-        const img = document.createElement('img');
-        img.classList.add('pd-info-thumb');
-        if (e.thumbnail) {
-            img.src = '/static/images/초콜릿.jpg'
-        }
-        else {
-            img.src = `${e.thumbnail[0]}`
-        }
-        imgDiv.appendChild(img);
+        // 페이지네이션 페이지 설정
+        const numOfContent = bills.length;
+        const maxContent = 5; //한 페이지에 보이는 수
+        const maxButton = 5; //보이는 최대 버튼 수
+        const maxPage = Math.ceil(numOfContent / maxContent);
+        let page = 1;
 
-        const textDiv = document.createElement('div');
-        textDiv.classList.add('pd-info-text');
-        textDiv.setAttribute('data-billId', `${e.id}`);
+        const Content = (id) => {
+            const pdInfoDiv = document.createElement('div');
+            pdInfoDiv.classList.add('pd-info');
 
-        const firstText = document.createElement('div');
-        try {
-            if (e.order_items_count == 1) {
-                firstText.innerText = `${e.thumbnail_name}`
+            const imgDiv = document.createElement('div');
+            imgDiv.style.padding = '0';
+            imgDiv.style.margin = '0';
+
+            const img = document.createElement('img');
+            img.classList.add('pd-info-thumb');
+            if (bills[id].thumbnail) {
+                img.src = '/static/images/초콜릿.jpg'
             }
             else {
-                firstText.innerText = `${e.thumbnail_name} 외 ${e.order_items_count - 1}건`;
+                img.src = `${bills[id].thumbnail[0]}`
             }
+            imgDiv.appendChild(img);
+
+            const textDiv = document.createElement('div');
+            textDiv.classList.add('pd-info-text');
+            textDiv.setAttribute('data-billId', `${bills[id].id}`);
+
+            const firstText = document.createElement('div');
+            try {
+                if (bills[id].order_items_count == 1) {
+                    firstText.innerText = `${bills[id].thumbnail_name}`
+                }
+                else {
+                    firstText.innerText = `${bills[id].thumbnail_name} 외 ${bills[id].order_items_count - 1}건`;
+                }
+            }
+            catch {
+                firstText.innerText = `주문 내역에 상품이 없습니다!!`;
+            }
+            firstText.style.fontWeight = 'bold';
+            firstText.style.fontSize = '1.2em';
+
+            const secondText = document.createElement('div');
+            secondText.innerText = `${bills[id].total_price.toLocaleString()} 원`;
+
+            const thirdText = document.createElement('div');
+            thirdText.innerText = `구매일 ${bills[id].created_at.split('T')[0]}`;
+
+            const fourthText = document.createElement('div');
+            fourthText.style.display = 'flex';
+            fourthText.innerText = `상태: ${bills[id].bill_order_status}`;
+
+            const fifthText = document.createElement('img');
+            fifthText.classList.add('pd-cart-icon');
+            fifthText.src = `/static/images/shopping-cart.png`;
+            fifthText.setAttribute('data-orderItem', `${bills[id].order_items}`)
+
+            const cartDiv = document.createElement('div')
+            cartDiv.classList.add('add-to-cart');
+
+            textDiv.appendChild(firstText);
+            textDiv.appendChild(secondText);
+            textDiv.appendChild(thirdText);
+            textDiv.appendChild(fourthText);
+            cartDiv.appendChild(fifthText);
+
+            pdInfoDiv.appendChild(imgDiv);
+            pdInfoDiv.appendChild(textDiv);
+            pdInfoDiv.appendChild(cartDiv);
+
+            textDiv.addEventListener('click', async function (e) {
+                const billId = e.currentTarget.dataset.billid
+                if (billId) {
+                    window.location.href = `${FRONT_BASE_URL}/bill_detail.html?bill_id=${billId}`;
+                }
+                else {
+                    alert('잘못된 요청입니다.');
+                }
+            })
+            fifthText.addEventListener('click', async function (e) {
+                const orderItem = e.currentTarget.dataset.orderitem;
+                billToCart(orderItem);
+                // console.log("여기서 이제 bill_id로 정보를 받아와서 백엔드에 요청하면 될듯?ㅜㅜ");
+            })
+
+            return pdInfoDiv
         }
-        catch {
-            firstText.innerText = `주문 내역에 상품이 없습니다!!`;
+
+
+        const makeButton = (id) => {
+            const button = document.createElement("button");
+            button.classList.add("button_page");
+            button.dataset.num = id;
+            button.innerText = id;
+            button.addEventListener("click", (e) => {
+                Array.prototype.forEach.call(buttons.children, (button) => {
+                    if (button.dataset.num) button.classList.remove("active");
+                });
+                e.target.classList.add("active");
+                renderContent(parseInt(e.target.dataset.num));
+            });
+            return button;
         }
-        firstText.style.fontWeight = 'bold';
-        firstText.style.fontSize = '1.2em';
 
-        const secondText = document.createElement('div');
-        secondText.innerText = `${e.total_price.toLocaleString()} 원`;
-
-        const thirdText = document.createElement('div');
-        thirdText.innerText = `구매일 ${e.created_at.split('T')[0]}`;
-
-        const fourthText = document.createElement('div');
-        fourthText.style.display = 'flex';
-        fourthText.innerText = `상태: ${e.bill_order_status}`;
-
-        const fifthText = document.createElement('img');
-        fifthText.classList.add('pd-cart-icon');
-        fifthText.src = `/static/images/shopping-cart.png`;
-        fifthText.setAttribute('data-orderItem', `${e.order_items}`)
-
-        const cartDiv = document.createElement('div')
-        cartDiv.classList.add('add-to-cart');
-
-        textDiv.appendChild(firstText);
-        textDiv.appendChild(secondText);
-        textDiv.appendChild(thirdText);
-        textDiv.appendChild(fourthText);
-        cartDiv.appendChild(fifthText);
-
-        pdInfoDiv.appendChild(imgDiv);
-        pdInfoDiv.appendChild(textDiv);
-        pdInfoDiv.appendChild(cartDiv);
-
-        billBox.appendChild(pdInfoDiv);
-
-        textDiv.addEventListener('click', async function (e) {
-            const billId = e.currentTarget.dataset.billid
-            if (billId) {
-                window.location.href = `${FRONT_BASE_URL}/bill_detail.html?bill_id=${billId}`;
+        const renderContent = (page) => {
+            // 목록 리스트 초기화
+            while (billBox.hasChildNodes()) {
+                billBox.removeChild(billBox.lastChild);
             }
-            else {
-                alert('잘못된 요청입니다.');
+            // 글의 최대 개수를 넘지 않는 선에서, 화면에 maxContent개의 글 생성
+            for (let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++) {
+                billBox.appendChild(Content(id - 1));
             }
-        })
-        fifthText.addEventListener('click', async function (e) {
-            const orderItem = e.currentTarget.dataset.orderitem;
-            billToCart(orderItem);
-            console.log("여기서 이제 bill_id로 정보를 받아와서 백엔드에 요청하면 될듯?ㅜㅜ");
-        })
-    })
-};
+        };
+
+        const goPrevPage = () => {
+            page -= maxButton;
+            render(page);
+        };
+
+        const goNextPage = () => {
+            page += maxButton;
+            render(page);
+        };
+
+        const prev = document.createElement("button");
+        prev.classList.add("button_page", "prev");
+        prev.innerHTML = `<ion-icon name="chevron-back-outline"></ion-icon>`;
+        prev.addEventListener("click", goPrevPage);
+
+        const next = document.createElement("button");
+        next.classList.add("button_page", "next");
+        next.innerHTML = `<ion-icon name="chevron-forward-outline"></ion-icon>`;
+        next.addEventListener("click", goNextPage);
+
+        const renderButton = (page) => {
+            // 버튼 리스트 초기화
+            while (buttons.hasChildNodes()) {
+                buttons.removeChild(buttons.lastChild);
+            }
+            // 화면에 최대 maxButton개의 페이지 버튼 생성
+            for (let id = page; id < page + maxButton && id <= maxPage; id++) {
+                buttons.appendChild(makeButton(id));
+            }
+            // 첫 버튼 활성화(class="active")
+            buttons.children[0].classList.add("active");
+
+            buttons.prepend(prev);
+            buttons.appendChild(next);
+
+            // 이전, 다음 페이지 버튼이 필요한지 체크
+            if (page - maxButton < 1) buttons.removeChild(prev);
+            if (page + maxButton > maxPage) buttons.removeChild(next);
+        };
+
+        const render = (page) => {
+            renderContent(page);
+            renderButton(page);
+        };
+        render(page);
+    } else {
+        billBox.setAttribute("style", "font-family: 'S-CoreDream-3Light'; color: white;")
+        billBox.innerText = "구매 내역이 없습니다."
+    }
+}
 
 window.onload = async function () {
     renderBillList();

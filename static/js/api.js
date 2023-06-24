@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5501"
+export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
@@ -1010,7 +1010,7 @@ export async function getBillList() {
 
 	if (response.status == 200) {
 		const response_json = await response.json();
-		console.log(response_json);
+		// console.log(response_json);
 		return response_json;
 	} else {
 		console.log(response.status);
@@ -1059,7 +1059,8 @@ export async function getProductslist(product) {
 	} else {
 		paginate.innerHTML = `<li class="gw-pagebtn">
                                     <a id="page_item_pre" class="gw-pagenum gw-p-move" onclick="pageMove(${pre_page})" data-page="${pre_page}">
-                                        <span aria-hidden="true">&laquo;</span>
+                                        <span aria-hidden="true">
+										</span>
                                     </a>
                                 </li>
                                 <li class="gw-pagebtn">
@@ -1067,7 +1068,9 @@ export async function getProductslist(product) {
                                 </li>
                                 <li class="gw-pagebtn">
                                     <a id="page_item_next" class="gw-pagenum gw-p-move" onclick="pageMove(${next_page})" data-page="${next_page}">
-                                        <span aria-hidden="true">&raquo;</span>
+                                        <span aria-hidden="true">
+										<button id="next-buttons">다음</button>
+										</span>
                                     </a>
                                 </li>`
 	}
@@ -1181,9 +1184,12 @@ window.pageMove = async function (move) {
 
 	// 페이지 박스 번호 갱신하기
 	const paginate = document.getElementById('product-buttons')
-	paginate.innerHTML = `<li class="gw-pagebtn">
+	if ((product.next != null) & (product.previous != null)) {
+		paginate.innerHTML = `<li class="gw-pagebtn">
                                 <a id="page_item_pre" class="gw-pagenum gw-p-move" onclick="pageMove(${pre_page})" data-page="${pre_page}">
-                                    <span aria-hidden="true">&laquo;</span>
+                                    <span aria-hidden="true">
+									<button id="previous-buttons">이전</button>
+									</span>
                                 </a>
                             </li>
                             <li class="gw-pagebtn">
@@ -1191,9 +1197,48 @@ window.pageMove = async function (move) {
                             </li>
                             <li class="gw-pagebtn">
                                 <a id="page_item_next" class="gw-pagenum gw-p-move" onclick="pageMove(${next_page})" data-page="${next_page}">
-                                    <span aria-hidden="true">&raquo;</span>
+                                    <span aria-hidden="true">
+									<button id="next-buttons">다음</button>
+									</span>
                                 </a>
                             </li>`
+	}
+	if ((product.next == null) & (product.previous != null)) {
+		paginate.innerHTML = `<li class="gw-pagebtn">
+									<a id="page_item_pre" class="gw-pagenum gw-p-move" onclick="pageMove(${pre_page})" data-page="${pre_page}">
+										<span aria-hidden="true">
+										<button id="previous-buttons">이전</button>
+										</span>
+									</a>
+								</li>
+								<li class="gw-pagebtn">
+									<a id="gw-pagenum">${page_num} / ${page_count}</a>
+								</li>
+								<li class="gw-pagebtn">
+									<a id="page_item_next" class="gw-pagenum gw-p-move" onclick="pageMove(${next_page})" data-page="${next_page}">
+										<span aria-hidden="true">
+										</span>
+									</a>
+								</li>`
+	}
+	if ((product.next != null) & (product.previous == null)) {
+		paginate.innerHTML = `<li class="gw-pagebtn">
+									<a id="page_item_pre" class="gw-pagenum gw-p-move" onclick="pageMove(${pre_page})" data-page="${pre_page}">
+										<span aria-hidden="true">
+										</span>
+									</a>
+								</li>
+								<li class="gw-pagebtn">
+									<a id="gw-pagenum">${page_num} / ${page_count}</a>
+								</li>
+								<li class="gw-pagebtn">
+									<a id="page_item_next" class="gw-pagenum gw-p-move" onclick="pageMove(${next_page})" data-page="${next_page}">
+										<span aria-hidden="true">
+										<button id="next-buttons">다음</button>
+										</span>
+									</a>
+								</li>`
+	}
 	// 페이지 이동했으니 다시 다음페이지 게시글 로드하기
 	viewProductslist(product);
 }

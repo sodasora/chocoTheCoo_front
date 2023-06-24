@@ -45,32 +45,37 @@ button {
     margin-left: 30px;
 }
 
-/* section calendar 끝 */
-
 .profile-card {
     font-family: 'S-CoreDream-3Light';
-    font-size: 1.3em;
+    font-size: 1.5vw;
     width: 25vw;
     height: auto;
     text-align: center;
     margin-top: 30px;
-    margin-bottom: 20px;
+    margin-left: 60px;
     border: 2px solid white;
     border-radius: 20px;
+    color: white;
+}
+
+.profile {
+    width: 23vw;
 }
 
 .subscription-card {
     width: 25vw;
-    height: 300px;
+    height: 18vw;
     padding: 20px;
     text-align: center;
-    margin-top: 30px;
-
+    margin-top: 10px;
+    margin-left: 60px;
+    margin-bottom: 20px;
     border: 2px solid white;
     border-radius: 20px;
-    text-align: center;
     font-family: 'S-CoreDream-3Light';
-    font-size: 1.4em;
+    font-size: 1.5vw;
+    color: white;
+    font-weight: bold;
 }
 
 /*프로필 기본 사진*/
@@ -160,6 +165,29 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+button {
+    height: 4vh;
+    font-size: 1vw;
+    margin-top: 1.2vw;
+    background-color: rgba(109, 86, 68, 0.822);
+    color: white;
+    border-radius: 10px;
+}
+
+#bill-buttons {
+    position: relative;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.button_page.active,
+.button_page:hover {
+    color: #0b5ed7;
+    font-weight: 600;
+    text-decoration: underline;
 }
 
 @media screen and (max-width:1080px) {
