@@ -17,6 +17,22 @@ export async function goEditReview(product_id, review_id) {
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('product_id');
 
+
+export async function goSellerPage() {
+
+}
+
+
+export async function setSellerInformation(information) {
+    const company_img = information.company_img == null ? "/static/images/pepe.jpg" : information.company_img
+    document.getElementById("seller-company_img").style.backgroundImage = `url(${company_img})`
+    document.getElementById("seller-company_name").innerText = information.company_name
+    document.getElementById("seller-business_owner_name").innerText = information.business_owner_name
+    document.getElementById("seller-contact_number").innerText = information.contact_number
+}
+
+
+
 // 상품 정보보기
 export async function viewProductDetail() {
     const response = await getProductDetailAPIView(productId);
@@ -58,6 +74,8 @@ export async function viewProductDetail() {
     }
     // 리뷰 정보 불러오기
     await showReview(response.product_reviews)
+    // 판매자 정보 불러오기
+    await setSellerInformation(response.seller)
 }
 
 // 상품 수정하기
@@ -349,8 +367,26 @@ async function addToLike() {
     }
 }
 
+async function setDisplayView() {
+    const nav_items = document.querySelectorAll(".option-container")
+    nav_items.forEach((item) => {
+        item.style.display = "none"
+    })
+}
+
 export async function reviewView() {
+    setDisplayView()
     document.getElementById("review-List").style.display = "block"
+}
+
+export async function productInformationView() {
+    setDisplayView()
+    document.getElementById("productInformation").style.display = "block"
+}
+
+export async function sellerpageView() {
+    setDisplayView()
+    document.getElementById("sellerInformationContainer").style.display = "block"
 }
 
 export async function setEventListener() {
@@ -360,6 +396,9 @@ export async function setEventListener() {
     document.getElementById("addToLike").addEventListener("click", addToLike)
     document.getElementById("addToCart").addEventListener("click", addToCart)
     document.getElementById("reviewView").addEventListener("click", reviewView)
+    document.getElementById("detailView").addEventListener("click", productInformationView)
+    document.getElementById("sellerpage").addEventListener("click", sellerpageView)
+    document.getElementById("seller-company_img").addEventListener("click", goSellerPage)
 }
 
 

@@ -318,7 +318,7 @@ export async function updateProfileInformationAPI(information) {
 	if (profile_image) {
 		formdata.append('profile_image', profile_image)
 	}
-	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/update/information/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
 		},
@@ -330,14 +330,13 @@ export async function updateProfileInformationAPI(information) {
 
 export async function updateUserInformationAPI(information) {
 	// 유저 상세 정보 수정 API
-	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${information.user_id}/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
 		},
-		method: 'PATCH',
+		method: 'PUT',
 		body: JSON.stringify({
-			"email": information.email,
 			"password": information.password,
 			"new_password": information.new_password
 		})
@@ -851,7 +850,7 @@ export async function makeOrders(queryString, bill_id) {
 export async function setCustomsCodeAPI(information) {
 	// 통관번호 등록 및 수정
 	const user_id = information.user_id
-	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
