@@ -141,8 +141,10 @@ async function makechat() {
     if (result == 201) {
         alert("등록완료")
         window.location.reload()
-    } else {
+    } else if (result == 400) {
         alert("잘못 입력하셨습니다. 빈칸이 있으면 안됩니다. 다시 입력 바랍니다.")
+    } else {
+        alert("채팅방은 3개까지 만들 수 있습니다.")
     }
 }
 

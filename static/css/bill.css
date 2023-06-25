@@ -194,6 +194,10 @@ button {
     margin-left: 24vw;
 }
 
+.box {
+    margin-top: 20px;
+}
+
 @media screen and (max-width:1080px) {
 
     #sectionBox {

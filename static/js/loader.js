@@ -61,23 +61,19 @@ async function injectHeader() {
         getPoint()
 
         // console.log(payload_parse)
-        // 판매자가 아니라면 판매자페이지 숨기기
+        // 판매자가 아니라면 판매자등록페이지로 이동
         if (!payload_parse.is_seller) {
-            const sellerpage = document.getElementById("sellerpage")
-            sellerpage.style.display = "none"
+            const onlyseller = document.getElementById("seller")
+            onlyseller.addEventListener("click", function () {
+                window.location.href = "user_detail_page.html"
+            })
         }
-
-        // const chats = document.getElementById("chats")
-        // chats.addEventListener("click", function () {
-        //     window.location.href = "chatindex.html"
-        // })
 
     } else {
         // 비로그인 상태에서 장바구니,마이페이지,판매자페이지,로그아웃 숨기기
         // 비로그인 상태에서 내 포인트,포인트충전 숨기기
         const cart = document.getElementById("cart")
         const mypage = document.getElementById("mypage")
-        const sellerpage = document.getElementById("sellerpage")
         const point = document.getElementById("point")
         const charge = document.getElementById("charge")
         const chats = document.getElementById("chatting")
@@ -86,7 +82,6 @@ async function injectHeader() {
 
         logout.style.display = "none"
         point.remove()
-        sellerpage.remove()
         cart.remove()
 
         function login() {

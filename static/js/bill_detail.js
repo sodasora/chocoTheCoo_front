@@ -1,4 +1,4 @@
-import {FRONT_BASE_URL, BACK_BASE_URL, getBillDetail, getSubscribeView, getUserProfileAPIView } from './api.js'
+import { FRONT_BASE_URL, BACK_BASE_URL, patchSubscribeView, getBillDetail, getSubscribeView, getUserProfileAPIView } from './api.js'
 
 window.onload = async function () {
     renderBillDetails();
@@ -41,8 +41,8 @@ async function renderBillDetails() {
 
 export async function gowritereview(product_id) {
     window.location.href = `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}`
-  }
-  
+}
+
 async function renderBillOrders(bill) {
     const orderListBox = document.getElementById("orderLists")
     const orderItemList = bill.order_items
@@ -85,12 +85,12 @@ async function renderBillOrders(bill) {
         fifthText.setAttribute('data-orderItem', `${e.order_items}`)
 
         const productId = e.product_id;
-        
+
         // 리뷰 작성 가기
         const goreview = document.createElement('button');
         goreview.innerText = `리뷰쓰기`;
         goreview.setAttribute(`id`, 'reviewbutton');
-        goreview.onclick = function() {
+        goreview.onclick = function () {
             gowritereview(productId)
         }
 
@@ -100,26 +100,36 @@ async function renderBillOrders(bill) {
         textDiv.appendChild(secondText)
         textDiv.appendChild(thirdText);
         textDiv.appendChild(fourthText)
-        textDiv.appendChild(goreview);
+        // textDiv.appendChild(goreview);
+
+        const content = document.createElement("div")
+        content.setAttribute("id", "button-content")
+
+        content.appendChild(fifthText)
+        content.appendChild(goreview)
 
         orderList.appendChild(imgDiv);
         orderList.appendChild(textDiv);
-        orderList.appendChild(fifthText);
-
+        // orderList.appendChild(fifthText);
+        orderList.appendChild(content);
         orderListBox.appendChild(orderList);
     });
 
 }
 
-// 구독
-async function nosub() {
-    const response = await patchSubscribeView();
-    if (response.status == 200) {
-        window.location.reload();
+let today = new Date();
+
+function leftPad(value) {
+    if (value < 10) {
+        value = "0" + value;
+        return value;
     }
+    return value;
 }
 
-async function againsub() {
+
+// 구독
+async function changesub() {
     const response = await patchSubscribeView();
     if (response.status == 200) {
         window.location.reload();
@@ -159,7 +169,7 @@ async function subscription_info() {
             newcard.appendChild(newsubscriptdate)
 
             subscription_button.innerText = "구독 해지"
-            subscription_button.addEventListener("click", nosub)
+            subscription_button.addEventListener("click", changesub)
         } else {
             const nowyear = today.getFullYear()
             const nowmonth = leftPad(today.getMonth() + 1)
@@ -197,7 +207,7 @@ async function subscription_info() {
                 newcard.appendChild(newsubscriptdate)
 
                 subscription_button.innerText = "구독하기"
-                subscription_button.addEventListener("click", againsub)
+                subscription_button.addEventListener("click", changesub)
             }
         }
     } else {
@@ -213,7 +223,7 @@ async function profile() {
     console.log(profile_data)
 
     if (profile_data.profile_image != null) {
-        document.getElementById("user-image").setAttribute("src", `${BACK_BASE_URL}` + profile_data['profile_image'])
+        document.getElementById("user-image").setAttribute("src", profile_data['profile_image'])
     }
 
     document.getElementById("user-name").innerText = profile_data.nickname

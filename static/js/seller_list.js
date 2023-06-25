@@ -237,7 +237,7 @@ const seller_products = await getAllProductListAPIView(user_id)
 console.log('seller_products', seller_products)
 
 // 로그인한 판매자의 전체 주문 목록 불러오기
-const seller_orders = await getSellerOrderListView(user_id)
+const seller_orders = await getSellerOrderListView()
 console.log('seller_orders',seller_orders)
 
 // 상품목록 Json 배열에 데이터 추가하기

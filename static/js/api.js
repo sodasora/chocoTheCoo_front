@@ -581,7 +581,7 @@ export async function getProductListAPIView() {
 // 특정 판매자의 상품 정보 전체 불러오기
 // # 특정 판매자의 상품 전체 조회
 export async function getSellerProductListAPIView(user_id) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/seller/${user_id}/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/?user_id=${user_id}`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`,
 		},
@@ -688,8 +688,8 @@ export async function getOrderListView(product_id) {
 
 // 판매자별 주문 목록 불러오기
 // # 판매자별 주문 목록 조회
-export async function getSellerOrderListView(user_id) {
-	const response = await fetch(`${BACK_BASE_URL}/api/users/orders/products/seller/${user_id}/`, {
+export async function getSellerOrderListView() {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/orders/products/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`,
 		},
@@ -1045,35 +1045,143 @@ async function productDetail(product_id) {
 
 //페이지네이션 : 리스트 가져오기
 export async function getProductslist(product) {
-	console.log(product)
+	// console.log(product)
 	let pageSize = 9;
 
 	const product_count = product.count
 	const page_count = parseInt(product_count / pageSize) + 1
-	const page_num = product.next.substr(-1) - 1
+
+	// URL에서 "page" 매개변수 값을 추출
+	let urlParams = new URLSearchParams(new URL(product.next).search);
+	let currentPage = parseInt(urlParams.get('page'));
+
+	// 두 칸 뒤의 숫자 계산
+	const page_num = currentPage - 1;
+
 	const pre_page = 1
 	const next_page = page_num + 1
 	const paginate = document.getElementById('product-buttons')
+	// console.log(product.next)
 
 	if (product_count <= 9) {
 		paginate.remove();
 	} else {
-		paginate.innerHTML = `<li class="gw-pagebtn">
-                                    <a id="page_item_pre" class="gw-pagenum gw-p-move" onclick="pageMove(${pre_page})" data-page="${pre_page}">
-                                        <span aria-hidden="true">
-										</span>
-                                    </a>
-                                </li>
-                                <li class="gw-pagebtn">
-                                    <a id="gw-pagenum">${page_num} / ${page_count}</a>
-                                </li>
-                                <li class="gw-pagebtn">
-                                    <a id="page_item_next" class="gw-pagenum gw-p-move" onclick="pageMove(${next_page})" data-page="${next_page}">
-                                        <span aria-hidden="true">
-										<button id="next-buttons">다음</button>
-										</span>
-                                    </a>
-                                </li>`
+		if (product.previous == null) {
+			// Create elements
+			const li1 = document.createElement('li');
+			li1.className = 'gw-pagebtn';
+			const a1 = document.createElement('a');
+			a1.id = 'page_item_pre';
+			a1.className = 'gw-pagenum gw-p-move';
+			a1.dataset.page = pre_page;
+			const span1 = document.createElement('span');
+			const li2 = document.createElement('li');
+			li2.className = 'gw-pagebtn';
+			const a2 = document.createElement('a');
+			a2.id = 'gw-pagenum';
+			a2.innerText = `${page_num} / ${page_count}`;
+			const li3 = document.createElement('li');
+			li3.className = 'gw-pagebtn';
+			const a3 = document.createElement('a');
+			a3.id = 'page_item_next';
+			a3.className = 'gw-pagenum gw-p-move';
+			a3.dataset.page = next_page;
+			const span2 = document.createElement('span');
+			const button1 = document.createElement('button');
+			button1.id = 'next-buttons';
+			button1.innerText = '다음';
+			button1.addEventListener('click', () => pageMove(product.next));
+
+			// Append elements
+			paginate.innerHTML = '';
+			paginate.appendChild(li1);
+			paginate.appendChild(li2);
+			paginate.appendChild(li3);
+			li1.appendChild(a1);
+			li2.appendChild(a2);
+			li3.appendChild(a3);
+			span2.appendChild(button1);
+			a1.appendChild(span1);
+			a3.appendChild(span2);
+		} else if (product.next == null) {
+			// Create elements
+			const li1 = document.createElement('li');
+			li1.className = 'gw-pagebtn';
+			const a1 = document.createElement('a');
+			a1.id = 'page_item_pre';
+			a1.className = 'gw-pagenum gw-p-move';;
+			a1.dataset.page = pre_page;
+			const span1 = document.createElement('span');
+			const li2 = document.createElement('li');
+			li2.className = 'gw-pagebtn';
+			const a2 = document.createElement('a');
+			a2.id = 'gw-pagenum';
+			a2.innerText = `${page_num} / ${page_count}`;
+			const li3 = document.createElement('li');
+			li3.className = 'gw-pagebtn';
+			const a3 = document.createElement('a');
+			a3.id = 'page_item_next';
+			a3.className = 'gw-pagenum gw-p-move';
+			const span2 = document.createElement('span');
+			const button1 = document.createElement('button');
+			button1.id = 'previous-buttons';
+			button1.innerText = '이전';
+			button1.addEventListener('click', () => pageMove(product.previous));
+
+			// Append elements
+			li1.appendChild(a1);
+			li2.appendChild(a2);
+			li3.appendChild(a3);
+			a1.appendChild(span2);
+			a3.appendChild(span1);
+			span2.appendChild(button1);
+			paginate.innerHTML = '';
+			paginate.appendChild(li1);
+			paginate.appendChild(li2);
+			paginate.appendChild(li3);
+		} else {
+			// Create elements
+			const li1 = document.createElement('li');
+			li1.className = 'gw-pagebtn';
+			const a1 = document.createElement('a');
+			a1.id = 'page_item_pre';
+			a1.className = 'gw-pagenum gw-p-move';
+			a1.dataset.page = pre_page;
+			const span1 = document.createElement('span');
+			const button1 = document.createElement('button');
+			button1.id = 'previous-buttons';
+			button1.innerText = '이전';
+			button1.addEventListener('click', () => pageMove(product.previous));
+			const li2 = document.createElement('li');
+			li2.className = 'gw-pagebtn';
+			const a2 = document.createElement('a');
+			a2.id = 'gw-pagenum';
+			a2.innerText = `${page_num} / ${page_count}`;
+			const li3 = document.createElement('li');
+			li3.className = 'gw-pagebtn';
+			const a3 = document.createElement('a');
+			a3.id = 'page_item_next';
+			a3.className = 'gw-pagenum gw-p-move';
+			a3.dataset.page = next_page;
+			const span2 = document.createElement('span');
+			const button2 = document.createElement('button');
+			button2.id = 'next-buttons';
+			button2.innerText = '다음';
+			button2.addEventListener('click', () => pageMove(product.next));
+
+			// Append elements
+			span1.appendChild(button1);
+			span2.appendChild(button2);
+			paginate.innerHTML = '';
+			paginate.appendChild(li1);
+			paginate.appendChild(li2);
+			paginate.appendChild(li3);
+			a1.appendChild(span1);
+			a3.appendChild(span2);
+			li1.appendChild(a1);
+			li2.appendChild(a2);
+			li3.appendChild(a3);
+		}
 	}
 	viewProductslist(product)
 }
@@ -1082,7 +1190,7 @@ export async function getProductslist(product) {
 export async function viewProductslist(product) {
 	const list = document.getElementById("product-content");
 
-	if (product.result != "") {
+	if (product.results != "") {
 		//초기화
 		while (list.hasChildNodes()) {
 			list.removeChild(list.lastChild);
@@ -1090,7 +1198,7 @@ export async function viewProductslist(product) {
 
 		product.results.forEach(e => {
 			const newCol = document.createElement("div");
-			newCol.setAttribute("class", "col");
+			newCol.setAttribute("class", "col-4");
 
 			const newCard = document.createElement("div");
 			newCard.setAttribute("class", "card");
@@ -1153,11 +1261,12 @@ export async function viewProductslist(product) {
 //페이지네이션
 // 페이지 이동 시 함수 response에서 받아온 next url로 현재 페이지 찾기.
 // 이전이나 다음이 각각 첫페이지나 마지막 페이지면 예외 처리.
-window.pageMove = async function (move) {
+async function pageMove(move) {
+	// console.log(move);
 	let pageSize = 9;
 
-	const url = `${BACK_BASE_URL}/api/products/?page=${move}`
-	const response = await fetch(url, {
+	// const url = `${BACK_BASE_URL}/api/products/?page=${move}`
+	const response = await fetch(move, {
 		method: 'GET',
 	})
 	const product = await response.json()
@@ -1171,74 +1280,138 @@ window.pageMove = async function (move) {
 		page_num = 1
 		pre_page = 1
 		next_page = 2
-
 	} else if (product.next == null) {
 		page_num = page_count
 		pre_page = page_num - 1
 		next_page = page_count
-
 	} else {
-		page_num = product.next.substr(-1) - 1
+		let urlParams = new URLSearchParams(new URL(product.next).search);
+		let currentPage = parseInt(urlParams.get('page'));
+
+		// 두 칸 뒤의 숫자 계산
+		page_num = currentPage - 1;
+		// console.log(page_num)
 		pre_page = page_num - 1
 		next_page = page_num + 1
 	}
 
 	// 페이지 박스 번호 갱신하기
-	const paginate = document.getElementById('product-buttons')
-	if ((product.next != null) & (product.previous != null)) {
-		paginate.innerHTML = `<li class="gw-pagebtn">
-                                <a id="page_item_pre" class="gw-pagenum gw-p-move" onclick="pageMove(${pre_page})" data-page="${pre_page}">
-                                    <span aria-hidden="true">
-									<button id="previous-buttons">이전</button>
-									</span>
-                                </a>
-                            </li>
-                            <li class="gw-pagebtn">
-                                <a id="gw-pagenum">${page_num} / ${page_count}</a>
-                            </li>
-                            <li class="gw-pagebtn">
-                                <a id="page_item_next" class="gw-pagenum gw-p-move" onclick="pageMove(${next_page})" data-page="${next_page}">
-                                    <span aria-hidden="true">
-									<button id="next-buttons">다음</button>
-									</span>
-                                </a>
-                            </li>`
-	}
-	if ((product.next == null) & (product.previous != null)) {
-		paginate.innerHTML = `<li class="gw-pagebtn">
-									<a id="page_item_pre" class="gw-pagenum gw-p-move" onclick="pageMove(${pre_page})" data-page="${pre_page}">
-										<span aria-hidden="true">
-										<button id="previous-buttons">이전</button>
-										</span>
-									</a>
-								</li>
-								<li class="gw-pagebtn">
-									<a id="gw-pagenum">${page_num} / ${page_count}</a>
-								</li>
-								<li class="gw-pagebtn">
-									<a id="page_item_next" class="gw-pagenum gw-p-move" onclick="pageMove(${next_page})" data-page="${next_page}">
-										<span aria-hidden="true">
-										</span>
-									</a>
-								</li>`
-	}
-	if ((product.next != null) & (product.previous == null)) {
-		paginate.innerHTML = `<li class="gw-pagebtn">
-									<a id="page_item_pre" class="gw-pagenum gw-p-move" onclick="pageMove(${pre_page})" data-page="${pre_page}">
-										<span aria-hidden="true">
-										</span>
-									</a>
-								</li>
-								<li class="gw-pagebtn">
-									<a id="gw-pagenum">${page_num} / ${page_count}</a>
-								</li>
-								<li class="gw-pagebtn">
-									<a id="page_item_next" class="gw-pagenum gw-p-move" onclick="pageMove(${next_page})" data-page="${next_page}">
-										<span aria-hidden="true">
-										<button id="next-buttons">다음</button>
-										</span>
-									</a>
-								</li>`
+	let paginate = document.getElementById('product-buttons')
+	if (product.previous == null) {
+		// Create elements
+		const li1 = document.createElement('li');
+		li1.className = 'gw-pagebtn';
+		const a1 = document.createElement('a');
+		a1.id = 'page_item_pre';
+		a1.className = 'gw-pagenum gw-p-move';
+		a1.dataset.page = next_page;
+		const span1 = document.createElement('span');
+		const li2 = document.createElement('li');
+		li2.className = 'gw-pagebtn';
+		const a2 = document.createElement('a');
+		a2.id = 'gw-pagenum';
+		a2.innerText = `${page_num} / ${page_count}`;
+		const li3 = document.createElement('li');
+		li3.className = 'gw-pagebtn';
+		const a3 = document.createElement('a');
+		a3.id = 'page_item_next';
+		a3.className = 'gw-pagenum gw-p-move';
+		const span2 = document.createElement('span');
+		const button1 = document.createElement('button');
+		button1.id = 'next-buttons';
+		button1.innerText = '다음';
+		button1.addEventListener('click', () => pageMove(product.next));
+
+		// Append elements
+		paginate.innerHTML = '';
+		paginate.appendChild(li1);
+		paginate.appendChild(li2);
+		paginate.appendChild(li3);
+		li1.appendChild(a1);
+		li2.appendChild(a2);
+		li3.appendChild(a3);
+		span2.appendChild(button1);
+		a1.appendChild(span1);
+		a3.appendChild(span2);
+	} else if (product.next == null) {
+		// Create elements
+		const li1 = document.createElement('li');
+		li1.className = 'gw-pagebtn';
+		const a1 = document.createElement('a');
+		a1.id = 'page_item_pre';
+		a1.className = 'gw-pagenum gw-p-move';
+		a1.dataset.page = pre_page;
+		const span1 = document.createElement('span');
+		const li2 = document.createElement('li');
+		li2.className = 'gw-pagebtn';
+		const a2 = document.createElement('a');
+		a2.id = 'gw-pagenum';
+		a2.innerText = `${page_num} / ${page_count}`;
+		const li3 = document.createElement('li');
+		li3.className = 'gw-pagebtn';
+		const a3 = document.createElement('a');
+		a3.id = 'page_item_next';
+		a3.className = 'gw-pagenum gw-p-move';
+		const span2 = document.createElement('span');
+		const button1 = document.createElement('button');
+		button1.id = 'previous-buttons';
+		button1.innerText = '이전';
+		button1.addEventListener('click', () => pageMove(product.previous));
+
+		// Append elements
+		li1.appendChild(a1);
+		li2.appendChild(a2);
+		li3.appendChild(a3);
+		a1.appendChild(span2);
+		a3.appendChild(span1);
+		span2.appendChild(button1);
+		paginate.innerHTML = '';
+		paginate.appendChild(li1);
+		paginate.appendChild(li2);
+		paginate.appendChild(li3);
+	} else {
+		// Create elements
+		const li1 = document.createElement('li');
+		li1.className = 'gw-pagebtn';
+		const a1 = document.createElement('a');
+		a1.id = 'page_item_pre';
+		a1.className = 'gw-pagenum gw-p-move';
+		// a1.addEventListener('click', () => pageMove(product.previous));
+		a1.dataset.page = pre_page;
+		const span1 = document.createElement('span');
+		const button1 = document.createElement('button');
+		button1.id = 'previous-buttons';
+		button1.innerText = '이전';
+		button1.addEventListener('click', () => pageMove(product.previous));
+		const li2 = document.createElement('li');
+		li2.className = 'gw-pagebtn';
+		const a2 = document.createElement('a');
+		a2.id = 'gw-pagenum';
+		a2.innerText = `${page_num} / ${page_count}`;
+		const li3 = document.createElement('li');
+		li3.className = 'gw-pagebtn';
+		const a3 = document.createElement('a');
+		a3.id = 'page_item_next';
+		a3.className = 'gw-pagenum gw-p-move';
+		a3.dataset.page = next_page;
+		const span2 = document.createElement('span');
+		const button2 = document.createElement('button');
+		button2.id = 'next-buttons';
+		button2.innerText = '다음';
+		button2.addEventListener('click', () => pageMove(product.next));
+
+		// Append elements
+		span1.appendChild(button1);
+		span2.appendChild(button2);
+		paginate.innerHTML = '';
+		paginate.appendChild(li1);
+		paginate.appendChild(li2);
+		paginate.appendChild(li3);
+		a1.appendChild(span1);
+		a3.appendChild(span2);
+		li1.appendChild(a1);
+		li2.appendChild(a2);
+		li3.appendChild(a3);
 	}
 	// 페이지 이동했으니 다시 다음페이지 게시글 로드하기
 	viewProductslist(product);
