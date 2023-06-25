@@ -174,7 +174,7 @@ input {
 
 #container {
     margin-top: 10rem;
-    height: calc(100vh - 150px);
+    height: calc(130vh - 150px);
     width: 100%;
     display: flex;
 }
@@ -757,11 +757,6 @@ input {
     font-size: 2rem;
 }
 
-/* 
-sellerImageBox
-sellerProfileView
-SellerImageText
-SellerImageFile */
 #sellerImageBox {
     height: 30rem;
     width: 100%;
@@ -787,7 +782,6 @@ SellerImageFile */
     align-items: center;
     background-size: 100% 100%;
     background-position: center;
-    background-image: url('/static/images/store.gif');
 }
 
 #SellerImageText {
@@ -802,4 +796,12 @@ SellerImageFile */
     margin-top: auto;
     background-color: white;
     border-radius: 1rem;
+}
+
+#setSellerInformation {
+    width: 100%;
+}
+
+#sellerForm {
+    width: 60%;
 }
