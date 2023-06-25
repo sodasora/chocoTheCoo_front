@@ -7,9 +7,16 @@ export async function goEditReview(keyword) {
 export async function categoryview() {
     const categories = await getCategoryView();
     const categorySelect = document.getElementById("categorymenu");
-
+    const categoryBox = document.createElement("div");
+    categoryBox.setAttribute("class", "category-box")
+    
     categories.forEach(category => {
-        categorySelect.innerHTML += `<a id=${category.id} href='index.html?category_id=${category.id}'>\n${category.name}</a>`;
+        const categoryItem = document.createElement("a");
+        categoryItem.setAttribute("id", `${category.id}`);
+        categoryItem.setAttribute("href", `index.html?category_id=${category.id}`);
+        categoryItem.innerText = `${category.name}\n`
+        categoryBox.appendChild(categoryItem);
+    categorySelect.appendChild(categoryBox);
     });
 }
 

@@ -1472,7 +1472,6 @@ async function pageMove(move) {
 export async function getCategoryView() {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/categories/`, {
 		headers: {
-			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "GET",
 	});
