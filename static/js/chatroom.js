@@ -11,7 +11,7 @@ roomname.innerText = "채팅방: " + roominfo["name"]
 
 const message_list = document.getElementById("chat_messages")
 
-async function get_chat_log(roomId) {
+async function get_chat_log() {
     const chatlog = await getChatLogAPI(roomId);
     console.log(chatlog)
 
@@ -37,8 +37,6 @@ async function get_chat_log(roomId) {
             message_list.scrollTop = message_list.scrollHeight;
         }
     })
-
-
 }
 
 let chatSocket
@@ -74,6 +72,31 @@ function socketSwap(roomId) {
             if (data['response_type'] == 'enter') {
                 const participant_count = document.getElementById("user_count")
                 participant_count.innerText = ` ${count}명`
+
+                // chatlog["participant"].forEach(e => {
+                //     const element = document.createElement("div");
+                //     element.className = "chat-message";
+
+                //     const participant = document.getElementById("user_list")
+                //     const newli = document.createElement('li')
+                //     newli.innerText = e.author
+                //     participant.appendChild(newli)
+                // })
+            }
+
+            if (data['response_type'] == 'out') {
+                const participant_count = document.getElementById("user_count")
+                participant_count.innerText = ` ${count}명`
+
+                // chatlog["participant"].forEach(e => {
+                //     const element = document.createElement("div");
+                //     element.className = "chat-message";
+
+                //     const participant = document.getElementById("user_list")
+                //     const newli = document.createElement('li')
+                //     newli.innerText = e.author
+                //     participant.appendChild(newli)
+                // })
             }
 
             const element = document.createElement("div");
