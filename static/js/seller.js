@@ -137,7 +137,7 @@ async function sellerProfile() {
 
 
     if (seller_data['company_img']) { //로고 이미지가 존재한다면
-        document.getElementById("company-img").setAttribute("src", `${BACK_BASE_URL}` + seller_data['company_img'])
+        document.getElementById("company-img").setAttribute("src", seller_data['company_img'])
     }
     document.getElementById("company-name").innerText = seller_data["company_name"]
     document.getElementById("owner-name").innerText = seller_data["business_owner_name"]

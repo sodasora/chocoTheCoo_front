@@ -46,13 +46,16 @@ input {
 }
 
 .category {
+  position: fixed;
+  left: 13%;
+  top: 55%;
+  transform: translate(-50%, -50%);
   font-size: 40px;
   font-family: '국립박물관문화재단클래식B';
-  float: left;
-  text-align: left;
-  justify-content: left;
-  width: 40px;
-  margin-right: 300px;
+  background-color: #a5705163;
+  border-radius: 1em;
+  padding: 1em 0;
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.5);
 }
 
 .section {
@@ -73,6 +76,23 @@ input {
   justify-content: center;
 }
 
+.category-box {
+  overflow: auto;
+  height: 30vh;
+  width: fit-content;
+}
+
+.category-box::-webkit-scrollbar {
+  display: none;
+}
+
+.category-box>a {
+  font-size: 0.8em;
+  
+}
+.category-box>a:hover {
+  color: #d17e3e;
+}
 /* 
 button {
   height: 4vh;
