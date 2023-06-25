@@ -98,7 +98,8 @@ button {
 }
 
 .card-img-top {
-  height: 200px;
+  height: 190px;
+  min-height: 190px;
 }
 
 .card {
