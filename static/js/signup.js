@@ -127,6 +127,15 @@ export async function VerificationCodeSubmit() {
     }
 }
 
+const hoverEvent = document.getElementById("hoverEvent")
+const hoverEventMessage = document.getElementById("hoverEventMessage")
+hoverEvent.addEventListener('mouseover', () => {
+    hoverEventMessage.style.display = 'block';
+});
+hoverEvent.addEventListener('mouseout', () => {
+    hoverEventMessage.style.display = 'none';
+});
+
 export async function setEventListener() {
     // html 요소 이벤트 리스너 추가
     document.getElementById("signupInformationSubmit").addEventListener("click", handleSignup)

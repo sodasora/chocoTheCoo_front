@@ -805,3 +805,35 @@ input {
 #sellerForm {
     width: 60%;
 }
+
+#guideContainer {
+
+    height: 100%;
+    padding: 5% 5% 5% 5%;
+}
+
+#guideImageBox {
+    height: 40rem;
+    background-image: url("/static/images/crying_pepe.jfif");
+    background-size: 100% 100%;
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10%;
+    box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.5);
+    margin-bottom: 10%;
+}
+
+#guideMessage {
+
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    height: 10rem;
+    background-color: #760c0c;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}

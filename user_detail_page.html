@@ -115,40 +115,49 @@
                 <!-- 회원 정보 수정 끝 -->
                 <!-- 회원 상세 정보 수정 시작 -->
                 <div id="setUserDetailInformation" style="display: none;" class="view-items">
-                    <div class="dropdown">
-                        <div>
-                            <button type="button" class="dropdown-button" id="addressLoad">등록된 주소지</button>
-                            <div class="dropdown-content" id="dropdownContent">
-                                <!-- 주소지 정보 불러오기 -->
+                    <div id="guideContainer">
+                        <div id="guideImageBox">
+                        </div>
+                        <span id="guideMessage">
+                            배송 정보를 기록하기 위해서는 연락처 정보가 필요합니다.
+                        </span>
+                    </div>
+                    <div id="cellPhoneNumberRegistered">
+                        <div class="dropdown">
+                            <div>
+                                <button type="button" class="dropdown-button" id="addressLoad">등록된 주소지</button>
+                                <div class="dropdown-content" id="dropdownContent">
+                                    <!-- 주소지 정보 불러오기 -->
+                                </div>
+                                <button type="button" id="createAddress" style="display: none;">새로운 주소지 작성하기</button>
                             </div>
-                            <button type="button" id="createAddress" style="display: none;">새로운 주소지 작성하기</button>
-                        </div>
 
-                    </div>
-                    <div id="addressBox">
-                        <label class="detailInputLable">주소지</label>
-                        <input id="delivery_id" hidden>
-                        <input class="address-input-item" type="text" id="postcode" placeholder="우편번호">
-                        <input class="address-input-item" type="button" id="Postcode" value="우편번호 찾기"><br>
-                        <input class="address-input-item" type="text" id="address" placeholder="주소"><br>
-                        <input class="address-input-item" type="text" id="detailAddress" placeholder="상세 주소"
-                            style="margin-bottom: 1rem;">
-                        <label class="detailInputLable">수령인</label>
-                        <input class="address-input-item" type="text" id="recipient" placeholder="수령인">
-
-                        <div id="wrap"
-                            style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
-                            <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
-                                style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" alt="접기 버튼">
                         </div>
+                        <div id="addressBox">
+                            <label class="detailInputLable">주소지</label>
+                            <input id="delivery_id" hidden>
+                            <input class="address-input-item" type="text" id="postcode" placeholder="우편번호">
+                            <input class="address-input-item" type="button" id="Postcode" value="우편번호 찾기"><br>
+                            <input class="address-input-item" type="text" id="address" placeholder="주소"><br>
+                            <input class="address-input-item" type="text" id="detailAddress" placeholder="상세 주소"
+                                style="margin-bottom: 1rem;">
+                            <label class="detailInputLable">수령인</label>
+                            <input class="address-input-item" type="text" id="recipient" placeholder="수령인">
+
+                            <div id="wrap"
+                                style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+                                <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
+                                    style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" alt="접기 버튼">
+                            </div>
+                        </div>
+                        <button type="button" id="addressSubmitButton">제출</button>
+                        <button type="button" id="addressUpdateButton" style="display: none;">수정</button>
+                        <button type="button" id="addressDeleteButton" style="display: none;">삭제</button>
+                        <div id="addressMessageBox" style="display: none;"></div>
+                        <label class="detailInputLable">통관 번호</label>
+                        <input id="customsCodeSubmitInput" type="text">
+                        <button type="button" id="customsCodeSubmitButton">제출</button>
                     </div>
-                    <button type="button" id="addressSubmitButton">제출</button>
-                    <button type="button" id="addressUpdateButton" style="display: none;">수정</button>
-                    <button type="button" id="addressDeleteButton" style="display: none;">삭제</button>
-                    <div id="addressMessageBox" style="display: none;"></div>
-                    <label class="detailInputLable">통관 번호</label>
-                    <input id="customsCodeSubmitInput" type="text">
-                    <button type="button" id="customsCodeSubmitButton">제출</button>
                 </div>
                 <!-- 회원 휴대폰 번호 정보 수정 -->
                 <div id="setUserPhoneNumberInformation" style="display: none;" class="view-items">

@@ -349,3 +349,12 @@ button {
 #getVerificationCodeBoxTag {
     font-size: 3rem;
 }
+
+
+#hoverEventMessage {
+    margin-top: 1rem;
+    height: 30rem;
+    background-color: white;
+    border-radius: 1rem;
+    padding: 3% 3% 3% 3%;
+}

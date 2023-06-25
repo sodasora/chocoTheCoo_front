@@ -71,7 +71,6 @@ export async function updateInformation() {
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else {
             const response_json = await response.json()
-            console.log(response_json)
             setUserInformationMessageBox.innerText = response_json.non_field_errors
         }
     }
@@ -249,9 +248,7 @@ export async function createSellerInformation() {
 export async function updateSellerInformation() {
     // 판매자 정보 수정
     // 입력값 불러오기
-    console.log("fdsafasd")
     const information = await getSellerInputData()
-    console.log(information)
     // // // 판매자 정보 수정 API
     const response = await updateSellerInformationAPI(information)
 
@@ -690,7 +687,6 @@ async function getSellerInformation(response_json) {
     const seller_information = response_json.user_seller
     if (seller_information != null) {
 
-        console.log(seller_information)
         if (seller_information.company_img == null) {
 
             document.getElementById("sellerProfileView").style.backgroundImage = "url('/static/images/store.gif')";
@@ -722,6 +718,16 @@ async function getUserInformation() {
     // 사용자의 모든 정보 불러오기
     const response = await getUserInformationAPI()
     const response_json = await response.json()
+
+    if (response_json.phone_number == null) {
+
+
+        document.getElementById("cellPhoneNumberRegistered").style.display = "none"
+    } else {
+        document.getElementById("guideContainer").style.display = "none"
+    }
+
+
 
     // 사용자의 상세 정보 input value 조정
     getUserDetailInformation(response_json)
