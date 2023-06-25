@@ -1,4 +1,4 @@
-import { FRONT_BASE_URL, OrderItemToCart, changebillstatus, patchSubscribeView, getBillDetail, getSubscribeView, getUserProfileAPIView, getMyReviewView } from './api.js'
+import { FRONT_BASE_URL, payload, OrderItemToCart, changebillstatus, patchSubscribeView, getBillDetail, getSubscribeView, getUserProfileAPIView, getMyReviewView } from './api.js'
 
 window.onload = async function () {
     renderBillDetails();
@@ -230,8 +230,8 @@ async function subscription_info() {
 
 // 프로필
 async function profile() {
-    const profile_data = await getUserProfileAPIView()
-    console.log(profile_data)
+    const user_id = payload.user_id
+    const profile_data = await getUserProfileAPIView(user_id)
 
     if (profile_data.profile_image != null) {
         document.getElementById("user-image").setAttribute("src", profile_data['profile_image'])

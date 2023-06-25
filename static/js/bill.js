@@ -1,4 +1,4 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, patchSubscribeView, getSubscribeView, getUserProfileAPIView, getBillList, billToCart } from './api.js'
+import { BACK_BASE_URL, FRONT_BASE_URL, payload, patchSubscribeView, getSubscribeView, getUserProfileAPIView, getBillList, billToCart } from './api.js'
 
 let today = new Date();
 
@@ -71,7 +71,7 @@ async function renderBillList() {
             const fourthText = document.createElement('div');
             fourthText.style.display = 'flex';
             fourthText.innerText = `상태: ${bills[id].bill_order_status}`;
-            
+
             const fifthText = document.createElement('img');
             fifthText.classList.add('pd-cart-icon');
             fifthText.src = `/static/images/shopping-cart.png`;
@@ -275,8 +275,8 @@ async function subscription_info() {
 
 // 프로필
 async function profile() {
-    const profile_data = await getUserProfileAPIView()
-    console.log(profile_data)
+    const user_id = payload.user_id
+    const profile_data = await getUserProfileAPIView(user_id)
 
     if (profile_data.profile_image != null) {
         document.getElementById("user-image").setAttribute("src", profile_data['profile_image'])
