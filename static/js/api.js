@@ -1,7 +1,8 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5500"
+export const FRONT_BASE_URL = "http://127.0.0.1:5501"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
+// export const REDIRECT_URI = FRONT_BASE_URL
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
 export const payload = JSON.parse(localStorage.getItem("payload"))
@@ -233,7 +234,7 @@ export async function getVerificationCodeAPI(email) {
 		headers: {
 			'content-type': 'application/json',
 		},
-		method: 'PUT',
+		method: 'POST',
 		body: JSON.stringify({
 			"email": email,
 		})
@@ -246,7 +247,7 @@ export async function setUserInformationAPI() {
 	const email = document.getElementById("email").value
 	const verificationCode = document.getElementById("verificationCode").value
 	const password = document.getElementById("password").value
-	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/get/auth_code/`, {
 		headers: {
 			'content-type': 'application/json',
 		},
@@ -329,7 +330,7 @@ export async function updateProfileInformationAPI(information) {
 }
 
 export async function updateUserInformationAPI(information) {
-	// 유저 상세 정보 수정 API
+	// 유저 상세 정보 수정 API (비밀번호)
 	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			'content-type': 'application/json',
