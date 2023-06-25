@@ -1,6 +1,6 @@
 import {
     BACK_BASE_URL, FRONT_BASE_URL, getUserProfileAPIView,
-    postPointCheckoutView, postPointValidationView,
+    postPointCheckoutView, postPointValidationView, payload
 } from "./api.js";
 
 async function payment100() {
@@ -61,7 +61,9 @@ async function ImpTrancsacton(merchant_id, imp_id, amount) {
 }
 
 async function requestPay(price) {
-    const userinfo = await getUserProfileAPIView();
+    const user_id = payload.user_id
+    const userinfo = await getUserProfileAPIView(user_id);
+
     const email = userinfo["email"]
     const name = userinfo["nickname"]
 
