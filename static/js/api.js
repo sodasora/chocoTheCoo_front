@@ -234,7 +234,7 @@ export async function getVerificationCodeAPI(email) {
 		headers: {
 			'content-type': 'application/json',
 		},
-		method: 'PUT',
+		method: 'POST',
 		body: JSON.stringify({
 			"email": email,
 		})
@@ -247,7 +247,7 @@ export async function setUserInformationAPI() {
 	const email = document.getElementById("email").value
 	const verificationCode = document.getElementById("verificationCode").value
 	const password = document.getElementById("password").value
-	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/get/auth_code/`, {
 		headers: {
 			'content-type': 'application/json',
 		},
@@ -330,7 +330,7 @@ export async function updateProfileInformationAPI(information) {
 }
 
 export async function updateUserInformationAPI(information) {
-	// 유저 상세 정보 수정 API
+	// 유저 상세 정보 수정 API (비밀번호)
 	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			'content-type': 'application/json',
