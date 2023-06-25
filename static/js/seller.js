@@ -70,11 +70,6 @@ sales_total_count.innerText = total_sales
 const product_total_count = document.getElementById('product_total_count')
 product_total_count.innerText = total_product_count
 
-
-// 5) 브랜드 좋아요(찜) - 미구현, 필드 추가 필요
-const seller_wish = document.getElementById('seller_wish')
-seller_wish.innerText = "0"
-
 // 6) 상품 총 좋아요(찜)
 const product_wish = document.getElementById('product_wish')
 product_wish.innerText = total_product_wish
@@ -123,6 +118,7 @@ async function sellerProfile() {
     let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
     const term = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
 
+    document.getElementById('seller_wish').innerText = seller_data["followings_count"]
     document.getElementById("total_profit").innerText = seller_data["total_profit"].toLocaleString({ style: 'currency', currency: 'KRW' })
     document.getElementById("month_profits").innerText = seller_data["month_profits"].toLocaleString({ style: 'currency', currency: 'KRW' })
     document.getElementById("month_growth_rate").innerText = seller_data["month_growth_rate"]
