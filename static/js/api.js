@@ -809,22 +809,36 @@ export async function getCheckedCart(queryString) {
 }
 
 // 주문내역 생성
-export async function makeBills(delivery_id) {
+export async function makeBills(delivery_id = null, delivery_data = null) {
+	let data;
+
+	if (delivery_data) {
+		data = JSON.stringify({
+			recipient: delivery_data.recipient,
+			postal_code: delivery_data.postcode,
+			address: delivery_data.address,
+			detail_address: delivery_data.detailAddress
+		})
+	} else if (delivery_id !== null) {
+		data = JSON.stringify({
+			delivery_id: delivery_id
+		})
+	}
 	const response = await fetch(`${BACK_BASE_URL}/api/users/bills/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'POST',
-		body: JSON.stringify({
-			delivery_id: delivery_id
-		})
+		body: data
 	})
-	const response_json = await response.json();
-	console.log(response_json)
-	return response_json
+	if (response.status == 201){
+		const response_json = await response.json()
+		return response_json
+	} else if (response.status == 404) {
+		alert("배송지 정보가 부정확합니다!")
+	}
 }
-
 
 // 주문들 생성
 export async function makeOrders(queryString, bill_id) {

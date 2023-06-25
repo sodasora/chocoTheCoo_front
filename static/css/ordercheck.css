@@ -16,6 +16,22 @@
     font-family: 'S-CoreDream-3Light';
 }
 
+#Postcode {
+    margin: 1em auto;
+    padding-left: 1em;
+    background-color: aliceblue;
+    min-width: 30vw;
+    border-radius: 10px;
+    padding: 0.5vh 1em;
+    /* box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5); */
+    border: none;
+}
+
+#wrap {
+    width: 100%!important;
+    /* margin: auto!important; */
+}
+
 .centered {
     display: flex;
     align-items: center;

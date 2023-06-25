@@ -46,11 +46,21 @@
                         <button class="dropdown-button address-display centered">다른 주소 선택</button>
                     </div>
                     <div class="dropdown-content" id="dropdownContent">
+                        <p id="registDelivery" class="dropdown-item centered">주소 등록하기</p>
                         <!-- 주소지 정보 드롭다운 -->
                     </div>
                 </div>
             </div>
             <div class="address-display">
+                <!-- <div id="addressBox">
+                </div> -->
+                <input id="delivery_id" hidden>
+                <input style="display: none;" class="address-input-item centered" type="button" id="Postcode" value="우편번호 찾기">
+                <div id="wrap"
+                    style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+                    <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
+                        style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" alt="접기 버튼">
+                </div>
                 <label for="address">
                     주소
                 </label>
@@ -66,7 +76,7 @@
                 <label>
                     수령인
                 </label for="recipient">
-                <input disabled id="recipient" class="address-item centered"></input>
+                <input id="recipient" class="address-item centered"></input>
                 <input id="orderDeliveryId" hidden>
             </div>
         </div>
@@ -137,6 +147,8 @@
     </div>
 </body>
 <footer></footer>
+<!-- 주소지 API -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- script -->
 <script src="/static/js/api.js" type="module"></script>
 <script src="/static/js/loader.js" type="module"></script>
