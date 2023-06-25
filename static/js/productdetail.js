@@ -1,6 +1,5 @@
 import {
     getProductDetailAPIView,
-    getReviewView,
     deletetProductDetailAPIView,
     addToCartAPI,
     addToLikeAPI,
@@ -37,7 +36,6 @@ export async function setSellerInformation(information) {
 // 상품 정보보기
 export async function viewProductDetail() {
     const response = await getProductDetailAPIView(productId);
-
     const productStar = document.getElementById('productStar');
     const productTitle = document.getElementById("product-title")
     const productImage = document.getElementById("product-image")
@@ -58,6 +56,9 @@ export async function viewProductDetail() {
         productLike.innerText = likes
     }
     else { productLike.innerText = 0 }
+    const like_image = response.in_wishlist == false ? '/static/images/좋아요x.png' : '/static/images/좋아요.png'
+    const likeBtn = document.getElementById("addToLike")
+    likeBtn.setAttribute("src", like_image)
 
     productTitle.innerText = response.name
     productContent.innerText = response.content
@@ -65,6 +66,7 @@ export async function viewProductDetail() {
     productAmount.innerText = "수량:  " + response.amount + " 개";
     const newImage = document.createElement("img");
     newImage.setAttribute('id', 'imagePut')
+
 
     if (response.image != null) {
         newImage.setAttribute("src", `${response.image}`)
@@ -77,6 +79,11 @@ export async function viewProductDetail() {
     await showReview(response.product_reviews)
     // 판매자 정보 불러오기
     await setSellerInformation(response.seller)
+
+    if (payload != null && payload.user_id == response.seller.user) {
+        document.getElementById("productControlBox").style.display = "block"
+    }
+
 }
 
 // 상품 수정하기
@@ -112,9 +119,17 @@ export async function reviewLike(review) {
 
     } else {
         const like_image = response.status == 200 ? '/static/images/좋아요x.png' : '/static/images/좋아요.png';
-        document.getElementById(`reviewLikeButton_${review.id}`).style.backgroundImage = `url(${like_image})`;
         const response_json = await response.json()
-        document.getElementById(`reviewLikeCount_${review.id}`).innerText = response_json.liking_people
+        const reviewLikeButton = document.getElementById(`reviewLikeButton_${review.id}`)
+        const reviewDetailLike = document.getElementById(`reviewDetailLike_${review.id}`);
+
+        if (reviewLikeButton == null) {
+            reviewDetailLike.style.backgroundImage = `url(${like_image})`;
+            document.getElementById(`reviewDetailLikeCount_${review.id}`).innerText = response_json.liking_people
+        } else {
+            reviewLikeButton.style.backgroundImage = `url(${like_image})`;
+            document.getElementById(`reviewLikeCount_${review.id}`).innerText = response_json.liking_people
+        }
     }
 }
 
@@ -225,6 +240,11 @@ export async function closeReview(element) {
     reviewDetailButton.addEventListener("click", function () {
         getReviewDetailData(element)
     });
+
+    const reviewDetailLike = document.getElementById(`reviewLikeButton_${element.id}`);
+    reviewDetailLike.addEventListener("click", function () {
+        reviewLike(element);
+    });
 }
 
 
@@ -252,8 +272,8 @@ export async function getReviewDetailData(element) {
                     <div class="reviewDetailNickname">${element.user.nickname}</div>
                 </div>
                 <div class="reviewDetailLikeGroup">
-                    <span class="reviewDetailLikeCount">${element.review_liking_people_count}</span>
-                    <div class="reviewDetailLikeButton" style="background-image: url(${like_image});"></div>
+                    <span class="reviewDetailLikeCount" id="reviewDetailLikeCount_${element.id}">${element.review_liking_people_count}</span>
+                    <div class="reviewDetailLikeButton" style="background-image: url(${like_image});" id="reviewDetailLike_${element.id}"></div>
                 </div>
             </div>
             <div class="reviewDetailTitleBox">
@@ -286,6 +306,12 @@ export async function getReviewDetailData(element) {
     closeReviewDetailInformation.addEventListener("click", function () {
         closeReview(element)
     });
+
+    const reviewDetailLike = document.getElementById(`reviewDetailLike_${element.id}`);
+    reviewDetailLike.addEventListener("click", function () {
+        reviewLike(element);
+    });
+
 
     if (payload != null) {
         if (payload.user_id == element.user.id) {
@@ -344,24 +370,35 @@ export async function sellerpage() {
 }
 
 async function addToCart() {
+    if (payload == null) {
+        alert("로그인이 필요합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    }
+
     const itemsCount = document.getElementById("cartCount").value
     const response = await addToCartAPI(productId, itemsCount)
     alert("장바구니에 추가되었습니다.")
 }
 
+
 async function addToLike() {
     const likes = document.getElementById("productLike")
-    const likesCount = document.getElementById("productLike").innerHTML
     const likeBtn = document.getElementById("addToLike")
     const response = await addToLikeAPI(productId)
+    const response_json = await response.json()
 
-    if (response.status == 201) {
+    if (response.status == 404) {
+        alert("상품 정보를 찾을 수 없거나, 로그인이 필요합니다.")
+    } else if (response.status == 401) {
+        alert("로그인이 필요합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else if (response.status == 201) {
         likeBtn.setAttribute("src", "/static/images/좋아요.png")
-        likes.innerHTML = parseInt(likesCount) + 1
+        likes.innerHTML = response_json.wish_list
     }
-    else if (response.status == 204) {
+    else if (response.status == 200) {
         likeBtn.setAttribute("src", "/static/images/좋아요x.png")
-        likes.innerHTML = parseInt(likesCount) - 1
+        likes.innerHTML = response_json.wish_list
     }
     else {
         console.log(response.status)
