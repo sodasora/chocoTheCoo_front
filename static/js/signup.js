@@ -58,8 +58,16 @@ export async function handleSignup() {
             password.value = ''
             password2.value = ''
             const response_json = await response.json()
+            console.log(response_json)
+
             if (response_json.err.non_field_errors == null) {
-                signupMessage.innerText = '이미 등록된 이메일 계정이거나, 이메일 정보가 올바르지 않습니다.'
+                if (response_json.err.nickname != null) {
+                    signupMessage.innerText = '닉네임의 길이는 20글자 미만 공백 없이 작성해 주세요.'
+                } else if (response_json.err.password != null) {
+                    signupMessage.innerText = '비밀 번호 정보가 올바르지 않습니다.'
+                } else {
+                    signupMessage.innerText = '이미 등록된 이메일 계정이거나, 이메일 정보가 올바르지 않습니다.'
+                }
             } else {
                 signupMessage.innerText = response_json.err.non_field_errors
             }
@@ -104,14 +112,17 @@ export async function VerificationCodeSubmit() {
     if (response.status == 200) {
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else {
+        const response_json = await response.json()
         const signupMessageBox = document.getElementById("signupMessageBox")
         const signupMessage = document.getElementById("signupMessage")
         signupMessageBox.style.display = "flex"
         if (response.status == 404) {
             signupMessage.innerText = "가입된 이메일 정보를 찾을 수 없습니다."
-        } else {
-            const response_json = await response.json()
+        } else if (response_json.err != null) {
+
             signupMessage.innerText = response_json.err
+        } else {
+            signupMessage.innerText = "인증코드 정보가 올바르지 않습니다."
         }
     }
 }

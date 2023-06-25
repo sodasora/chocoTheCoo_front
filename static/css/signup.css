@@ -318,8 +318,9 @@ button {
 #loginGuide {
     font-size: 1.5rem;
     font-weight: bold;
-    text-align: right;
+    margin-left: auto;
     margin-top: 3rem;
+    width: 30%;
 
 }
 

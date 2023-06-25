@@ -281,7 +281,7 @@ export async function handleSignupAPI(email, nickname, password) {
 
 export async function VerificationCodeSubmitAPI(email, verificationCode) {
 	// 회원 가입시 이메일 인증
-	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/get/auth_code/`, {
 		headers: {
 			'content-type': 'application/json',
 		},

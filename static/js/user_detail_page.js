@@ -71,6 +71,7 @@ export async function updateInformation() {
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else {
             const response_json = await response.json()
+            console.log(response_json)
             setUserInformationMessageBox.innerText = response_json.non_field_errors
         }
     }
