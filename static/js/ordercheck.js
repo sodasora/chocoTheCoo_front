@@ -74,7 +74,6 @@ async function loadCheckedCart() {
 
         if (e.product.image) {
             col1image.classList.add("product-img");
-            // col1image.setAttribute("src", `${BACK_BASE_URL}/${e.product.image}`);
             col1image.setAttribute("src", `${e.product.image}`);
         }
         const col2 = document.createElement("div");
