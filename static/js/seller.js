@@ -6,7 +6,7 @@ const user_id = payload_parse.user_id //로그인한 유저id
 
 // 로그인한 판매자의 전체 상품 목록 불러오기
 const seller_products = await getAllProductListAPIView(user_id)
-console.log('seller_products',seller_products)
+console.log('seller_products', seller_products)
 
 // 로그인한 판매자의 전체 주문 목록 불러오기
 const seller_orders = await getSellerOrderListView()
@@ -55,7 +55,7 @@ let is_score_products = seller_products.filter(function (product) {
 for (const is_score_product of is_score_products) {
     total_star_score += is_score_product.stars
 }
-let avg_star_score = Math.round((total_star_score / is_score_products.length)*10)/10
+let avg_star_score = (Math.round((total_star_score / is_score_products.length) * 10) / 10).toFixed(1);
 // 8) 최고평점
 let max_star_score = Math.max(...is_score_products.map(product => product.stars)).toFixed(1);
 //########## ↑ 정보 정의 ↑ ##########//
@@ -107,7 +107,7 @@ async function sellerProfile() {
     const seller_data = await getSellerPermissionAPIView(user_id)
     console.log("판매자정보", seller_data)
 
-    const firstday= seller_data["created_at"].substr(0,10)
+    const firstday = seller_data["created_at"].substr(0, 10)
 
     // 오늘날짜 형식 맞추기 0000-00-00
     let today = new Date();
@@ -121,7 +121,7 @@ async function sellerProfile() {
     let startDate = new Date(firstday);
     let endDate = new Date(today);
     let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-    const term = Math.ceil(timeDiff / (1000 * 3600 * 24))+1;
+    const term = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
 
     document.getElementById("total_profit").innerText = seller_data["total_profit"].toLocaleString({ style: 'currency', currency: 'KRW' })
     document.getElementById("month_profits").innerText = seller_data["month_profits"].toLocaleString({ style: 'currency', currency: 'KRW' })
@@ -129,9 +129,9 @@ async function sellerProfile() {
     document.getElementById("month_sent").innerText = seller_data["month_sent"]
     document.getElementById("month_sent_charge").innerText = (seller_data["month_sent"] * 3000).toLocaleString({ style: 'currency', currency: 'KRW' }) //배송비 3000원
     document.getElementById("firstday").innerText = firstday
-    document.getElementById("today").innerHTML = `<text id="today" class="status-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~${today}</text>` 
-    document.getElementById("term").innerHTML = `<text  id="term" class="unit-text">초코더쿠와 함께한 기간: ${term}일</text>` 
-    
+    document.getElementById("today").innerHTML = `<text id="today" class="status-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~${today}</text>`
+    document.getElementById("term").innerHTML = `<text  id="term" class="unit-text">초코더쿠와 함께한 기간: ${term}일</text>`
+
     document.getElementById("unpaid_sent").innerText = seller_data["unpaid_sent"]
     document.getElementById("unsent").innerText = seller_data["unsent"]
 
@@ -157,25 +157,59 @@ function listView_product(product, type) {
         if (!product[id].image) {
             product[id].image = "/static/images/기본상품.png" // 상품이미지 없으면 기본이미지 대체
         }
-        // 판매비중
-        let ratio = Math.round(product[id].sales / product[id].total_sales * 1000) / 10
-        if (!ratio) { // 판매비중이 없다면 0%
-            ratio = 0
-        }
         const content = document.createElement("div");
         content.setAttribute("class", 'under-column');
-        content.innerHTML = `
-        <text>${id + 1}. ${product[id].name}</text>
-        <img style="width: 50px;" src="${product[id].image}" alt="상품이미지">
-        <text style="font-size: 20px; float:inline-end">${product[id].sales}개</text>
-        <div class="graph">
-        <div>
-        <div class="${type} bar" style="width: ${ratio*0.8}%;"></div>
-        <text style="font-size:large; ">${ratio}%</text>
-        </div>
-        </div>
-        `;
-        return content;
+
+        // type에 따른 분기 type: [sells, likes, stars]
+        if (type === 'sells') {
+            // 판매비중
+            let ratio = Math.round(product[id].sales / product[id].total_sales * 1000) / 10
+            if (!ratio) { // 판매비중이 없다면 0%
+                ratio = 0
+            }
+            content.innerHTML = `
+            <text>${id + 1}. 
+            <img style="width: 50px;" src="${product[id].image}" alt="상품이미지">
+            ${product[id].name}</text>
+            <text style="font-size: 20px; float:inline-end">${product[id].sales}개</text>
+            <div class="graph">
+            <div>
+            <div class="${type} bar" style="width: ${ratio * 0.8}%;"></div>
+            <text style="font-size:large; ">${ratio}%</text>
+            </div>
+            </div>
+            `;
+            return content;
+        }
+        else if (type === 'likes') {
+            // 찜(좋아요)비중
+            let ratio = Math.round(product[id].likes / total_product_wish * 1000) / 10
+            if (!ratio) { // 찜(좋아요)비중이 없다면 0%
+                ratio = 0
+            }
+            content.innerHTML = `
+            <text>${id + 1}.
+            <img style="width: 50px;" src="${product[id].image}" alt="상품이미지">
+            ${product[id].name}</text>
+            <text style="font-size: 20px; float:inline-end"><img style="width: 20px;" src="static/images/좋아요.png" alt="브랜드좋아요">${product[id].likes}개</text>
+            <div class="graph">
+            <div>
+            <div class="${type} bar" style="width: ${ratio * 0.8}%;"></div>
+            <text style="font-size:large; ">${ratio}%</text>
+            </div>
+            </div>
+            `;
+            return content;
+        }
+        else if (type === 'stars') {
+            content.innerHTML = `
+            <text>${id + 1}. 
+            <img style="width: 50px;" src="${product[id].image}" alt="상품이미지">
+            ${product[id].name}</text>
+            <text style="font-size: 20px; float:inline-end">⭐${product[id].stars.toFixed(1)}점</text>
+            `;
+            return content;
+        }
     };
 
     for (let index = 0; index < product.length; index++) {
@@ -183,8 +217,7 @@ function listView_product(product, type) {
     }
 }
 
-
-// 주문리스트 불러오기 함수
+// 주문리스트 불러오기 함수 - 미해결주문량
 function listView_order(order, type) {
     const contents = document.getElementById(`${type}_under-column-dox`);
     contents.innerHTML = '';
@@ -198,8 +231,8 @@ function listView_order(order, type) {
         const content = document.createElement("div");
         content.setAttribute("class", 'under-column');
         content.innerHTML = `
-        <img style="width: 50px;" src="${order[id].image}" alt="상품이미지">
-        <text>${id + 1}. ${order[id].name}</text>
+        <text>${id + 1}.<img style="width: 50px;" src="${order[id].image}" alt="상품이미지">
+        ${order[id].name}</text>
         <text style="font-size: 20px; float:inline-end">${order[id].amount}개</text>
         <br>
         <text style="font-weight: bold;">${order[id].order_status.name}</text>
@@ -212,6 +245,7 @@ function listView_order(order, type) {
         contents.appendChild(makeContent(index));
     }
 }
+
 
 // 상품리스트 불러오기
 listView_product(seller_products, 'sells')
