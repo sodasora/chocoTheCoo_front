@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5500"
+export const FRONT_BASE_URL = "http://127.0.0.1:5501"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
@@ -845,7 +845,7 @@ export async function makeBills(delivery_id = null, delivery_data = null) {
 		method: 'POST',
 		body: data
 	})
-	if (response.status == 201){
+	if (response.status == 201) {
 		const response_json = await response.json()
 		return response_json
 	} else if (response.status == 404) {
@@ -1541,4 +1541,15 @@ export async function searchProductAPI(keyword) {
 		method: "GET",
 	});
 	return response.json();
+}
+
+
+export async function sellerFollowAPI(user_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/follow/${user_id}/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "POST",
+	});
+	return response
 }
