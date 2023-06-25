@@ -15,7 +15,7 @@ async function renderBillList() {
     const bills = await getBillList();
     const billBox = document.getElementById('billLists');
     const buttons = document.getElementById("bill-buttons");
-
+    console.log(bills)
     if (bills != "") {
 
         // 페이지네이션 페이지 설정
@@ -35,11 +35,11 @@ async function renderBillList() {
 
             const img = document.createElement('img');
             img.classList.add('pd-info-thumb');
-            if (bills[id].thumbnail) {
+            if (!bills[id].thumbnail.image) {
                 img.src = '/static/images/초콜릿.jpg'
             }
             else {
-                img.src = `${bills[id].thumbnail[0]}`
+                img.src = `${bills[id].thumbnail.image}`
             }
             imgDiv.appendChild(img);
 
@@ -50,10 +50,10 @@ async function renderBillList() {
             const firstText = document.createElement('div');
             try {
                 if (bills[id].order_items_count == 1) {
-                    firstText.innerText = `${bills[id].thumbnail_name}`
+                    firstText.innerText = `${bills[id].thumbnail.name}`
                 }
                 else {
-                    firstText.innerText = `${bills[id].thumbnail_name} 외 ${bills[id].order_items_count - 1}건`;
+                    firstText.innerText = `${bills[id].thumbnail.name} 외 ${bills[id].order_items_count - 1}건`;
                 }
             }
             catch {
