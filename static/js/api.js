@@ -810,22 +810,36 @@ export async function getCheckedCart(queryString) {
 }
 
 // 주문내역 생성
-export async function makeBills(delivery_id) {
+export async function makeBills(delivery_id = null, delivery_data = null) {
+	let data;
+
+	if (delivery_data) {
+		data = JSON.stringify({
+			recipient: delivery_data.recipient,
+			postal_code: delivery_data.postcode,
+			address: delivery_data.address,
+			detail_address: delivery_data.detailAddress
+		})
+	} else if (delivery_id !== null) {
+		data = JSON.stringify({
+			delivery_id: delivery_id
+		})
+	}
 	const response = await fetch(`${BACK_BASE_URL}/api/users/bills/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`,
 		},
 		method: 'POST',
-		body: JSON.stringify({
-			delivery_id: delivery_id
-		})
+		body: data
 	})
-	const response_json = await response.json();
-	console.log(response_json)
-	return response_json
+	if (response.status == 201){
+		const response_json = await response.json()
+		return response_json
+	} else if (response.status == 404) {
+		alert("배송지 정보가 부정확합니다!")
+	}
 }
-
 
 // 주문들 생성
 export async function makeOrders(queryString, bill_id) {
@@ -1018,22 +1032,45 @@ export async function getBillList() {
 	}
 }
 
-export async function billToCart(orderItem) {
+export async function billToCart(bill_id) {
 	// 구매내역에서 장바구니 추가하기
-	const response = await fetch(`${BACK_BASE_URL}/api/users/bills/cart/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
 		},
 		body: JSON.stringify({
-			order_items: orderItem
+			bill_id: bill_id
 		})
 	})
 	if (response.status == 200) {
-		const response_json = await response.json();
-		console.log(response.status);
-		console.log(response_json);
+		const toastElement = document.getElementById("toast");
+		toastElement.style.display = "block";
+		setTimeout(() => {
+			toastElement.style.display = "none";
+		}, 2000);
+	}
+}
+
+export async function OrderItemToCart(orderItemId) {
+	// 구매내역에서 장바구니 추가하기
+	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		body: JSON.stringify({
+			order_item_id: orderItemId
+		})
+	})
+	if (response.status == 200) {
+		const toastElement = document.getElementById("toast");
+		toastElement.style.display = "block";
+		setTimeout(() => {
+			toastElement.style.display = "none";
+		}, 2000);
 	}
 }
 
@@ -1453,8 +1490,11 @@ export async function addToCartAPI(product, amount) {
 		})
 	})
 	if (response.status == 200) {
-		const response_json = await response.json()
-		return response_json
+		const toastElement = document.getElementById("toast");
+		toastElement.style.display = "block";
+		setTimeout(() => {
+			toastElement.style.display = "none";
+		}, 2000);
 	}
 }
 
