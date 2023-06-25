@@ -478,7 +478,7 @@ async function pagination_wish(wish) {
         if (wish[id].image == null) {
             newItemImage.setAttribute("src", "static/images/기본이미지.gif")
         } else {
-            newItemImage.setAttribute("src", `${BACK_BASE_URL}${wish[id].image}`)
+            newItemImage.setAttribute("src", wish[id].image)
         }
         const newItemName = document.createElement("div")
         newItemName.setAttribute("class", "wishname")
