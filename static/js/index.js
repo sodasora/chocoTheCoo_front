@@ -9,12 +9,12 @@ export async function categoryview() {
     const categorySelect = document.getElementById("categorymenu");
     const categoryBox = document.createElement("div");
     categoryBox.setAttribute("class", "category-box")
-    
+
     categories.forEach(category => {
         const categoryItem = document.createElement("a");
         categoryItem.setAttribute("id", `${category.id}`);
         categoryItem.setAttribute("href", `index.html?category_id=${category.id}`);
-        categoryItem.innerText = `${category.name}\n`
+        categoryItem.innerText = `🍫${category.name}\n`
         categoryBox.appendChild(categoryItem);
     categorySelect.appendChild(categoryBox);
     });
