@@ -104,7 +104,7 @@ button {
 
 .card {
   font-family: 'S-CoreDream-3Light';
-  height: 50vh;
+  height: auto;
   width: 20vw;
   font-size: 1vw;
 }
