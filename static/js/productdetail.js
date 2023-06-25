@@ -7,6 +7,7 @@ import {
     FRONT_BASE_URL,
     payload,
     reviewLikeAPI,
+    sellerFollowAPI,
 } from './api.js';
 
 
@@ -22,13 +23,36 @@ export async function goSellerPage() {
 
 }
 
+export async function sellerFollow(user_id) {
+    const response = await sellerFollowAPI(user_id);
+    if (response.status == 404) {
+        alert("판매자 정보가 삭제되었거나, 로그인이 필요합니다.")
+    } else if (response.status == 401) {
+        alert("로그인이 필요합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else {
+        const response_json = await response.json()
+        document.getElementById("followerCount").innerText = `follower : ${response_json.followings}`
+        const follow_button = document.getElementById("seller-follow-button")
+        response.status == 200 ? follow_button.innerText = "Follow" : follow_button.innerText = "Un Follow"
+    }
 
+}
 export async function setSellerInformation(information) {
+    const follow_button = document.getElementById("seller-follow-button")
     const company_img = information.company_img == null ? "/static/images/pepe.jpg" : information.company_img
     document.getElementById("seller-company_img").style.backgroundImage = `url(${company_img})`
     document.getElementById("seller-company_name").innerText = information.company_name
     document.getElementById("seller-business_owner_name").innerText = information.business_owner_name
     document.getElementById("seller-contact_number").innerText = information.contact_number
+    document.getElementById("followerCount").innerText = `follower : ${information.followings_count}`
+    console.log(information)
+    information.is_follow == false ? follow_button.innerText = "Follow" : follow_button.innerText = "Un Follow"
+
+
+    follow_button.addEventListener("click", function () {
+        sellerFollow(information.user)
+    });
 }
 
 

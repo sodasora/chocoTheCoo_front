@@ -59,19 +59,19 @@ export async function getVerificationCode() {
     // 인증 코드 발급 받기
     const message = document.getElementById("message")
     const email = document.getElementById("email")
+    message.innerText = "인증 코드를 발송 중 입니다. 잠시만 기다려 주세요."
     if (email.value == "") {
         message.innerText = "이메일을 입력해 주세요."
     } else {
         const response = await getVerificationCodeAPI(email.value)
-        console.log(response)
         if (response.status == 200) {
-            message.innerText = "이메일을 발송 했습니다."
+            message.innerText = "인증 코드를 발급 했습니다."
             const hidden_items = document.querySelectorAll(".hidden-box-2");
             hidden_items.forEach((item) => {
                 item.style.display = "block";
             });
             email.readOnly = true
-        } else if (response.status == 405) {
+        } else if (response.status == 404) {
             message.innerText = "이메일 정보를 찾을 수 없습니다."
         }
     }
@@ -93,13 +93,15 @@ export async function setUserInformation() {
         message.innerText = "입력하신 두 비밀번호가 같지 않습니다."
     } else {
         const response = await setUserInformationAPI()
+        const response_json = await response.json()
+        console.log(response_json)
         if (response.status == 200) {
             window.location.reload()
         } else if (response.status == 404) {
             message.innerText = '가입된 이메일 정보를 찾을 수 없습니다.'
         }
         else {
-            const response_json = await response.json()
+
             message.innerText = response_json.non_field_errors
         }
     }
