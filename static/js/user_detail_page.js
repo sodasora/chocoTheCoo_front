@@ -202,7 +202,10 @@ export async function addressDelete() {
 
 async function getSellerInputData() {
     // 입력값 불러오기
+    const profile_image = document.getElementById("profileImageFile").files[0]
+    const img = document.getElementById("sellerImageFile").files[0]
     const information = {
+        company_img: img,
         business_owner_name: document.getElementById("business_owner_name").value,
         company_name: document.getElementById("company_name").value,
         contact_number: document.getElementById("contact_number").value,
@@ -244,17 +247,14 @@ export async function createSellerInformation() {
 
 export async function updateSellerInformation() {
     // 판매자 정보 수정
-
     // 입력값 불러오기
     const information = await getSellerInputData()
-
-    // 판매자 정보 수정 API
+    // // // 판매자 정보 수정 API
     const response = await updateSellerInformationAPI(information)
 
     // 알림 메시지 출력
     const sellerMessageBox = document.getElementById("sellerMessageBox")
     sellerMessageBox.style.display = "flex"
-
 
     // API 응답 처리
     if (response.status == 200) {
@@ -490,6 +490,10 @@ export async function navItemSellerInformationView() {
     // 유저 판매자 정보 페이지 출력
     changeView("navItemSellerInformation")
     document.getElementById("setSellerInformation").style.display = "flex"
+    // id가 'container'인 요소 선택
+    const container = document.getElementById("container");
+    // 높이 값 설정 
+    container.style.height = "calc(120vh - 50px)";
 }
 
 export async function navItemDeleteUserInformationView() {
@@ -511,7 +515,18 @@ export function readURL(input) {
     }
 }
 
-
+export function readSellerURL(input) {
+    // 사용자가 등록한 프로필 이미지 미리보기 기능 제공
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('sellerProfileView').src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        document.getElementById('sellerProfileView').src = "/static/images/store.gif";
+    }
+}
 
 export async function foldPostcode() {
     // 주소지 검색 API창
@@ -671,7 +686,16 @@ async function getUserDetailInformation(response_json) {
 async function getSellerInformation(response_json) {
     const seller_information = response_json.user_seller
     if (seller_information != null) {
-        // 데이터 불러오기
+
+        if (seller_information.company_img == null) {
+
+            document.getElementById("sellerProfileView").style.backgroundImage = "url('/static/images/store.gif')";
+            // .style.src = "/static/images/store.gif";
+        } else {
+            document.getElementById("sellerProfileView").style.backgroundImage = `url(${BACK_BASE_URL}${seller_information.company_img})`;
+            // .setAttribute("src", response_json.profile_image)
+        }
+
         document.getElementById("navSellerInformation").innerText = "사업자 정보 수정"
         document.getElementById("business_owner_name").value = seller_information.business_owner_name
         document.getElementById("contact_number").value = seller_information.contact_number
@@ -694,6 +718,16 @@ async function getUserInformation() {
     // 사용자의 모든 정보 불러오기
     const response = await getUserInformationAPI()
     const response_json = await response.json()
+
+    if (response_json.phone_number == null) {
+
+
+        document.getElementById("cellPhoneNumberRegistered").style.display = "none"
+    } else {
+        document.getElementById("guideContainer").style.display = "none"
+    }
+
+
 
     // 사용자의 상세 정보 input value 조정
     getUserDetailInformation(response_json)
@@ -746,6 +780,9 @@ export async function setEventListener() {
 
     // 프로필 이미지 미리보기
     document.getElementById("profileImageFile").addEventListener("change", function (event) { readURL(event.target); });
+
+    document.getElementById("sellerImageFile").addEventListener("change", function (event) { readSellerURL(event.target); });
+
 
     // 프로필 정보 수정
     document.getElementById("profileSubmitButton").addEventListener("click", updateProfileInformation)

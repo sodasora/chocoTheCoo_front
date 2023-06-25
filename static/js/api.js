@@ -281,7 +281,7 @@ export async function handleSignupAPI(email, nickname, password) {
 
 export async function VerificationCodeSubmitAPI(email, verificationCode) {
 	// 회원 가입시 이메일 인증
-	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/get/auth_code/`, {
 		headers: {
 			'content-type': 'application/json',
 		},
@@ -393,44 +393,56 @@ export async function addressDeleteAPI(delivery_id) {
 }
 
 
+
+
 export async function createSellerInformationAPI(information) {
 	// 판매자 정보 생성 및 권한 신청
+	const company_img = information.company_img
+	const formdata = new FormData();
+	formdata.append('business_owner_name', information.business_owner_name,)
+	formdata.append('company_name', information.company_name,)
+	formdata.append('contact_number', information.contact_number,)
+	formdata.append('business_number', information.business_number,)
+	formdata.append('bank_name', information.bank_name,)
+	formdata.append('account_holder', information.account_holder,)
+	formdata.append('account_number', information.account_number,)
+	if (company_img) {
+		formdata.append('company_img', company_img)
+	}
+
+	// 판매자 정보 수정
 	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/`, {
 		headers: {
-			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
 		},
 		method: 'POST',
-		body: JSON.stringify({
-			business_owner_name: information.business_owner_name,
-			company_name: information.company_name,
-			contact_number: information.contact_number,
-			business_number: information.business_number,
-			bank_name: information.bank_name,
-			account_holder: information.account_holder,
-			account_number: information.account_number,
-		})
+		body: formdata,
 	})
 	return response
 }
 
 export async function updateSellerInformationAPI(information) {
 	// 판매자 정보 수정
+	const company_img = information.company_img
+	const formdata = new FormData();
+	formdata.append('business_owner_name', information.business_owner_name,)
+	formdata.append('company_name', information.company_name,)
+	formdata.append('contact_number', information.contact_number,)
+	formdata.append('business_number', information.business_number,)
+	formdata.append('bank_name', information.bank_name,)
+	formdata.append('account_holder', information.account_holder,)
+	formdata.append('account_number', information.account_number,)
+	if (company_img) {
+		formdata.append('company_img', company_img)
+	}
+
+	// 판매자 정보 수정
 	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/`, {
 		headers: {
-			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
 		},
 		method: 'PUT',
-		body: JSON.stringify({
-			business_owner_name: information.business_owner_name,
-			company_name: information.company_name,
-			contact_number: information.contact_number,
-			business_number: information.business_number,
-			bank_name: information.bank_name,
-			account_holder: information.account_holder,
-			account_number: information.account_number,
-		})
+		body: formdata,
 	})
 	return response
 }
@@ -833,7 +845,7 @@ export async function makeBills(delivery_id = null, delivery_data = null) {
 		method: 'POST',
 		body: data
 	})
-	if (response.status == 201){
+	if (response.status == 201) {
 		const response_json = await response.json()
 		return response_json
 	} else if (response.status == 404) {
@@ -1529,4 +1541,15 @@ export async function searchProductAPI(keyword) {
 		method: "GET",
 	});
 	return response.json();
+}
+
+
+export async function sellerFollowAPI(user_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/follow/${user_id}/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "POST",
+	});
+	return response
 }
