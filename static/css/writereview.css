@@ -52,3 +52,13 @@ form {
     --bs-btn-font-size: 1.5rem;
     background-color: #522F18;
 }
+
+/* 미리보기 이미지 */
+#preView{
+    margin-top: 10px;
+    width: 100px;
+    max-height: 100px;
+}
+.file-box{
+    text-align: center;
+}

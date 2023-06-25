@@ -276,6 +276,22 @@ td {
   color: white;
 }
 
+.bookmarkmarket {
+  font-family: 'S-CoreDream-3Light';
+  font-weight: bold;
+  padding-left: 40px;
+  margin-top: 20px;
+  font-size: 2vw;
+  color: white;
+}
+
+.product-nav {
+  justify-content: center;
+  position: relative;
+  display: flex;
+  width: auto;
+}
+
 .wishimage {
   width: 17vw;
   height: 10vw;

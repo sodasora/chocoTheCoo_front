@@ -71,11 +71,11 @@ async function renderBillList() {
             const fourthText = document.createElement('div');
             fourthText.style.display = 'flex';
             fourthText.innerText = `상태: ${bills[id].bill_order_status}`;
-
+            
             const fifthText = document.createElement('img');
             fifthText.classList.add('pd-cart-icon');
             fifthText.src = `/static/images/shopping-cart.png`;
-            fifthText.setAttribute('data-orderItem', `${bills[id].order_items}`)
+            fifthText.addEventListener('click', () => billToCart(bills[id].id))
 
             const cartDiv = document.createElement('div')
             cartDiv.classList.add('add-to-cart');
@@ -99,12 +99,6 @@ async function renderBillList() {
                     alert('잘못된 요청입니다.');
                 }
             })
-            fifthText.addEventListener('click', async function (e) {
-                const orderItem = e.currentTarget.dataset.orderitem;
-                billToCart(orderItem);
-                // console.log("여기서 이제 bill_id로 정보를 받아와서 백엔드에 요청하면 될듯?ㅜㅜ");
-            })
-
             return pdInfoDiv
         }
 
