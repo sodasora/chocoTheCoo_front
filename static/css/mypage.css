@@ -309,3 +309,72 @@ td {
 .sub-button {
   margin-left: 24vw;
 }
+
+#bookmarkList {
+  height: auto;
+  display: flex;
+
+}
+
+.seller-card-list {
+  height: 15rem;
+  width: 100%;
+  padding: 2% 2% 2% 2%;
+  display: flex;
+}
+
+.seller-card-box {
+  width: 40%;
+  height: 100%;
+  margin-right: 5%;
+  border-radius: 2rem;
+  display: flex;
+  border: 2px solid rgba(255, 255, 255, 0.729);
+
+}
+
+.seller-img-box {
+  height: 100%;
+  width: 40%;
+  background-image: url("/static/images/crying_pepe.jfif");
+  background-size: 100% 100%;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10%;
+  box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.5);
+}
+
+.seller-information-box {
+  height: 100%;
+  width: 60%;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: white;
+}
+
+.seller-follow {
+  width: 40%;
+  height: 20%;
+  border-radius: 5rem;
+  background-color: #fff;
+  color: black;
+  border-radius: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.3rem;
+  cursor: pointer;
+}
+
+.seller-follow:hover {
+  background-color: black;
+  color: white;
+}
