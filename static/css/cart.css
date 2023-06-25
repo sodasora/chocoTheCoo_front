@@ -117,20 +117,22 @@
 }
 
 .pd-del-box {
+    width: 1em;
+    height: 1em;
     display: flex;
     justify-content: center;
     align-items: center;
     object-fit: cover;
     position: absolute;
     top: 40%;
-    right: 50%;
+    left: 0%;
+    cursor: pointer;
+    z-index: 2;
 }
 
 .pd-del-btn {
     width: 1em;
     height: 1em;
-    cursor: pointer;
-    object-fit:scale-down;
 }
 
 .order-btn {

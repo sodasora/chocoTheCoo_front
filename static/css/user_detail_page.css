@@ -174,7 +174,7 @@ input {
 
 #container {
     margin-top: 10rem;
-    height: calc(100vh - 150px);
+    height: calc(130vh - 150px);
     width: 100%;
     display: flex;
 }
@@ -757,11 +757,6 @@ input {
     font-size: 2rem;
 }
 
-/* 
-sellerImageBox
-sellerProfileView
-SellerImageText
-SellerImageFile */
 #sellerImageBox {
     height: 30rem;
     width: 100%;
@@ -787,7 +782,6 @@ SellerImageFile */
     align-items: center;
     background-size: 100% 100%;
     background-position: center;
-    background-image: url('/static/images/store.gif');
 }
 
 #SellerImageText {
@@ -802,4 +796,44 @@ SellerImageFile */
     margin-top: auto;
     background-color: white;
     border-radius: 1rem;
+}
+
+#setSellerInformation {
+    width: 100%;
+}
+
+#sellerForm {
+    width: 60%;
+}
+
+#guideContainer {
+
+    height: 100%;
+    padding: 5% 5% 5% 5%;
+}
+
+#guideImageBox {
+    height: 40rem;
+    background-image: url("/static/images/crying_pepe.jfif");
+    background-size: 100% 100%;
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10%;
+    box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.5);
+    margin-bottom: 10%;
+}
+
+#guideMessage {
+
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    height: 10rem;
+    background-color: #760c0c;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }

@@ -147,7 +147,7 @@ export async function setEventListener() {
     }
     // html 아이디 불러오기
     document.getElementById("formFile").addEventListener("change", function (event) { readURL(event.target); });
-      
+    
 }
 
 

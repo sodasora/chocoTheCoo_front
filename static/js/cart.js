@@ -156,7 +156,7 @@ async function renderCartList() {
                 changeCartItemAmount(e.id, a.target.value)
             }
         })
-        delBtn.addEventListener('click', (b) => {
+        col5Div.addEventListener('click', (b) => {
             deleteCartItem(e.id);
         })
     })
