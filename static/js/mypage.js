@@ -660,6 +660,24 @@ async function subscription_info() {
     }
 }
 
+
+async function setDisplayView() {
+    const nav_items = document.querySelectorAll(".option-container")
+    nav_items.forEach((item) => {
+        item.style.display = "none"
+    })
+}
+
+export async function mywishView() {
+    setDisplayView()
+    document.getElementById("my-wish-box").style.display = "block"
+}
+
+export async function setEventListener() {
+    document.getElementById("wishfont").addEventListener("click", mywishView)
+}
+
+
 window.onload = async function () {
     buildCalendar();
     document.getElementById("prevCalendar").addEventListener("click", prevCalendar)
@@ -676,5 +694,6 @@ window.onload = async function () {
     } else {
         pagination_wish(wish);
     }
-    subscription_info()
+    subscription_info();
+    setEventListener();
 }  
