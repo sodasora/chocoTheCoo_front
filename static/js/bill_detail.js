@@ -84,33 +84,43 @@ async function renderBillOrders(bill) {
         fifthText.src = `/static/images/shopping-cart.png`;
         fifthText.setAttribute('data-orderItem', `${e.order_items}`)
 
-        const productId = e.product_id;
-
-        // 리뷰 작성 가기
-        const goreview = document.createElement('button');
-        goreview.innerText = `리뷰쓰기`;
-        goreview.setAttribute(`id`, 'reviewbutton');
-        goreview.onclick = function () {
-            gowritereview(productId)
-        }
-
         const textDiv = document.createElement('div');
         textDiv.classList.add('order-context')
         textDiv.appendChild(firstText)
         textDiv.appendChild(secondText)
         textDiv.appendChild(thirdText);
         textDiv.appendChild(fourthText)
-        // textDiv.appendChild(goreview);
 
         const content = document.createElement("div")
         content.setAttribute("id", "button-content")
 
         content.appendChild(fifthText)
-        content.appendChild(goreview)
+
+        if (e.order_status == "구매확정") {
+            // 리뷰 작성 가기
+            const productId = e.product_id;
+            const goreview = document.createElement('button');
+            goreview.innerText = `리뷰쓰기`;
+            goreview.setAttribute(`id`, 'reviewbutton');
+            goreview.onclick = function () {
+                gowritereview(productId)
+            }
+            content.appendChild(goreview)
+        } else if (e.order_status == "배송완료") {
+            // const productId = e.product_id;
+            // const goreview = document.createElement('button');
+            // goreview.innerText = `리뷰쓰기`;
+            // goreview.setAttribute(`id`, 'reviewbutton');
+            // goreview.onclick = function () {
+            //     gowritereview(productId)
+            // }
+            // content.appendChild(goreview)
+        }
+
+
 
         orderList.appendChild(imgDiv);
         orderList.appendChild(textDiv);
-        // orderList.appendChild(fifthText);
         orderList.appendChild(content);
         orderListBox.appendChild(orderList);
     });
