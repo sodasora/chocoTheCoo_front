@@ -1,4 +1,4 @@
-import { FRONT_BASE_URL, BACK_BASE_URL, patchSubscribeView, getBillDetail, getSubscribeView, getUserProfileAPIView } from './api.js'
+import { FRONT_BASE_URL, OrderItemToCart, patchSubscribeView, getBillDetail, getSubscribeView, getUserProfileAPIView } from './api.js'
 
 window.onload = async function () {
     renderBillDetails();
@@ -83,6 +83,7 @@ async function renderBillOrders(bill) {
         fifthText.classList.add('pd-cart-icon');
         fifthText.src = `/static/images/shopping-cart.png`;
         fifthText.setAttribute('data-orderItem', `${e.order_items}`)
+        fifthText.addEventListener('click', () => OrderItemToCart(e.id))
 
         const productId = e.product_id;
 

@@ -1017,22 +1017,45 @@ export async function getBillList() {
 	}
 }
 
-export async function billToCart(orderItem) {
+export async function billToCart(bill_id) {
 	// 구매내역에서 장바구니 추가하기
-	const response = await fetch(`${BACK_BASE_URL}/api/users/bills/cart/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
 		},
 		body: JSON.stringify({
-			order_items: orderItem
+			bill_id: bill_id
 		})
 	})
 	if (response.status == 200) {
-		const response_json = await response.json();
-		console.log(response.status);
-		console.log(response_json);
+		const toastElement = document.getElementById("toast");
+		toastElement.style.display = "block";
+		setTimeout(() => {
+			toastElement.style.display = "none";
+		}, 2000);
+	}
+}
+
+export async function OrderItemToCart(orderItemId) {
+	// 구매내역에서 장바구니 추가하기
+	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		body: JSON.stringify({
+			order_item_id: orderItemId
+		})
+	})
+	if (response.status == 200) {
+		const toastElement = document.getElementById("toast");
+		toastElement.style.display = "block";
+		setTimeout(() => {
+			toastElement.style.display = "none";
+		}, 2000);
 	}
 }
 
@@ -1452,8 +1475,11 @@ export async function addToCartAPI(product, amount) {
 		})
 	})
 	if (response.status == 200) {
-		const response_json = await response.json()
-		return response_json
+		const toastElement = document.getElementById("toast");
+		toastElement.style.display = "block";
+		setTimeout(() => {
+			toastElement.style.display = "none";
+		}, 2000);
 	}
 }
 

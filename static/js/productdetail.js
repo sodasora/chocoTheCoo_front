@@ -345,8 +345,7 @@ export async function sellerpage() {
 
 async function addToCart() {
     const itemsCount = document.getElementById("cartCount").value
-    const response = await addToCartAPI(productId, itemsCount)
-    alert("장바구니에 추가되었습니다.")
+    addToCartAPI(productId, itemsCount)
 }
 
 async function addToLike() {
