@@ -20,6 +20,7 @@
     background-color: #C4A492;
 }
 
+/* 상품이미지 */
 .product-img {
     display: inline-block;
     background-position: center;
@@ -28,6 +29,17 @@
     width: 40px;
     height: 40px;
 }
+
+/* 상품이미지 크게보기 */
+.product-img-zoom{
+    display: none;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 150px;
+    height: 150px;
+}
+
 
 tr,
 td {

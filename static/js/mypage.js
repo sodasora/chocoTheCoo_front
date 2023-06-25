@@ -1,7 +1,7 @@
 import {
     BACK_BASE_URL, FRONT_BASE_URL, getPointView, getPointStaticView,
     postPointAttendanceView, getUserProfileAPIView,
-    getSubscribeView, patchSubscribeView,
+    getSubscribeView, patchSubscribeView, payload
 } from "./api.js";
 
 // 달력
@@ -432,7 +432,8 @@ async function attendancePoint() {
 
 // 프로필
 async function profile() {
-    const profile_data = await getUserProfileAPIView()
+    const user_id = payload.user_id
+    const profile_data = await getUserProfileAPIView(user_id)
 
     if (profile_data['profile_image'] != null) {
         document.getElementById("user-image").setAttribute("src", profile_data['profile_image'])
@@ -685,7 +686,8 @@ window.onload = async function () {
     getToday();
     document.getElementById("Attendance").addEventListener("click", attendancePoint);
     profile();
-    const profile_data = await getUserProfileAPIView()
+    const user_id = payload.user_id
+    const profile_data = await getUserProfileAPIView(user_id)
     const wish = profile_data["product_wish_list"]
     //console.log(wish)
     if (wish == "") {

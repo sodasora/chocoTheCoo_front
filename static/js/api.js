@@ -120,8 +120,7 @@ export async function postPointValidationView(merchant_id, imp_id, amount) {
 
 
 // 프로필 정보 가져오기
-export async function getUserProfileAPIView() {
-	const user_id = payload.user_id
+export async function getUserProfileAPIView(user_id) {
 	const response_data = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
 		headers: {
 			'content-type': 'application/json',

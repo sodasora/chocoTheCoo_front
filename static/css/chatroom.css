@@ -46,3 +46,19 @@ body {
 #user_list {
     font-family: 'S-CoreDream-3Light';
 }
+
+.message_time {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 0.5vw;
+}
+
+.readcheck {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 0.5vw;
+    margin-bottom: 15px;
+}
+
+.profile_image {
+    width: 10vw;
+    border-radius: 50px;
+}
