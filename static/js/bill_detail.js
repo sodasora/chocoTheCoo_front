@@ -1,4 +1,4 @@
-import { FRONT_BASE_URL, OrderItemToCart, patchSubscribeView, getBillDetail, getSubscribeView, getUserProfileAPIView } from './api.js'
+import { FRONT_BASE_URL, OrderItemToCart, changebillstatus, patchSubscribeView, getBillDetail, getSubscribeView, getUserProfileAPIView, getMyReviewView } from './api.js'
 
 window.onload = async function () {
     renderBillDetails();
@@ -56,7 +56,6 @@ async function renderBillOrders(bill) {
 
         const img = document.createElement('img');
         img.classList.add('pd-info-thumb');
-        console.log(e)
         if (e.product_image) {
             img.src = `${e.product_image}`
         }
@@ -95,31 +94,31 @@ async function renderBillOrders(bill) {
 
         const content = document.createElement("div")
         content.setAttribute("id", "button-content")
-
         content.appendChild(fifthText)
+
+        const productId = e.product_id
 
         if (e.order_status == "구매확정") {
             // 리뷰 작성 가기
-            const productId = e.product_id;
             const goreview = document.createElement('button');
             goreview.innerText = `리뷰쓰기`;
             goreview.setAttribute(`id`, 'reviewbutton');
+
             goreview.onclick = function () {
                 gowritereview(productId)
             }
             content.appendChild(goreview)
         } else if (e.order_status == "배송완료") {
-            // const productId = e.product_id;
-            // const goreview = document.createElement('button');
-            // goreview.innerText = `리뷰쓰기`;
-            // goreview.setAttribute(`id`, 'reviewbutton');
-            // goreview.onclick = function () {
-            //     gowritereview(productId)
-            // }
-            // content.appendChild(goreview)
+            const productId = e.id;
+            const goconfirm = document.createElement('button');
+            goconfirm.innerText = `구매확정하기`;
+            goconfirm.setAttribute(`id`, 'confirmbutton');
+            goconfirm.onclick = async function () {
+                await changebillstatus(productId, 6)
+                window.location.reload();
+            }
+            content.appendChild(goconfirm)
         }
-
-
 
         orderList.appendChild(imgDiv);
         orderList.appendChild(textDiv);

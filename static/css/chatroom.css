@@ -42,3 +42,7 @@ body {
     color: #fff;
     text-align: left;
 }
+
+#user_list {
+    font-family: 'S-CoreDream-3Light';
+}

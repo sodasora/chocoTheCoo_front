@@ -734,8 +734,11 @@ export async function writeReviewAPI(product_id, formdata) {
 	if (response.status == 201) {
 		alert("리뷰 등록 성공!")
 		window.location.href = `${FRONT_BASE_URL}//productdetail.html?product_id=${product_id}`;
+	} else if (response.status == 406) {
+		alert("해당 상품 리뷰를 이미 작성했습니다.")
+		window.location.href = `${FRONT_BASE_URL}//productdetail.html?product_id=${product_id}`;
 	} else {
-		alert("리뷰 등록 실패!")
+		alert(`"리뷰 등록 실패!"`)
 	}
 	return response.json();
 }
@@ -1550,6 +1553,33 @@ export async function sellerFollowAPI(user_id) {
 			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "POST",
+	});
+	return response
+}
+
+
+// 주문상태 변경 api
+export async function changebillstatus(id, status) {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/orders/status/${id}/`, {
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "PATCH",
+		body: JSON.stringify({
+			"order_status": status,
+		})
+	});
+	return response
+}
+
+// 상품의 내 리뷰 조회
+export async function checkoutmyreview(product_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/mypage/${product_id}/reviews/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "GET",
 	});
 	return response
 }
