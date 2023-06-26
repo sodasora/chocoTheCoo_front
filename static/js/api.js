@@ -1,9 +1,9 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5500"
+export const FRONT_BASE_URL = "http://127.0.0.1:5501"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
 // export const REDIRECT_URI = FRONT_BASE_URL
-export const REDIRECT_URI = `${FRONT_BASE_URL}/login.html`
+export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
 export const payload = JSON.parse(localStorage.getItem("payload"))
 
