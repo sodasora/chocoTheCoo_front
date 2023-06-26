@@ -3,7 +3,7 @@ export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
 // export const REDIRECT_URI = FRONT_BASE_URL
-export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
+export const REDIRECT_URI = `${FRONT_BASE_URL}/login.html`
 export const access_token = localStorage.getItem("access")
 export const payload = JSON.parse(localStorage.getItem("payload"))
 
@@ -1471,8 +1471,6 @@ async function pageMove(move) {
 // 카테고리 조회 
 export async function getCategoryView() {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/categories/`, {
-		headers: {
-		},
 		method: "GET",
 	});
 	return response.json();

@@ -85,3 +85,77 @@ window.onload = async function () {
         getProductslist(product);
     }
 }
+
+
+async function setLocalStorage(response) {
+    const response_json = await response.json();
+    if (response.status === 200) {
+        localStorage.setItem("access", response_json.access);
+        localStorage.setItem("refresh", response_json.refresh);
+        const base64Url = response_json.access.split(".")[1];
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split("")
+                .map(function (c) {
+                    return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+                })
+                .join("")
+        );
+        localStorage.setItem("payload", jsonPayload);
+        window.location.reload();
+    } else {
+        alert(response_json["error"]);
+        window.history.back();
+    }
+}
+async function getKakaoToken(kakao_code) {
+    // Resource Server로부터 응답받은 accesstoken을 백엔드 서버로 발송
+    const response = await fetch(`${BACK_BASE_URL}/api/users/kakao/login/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ code: kakao_code })
+    });
+    setLocalStorage(response);
+}
+
+async function getGoogleToken(google_token) {
+    const response = await fetch(`${BACK_BASE_URL}/api/users/google/login/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ access_token: google_token })
+    });
+    setLocalStorage(response);
+}
+
+async function getNaverToken(naver_code, state) {
+    const response = await fetch(`${BACK_BASE_URL}/api/users/naver/login/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ naver_code: naver_code, state: state })
+    });
+    setLocalStorage(response);
+}
+
+if (localStorage.getItem("payload")) {
+} else if (location.href.split("=")[1]) {
+    const code = new URLSearchParams(window.location.search).get("code");
+    const state = new URLSearchParams(window.location.search).get("state");
+    const hashParams = new URLSearchParams(window.location.hash.substr(1));
+    const google_token = hashParams.get("access_token");
+    if (code) {
+        if (state) {
+            getNaverToken(code, state);
+        } else {
+            getKakaoToken(code);
+        }
+    } else if (google_token) {
+        getGoogleToken(google_token);
+    }
+}
