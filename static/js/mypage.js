@@ -680,13 +680,20 @@ async function setDisplayView() {
 export async function mywishView() {
     setDisplayView()
     document.getElementById("my-wish-box").style.display = "block"
+    document.getElementById("bookmarkList").style.display = "none"
+}
+
+export async function showBookmarkList() {
+    document.getElementById("bookmarkList").style.display = "block"
+    document.getElementById("my-wish-box").style.display = "none"
 }
 
 export async function setEventListener() {
+
+
     document.getElementById("wishfont").addEventListener("click", mywishView)
+    document.getElementById("bookmarkmarket").addEventListener("click", showBookmarkList)
 }
-
-
 
 export async function sellerFollow(element) {
     const response = await sellerFollowAPI(element.user.id);
@@ -753,6 +760,7 @@ export async function getMyFollowList(seller_information) {
     });
 
 }
+
 
 window.onload = async function () {
     buildCalendar();
