@@ -724,7 +724,7 @@ export async function getMyFollowList(seller_information) {
             // 짝수번째 실행이라면 실행
             innerHTMLContent += `<div class="seller-card-list">`;
         }
-        const company_img = element.company_img == null ? '/static/images/store.gif' : `${BACK_BASE_URL}/${element.company_img}`
+        const company_img = element.company_img == null ? '/static/images/store.gif' : `${element.company_img}`
         // 홀수 짝수 상관없이 데이터 추가
         innerHTMLContent += `
         <div class="seller-card-box">
