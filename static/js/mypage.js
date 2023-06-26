@@ -143,6 +143,10 @@ async function Choicelist() {
                 newP.setAttribute("style", "color:red;")
                 newP.innerText = `${point_date}` + " 결제: " + point[id].point + "p"
             }
+            if (point[id].point_category == "정산") {
+                newP.setAttribute("style", "color:blue;")
+                newP.innerText = `${point_date}` + " 정산: " + point[id].point + "p"
+            }
             return newP
         }
 
@@ -306,6 +310,10 @@ async function getToday() {
             if (point[id].point_category == "결제") {
                 newP.setAttribute("style", "color:red;")
                 newP.innerText = `${point_date}` + " 결제: " + point[id].point.toLocaleString() + "p"
+            }
+            if (point[id].point_category == "정산") {
+                newP.setAttribute("style", "color:blue;")
+                newP.innerText = `${point_date}` + " 정산: " + point[id].point.toLocaleString() + "p"
             }
             return newP
         }
