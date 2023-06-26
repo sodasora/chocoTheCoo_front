@@ -1,7 +1,7 @@
 import {
     BACK_BASE_URL, FRONT_BASE_URL, getPointView, getPointStaticView,
     postPointAttendanceView, getUserProfileAPIView,
-    getSubscribeView, patchSubscribeView, payload
+    getSubscribeView, patchSubscribeView, payload, sellerFollowAPI
 } from "./api.js";
 
 // 달력
@@ -680,10 +680,85 @@ async function setDisplayView() {
 export async function mywishView() {
     setDisplayView()
     document.getElementById("my-wish-box").style.display = "block"
+    document.getElementById("bookmarkList").style.display = "none"
+}
+
+export async function showBookmarkList() {
+    document.getElementById("bookmarkList").style.display = "block"
+    document.getElementById("my-wish-box").style.display = "none"
 }
 
 export async function setEventListener() {
+
+
     document.getElementById("wishfont").addEventListener("click", mywishView)
+    document.getElementById("bookmarkmarket").addEventListener("click", showBookmarkList)
+}
+
+export async function sellerFollow(element) {
+    const response = await sellerFollowAPI(element.user.id);
+    if (response.status == 404) {
+        alert("판매자 정보가 삭제되었거나, 로그인이 필요합니다.")
+    } else if (response.status == 401) {
+        alert("로그인이 필요합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else {
+        const response_json = await response.json()
+        document.getElementById(`followingCount_${element.user.id}`).innerText = `follower : ${response_json.followings}`
+        const follow_button = document.getElementById(`sellerFollowButton_${element.user.id}`)
+        response.status == 200 ? follow_button.innerText = "Follow" : follow_button.innerText = "Un Follow"
+    }
+
+}
+
+
+export async function getMyFollowList(seller_information) {
+    const bookmarkList = document.getElementById("bookmarkList");
+    let innerHTMLContent = '';
+    for (let i = 0; i < seller_information.length; i++) {
+        // 리스트의 최대 길이만큼 반복
+        const element = seller_information[i];
+        // 현재 인덱스의 데이터 저장
+
+        if (i % 2 == 0) {
+            // 짝수번째 실행이라면 실행
+            innerHTMLContent += `<div class="seller-card-list">`;
+        }
+        const company_img = element.company_img == null ? '/static/images/store.gif' : `${BACK_BASE_URL}/${element.company_img}`
+        // 홀수 짝수 상관없이 데이터 추가
+        innerHTMLContent += `
+        <div class="seller-card-box">
+          <div class="seller-img-box" style="background-image: url(${company_img});">
+          </div>
+          <div class="seller-information-box">
+            <p>${element.company_name}</p>
+            <p>${element.contact_number}</p>
+            <div class="seller-follow" id="sellerFollowButton_${element.user.id}">
+              Un Follow
+            </div>
+            <span id="followingCount_${element.user.id}" >following: ${element.followings_count}</span>
+          </div>
+        </div>`;
+
+        if (i % 2 != 0) {
+            // 홀수번째라면 div 태그 닫아줌
+            innerHTMLContent += `</div>`;
+        }
+    }
+
+    if (seller_information.length % 2 != 0) {
+        // 홀수번째에서 끝나서 div태그를 닫지 못할경우 닫아줌
+        innerHTMLContent += `</div>`;
+    }
+
+    bookmarkList.innerHTML = innerHTMLContent;
+
+    seller_information.forEach((element) => {
+        document.getElementById(`sellerFollowButton_${element.user.id}`).addEventListener("click", function () {
+            sellerFollow(element)
+        });
+    });
+
 }
 
 
@@ -706,4 +781,5 @@ window.onload = async function () {
     }
     subscription_info();
     setEventListener();
+    await getMyFollowList(profile_data.seller_information)
 }  
