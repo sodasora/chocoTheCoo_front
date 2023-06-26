@@ -11,7 +11,7 @@ roomname.innerText = "채팅방: " + roominfo["name"]
 
 const message_list = document.getElementById("chat_messages")
 
-async function get_chat_log(roomId) {
+async function get_chat_log() {
     const chatlog = await getChatLogAPI(roomId);
     console.log(chatlog)
 
@@ -21,7 +21,10 @@ async function get_chat_log(roomId) {
 
         let footer = "";
         let message = e['content'];
-        let sender = e['author'];
+        let sender = e['author_name'];
+        let time = e['created_at'];
+        let is_read = e['is_read'];
+        let profile = e['author_image'];
 
         if (sender == payload.nickname) {
             element.className += " me";
@@ -32,13 +35,41 @@ async function get_chat_log(roomId) {
         if (message) {
             const wrapper = document.createElement("div");
             wrapper.textContent = message + footer;
+
+            const content = document.createElement("li");
+            content.setAttribute("class", "image")
+
+            const profile_image = document.createElement("img")
+            profile_image.setAttribute("class", "profile_image")
+            if (profile != null) {
+                // console.log(profile);
+                profile_image.setAttribute("src", profile)
+            } else {
+                profile_image.setAttribute("src", "static/images/기본상품.png")
+            }
+
+            const message_time = document.createElement("li")
+            message_time.setAttribute("class", "message_time")
+            message_time.innerText = time
+
+            // const readcheck = document.createElement("li")
+            // readcheck.setAttribute("class", "readcheck")
+            // if (is_read == true) {
+            //     readcheck.innerText = "읽음"
+            // } else {
+            //     readcheck.innerText = "읽지 않음"
+            // }
+
+            content.appendChild(profile_image);
+            element.appendChild(content);
             element.appendChild(wrapper);
+            element.appendChild(message_time);
+            // element.appendChild(readcheck);
+
             message_list.appendChild(element);
             message_list.scrollTop = message_list.scrollHeight;
         }
     })
-
-
 }
 
 let chatSocket
@@ -70,10 +101,38 @@ function socketSwap(roomId) {
             let sender = data['sender_name']
             let count = data['participants_count']
             let message = data['message']
+            let time = data['time'];
+            let is_read = data['is_read']
+            let profile = data['profile']
 
             if (data['response_type'] == 'enter') {
                 const participant_count = document.getElementById("user_count")
                 participant_count.innerText = ` ${count}명`
+
+                // chatlog["participant"].forEach(e => {
+                //     const element = document.createElement("div");
+                //     element.className = "chat-message";
+
+                //     const participant = document.getElementById("user_list")
+                //     const newli = document.createElement('li')
+                //     newli.innerText = e.author
+                //     participant.appendChild(newli)
+                // })
+            }
+
+            if (data['response_type'] == 'out') {
+                const participant_count = document.getElementById("user_count")
+                participant_count.innerText = ` ${count}명`
+
+                // chatlog["participant"].forEach(e => {
+                //     const element = document.createElement("div");
+                //     element.className = "chat-message";
+
+                //     const participant = document.getElementById("user_list")
+                //     const newli = document.createElement('li')
+                //     newli.innerText = e.author
+                //     participant.appendChild(newli)
+                // })
             }
 
             const element = document.createElement("div");
@@ -89,7 +148,37 @@ function socketSwap(roomId) {
             if (message) {
                 const wrapper = document.createElement("div");
                 wrapper.textContent = message + footer;
+
+                const message_time = document.createElement("li")
+                message_time.setAttribute("class", "message_time")
+                message_time.innerText = time
+
+                // const readcheck = document.createElement("li")
+                // readcheck.setAttribute("class", "readcheck")
+                // if (is_read == true) {
+                //     readcheck.innerText = "읽음"
+                // } else {
+                //     readcheck.innerText = "읽지 않음"
+                // }
+
+                const content = document.createElement("li");
+                content.setAttribute("class", "image")
+
+                const profile_image = document.createElement("img")
+                profile_image.setAttribute("class", "profile_image")
+                if (profile != null) {
+                    // console.log(profile);
+                    profile_image.setAttribute("src", profile)
+                } else {
+                    profile_image.setAttribute("src", "static/images/기본상품.png")
+                }
+
+                content.appendChild(profile_image);
+                element.appendChild(content);
                 element.appendChild(wrapper);
+                element.appendChild(message_time);
+                // element.appendChild(readcheck);
+
                 message_list.appendChild(element);
                 message_list.scrollTop = message_list.scrollHeight;
             }

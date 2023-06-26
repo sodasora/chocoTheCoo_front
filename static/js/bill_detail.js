@@ -1,4 +1,4 @@
-import { FRONT_BASE_URL, OrderItemToCart, patchSubscribeView, getBillDetail, getSubscribeView, getUserProfileAPIView } from './api.js'
+import { FRONT_BASE_URL, payload, OrderItemToCart, changebillstatus, patchSubscribeView, getBillDetail, getSubscribeView, getUserProfileAPIView, getMyReviewView } from './api.js'
 
 window.onload = async function () {
     renderBillDetails();
@@ -85,33 +85,43 @@ async function renderBillOrders(bill) {
         fifthText.setAttribute('data-orderItem', `${e.order_items}`)
         fifthText.addEventListener('click', () => OrderItemToCart(e.id))
 
-        const productId = e.product_id;
-
-        // 리뷰 작성 가기
-        const goreview = document.createElement('button');
-        goreview.innerText = `리뷰쓰기`;
-        goreview.setAttribute(`id`, 'reviewbutton');
-        goreview.onclick = function () {
-            gowritereview(productId)
-        }
-
         const textDiv = document.createElement('div');
         textDiv.classList.add('order-context')
         textDiv.appendChild(firstText)
         textDiv.appendChild(secondText)
         textDiv.appendChild(thirdText);
         textDiv.appendChild(fourthText)
-        // textDiv.appendChild(goreview);
 
         const content = document.createElement("div")
         content.setAttribute("id", "button-content")
-
         content.appendChild(fifthText)
-        content.appendChild(goreview)
+
+        const productId = e.product_id
+
+        if (e.order_status == "구매확정") {
+            // 리뷰 작성 가기
+            const goreview = document.createElement('button');
+            goreview.innerText = `리뷰쓰기`;
+            goreview.setAttribute(`id`, 'reviewbutton');
+
+            goreview.onclick = function () {
+                gowritereview(productId)
+            }
+            content.appendChild(goreview)
+        } else if (e.order_status == "배송완료") {
+            const productId = e.id;
+            const goconfirm = document.createElement('button');
+            goconfirm.innerText = `구매확정하기`;
+            goconfirm.setAttribute(`id`, 'confirmbutton');
+            goconfirm.onclick = async function () {
+                await changebillstatus(productId, 6)
+                window.location.reload();
+            }
+            content.appendChild(goconfirm)
+        }
 
         orderList.appendChild(imgDiv);
         orderList.appendChild(textDiv);
-        // orderList.appendChild(fifthText);
         orderList.appendChild(content);
         orderListBox.appendChild(orderList);
     });
@@ -220,8 +230,8 @@ async function subscription_info() {
 
 // 프로필
 async function profile() {
-    const profile_data = await getUserProfileAPIView()
-    console.log(profile_data)
+    const user_id = payload.user_id
+    const profile_data = await getUserProfileAPIView(user_id)
 
     if (profile_data.profile_image != null) {
         document.getElementById("user-image").setAttribute("src", profile_data['profile_image'])

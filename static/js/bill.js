@@ -1,4 +1,4 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, patchSubscribeView, getSubscribeView, getUserProfileAPIView, getBillList, billToCart } from './api.js'
+import { BACK_BASE_URL, FRONT_BASE_URL, payload, patchSubscribeView, getSubscribeView, getUserProfileAPIView, getBillList, billToCart } from './api.js'
 
 let today = new Date();
 
@@ -15,7 +15,7 @@ async function renderBillList() {
     const bills = await getBillList();
     const billBox = document.getElementById('billLists');
     const buttons = document.getElementById("bill-buttons");
-
+    console.log(bills)
     if (bills != "") {
 
         // 페이지네이션 페이지 설정
@@ -35,11 +35,11 @@ async function renderBillList() {
 
             const img = document.createElement('img');
             img.classList.add('pd-info-thumb');
-            if (bills[id].thumbnail) {
+            if (!bills[id].thumbnail.image) {
                 img.src = '/static/images/초콜릿.jpg'
             }
             else {
-                img.src = `${bills[id].thumbnail[0]}`
+                img.src = `${bills[id].thumbnail.image}`
             }
             imgDiv.appendChild(img);
 
@@ -50,10 +50,10 @@ async function renderBillList() {
             const firstText = document.createElement('div');
             try {
                 if (bills[id].order_items_count == 1) {
-                    firstText.innerText = `${bills[id].thumbnail_name}`
+                    firstText.innerText = `${bills[id].thumbnail.name}`
                 }
                 else {
-                    firstText.innerText = `${bills[id].thumbnail_name} 외 ${bills[id].order_items_count - 1}건`;
+                    firstText.innerText = `${bills[id].thumbnail.name} 외 ${bills[id].order_items_count - 1}건`;
                 }
             }
             catch {
@@ -71,7 +71,7 @@ async function renderBillList() {
             const fourthText = document.createElement('div');
             fourthText.style.display = 'flex';
             fourthText.innerText = `상태: ${bills[id].bill_order_status}`;
-            
+
             const fifthText = document.createElement('img');
             fifthText.classList.add('pd-cart-icon');
             fifthText.src = `/static/images/shopping-cart.png`;
@@ -275,8 +275,8 @@ async function subscription_info() {
 
 // 프로필
 async function profile() {
-    const profile_data = await getUserProfileAPIView()
-    console.log(profile_data)
+    const user_id = payload.user_id
+    const profile_data = await getUserProfileAPIView(user_id)
 
     if (profile_data.profile_image != null) {
         document.getElementById("user-image").setAttribute("src", profile_data['profile_image'])

@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5501"
+export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
@@ -120,8 +120,7 @@ export async function postPointValidationView(merchant_id, imp_id, amount) {
 
 
 // 프로필 정보 가져오기
-export async function getUserProfileAPIView() {
-	const user_id = payload.user_id
+export async function getUserProfileAPIView(user_id) {
 	const response_data = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
 		headers: {
 			'content-type': 'application/json',
@@ -734,8 +733,11 @@ export async function writeReviewAPI(product_id, formdata) {
 	if (response.status == 201) {
 		alert("리뷰 등록 성공!")
 		window.location.href = `${FRONT_BASE_URL}//productdetail.html?product_id=${product_id}`;
+	} else if (response.status == 406) {
+		alert("해당 상품 리뷰를 이미 작성했습니다.")
+		window.location.href = `${FRONT_BASE_URL}//productdetail.html?product_id=${product_id}`;
 	} else {
-		alert("리뷰 등록 실패!")
+		alert(`"리뷰 등록 실패!"`)
 	}
 	return response.json();
 }
@@ -1547,6 +1549,33 @@ export async function sellerFollowAPI(user_id) {
 			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "POST",
+	});
+	return response
+}
+
+
+// 주문상태 변경 api
+export async function changebillstatus(id, status) {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/orders/status/${id}/`, {
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "PATCH",
+		body: JSON.stringify({
+			"order_status": status,
+		})
+	});
+	return response
+}
+
+// 상품의 내 리뷰 조회
+export async function checkoutmyreview(product_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/mypage/${product_id}/reviews/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "GET",
 	});
 	return response
 }

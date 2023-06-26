@@ -1,6 +1,6 @@
 import {
     BACK_BASE_URL, FRONT_BASE_URL, getUserProfileAPIView,
-    getSubscribeView, patchSubscribeView, getMyReviewView
+    getSubscribeView, patchSubscribeView, getMyReviewView, payload
 } from "./api.js";
 
 let today = new Date();
@@ -16,7 +16,8 @@ function leftPad(value) {
 
 // 프로필
 async function profile() {
-    const profile_data = await getUserProfileAPIView()
+    const user_id = payload.user_id
+    const profile_data = await getUserProfileAPIView(user_id)
 
     if (profile_data['profile_image'] != null) {
         document.getElementById("user-image").setAttribute("src", profile_data['profile_image'])
