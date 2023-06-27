@@ -585,3 +585,30 @@ nav a:nth-child(3):hover~.nav-underline {
     display: flex;
     justify-content: space-evenly;
 }
+
+.help-btn {
+    width:20px;
+    height: 20px;
+}
+
+.help-box{
+    display: flex;
+    justify-content: right;
+}
+
+#tooltip-btn2{
+    margin-left: 15vw;
+}
+#tooltip-btn{
+    width: 20px;
+    height: 25px;
+    text-align: left;
+    font-size: 19px;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.help-content {
+    border-radius: 10px;
+}
+
