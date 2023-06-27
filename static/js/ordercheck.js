@@ -54,7 +54,20 @@ async function getUserDeliveryInformationAPI(user_id) {
         },
         method: 'GET',
     });
-    return response;
+    if (response.status == 404) {
+        // 사용자 정보를 찾을 수 없음 (로그인 필요),  올바르지 않은 접근 방법
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else if (response.status == 401) {
+        // 로그인을 하지 않았거나, 토큰 정보 오류
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else if (response.status == 400) {
+        //  유효성 검사 실패
+        addressMessageBox.innerText = response_json.err.non_field_errors
+    } else if (response.status == 200){
+        // 예외 처리
+        // console.log(response_json)
+        return response;
+    } 
 }
 
 async function loadCheckedCart() {
@@ -210,6 +223,7 @@ window.onload = async () => {
     })
 
     registDelivery.addEventListener("click", function () {
+        document.getElementById("dropdownContent").style.display = "none";
         document.getElementById("Postcode").style.display = "block";
         document.getElementById("address").value = ""
         document.getElementById("detailAddress").value = ""
