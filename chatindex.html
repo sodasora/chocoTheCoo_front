@@ -25,10 +25,11 @@
     <div class="container">
         <div
             class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-            <a href="/" id="chatindex"
-                class="d-flex align-items-center col-md-5 mb-2 mb-md-0 text-white text-decoration-none">
+            <a id="chatindex" class="d-flex align-items-center col-md-5 mb-2 mb-md-0 text-white text-decoration-none">
                 ChocoTheCoo Chats
             </a>
+            <img class="help-text" src="/static/images/helpbtn.png" data-bs-toggle="tooltip" data-bs-html="true"
+                data-bs-title="채팅방은 한 유저당 최대 3개까지 만들 수 있고, <br/> 삭제는 채팅방 접속유저가 없을 때에만 가능합니다.">
             <!--채팅방 만들기-->
             <button class="chats-create" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">새 채팅방
                 만들기</button>
@@ -48,10 +49,11 @@
                 </div>
                 <div class="modal-body">
                     <li>채팅방 이름</li>
-                    <input type="text" id="room-name" class="form-control" placeholder="Chatroom's name"
+                    <input type="text" id="room-name" class="form-control" placeholder="Chatroom's name 최대 10자"
                         aria-label="Chatroom's name">
                     <li>채팅방 설명</li>
-                    <input type="text" id="room-desc" class="form-control" placeholder="Chatting" aria-label="Chatting">
+                    <input type="text" id="room-desc" class="form-control" placeholder="채팅방 설명 최대 50자"
+                        aria-label="Chatting">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
