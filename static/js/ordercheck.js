@@ -185,6 +185,7 @@ window.onload = async () => {
         if (response.status == 200) {
             DeliveryInformation(response_json);
         } else {
+            // 판매자가 아닌 사용자가 다른 사용자의 배송 정보를 조회하고자 할 경우 예외 처리
             const message = response.status == 400 ? "권한이 없습니다." : "로그인이 필요합니다."
             alert(message)
             window.location.href = `${FRONT_BASE_URL}/login`;
