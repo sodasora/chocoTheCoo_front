@@ -529,11 +529,11 @@ const seller_orders = await getSellerOrderListView()
 console.log('seller_orders', seller_orders)
 
 // 상품목록 Json 배열에 데이터 추가하기
-for (let i = 0; i < seller_orders.length; i++) {
-    // 상품리스트에서 상품이미지 조회 - 상품이미지는 post 요청으로 넘어오지 않으므로 Product 에서 조회
-    const product = await getProductDetailAPIView(seller_orders[i].product_id);
-    seller_orders[i]['image'] = product.image;
-}
+// for (let i = 0; i < seller_orders.length; i++) {
+//     // 상품리스트에서 상품이미지 조회 - 상품이미지는 post 요청으로 넘어오지 않으므로 Product 에서 조회
+//     const product = await getProductDetailAPIView(seller_orders[i].product_id);
+//     seller_orders[i]['image'] = product.image;
+// }
 
 // ↑상품 목록 가져오기 관련 코드↑ //
 

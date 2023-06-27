@@ -56,8 +56,8 @@ async function renderBillOrders(bill) {
 
         const img = document.createElement('img');
         img.classList.add('pd-info-thumb');
-        if (e.product_image) {
-            img.src = `${e.product_image}`
+        if (e.image) {
+            img.src = `${e.image}`
         }
         else {
             img.src = '/static/images/초콜릿.jpg'
