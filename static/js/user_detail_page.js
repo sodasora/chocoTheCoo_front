@@ -537,7 +537,7 @@ export async function navItemSellerInformationView() {
     // id가 'container'인 요소 선택
     const container = document.getElementById("container");
     // 높이 값 설정 
-    container.style.height = "calc(120vh - 50px)";
+    container.style.height = "calc(130vh - 50px)";
 }
 
 export async function navItemDeleteUserInformationView() {
