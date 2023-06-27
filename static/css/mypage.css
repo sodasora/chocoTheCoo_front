@@ -108,6 +108,43 @@ button {
   margin-top: 5px;
 }
 
+.help-text {
+  position: absolute;
+  object-fit: cover;
+  width: 20px;
+  height: 20px;
+  left: 50px;
+  z-index: 1;
+}
+
+.help-text2 {
+  position: absolute;
+  object-fit: cover;
+  width: 20px;
+  height: 20px;
+  right: -40px;
+  top: 25px;
+  z-index: 1;
+}
+
+.help-text3 {
+  position: absolute;
+  object-fit: cover;
+  width: 20px;
+  height: 20px;
+  right: 30vw;
+  z-index: 1;
+}
+
+/* 크기변경 */
+.tooltip>.tooltip-inner {
+  max-width: 400px;
+}
+
+/* .tooltip{
+  inset: auto auto 100px 100px; 위치
+} */
+
 #month-total {
   font-family: 'S-CoreDream-3Light';
   font-size: 30px;
@@ -254,7 +291,6 @@ td {
 }
 
 #my-wish-list {
-  margin-top: 5px;
   font-family: 'S-CoreDream-3Light';
   font-size: 1.5vw;
   font-weight: bold;
@@ -313,8 +349,6 @@ td {
 
 #bookmarkList {
   height: auto;
-
-
 }
 
 .seller-card-list {
@@ -341,8 +375,7 @@ td {
   background-color: transparent;
   background-position: center;
   background-repeat: no-repeat;
-  border-radius: 10%;
-  box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
 }
 
 .seller-information-box {
@@ -368,7 +401,7 @@ td {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 1vw;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
   margin-bottom: 0.3rem;
   cursor: pointer;
