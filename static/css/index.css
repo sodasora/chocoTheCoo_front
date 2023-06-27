@@ -45,10 +45,25 @@ input {
   margin-left: 50px;
 }
 
+/* 왼쪽 사이드 카테고리 */
 .category {
   position: fixed;
   left: 13%;
   top: 55%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  font-family: '국립박물관문화재단클래식B';
+  background-color: #a5705163;
+  border-radius: 1em;
+  padding: 1em 0;
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* 오른쪽 사이드 카테고리 */
+.right-side {
+  position: fixed;
+  left: 87%;
+  top: 45%;
   transform: translate(-50%, -50%);
   font-size: 40px;
   font-family: '국립박물관문화재단클래식B';
@@ -111,6 +126,8 @@ button {
 } */
 
 #chocobanner {
+  position: relative;
+  left: -1%;
   height: 30vh;
   width: 50vw;
   margin-top: 20px;
@@ -125,7 +142,7 @@ button {
 .card {
   font-family: 'S-CoreDream-3Light';
   height: auto;
-  width: 20vw;
+  width: 15vw;
   font-size: 1vw;
 }
 

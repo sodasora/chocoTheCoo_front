@@ -6,7 +6,7 @@ const user_id = payload_parse.user_id //로그인한 유저id
 
 // 로그인한 판매자의 전체 상품 목록 불러오기
 const seller_products = await getAllProductListAPIView(user_id)
-console.log('seller_products', seller_products)
+// console.log('seller_products', seller_products)
 
 // 로그인한 판매자의 전체 주문 목록 불러오기
 const seller_orders = await getSellerOrderListView()
@@ -100,7 +100,7 @@ async function sellerProfile() {
     const user_id = payload_parse.user_id //로그인한 유저id
 
     const seller_data = await getSellerPermissionAPIView(user_id)
-    console.log("판매자정보", seller_data)
+    // console.log("판매자정보", seller_data)
 
     const firstday = seller_data["created_at"].substr(0, 10)
 
@@ -146,7 +146,7 @@ sellerProfile()
 function listView_product(product, type) {
     const contents = document.getElementById(`${type}_under-column-dox`);
     contents.innerHTML = '';
-    console.log("상품확인", product);
+    // console.log("상품확인", product);
     // console.log("type", type);
 
     const makeContent = (id) => {
@@ -202,7 +202,7 @@ function listView_product(product, type) {
             <text>${id + 1}. 
             <img style="width: 50px;" src="${product[id].image}" alt="상품이미지">
             ${product[id].name}</text>
-            <text style="font-size: 20px; float:inline-end">⭐${product[id].stars.toFixed(1)}점</text>
+            <text style="font-size: 20px; float:inline-end">⭐${product[id].stars}점</text>
             `;
             return content;
         }
@@ -217,7 +217,7 @@ function listView_product(product, type) {
 function listView_order(order, type) {
     const contents = document.getElementById(`${type}_under-column-dox`);
     contents.innerHTML = '';
-    console.log("주문확인", order);
+    // console.log("주문확인", order);
     // console.log("type", type);
 
     const makeContent = (id) => {
