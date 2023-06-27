@@ -137,6 +137,7 @@ button {
 .card-img-top {
   height: 190px;
   min-height: 190px;
+  max-height: 190px;
 }
 
 .card {
