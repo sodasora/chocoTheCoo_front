@@ -47,7 +47,7 @@ async function DeliveryInformation(response_json) {
 
 //* 유저 배송정보 조회, 머지하면 똑같은거 있을거같아서 일단 api로 안넘겼습니다
 async function getUserDeliveryInformationAPI(user_id) {
-    const response = await fetch(`${BACK_BASE_URL}/api/users/get/delivery/${user_id}/`, {
+    const response = await fetch(`${BACK_BASE_URL}/api/users/delivery/`, {
         headers: {
             'content-type': 'application/json',
             "Authorization": "Bearer " + localStorage.getItem("access")
@@ -184,10 +184,8 @@ window.onload = async () => {
         const response_json = await response.json();
         if (response.status == 200) {
             DeliveryInformation(response_json);
-        } else {
-            // 판매자가 아닌 사용자가 다른 사용자의 배송 정보를 조회하고자 할 경우 예외 처리
-            const message = response.status == 400 ? "권한이 없습니다." : "로그인이 필요합니다."
-            alert(message)
+        } else if (response.status == 404 || response.status == 401) {
+            alert("로그인이 필요합니다.")
             window.location.href = `${FRONT_BASE_URL}/login`;
         }
 
