@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5501"
+export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
@@ -1534,9 +1534,9 @@ export async function reviewLikeAPI(review_id) {
 
 export async function searchProductAPI(keyword) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/?search=${keyword}`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
+		// headers: {
+			// "Authorization": `Bearer ${access_token}`,
+		// },
 		method: "GET",
 	});
 	return response.json();

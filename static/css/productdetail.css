@@ -21,7 +21,8 @@ body {
     flex-direction: column;
     font-family: 'GangwonEdu_OTFBoldA';
     height: 100%;
-    padding-bottom: 100px;
+    padding-bottom: 10em;
+    padding-top: 5em;
     margin: 0 30%;
 }
 
