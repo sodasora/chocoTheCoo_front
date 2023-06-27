@@ -95,7 +95,7 @@ export async function postPointCheckoutView(amount, type) {
 		method: 'POST',
 		body: JSON.stringify({
 			"amount": amount,
-			"type": type
+			"payment_type": type
 		})
 	})
 	return response_point.json();

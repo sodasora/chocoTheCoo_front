@@ -12,3 +12,17 @@
     margin-bottom: 40px;
     width: 40vw;
 }
+
+.help-text {
+    position: absolute;
+    object-fit: cover;
+    width: 20px;
+    height: 20px;
+    left: 20px;
+    top: 10px;
+    z-index: 1;
+}
+
+.tooltip>.tooltip-inner {
+    max-width: 300px;
+}
