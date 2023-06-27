@@ -68,7 +68,7 @@ input {
 .right-side {
   position: fixed;
   left: 87%;
-  top: 65%;
+  top: 55%;
   transform: translate(-50%, -50%);
   font-size: 40px;
   font-family: '국립박물관문화재단클래식B';
@@ -77,6 +77,7 @@ input {
   padding: 1em 0;
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.5);
   width:20vw;
+  padding-left: 2vw;
 }
 
 .section {
@@ -182,15 +183,39 @@ button {
 
 #check-font {
   font-family: 'TheJamsil5Bold';
-
   font-size: 15px;
 }
 #check-title{
   font-family: 'TheJamsil5Bold';
-  font-size: 25px;
+  font-size: 20px;
 }
 .form-check-label {
   font-family: 'TheJamsil5Bold';
   font-size: 15px;
   cursor: pointer;
+  margin-bottom: 1vw;
+}
+
+.form-check{
+  overflow: auto;
+  height: 40vh;
+  width: fit-content;
+}
+.form-check::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-control-prev{
+  margin-top: 11vw;
+}
+
+.carousel-control-next {
+  margin-top: 11vw;
+}
+
+.carousel-inner {
+  text-align: center;
+}
+.form-check {
+  text-align: left;
 }
