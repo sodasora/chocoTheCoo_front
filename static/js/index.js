@@ -102,66 +102,66 @@ export async function searchAnythingAPI(){
 }
 
 export async function setEventListener() {
-    document.getElementById("search-btn").addEventListener("click", keywordSeachView)
+    document.getElementById("search-btn").addEventListener("click", keywordSeachView);
     // 구매자 체크리스트    
     // 체크리스트 출석체크
     document.getElementById("go-mypage").addEventListener("click", function () {
         window.location.href = "mypage.html";
-    })
+    });
     // 체크리스트 포인트 충전
     document.getElementById("go-mypoint").addEventListener("click", function () {
         window.location.href = "pointcharge.html";
-    })
+    });
     // 체크리스트 구독
     document.getElementById("go-subscribe").addEventListener("click", function () {
         window.location.href = "subscriptioninfo.html";
-    })
+    });
     // 체크리스트 채팅
     document.getElementById("go-chat").addEventListener("click", function () {
         window.location.href = "chatroom.html";
-    })
+    });
     // 체크리스트 결제
     document.getElementById("go-cart").addEventListener("click", function () {
         window.location.href = "cart.html";
-    })
+    });
     // 체크리스트 구매내역 확인
     document.getElementById("go-bill").addEventListener("click", function () {
         window.location.href = "bill.html";
-    })
+    });
     // 체크리스트 
     document.getElementById("go-bill").addEventListener("click", function () {
         window.location.href = "bill.html";
-    })
+    });
 
     // 판매자 체크리스트
     // 체크리스트 판매자 권한 신청
     document.getElementById("go-seller").addEventListener("click", function () {
         window.location.href = "seller.html";
-    })
+    });
     // 체크리스트 판매자 상품 등록
     document.getElementById("go-addproduct").addEventListener("click", function () {
         window.location.href = "productregistration.html";
-    })
+    });
     // 체크리스트 product-list체크
     document.getElementById("go-productlist").addEventListener("click", function () {
         window.location.href = "seller_productlist.html";
-    })
+    });
     // 체크리스트 order-list체크
     document.getElementById("go-orderlist").addEventListener("click", function () {
         window.location.href = "seller_orderlist.html";
-    })
+    });
     // 체크리스트 배송상태 체크
     document.getElementById("go-statistics").addEventListener("click", function () {
         window.location.href = "seller_orderlist.html";
-    })
+    });
     // 체크리스트 판매자 statistics 체크
     document.getElementById("go-statistics").addEventListener("click", function () {
         window.location.href = "seller.html";
-    })
+    });
     // 체크리스트 order-list체크
     document.getElementById("go-storepage").addEventListener("click", function () {
         window.location.href = "sellerpage.html";
-    })
+    });
 
 }
 
