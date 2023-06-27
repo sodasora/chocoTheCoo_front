@@ -12,6 +12,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'TheJamsil5Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
 .img {
   border-radius: 20px;
 }
@@ -47,6 +54,7 @@ input {
 
 /* 왼쪽 사이드 카테고리 */
 .category {
+  /* margin-top: 5%; */
   position: fixed;
   left: 13%;
   top: 55%;
@@ -61,9 +69,11 @@ input {
 
 /* 오른쪽 사이드 카테고리 */
 .right-side {
+  /* margin-top: 5%; */
+  align-items: center;
   position: fixed;
   left: 87%;
-  top: 45%;
+  top: 55%;
   transform: translate(-50%, -50%);
   font-size: 40px;
   font-family: '국립박물관문화재단클래식B';
@@ -71,6 +81,7 @@ input {
   border-radius: 1em;
   padding: 1em 0;
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.5);
+  width: 20vw;
 }
 
 .section {
@@ -103,11 +114,13 @@ input {
 
 .category-box>a {
   font-size: 0.8em;
-  
+
 }
+
 .category-box>a:hover {
   color: #d17e3e;
 }
+
 /* 
 button {
   height: 4vh;
@@ -137,6 +150,7 @@ button {
 .card-img-top {
   height: 190px;
   min-height: 190px;
+  max-height: 190px;
 }
 
 .card {
@@ -171,4 +185,47 @@ button {
 
 #next-buttons {
   margin-left: 10px;
+}
+
+#check-font {
+  font-family: 'TheJamsil5Bold';
+  font-size: 15px;
+}
+
+#check-title {
+  font-family: 'TheJamsil5Bold';
+  font-size: 20px;
+}
+
+.form-check-label {
+  font-family: 'TheJamsil5Bold';
+  font-size: 15px;
+  cursor: pointer;
+  margin-bottom: 1vw;
+}
+
+.form-check {
+  overflow: auto;
+  height: 40vh;
+  width: fit-content;
+}
+
+.form-check::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-control-prev {
+  margin-top: 11vw;
+}
+
+.carousel-control-next {
+  margin-top: 11vw;
+}
+
+.carousel-inner {
+  text-align: center;
+}
+
+.form-check {
+  text-align: left;
 }

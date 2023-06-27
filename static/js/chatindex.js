@@ -159,13 +159,35 @@ async function deletechat(id) {
     if (response == 204) {
         alert("삭제완료")
         window.location.reload();
+    } else if (response == 403) {
+        alert("접속유저가 존재합니다. 잠시 후 실행해주세요.")
     } else {
-        alert("삭제실패")
+        alert("삭제권한이 없습니다.")
     }
 }
 
 
 window.onload = async function () {
+    const inputElement = document.querySelector('#room-name');
+    inputElement.addEventListener('keyup', function () {
+        const text = inputElement.value;
+
+        // 입력한 글자 수가 최대 글자 수를 초과할 경우, 입력한 문자열을 자름
+        if (text.length > 10) {
+            inputElement.value = text.slice(0, 10);
+        }
+    });
+
+    const inputdescElement = document.querySelector('#room-desc');
+    inputdescElement.addEventListener('keyup', function () {
+        const text = inputdescElement.value;
+
+        // 입력한 글자 수가 최대 글자 수를 초과할 경우, 입력한 문자열을 자름
+        if (text.length > 50) {
+            inputdescElement.value = text.slice(0, 50);
+        }
+    });
+
     const chat = await getChatindexAPI();
     // console.log(chat)
     pagination_chatlist(chat);

@@ -7,8 +7,8 @@
 .section2 {
     background-color: #C4A492;
     height: 100%;
-    display: flex;
-    justify-content: center;
+    /* display: flex; */
+    /* justify-content: center; */
     width: 100%;
     padding-bottom: 100px;
 }
@@ -20,6 +20,7 @@
 .card {
     width: 300px;
     margin: 1em auto;
+    min-height: 48vh;
 }
 
 .card-img-top {
@@ -31,13 +32,13 @@
     width: 100vw;
 }
 
-.card-text {
+/* .card-text {
     margin-left: 10px;
 }
 
 .card-star {
     margin-left: 10px;
-}
+} */
 
 .sellerlogo {
     background-color: #C4A492;
@@ -64,10 +65,10 @@ button {
     border-radius: 10px;
 }
 
-#previous-buttons {
+/* #previous-buttons {
     margin-right: 10px;
 }
 
 #next-buttons {
     margin-left: 10px;
-}
+} */

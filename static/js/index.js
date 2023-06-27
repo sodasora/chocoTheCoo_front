@@ -1,4 +1,9 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, searchProductAPI, sameCategoryProductView, getProductslist, viewProductslist, getCategoryView, getProductListAPIView } from './api.js'
+import { BACK_BASE_URL, FRONT_BASE_URL, searchProductAPI, searchWhatAPI, sameCategoryProductView, getProductslist, viewProductslist, getCategoryView, getProductListAPIView } from './api.js'
+
+
+export async function goSearch(url) {
+    window.location.href = `${FRONT_BASE_URL}/index.html?url=${url}`;
+}
 
 export async function goEditReview(keyword) {
     window.location.href = `${FRONT_BASE_URL}/index.html?search=${keyword}`;
@@ -53,16 +58,115 @@ export async function showSearchKeywordProduct() {
     } else {
         getProductslist(products)
     }
-
-
 }
 
+export async function searchAnythingAPI(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const url = new URLSearchParams();
+
+    const categoryId = urlParams.get('category_id');
+    const categories = await getCategoryView();
+
+    const products = await searchProductAPI(keyword);
+    const product = products.results;
+
+    const search = document.getElementById("search");
+    const keyword = urlParams.get('search');
+
+    const ordering = document.getElementById("ordering")
+
+    // 카테고리 검색 카테고리 ID가 url에 있을때
+    if(categoryId){
+        categories.forEach(category => {
+
+            url += `category=${categoryId}`
+        });
+    }
+    // 검색창 입력어로 검색 : 키워드가 url에 있을때
+    else if(keyword) {
+        search.addEventListener("click", function () {
+            
+            url += `search=${keyword}`
+        })
+    }
+    // 정렬 : 정렬 규칙이 url에 있을 때 
+    else if(ordering){
+    ordering.addEventListener("click", function () {
+        
+        url += `ordering=${ordering}`
+        window.location.href = url
+    });
+    }
+
+    goSearch(url)
+}
 
 export async function setEventListener() {
-    document.getElementById("search-btn").addEventListener("click", keywordSeachView)
+    document.getElementById("search-btn").addEventListener("click", keywordSeachView);
+    // 구매자 체크리스트    
+    // 체크리스트 출석체크
+    document.getElementById("go-mypage").addEventListener("click", function () {
+        window.location.href = "mypage.html";
+    });
+    // 체크리스트 포인트 충전
+    document.getElementById("go-mypoint").addEventListener("click", function () {
+        window.location.href = "pointcharge.html";
+    });
+    // 체크리스트 구독
+    document.getElementById("go-subscribe").addEventListener("click", function () {
+        window.location.href = "subscriptioninfo.html";
+    });
+    // 체크리스트 채팅
+    document.getElementById("go-chat").addEventListener("click", function () {
+        window.location.href = "chatroom.html";
+    });
+    // 체크리스트 결제
+    document.getElementById("go-cart").addEventListener("click", function () {
+        window.location.href = "cart.html";
+    });
+    // 체크리스트 구매내역 확인
+    document.getElementById("go-bill").addEventListener("click", function () {
+        window.location.href = "bill.html";
+    });
+    // 체크리스트 
+    document.getElementById("go-bill").addEventListener("click", function () {
+        window.location.href = "bill.html";
+    });
+
+    // 판매자 체크리스트
+    // 체크리스트 판매자 권한 신청
+    document.getElementById("go-seller").addEventListener("click", function () {
+        window.location.href = "seller.html";
+    });
+    // 체크리스트 판매자 상품 등록
+    document.getElementById("go-addproduct").addEventListener("click", function () {
+        window.location.href = "productregistration.html";
+    });
+    // 체크리스트 product-list체크
+    document.getElementById("go-productlist").addEventListener("click", function () {
+        window.location.href = "seller_productlist.html";
+    });
+    // 체크리스트 order-list체크
+    document.getElementById("go-orderlist").addEventListener("click", function () {
+        window.location.href = "seller_orderlist.html";
+    });
+    // 체크리스트 배송상태 체크
+    document.getElementById("go-statistics").addEventListener("click", function () {
+        window.location.href = "seller_orderlist.html";
+    });
+    // 체크리스트 판매자 statistics 체크
+    document.getElementById("go-statistics").addEventListener("click", function () {
+        window.location.href = "seller.html";
+    });
+    // 체크리스트 order-list체크
+    document.getElementById("go-storepage").addEventListener("click", function () {
+        window.location.href = "sellerpage.html";
+    });
+
 }
 
 window.onload = async function () {
+    
     categoryview()
     setEventListener()
     const product = await getProductListAPIView();

@@ -1582,3 +1582,16 @@ export async function checkoutmyreview(product_id) {
 	});
 	return response
 }
+
+export async function searchWhatAPI(url) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${url}`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "GET",
+	});
+	return response.json();
+}
+
+export const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+export const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
