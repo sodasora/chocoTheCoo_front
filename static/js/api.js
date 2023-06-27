@@ -345,7 +345,8 @@ export async function updateUserInformationAPI(information) {
 }
 
 export async function addressSubmitAPI(information) {
-	const response = await fetch(`${BACK_BASE_URL}/api/users/create/delivery/`, {
+	// 배송 정보 추가
+	const response = await fetch(`${BACK_BASE_URL}/api/users/delivery/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`
