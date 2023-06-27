@@ -345,7 +345,7 @@ export async function updateUserInformationAPI(information) {
 }
 
 export async function addressSubmitAPI(information) {
-	const response = await fetch(`${BACK_BASE_URL}/api/users/create/delivery/${information.user_id}/`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/create/delivery/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`

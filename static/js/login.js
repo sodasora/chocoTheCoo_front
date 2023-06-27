@@ -157,7 +157,7 @@ async function googleLoginBtn() {
 }
 
 async function naverLoginBtn() {
-    const response = await fetch(`${BACK_BASE_URL}/api/users/naver/login`, { method: 'GET' });
+    const response = await fetch(`${BACK_BASE_URL}/api/users/naver/login/`, { method: 'GET' });
     const naver_id = await response.json();
     const redirect_uri = `${FRONT_BASE_URL}/index.html`;
     const state = new Date().getTime().toString(36);

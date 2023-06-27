@@ -123,6 +123,7 @@ export async function addressSubmit() {
         // 배송 정보 등록 완료
         location.reload();
     } else {
+        const response_json = await response.json()
         const addressMessageBox = document.getElementById("addressMessageBox")
         addressMessageBox.style.display = "flex"
         if (response.status == 404) {
@@ -131,14 +132,13 @@ export async function addressSubmit() {
         } else if (response.status == 401) {
             // 로그인을 하지 않았거나, 올바르지 않은 접근 방법
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
-        } else if (response.status == 402) {
-            addressMessageBox.innerText = "핸드폰 정보를 먼저 등록해 주세요."
         } else if (response.status == 400) {
-            addressMessageBox.innerText = "배송 정보는 다섯개 까지 등록할 수 있습니다."
+            //  유효성 검사 실패
+            addressMessageBox.innerText = response_json.err.non_field_errors
         } else {
-            addressMessageBox.innerText = "배송 정보가 올바르지 않습니다."
+            // 예외 처리
+            console.log(response_json)
         }
-
     }
 }
 export async function addressUpdate() {
@@ -165,15 +165,17 @@ export async function addressUpdate() {
         const addressMessageBox = document.getElementById("addressMessageBox")
         addressMessageBox.style.display = "flex"
         if (response.status == 404) {
-            addressMessageBox.innerText = "배송 정보를 찾을 수 없습니다."
+            // 사용자 정보를 찾을 수 없음 (로그인 필요)
+            window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else if (response.status == 401) {
-            // 로그인을 하지 않았거나 올바르지 않은 접근 방법
+            // 로그인을 하지 않았거나, 올바르지 않은 접근 방법
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else if (response.status == 400) {
-            addressMessageBox.innerText = "입력값이 올바르지 않습니다."
+            //  유효성 검사 실패
+            addressMessageBox.innerText = response_json.err.non_field_errors
         } else {
-            // 반례
-            console.log(response)
+            // 예외 처리
+            console.log(response_json)
         }
     }
 }
