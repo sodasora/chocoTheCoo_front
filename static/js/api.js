@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5500"
+export const FRONT_BASE_URL = "http://127.0.0.1:5501"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
@@ -459,9 +459,9 @@ export async function deleteSellerInformationAPI() {
 	return response
 }
 
-export async function deleteUserInformationAPI(user_id) {
-	// 판매자 정보 삭제
-	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
+export async function deleteUserInformationAPI() {
+	// 휴면 계정으로 전환
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
 		},
@@ -1576,4 +1576,36 @@ export async function checkoutmyreview(product_id) {
 		method: "GET",
 	});
 	return response
+}
+
+export async function kakaoLoginAPI() {
+	// 카카오 로그인
+
+	// 백엔드 서버로부터 kakao API 반환
+	const response = await fetch(`${BACK_BASE_URL}/api/users/kakao/login/`, { method: 'GET' })
+	const kakao_id = await response.json()
+	// Resource server와 약속된 REDIRECT URI 설정
+	const redirect_uri = REDIRECT_URI
+	// 요청할 데이터 설정
+	const scope = 'profile_nickname,profile_image,account_email'
+	// 사용자를 Resource Server로 이동
+	// Resource Server는 사용자를 Redirect URI로 안내
+	window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${kakao_id}&redirect_uri=${redirect_uri}&response_type=code&scope=${scope}`
+}
+
+export async function googleLoginAPI() {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/google/login/`, { method: 'GET' })
+	const google_id = await response.json()
+	const redirect_uri = REDIRECT_URI
+	const scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
+	const param = `scope=${scope}&include_granted_scopes=true&response_type=token&state=pass-through value&prompt=consent&client_id=${google_id}&redirect_uri=${redirect_uri}`
+	window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${param}`
+}
+
+export async function naverLoginAPI() {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/naver/login/`, { method: 'GET' });
+	const naver_id = await response.json();
+	const redirect_uri = `${FRONT_BASE_URL}/index.html`;
+	const state = new Date().getTime().toString(36);
+	window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naver_id}&redirect_uri=${redirect_uri}&state=${state}`;
 }

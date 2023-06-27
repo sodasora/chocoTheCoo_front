@@ -43,7 +43,7 @@ async function getPayloadParse() {
 }
 
 export async function updateInformation() {
-    // 이메일, 비밀번호 변경
+    //  비밀번호 변경
     const password = document.getElementById("password").value
     const newPassword = document.getElementById("newPassword").value
     const newPassword2 = document.getElementById("newPassword2").value
@@ -110,6 +110,8 @@ export async function addressSubmit() {
     const postcode = document.getElementById("postcode").value
     const address = document.getElementById("address").value
     const detailAddress = document.getElementById("detailAddress").value
+    const addressMessageBox = document.getElementById("addressMessageBox")
+
     const information = {
         user_id: payload_parse.user_id,
         recipient: recipient,
@@ -118,26 +120,31 @@ export async function addressSubmit() {
         detailAddress: detailAddress
     };
 
-    const response = await addressSubmitAPI(information)
-    if (response.status == 200) {
-        // 배송 정보 등록 완료
-        location.reload();
-    } else {
-        const response_json = await response.json()
-        const addressMessageBox = document.getElementById("addressMessageBox")
+    if (recipient == "" || postcode == "" || address == "") {
         addressMessageBox.style.display = "flex"
-        if (response.status == 404) {
-            // 사용자 정보를 찾을 수 없음 (로그인 필요)
-            window.location.replace(`${FRONT_BASE_URL}/login.html`)
-        } else if (response.status == 401) {
-            // 로그인을 하지 않았거나, 올바르지 않은 접근 방법
-            window.location.replace(`${FRONT_BASE_URL}/login.html`)
-        } else if (response.status == 400) {
-            //  유효성 검사 실패
-            addressMessageBox.innerText = response_json.err.non_field_errors
+        addressMessageBox.innerText = "입력값이 올바르지 않습니다."
+    } else {
+
+        const response = await addressSubmitAPI(information)
+        if (response.status == 200) {
+            // 배송 정보 등록 완료
+            location.reload();
         } else {
-            // 예외 처리
-            console.log(response_json)
+            const response_json = await response.json()
+            addressMessageBox.style.display = "flex"
+            if (response.status == 404) {
+                // 사용자 정보를 찾을 수 없음 (로그인 필요) , 올바르지 않은 접근 방법
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else if (response.status == 401) {
+                // 로그인을 하지 않았거나, 토큰 정보 오류
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else if (response.status == 400) {
+                //  유효성 검사 실패
+                addressMessageBox.innerText = response_json.err.non_field_errors
+            } else {
+                // 예외 처리
+                console.log(response_json)
+            }
         }
     }
 }
@@ -156,26 +163,31 @@ export async function addressUpdate() {
         delivery_id: delivery_id
     };
 
-    const response = await addressUpdateAPI(information)
-    const response_json = await response.json()
-    if (response.status == 200) {
-        // 배송 정보 수정 완료
-        location.reload();
-    } else {
-        const addressMessageBox = document.getElementById("addressMessageBox")
+    if (recipient == "" || postcode == "" || address == "") {
         addressMessageBox.style.display = "flex"
-        if (response.status == 404) {
-            // 사용자 정보를 찾을 수 없음 (로그인 필요)
-            window.location.replace(`${FRONT_BASE_URL}/login.html`)
-        } else if (response.status == 401) {
-            // 로그인을 하지 않았거나, 올바르지 않은 접근 방법
-            window.location.replace(`${FRONT_BASE_URL}/login.html`)
-        } else if (response.status == 400) {
-            //  유효성 검사 실패
-            addressMessageBox.innerText = response_json.err.non_field_errors
+        addressMessageBox.innerText = "입력값이 올바르지 않습니다."
+    } else {
+        const response = await addressUpdateAPI(information)
+        const response_json = await response.json()
+        if (response.status == 200) {
+            // 배송 정보 수정 완료
+            location.reload();
         } else {
-            // 예외 처리
-            console.log(response_json)
+            const addressMessageBox = document.getElementById("addressMessageBox")
+            addressMessageBox.style.display = "flex"
+            if (response.status == 404) {
+                // 사용자 정보를 찾을 수 없음 (로그인 필요)
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else if (response.status == 401) {
+                // 로그인을 하지 않았거나, 올바르지 않은 접근 방법
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else if (response.status == 400) {
+                //  유효성 검사 실패
+                addressMessageBox.innerText = response_json.non_field_errors
+            } else {
+                // 예외 처리
+                console.log(response_json)
+            }
         }
     }
 }
@@ -323,22 +335,28 @@ export async function setCustomsCode() {
     // 통관 번호 수정
     const payload_parse = await getPayloadParse()
     const customs_code = document.getElementById("customsCodeSubmitInput").value
+    const customsCodeMessageBox = document.getElementById("customsCodeMessageBox")
     const information = {
         customs_code: customs_code
     }
     const response = await setCustomsCodeAPI(information)
-    const response_json = await response.json()
-
-    if (response.status == 200) {
-        // 수정 완료
-        location.reload();
-    } else if (response.status == 404) {
-        // 로그인 필요
-        window.location.replace(`${FRONT_BASE_URL}/login.html`)
-    } else if (response.status == 400) {
-        const addressMessageBox = document.getElementById("addressMessageBox")
-        addressMessageBox.style.display = "flex"
-        addressMessageBox.innerText = "통관 번호가 올바르지 않습니다."
+    if (customs_code == "") {
+        customsCodeMessageBox.style.display = "flex"
+        customsCodeMessageBox.innerText = "통관 번호가 올바르지 않습니다."
+    } else {
+        if (response.status == 200) {
+            // 수정 완료
+            location.reload();
+        } else if (response.status == 404) {
+            // 로그인 필요
+            window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        } else if (response.status == 401) {
+            //토큰 정보 오류
+            window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        } else if (response.status == 400) {
+            customsCodeMessageBox.style.display = "flex"
+            customsCodeMessageBox.innerText = "통관 번호가 올바르지 않습니다."
+        }
     }
 }
 
@@ -347,24 +365,28 @@ export async function getAuthNumber() {
     const phoneNum = document.getElementById("phoneNum")
     const phone_number = phoneNum.value.replace(/-/g, "")
     const phoneMessageBox = document.getElementById("phoneMessageBox")
-    const information = {
-        phone_number: phone_number
-    }
-    const response = await getAuthNumberAPI(information)
-    const response_json = await response.json()
-    if (response.status == 200) {
-        phoneMessageBox.style.display = "none"
-        document.getElementById("phone_auth_box").style.display = "block"
-        document.getElementById("submit_auth_number_button_box").style.display = "block"
-
-    } else {
+    if (phone_number == "") {
         phoneMessageBox.style.display = "flex"
-        if (response.status == 404) {
-            // 로그인 필요
-            window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        phoneMessageBox.innerText = "빈칸 없이 입력해 주세요."
+    } else {
+        const information = {
+            phone_number: phone_number
+        }
+        const response = await getAuthNumberAPI(information)
+        if (response.status == 200) {
+            phoneMessageBox.style.display = "none"
+            document.getElementById("phone_auth_box").style.display = "block"
+            document.getElementById("submit_auth_number_button_box").style.display = "block"
+
         } else {
-            const response_json = await response.json()
-            phoneMessageBox.innerText = response_json.non_field_errors
+            phoneMessageBox.style.display = "flex"
+            if (response.status == 404) {
+                // 로그인 필요
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else {
+                const response_json = await response.json()
+                phoneMessageBox.innerText = response_json.err.non_field_errors
+            }
         }
     }
 }
@@ -372,74 +394,88 @@ export async function getAuthNumber() {
 export async function submitVerificationNumbers() {
     // 휴대폰 인증
     const verification_numbers = document.getElementById("verification_numbers").value
-    const information = {
-        verification_numbers: verification_numbers
-    }
-    const response = await submitVerificationNumbersAPI(information)
-    if (response.status == 200) {
-        // 인증 완료
-        location.reload();
-    } else {
-        const phoneMessageBox = document.getElementById("phoneMessageBox")
+    const phoneMessageBox = document.getElementById("phoneMessageBox")
+    if (verification_numbers == "") {
         phoneMessageBox.style.display = "flex"
-        if (response.status == 404) {
-            // 로그인 필요
-            window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        phoneMessageBox.innerText = "빈칸 없이 입력해 주세요"
+    } else {
+        const information = {
+            verification_numbers: verification_numbers
+        }
+        const response = await submitVerificationNumbersAPI(information)
+        if (response.status == 200) {
+            // 인증 완료
+            location.reload();
         } else {
-            const response_json = await response.json()
-            phoneMessageBox.innerText = response_json.err
+
+            phoneMessageBox.style.display = "flex"
+            if (response.status == 404) {
+                // 로그인 필요
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else {
+                const response_json = await response.json()
+                phoneMessageBox.innerText = response_json.err
+            }
         }
     }
 }
-
 
 
 export async function getEmailVerificationCode() {
     // 변경할 이메일로 인증 코드 발급 받기
     const email = document.getElementById("email").value
-    const phoneMessageBox = document.getElementById("phoneMessageBox")
+    const phoneMessageBox = document.getElementById("emailMessageBox")
     phoneMessageBox.style.display = "flex"
     phoneMessageBox.innerText = "인증 코드를 발급 중 입니다. 잠시만 기다려 주세요."
 
-    const response = await getEmailVerificationCodeAPI(email)
-    if (response.status == 200) {
-        document.getElementById("verificationCodeBox").style.display = "block"
-        document.getElementById("submitChangeEamilInformationBox").style.display = "block"
-        phoneMessageBox.innerText = "인증 코드를 발급 했습니다."
-
+    if (email == "") {
+        phoneMessageBox.innerText = "빈칸 없이 입력해 주세요."
     } else {
+        const response = await getEmailVerificationCodeAPI(email)
+        if (response.status == 200) {
+            document.getElementById("verificationCodeBox").style.display = "block"
+            document.getElementById("submitChangeEamilInformationBox").style.display = "block"
+            phoneMessageBox.innerText = "인증 코드를 발급 했습니다."
 
-        if (response.status == 404) {
-            // 로그인 필요
-            window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else {
-            const response_json = await response.json()
-            phoneMessageBox.innerText = response_json.err
+
+            if (response.status == 404) {
+                // 로그인 필요
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else {
+                const response_json = await response.json()
+                phoneMessageBox.innerText = response_json.err
+            }
         }
     }
 }
+
+
 export async function submitChangeEamilInformation() {
     const email = document.getElementById("email").value
     const verificationCode = document.getElementById("verificationCode").value
-
+    const emailMessageBox = document.getElementById("emailMessageBox")
     const information = {
         email: email,
         verification_code: verificationCode
     }
-
-    const response = await submitChangeEamilInformationAPI(information)
-    if (response.status == 200) {
-        // 인증 완료
-        location.reload();
+    if (verificationCode == "" || email == "") {
+        emailMessageBox.innerText = "빈칸 없이 입력해 주세요."
     } else {
-        const phoneMessageBox = document.getElementById("phoneMessageBox")
-        phoneMessageBox.style.display = "flex"
-        if (response.status == 404) {
-            // 로그인 필요
-            window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        const response = await submitChangeEamilInformationAPI(information)
+        if (response.status == 200) {
+            // 인증 완료
+            location.reload();
         } else {
-            const response_json = await response.json()
-            phoneMessageBox.innerText = response_json.non_field_errors
+
+            emailMessageBox.style.display = "flex"
+            if (response.status == 404) {
+                // 로그인 필요
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else {
+                const response_json = await response.json()
+                emailMessageBox.innerText = response_json.non_field_errors
+            }
         }
     }
 }
@@ -488,6 +524,12 @@ export async function navItemUserPhoneNumberView() {
     changeView("navItemUserPhoneNumber")
     document.getElementById("setUserPhoneNumberInformation").style.display = "block"
 }
+
+export async function navItemUserCustomsCodeInformation() {
+    // 통관 번호 수정
+    changeView("navItemUserCustomsCodeInformation")
+    document.getElementById("userCustomsCodeInformation").style.display = "block"
+}
 export async function navItemSellerInformationView() {
     // 유저 판매자 정보 페이지 출력
     changeView("navItemSellerInformation")
@@ -502,6 +544,11 @@ export async function navItemDeleteUserInformationView() {
     // 유저 휴면 계정 전환 페이지 출력
     changeView("navItemDeleteUserInformation")
     document.getElementById("deleteUserInformation").style.display = "block"
+}
+
+export async function navItemUserEmail() {
+    changeView("navItemUserEmail")
+    document.getElementById("userEmailInformation").style.display = "block"
 }
 
 export function readURL(input) {
@@ -760,6 +807,9 @@ export async function setEventListener() {
     document.getElementById("navItemUserPhoneNumber").addEventListener("click", navItemUserPhoneNumberView)
     document.getElementById("navItemSellerInformation").addEventListener("click", navItemSellerInformationView)
     document.getElementById("navItemDeleteUserInformation").addEventListener("click", navItemDeleteUserInformationView)
+    document.getElementById("navItemUserEmail").addEventListener("click", navItemUserEmail)
+    document.getElementById("navItemUserCustomsCodeInformation").addEventListener("click", navItemUserCustomsCodeInformation)
+
 
     // 드랍 다운 메뉴
     const dropdownButton = document.querySelector(".dropdown-button");
@@ -789,7 +839,7 @@ export async function setEventListener() {
     // 프로필 정보 수정
     document.getElementById("profileSubmitButton").addEventListener("click", updateProfileInformation)
 
-    // 이메일, 비밀번호 변경
+    // 비밀번호 변경
     document.getElementById("userInformationSubmitButton").addEventListener("click", updateInformation)
 
     // 불러온 배송지 정보 숨기고, 새로운 배송지 작성하기

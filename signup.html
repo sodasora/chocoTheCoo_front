@@ -11,6 +11,23 @@
 <header></header>
 
 <body>
+    <div id="modal">
+        <div id="modal-header">
+            <span id="modal-message-box">
+                회원 정보를 입력해 주세요.
+            </span>
+            <div id="modal-close-button"></div>
+        </div>
+        <div id="modal-content-box">
+            <div id="modal-left-button"></div>
+            <div id="modal-image-box"></div>
+            <div id="modal-right-button"></div>
+        </div>
+        <div id="modal-page-box">
+            <span id="modal-page">0/8</span>
+        </div>
+    </div>
+
     <!-- <div id="titleContainer"></div> -->
     <a href="index.html">
         <div id="titleBox">
@@ -118,14 +135,27 @@
 
                                     </div>
                                     <div id="loginGuide" class="signup-item-one">
-                                        <a href="./login.html">
-                                            <p>
-                                                이미 초코더쿠 멤버이신가요?
-                                            </p>
-                                            <p>
-                                                로그인 하러 가기
-                                            </p>
-                                        </a>
+                                        <div class="social-login-box">
+                                            <a href="#">
+                                                <div id="kakaoBtn"></div>
+                                            </a>
+                                            <a href="#" style="margin-left: 7%; margin-right: 7%;">
+                                                <div id="naverBtn" style="display: none;"></div>
+                                            </a>
+                                            <a href="#">
+                                                <div id="googleBtn"></div>
+                                            </a>
+                                        </div>
+                                        <div id="loginBox">
+                                            <a href="./login.html">
+                                                <p>
+                                                    이미 초코더쿠 멤버이신가요?
+                                                </p>
+                                                <p>
+                                                    로그인 하러 가기
+                                                </p>
+                                            </a>
+                                        </div>
                                     </div>
                                 </form>
                                 <div>

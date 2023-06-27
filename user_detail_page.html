@@ -25,16 +25,22 @@
                     <span>회원 정보</span>
                 </div>
                 <div class="container-nav-item" id="navItemUserDetailInformation">
-                    <span>주소지 및 통관번호</span>
+                    <span>주소지</span>
                 </div>
                 <div class="container-nav-item" id="navItemUserPhoneNumber">
                     <span>연락처</span>
+                </div>
+                <div class="container-nav-item" id="navItemUserEmail">
+                    <span>이메일</span>
                 </div>
                 <div class="container-nav-item" id="navItemSellerInformation">
                     <span id="navSellerInformation">판매자 권한 신청</span>
                 </div>
                 <div class="container-nav-item" id="navItemDeleteUserInformation">
                     <span>회원 탈퇴</span>
+                </div>
+                <div class="container-nav-item" id="navItemUserCustomsCodeInformation">
+                    <span>통관번호</span>
                 </div>
             </div>
         </div>
@@ -139,11 +145,9 @@
                             <input class="address-input-item" type="text" id="postcode" placeholder="우편번호">
                             <input class="address-input-item" type="button" id="Postcode" value="우편번호 찾기"><br>
                             <input class="address-input-item" type="text" id="address" placeholder="주소"><br>
-                            <input class="address-input-item" type="text" id="detailAddress" placeholder="상세 주소"
-                                style="margin-bottom: 1rem;">
+                            <input class="address-input-item" type="text" id="detailAddress" placeholder="상세 주소">
                             <label class="detailInputLable">수령인</label>
                             <input class="address-input-item" type="text" id="recipient" placeholder="수령인">
-
                             <div id="wrap"
                                 style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
                                 <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
@@ -154,9 +158,6 @@
                         <button type="button" id="addressUpdateButton" style="display: none;">수정</button>
                         <button type="button" id="addressDeleteButton" style="display: none;">삭제</button>
                         <div id="addressMessageBox" style="display: none;"></div>
-                        <label class="detailInputLable">통관 번호</label>
-                        <input id="customsCodeSubmitInput" type="text">
-                        <button type="button" id="customsCodeSubmitButton">제출</button>
                     </div>
                 </div>
                 <!-- 회원 휴대폰 번호 정보 수정 -->
@@ -178,41 +179,13 @@
                                 placeholder="인증 번호를 입력해 주세요">
                         </div>
                     </div>
-                    <div class="input-itme-box">
+                    <div class="input-itme-box" style="margin-top: 2rem;">
                         <button type="button" id="getAuthNumber"> 핸드폰 인증 번호 발급 받기 </button>
                     </div>
-                    <div class="input-itme-box" style="display: none;" id="submit_auth_number_button_box">
+                    <div class="input-itme-box" id="submit_auth_number_button_box" style="display: none;">
                         <button type="button" id="submitPhoneNumber"> 핸드폰 인증 번호 제출 </button>
                     </div>
                     <div id="phoneMessageBox" style="display: none;">
-                    </div>
-
-                    <div class="input-itme-box" style="margin-top: 3%;" id="emailBox">
-                        <label class="input-text-items">
-                            이메일
-                        </label>
-                        <div class="phoneNumberBox">
-                            <input type="text" class="phone_number_input_items" id="email">
-                        </div>
-                    </div>
-
-                    <div class="input-itme-box" style="margin-top: 3%; display: none;" id="verificationCodeBox">
-                        <label class="input-text-items">
-                            인증 코드
-                        </label>
-                        <div class="phoneNumberBox">
-                            <input type="text" class="phone_number_input_items" id="verificationCode">
-                        </div>
-                    </div>
-                    <div class="input-itme-box">
-                        <button type="button" class="change-email-information-button" id="getEmailVerificationCode"> 이메일
-                            인증 번호 발급
-                        </button>
-                    </div>
-                    <div class="input-itme-box" style="display: none;" id="submitChangeEamilInformationBox">
-                        <button type="button" class="change-email-information-button" id="submitChangeEamilInformation">
-                            이메일 인증 번호 제출
-                        </button>
                     </div>
                 </div>
                 <!-- 회원 휴대폰 번호 정보 수정 끝 -->
@@ -299,8 +272,47 @@
                     </div>
                 </div>
                 <!-- 회원 탈퇴 끝 -->
-                <!-- userDetailView
-                    userDetailViewImageBox -->
+                <div id="userCustomsCodeInformation" style="display: none;" class="view-items">
+                    <label class="detailInputLable">통관 번호</label>
+                    <input id="customsCodeSubmitInput" type="text">
+                    <div id="customsCodeMessageBox" style="display: none;">
+
+                    </div>
+                    <button type="button" id="customsCodeSubmitButton">제출</button>
+                </div>
+                <div id="userEmailInformation" style="display: none;" class="view-items">
+                    <div class="input-itme-box" style="margin-top: 3%;" id="emailBox">
+                        <label class="input-text-items">
+                            이메일
+                        </label>
+                        <div class="phoneNumberBox">
+                            <input type="text" class="phone_number_input_items" id="email">
+                        </div>
+                    </div>
+                    <div class="input-itme-box" style="margin-top: 3%; display: none;" id="verificationCodeBox">
+                        <label class="input-text-items">
+                            인증 코드
+                        </label>
+                        <div class="phoneNumberBox">
+                            <input type="text" class="phone_number_input_items" id="verificationCode">
+                        </div>
+                    </div>
+                    <div id="emailMessageBox" style="display: none;">
+
+                    </div>
+
+                    <div class="input-itme-box">
+                        <button type="button" class="change-email-information-button" id="getEmailVerificationCode"> 이메일
+                            인증 번호 발급
+                        </button>
+                    </div>
+
+                    <div class="input-itme-box" id="submitChangeEamilInformationBox" style="display: none;">
+                        <button type="button" class="change-email-information-button" id="submitChangeEamilInformation">
+                            이메일 인증 번호 제출
+                        </button>
+                    </div>
+                </div>
                 <div id="userDetailView" class="view-items">
                     <div id="userDetailViewImageBox">
                     </div>

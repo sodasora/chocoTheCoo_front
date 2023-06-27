@@ -25,13 +25,16 @@ export async function goSellerPage() {
 
 export async function sellerFollow(user_id) {
     const response = await sellerFollowAPI(user_id);
+    const response_json = await response.json()
     if (response.status == 404) {
         alert("판매자 정보가 삭제되었거나, 로그인이 필요합니다.")
     } else if (response.status == 401) {
         alert("로그인이 필요합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else if (response.status == 400) {
+        alert(response_json.err)
     } else {
-        const response_json = await response.json()
+
         document.getElementById("followerCount").innerText = `follower : ${response_json.followings}`
         const follow_button = document.getElementById("seller-follow-button")
         response.status == 200 ? follow_button.innerText = "Follow" : follow_button.innerText = "Un Follow"
