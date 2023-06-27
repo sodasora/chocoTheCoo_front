@@ -1,4 +1,9 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, searchProductAPI, sameCategoryProductView, getProductslist, viewProductslist, getCategoryView, getProductListAPIView } from './api.js'
+import { BACK_BASE_URL, FRONT_BASE_URL, searchProductAPI, searchWhatAPI, sameCategoryProductView, getProductslist, viewProductslist, getCategoryView, getProductListAPIView } from './api.js'
+
+
+export async function goSearch(url) {
+    window.location.href = `${FRONT_BASE_URL}/index.html?url=${url}`;
+}
 
 export async function goEditReview(keyword) {
     window.location.href = `${FRONT_BASE_URL}/index.html?search=${keyword}`;
@@ -53,10 +58,48 @@ export async function showSearchKeywordProduct() {
     } else {
         getProductslist(products)
     }
-
-
 }
 
+export async function searchAnythingAPI(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const url = new URLSearchParams();
+
+    const categoryId = urlParams.get('category_id');
+    const categories = await getCategoryView();
+
+    const products = await searchProductAPI(keyword);
+    const product = products.results;
+
+    const search = document.getElementById("search");
+    const keyword = urlParams.get('search');
+
+    const ordering = document.getElementById("ordering")
+
+    // 카테고리 검색 카테고리 ID가 url에 있을때
+    if(categoryId){
+        categories.forEach(category => {
+
+            url += `category=${categoryId}`
+        });
+    }
+    // 검색창 입력어로 검색 : 키워드가 url에 있을때
+    else if(keyword) {
+        search.addEventListener("click", function () {
+            
+            url += `search=${keyword}`
+        })
+    }
+    // 정렬 : 정렬 규칙이 url에 있을 때 
+    else if(ordering){
+    ordering.addEventListener("click", function () {
+        
+        url += `ordering=${ordering}`
+        window.location.href = url
+    });
+    }
+
+    goSearch(url)
+}
 
 export async function setEventListener() {
     document.getElementById("search-btn").addEventListener("click", keywordSeachView)

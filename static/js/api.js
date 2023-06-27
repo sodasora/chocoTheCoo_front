@@ -1577,3 +1577,13 @@ export async function checkoutmyreview(product_id) {
 	});
 	return response
 }
+
+export async function searchWhatAPI(url) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${url}`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "GET",
+	});
+	return response.json();
+}
