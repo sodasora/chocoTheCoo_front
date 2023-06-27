@@ -347,8 +347,12 @@ async function paginationView_order(order) {
             window.location.reload()
         });
 
-        // 구매확정(6) 이후 수정 불가 | 프론트: 버튼제거, 백엔드: 권한막기
-        if (order[id].order_status.id == 6){
+        // 발송준비중(3) 이후 주문확인 버튼 숨기기 | 프론트: 버튼제거, 백엔드: 권한막기
+        if (order[id].order_status.id == 3 ){
+            btnOrder.style.display = 'none';
+        }
+        // 배송완료(5) 구매확정(6) 이후 수정 불가 | 프론트: 버튼제거, 백엔드: 권한막기
+        if (order[id].order_status.id == 5 || order[id].order_status.id == 6){
             btnOrder.style.display = 'none';
             btnShipping.style.display = 'none';
         }
@@ -511,7 +515,6 @@ async function paginationView_order(order) {
 
 
 // ↓상품 목록 가져오기 관련 코드↓ //
-
 const payload = localStorage.getItem("payload");
 const payload_parse = JSON.parse(payload);
 const user_id = payload_parse.user_id //로그인한 유저id
