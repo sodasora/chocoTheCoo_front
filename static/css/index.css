@@ -11,7 +11,12 @@
   font-weight: normal;
   font-style: normal;
 }
-
+@font-face {
+  font-family: 'TheJamsil5Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
 .img {
   border-radius: 20px;
 }
@@ -63,7 +68,7 @@ input {
 .right-side {
   position: fixed;
   left: 87%;
-  top: 45%;
+  top: 65%;
   transform: translate(-50%, -50%);
   font-size: 40px;
   font-family: '국립박물관문화재단클래식B';
@@ -71,6 +76,7 @@ input {
   border-radius: 1em;
   padding: 1em 0;
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.5);
+  width:20vw;
 }
 
 .section {
@@ -172,4 +178,19 @@ button {
 
 #next-buttons {
   margin-left: 10px;
+}
+
+#check-font {
+  font-family: 'TheJamsil5Bold';
+
+  font-size: 15px;
+}
+#check-title{
+  font-family: 'TheJamsil5Bold';
+  font-size: 25px;
+}
+.form-check-label {
+  font-family: 'TheJamsil5Bold';
+  font-size: 15px;
+  cursor: pointer;
 }

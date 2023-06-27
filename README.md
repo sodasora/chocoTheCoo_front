@@ -84,14 +84,14 @@ ChcoTheCoo supports your LOVE!!
 >* 공유되어선 안되는 민감한 정보를 환경 변수를 통해 관리 <br>
 
 > django-cors-headers = "^4.0.0" <br>
->* CORS 정책 관리, API 연결을 위해 채택 프brr>
+>* CORS 정책 관리, API 연결을 위해 채택 <br>
 
 > pillow = "^9.5.0" <br>
 >*이미지 처리 및 조작 기능을 제공명 <br
 >* 이미지 포맷 기능을 이용하여 이미지 필드 데이터 생성 <br>
 
 > pycryptodome = "^3.18.0" <br>
->* 보안 기능을 위해 다양한 암·복호화 기능 지원, 그중 AES 대칭키 알고리즘 챝 <br>
+>* 보안 기능을 위해 다양한 암·복호화 기능 지원, 그중 AES 대칭키 알고리즘 채택 <br>
 
 > django-environ = "^0.10.0" <br>
 >* 설정 값들을 표준화된 방식으로 가져오고 관리<br>
