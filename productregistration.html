@@ -26,27 +26,31 @@
             <div class="productBox">
 
                 <select class="form-select" id="category-select" aria-label="Default select example">
-                    <option selected>카테고리</option>
+                    <option selected>상품 카테고리</option>
                     <!-- 카테고리 불러오는 부분 -->
                 </select>
 
-                <div class="row mb-3">
-
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="name" placeholder="상품명">
+                <div class="row mb-3" id="registproduct">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">상품명</span>
+                        <input type="text" class="form-control"id="name" placeholder="상품 이름">>
                     </div>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="col-sm-10">
+                <div class="row mb-3" id="registproduct">
+                    <div class="input-group mb-3" >
+                        <span class="input-group-text" id="basic-addon1">상품 가격</span>
                         <input type="number" step="1000" min="0" max="1000000" class="form-control" id="price" placeholder="상품 가격">
                     </div>
                 </div>
 
                 <div class="row mb-3">
 
-                    <div class="col-sm-10">
+                    <div class="col-sm-10" id="registproduct">
+                        <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">상품 수량</span>
                         <input type="number" step="10" min="0" max="1000000" class="form-control" id="amount" placeholder="상품 수량">
+                        </div>    
                     </div>
                 </div>
 

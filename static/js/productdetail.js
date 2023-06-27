@@ -53,6 +53,7 @@ export async function setSellerInformation(information) {
     follow_button.addEventListener("click", function () {
         sellerFollow(information.user)
     });
+    
 }
 
 
