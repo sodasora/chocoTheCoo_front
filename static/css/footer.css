@@ -15,8 +15,6 @@
 /* **********푸터시작*********** */
 footer {
     display: block;
-    /* left: 0; */
-    /* bottom: 0; */
     width: 100%;
     height: fit-content;
     background-color: rgba(185, 147, 126, 0.842);
@@ -30,10 +28,8 @@ li {
 }
 
 .footer-wrapper-desktop .inner {
-    /* position: relative; */
-    /* display: table; */
-    /* margin: 0 auto; */
-    padding-top: 10px;
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 
 .footer-wrapper-desktop .inner div img {
@@ -41,14 +37,6 @@ li {
     display: table-cell;
     width: 300px;
     vertical-align: top;
-}
-
-@media (min-width: 1080px) {
-    .footer-region {
-        /* display: table-cell; */
-        /* min-width: 570px; */
-        vertical-align: top;
-    }
 }
 
 .footer-region-columns {
@@ -70,15 +58,6 @@ li {
 }
 
 /* **********푸터끝*********** */
-
-
-@media (max-width: 850px) {
-    .footer-region {
-        display: table-cell;
-        min-width: 570px;
-        /* vertical-align: top; */
-    }
-}
 
 .team-member-name {
     margin-right: 20px;
@@ -128,7 +107,6 @@ li {
 }
 
 @media screen and (max-width: 700px) {
-    /* .footer-left {} */
 
     .footer-right {
         display: none;

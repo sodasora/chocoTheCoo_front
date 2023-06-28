@@ -19,6 +19,10 @@
   font-style: normal;
 }
 
+.section {
+  background-color: #C4A492!important;
+}
+
 body {
   background-color: #C4A492;
 }
@@ -112,6 +116,10 @@ input {
   width: auto;
   font-size: 1vw;
   overflow: auto;
+}
+
+.card::-webkit-scrollbar {
+  display: none;
 }
 
 .carddesc {
