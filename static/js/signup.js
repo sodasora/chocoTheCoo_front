@@ -175,14 +175,41 @@ export async function setEventListener() {
     document.getElementById("kakaoBtn").addEventListener("click", kakaoLoginAPI)
     document.getElementById("naverBtn").addEventListener("click", naverLoginAPI)
     document.getElementById("googleBtn").addEventListener("click", googleLoginAPI)
+
     document.getElementById("modal-close-button").addEventListener("click", closeModal)
     document.getElementById("modal-left-button").addEventListener("click", modalLeftButton)
     document.getElementById("modal-right-button").addEventListener("click", modalRightButton)
+    document.getElementById('modal-skip-today').addEventListener('click', hideModalForToday)
 }
 
+
+function getTodayString() {
+    // 오늘 날짜 가져오기
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+function checkSkipToday() {
+    const skipToday = localStorage.getItem('signup-skip-today');
+    const today = getTodayString();
+    if (skipToday === today) {
+        closeModal();
+    }
+}
+
+function hideModalForToday() {
+    closeModal();
+
+    const today = getTodayString();
+    localStorage.setItem('signup-skip-today', today);
+}
 window.onload = async () => {
     injectFooter()
     setEventListener()
+    checkSkipToday()
     const payload = localStorage.getItem("payload");
     const payload_parse = JSON.parse(payload)
     if (payload_parse != null) {

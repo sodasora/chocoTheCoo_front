@@ -409,6 +409,7 @@ button {
     background-image: url("/static/images/google.png");
 }
 
+
 #modal {
     height: 90%;
     width: 90%;
@@ -433,8 +434,8 @@ button {
 
 #modal-page-box {
     width: 100%;
-    height: 10rem;
 }
+
 
 #modal-page {
     color: white;
@@ -502,5 +503,16 @@ button {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+#modal-control-box {
+    display: flex;
+}
+
+#modal-skip-today {
+    margin-left: auto;
+    font-size: 3rem;
+    color: white;
     cursor: pointer;
 }

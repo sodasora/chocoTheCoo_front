@@ -842,7 +842,7 @@ export async function setEventListener() {
     document.getElementById("modal-close-button").addEventListener("click", closeModal)
     document.getElementById("modal-left-button").addEventListener("click", modalLeftButton)
     document.getElementById("modal-right-button").addEventListener("click", modalRightButton)
-
+    document.getElementById('modal-skip-today').addEventListener('click', hideModalForToday);
 
     // 드랍 다운 메뉴
     const dropdownButton = document.querySelector(".dropdown-button");
@@ -993,9 +993,34 @@ export async function modalRightButton() {
     changeModal(modal_image_index)
 }
 
+function getTodayString() {
+    // 오늘 날짜 가져오기
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+function checkSkipToday() {
+    const skipToday = localStorage.getItem('user-detail-modal-skip-today');
+    const today = getTodayString();
+    if (skipToday === today) {
+        closeModal();
+    }
+}
+
+function hideModalForToday() {
+    closeModal();
+
+    const today = getTodayString();
+    localStorage.setItem('user-detail-modal-skip-today', today);
+}
+
 
 window.onload = async () => {
     setEventListener()
+    checkSkipToday()
     const payload_parse = await getPayloadParse()
     if (payload_parse == null) {
         window.location.replace(`${FRONT_BASE_URL}/index.html`)
@@ -1003,17 +1028,3 @@ window.onload = async () => {
         getUserInformation()
     }
 }
-
-
-// 
-
-
-
-
-
-
-let EI = 0
-
-
-// EI 
-

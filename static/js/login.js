@@ -164,6 +164,30 @@ export async function modalRightButton() {
     changeModal(modal_image_index)
 }
 
+function getTodayString() {
+    // 오늘 날짜 가져오기
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+function checkSkipToday() {
+    const skipToday = localStorage.getItem('login-modal-skip-today');
+    const today = getTodayString();
+    if (skipToday === today) {
+        closeModal();
+    }
+}
+
+function hideModalForToday() {
+    closeModal();
+
+    const today = getTodayString();
+    localStorage.setItem('login-modal-skip-today', today);
+}
+
 export async function setEventListener() {
     // html 요소 이벤트 리스너 추가
     document.getElementById("loginButton").addEventListener("click", handleLogin)
@@ -186,6 +210,8 @@ export async function setEventListener() {
     document.getElementById("modal-close-button").addEventListener("click", closeModal)
     document.getElementById("modal-left-button").addEventListener("click", modalLeftButton)
     document.getElementById("modal-right-button").addEventListener("click", modalRightButton)
+    document.getElementById("modal-skip-today").addEventListener("click", hideModalForToday)
+    document.getElementById('modal-skip-today').addEventListener('click', hideModalForToday);
 
 }
 
@@ -199,6 +225,7 @@ window.onload = async () => {
     // 로그인 안한 사용자만 접근 가능
     setEventListener();
     // injectFooter();
+    checkSkipToday()
     const payload = localStorage.getItem("payload");
     const payload_parse = JSON.parse(payload)
     if (payload_parse != null) {
