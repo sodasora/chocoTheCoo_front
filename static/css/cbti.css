@@ -1,6 +1,6 @@
 .section2{
     text-align: center;
-    height: 40vw;
+    height: 60vw;
     display: flex;
     justify-content: center;
     background-color:#FFEBDB;
@@ -42,16 +42,15 @@
     border-radius: 1vw;
     display: flex;
     justify-content: center;
-    margin-top: 5vw;
-    height: 30vw;
-    width: 45vw;
-    font-size: 20px;
+    margin-top: 2vw;
+    height: 45vw;
+    width: 70vw;
+    font-size: 1.5vw;
 }
 
 #label-title{
-    padding-top: 10vw;
+    padding-top: 6vw;
     margin-bottom: 2vw;
-    font-size: 25px;
 }
 
 #CBTI-result-btn{
@@ -62,8 +61,8 @@
 }
 
 #cbti-main{
-    height: 30vw;
-    width: 45vw;
+    height: 45vw;
+    width: 70vw;
 }
 
 /* 모달창 */
