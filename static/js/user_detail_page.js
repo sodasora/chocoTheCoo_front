@@ -845,6 +845,7 @@ export async function salesActivityApproval(seller_id) {
 
 
 async function admin_view() {
+    document.getElementById("adminContainer").style.display = "flex"
     document.getElementById("container").style.display = "none"
     document.getElementById("modal").style.display = "none"
     const response = await getSellerInformationListAPI()

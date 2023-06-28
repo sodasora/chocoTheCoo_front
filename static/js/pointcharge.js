@@ -94,24 +94,29 @@ async function requestPay(price) {
 }
 
 window.onload = async function () {
-    const pay100 = document.getElementById("100")
-    pay100.addEventListener("click", payment100)
+    if (payload == null) {
+        alert("로그인이 필요 합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else {
+        const pay100 = document.getElementById("100")
+        pay100.addEventListener("click", payment100)
 
-    const pay3000 = document.getElementById("3000")
-    pay3000.addEventListener("click", payment3000)
+        const pay3000 = document.getElementById("3000")
+        pay3000.addEventListener("click", payment3000)
 
-    const pay5000 = document.getElementById("5000")
-    pay5000.addEventListener("click", payment5000)
+        const pay5000 = document.getElementById("5000")
+        pay5000.addEventListener("click", payment5000)
 
-    const pay10000 = document.getElementById("10000")
-    pay10000.addEventListener("click", payment10000)
+        const pay10000 = document.getElementById("10000")
+        pay10000.addEventListener("click", payment10000)
 
-    const pay30000 = document.getElementById("30000")
-    pay30000.addEventListener("click", payment30000)
+        const pay30000 = document.getElementById("30000")
+        pay30000.addEventListener("click", payment30000)
 
-    const pay50000 = document.getElementById("50000")
-    pay50000.addEventListener("click", payment50000)
+        const pay50000 = document.getElementById("50000")
+        pay50000.addEventListener("click", payment50000)
 
-    const pay100000 = document.getElementById("100000")
-    pay100000.addEventListener("click", payment100000)
+        const pay100000 = document.getElementById("100000")
+        pay100000.addEventListener("click", payment100000)
+    }
 }

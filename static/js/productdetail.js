@@ -56,7 +56,7 @@ export async function setSellerInformation(information) {
     follow_button.addEventListener("click", function () {
         sellerFollow(information.user)
     });
-    
+
 }
 
 
@@ -468,6 +468,11 @@ export async function setEventListener() {
 
 
 window.onload = async function () {
-    viewProductDetail()
-    setEventListener()
+    if (productId == null) {
+        alert("상품 정보를 찾을 수 없습니다.")
+        window.location.replace(`${FRONT_BASE_URL}/index.html`)
+    } else {
+        viewProductDetail()
+        setEventListener()
+    }
 }
