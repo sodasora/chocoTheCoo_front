@@ -161,6 +161,9 @@ export async function setEventListener() {
     document.getElementById("go-storepage").addEventListener("click", function () {
         window.location.href = "sellerpage.html";
     });
+    document.getElementById("go-CBTI").addEventListener("click", function() {
+        window.location.href = "cbti.html";
+    });
 
 }
 

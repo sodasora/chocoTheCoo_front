@@ -37,19 +37,19 @@
 
 #carouselExampleControlsNoTouching {
     font-family: 'TheJamsil5Bold';
-    background-color: #6E4538;
-    color: rgb(255, 183, 209);
+    background-color: #FFB3C0;
+    color: #522F18;
     border-radius: 1vw;
     display: flex;
     justify-content: center;
     margin-top: 5vw;
-    padding-top: 10vw;
     height: 30vw;
     width: 45vw;
     font-size: 20px;
 }
 
 #label-title{
+    padding-top: 10vw;
     margin-bottom: 2vw;
     font-size: 25px;
 }
@@ -59,4 +59,18 @@
     color:#522F18;
     border-color: #522F18;
     margin-top: 3vw;
+}
+
+#cbti-main{
+    height: 30vw;
+    width: 45vw;
+}
+
+/* 모달창 */
+#staticBackdrop{
+    color:#522F18;
+}
+#modal-button{
+    background-color:  rgb(255, 183, 209);
+    color:#522F18;
 }
