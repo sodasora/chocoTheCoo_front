@@ -736,10 +736,10 @@ export async function writeReviewAPI(product_id, formdata) {
 	} else if (response.status == 406) {
 		alert("해당 상품 리뷰를 이미 작성했습니다.")
 		window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`;
-	} else if (response.status == 404){
+	} else if (response.status == 404) {
 		alert("판매자가 삭제한 상품입니다 ㅠㅠ")
 		window.location.href = `${FRONT_BASE_URL}/mypage.html`
-	} else if (response.status ==400) {
+	} else if (response.status == 400) {
 		alert("구매 이력이 없습니다")
 		window.location.href = `${FRONT_BASE_URL}/mypage.html`
 	} else {
@@ -1260,6 +1260,9 @@ export async function viewProductslist(product) {
 			newCard.setAttribute("class", "card");
 			newCard.setAttribute("id", e.id);
 
+			const newImageCard = document.createElement("div");
+			newImageCard.setAttribute("class", "image-card")
+
 			newCard.onclick = function () {
 				productDetail(e.id);
 			};
@@ -1276,7 +1279,8 @@ export async function viewProductslist(product) {
 				img.setAttribute("src", '/static/images/기본이미지.gif')
 			}
 
-			newCard.appendChild(img);
+			newImageCard.appendChild(img);
+			newCard.appendChild(newImageCard);
 
 			const newCardBody = document.createElement("div");
 			newCardBody.setAttribute("class", "card-body");
@@ -1287,25 +1291,29 @@ export async function viewProductslist(product) {
 			newCardTitle.innerText = e.name;
 			newCardBody.appendChild(newCardTitle);
 
+			const newCarddesc = document.createElement("div")
+			newCarddesc.setAttribute("class", "carddesc")
+
 			const newCardStar = document.createElement("div");
 			newCardStar.setAttribute("class", "card-star")
 
-			if (e.stars == null) {
+			if (e.stars == 0) {
 				newCardStar.innerText = "아직 리뷰별점이 없습니다."
 			} else {
 				newCardStar.innerText = "⭐" + e.stars + "점"
 			}
-			newCard.appendChild(newCardStar);
+			newCarddesc.appendChild(newCardStar);
 
 			const newCardText = document.createElement("p");
 			newCardText.setAttribute("class", "card-text");
 			newCardText.innerText = "상품가격 : " + e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
-			newCard.appendChild(newCardText)
+			newCarddesc.appendChild(newCardText)
 
 			const newCardFooter = document.createElement("p");
 			newCardFooter.setAttribute("class", "card-footer");
 			newCardFooter.innerText = "상품수량 : " + e.amount + "개";
-			newCard.appendChild(newCardFooter)
+			newCarddesc.appendChild(newCardFooter)
+			newCard.appendChild(newCarddesc)
 			newCol.appendChild(newCard);
 			list.appendChild(newCol);
 		})
