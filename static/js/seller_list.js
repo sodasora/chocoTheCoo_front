@@ -1,5 +1,7 @@
-import { changebillstatus, getAllProductListAPIView, getSellerOrderListView, getProductDetailAPIView } from './api.js';
+import { FRONT_BASE_URL, changebillstatus, getAllProductListAPIView, getSellerOrderListView, getProductDetailAPIView } from './api.js';
 import { productDetail } from './sellerpage.js';
+
+
 
 // 상품목록 페이지네이션
 async function paginationView_product(product) {
@@ -240,7 +242,7 @@ async function paginationView_order(order) {
         //                     </div>
         //                     </div>
         //                     </div>`
-        
+
         const modalDialog = document.createElement('div');
         modalDialog.classList.add('modal-dialog');
 
@@ -334,7 +336,7 @@ async function paginationView_order(order) {
         btnOrder.textContent = '주문확인';
         // 상태: 주문확인중(2) → 발송준비중(3)
         btnOrder.addEventListener('click', () => {
-            changebillstatus(order[id].id,3)
+            changebillstatus(order[id].id, 3)
             window.location.reload()
         });
 
@@ -343,16 +345,16 @@ async function paginationView_order(order) {
         btnShipping.textContent = '발송완료';
         // 상태: 발송준비중(3) → (발송완료(4)) → 배송완료(5) ∵배송과정생략
         btnShipping.addEventListener('click', () => {
-            changebillstatus(order[id].id,5)
+            changebillstatus(order[id].id, 5)
             window.location.reload()
         });
 
         // 발송준비중(3) 이후 주문확인 버튼 숨기기 | 프론트: 버튼제거, 백엔드: 권한막기
-        if (order[id].order_status.id == 3 ){
+        if (order[id].order_status.id == 3) {
             btnOrder.style.display = 'none';
         }
         // 배송완료(5) 구매확정(6) 이후 수정 불가 | 프론트: 버튼제거, 백엔드: 권한막기
-        if (order[id].order_status.id == 5 || order[id].order_status.id == 6){
+        if (order[id].order_status.id == 5 || order[id].order_status.id == 6) {
             btnOrder.style.display = 'none';
             btnShipping.style.display = 'none';
         }
@@ -517,6 +519,12 @@ async function paginationView_order(order) {
 // ↓상품 목록 가져오기 관련 코드↓ //
 const payload = localStorage.getItem("payload");
 const payload_parse = JSON.parse(payload);
+
+if (payload_parse == null) {
+    alert("로그인이 필요 합니다.")
+    window.location.replace(`${FRONT_BASE_URL}/login.html`)
+}
+
 const user_id = payload_parse.user_id //로그인한 유저id
 
 

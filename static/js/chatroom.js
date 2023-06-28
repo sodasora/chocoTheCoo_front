@@ -1,9 +1,21 @@
 import {
-    access_token, getChatLogAPI, getChatroominfo, payload, BACK_BASE_URL
+    access_token, getChatLogAPI, getChatroominfo, payload, BACK_BASE_URL, FRONT_BASE_URL
 } from "./api.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const roomId = urlParams.get('room');
+
+
+if (payload == null) {
+    alert("로그인이 필요 합니다.")
+    window.location.replace(`${FRONT_BASE_URL}/login.html`)
+} else if (roomId == null) {
+    alert("채팅방 정보를 찾을 수 없습니다.")
+    window.location.replace(`${FRONT_BASE_URL}/index.html`)
+}
+
+
+
 
 const roominfo = await getChatroominfo(roomId)
 const roomname = document.getElementById("chatname")
@@ -13,7 +25,6 @@ const message_list = document.getElementById("chat_messages")
 
 async function get_chat_log() {
     const chatlog = await getChatLogAPI(roomId);
-    console.log(chatlog)
 
     chatlog.forEach(e => {
         const element = document.createElement("div");

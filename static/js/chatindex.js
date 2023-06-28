@@ -166,6 +166,12 @@ async function deletechat(id) {
     }
 }
 
+export async function create_chat_room() {
+    if (payload == null) {
+        alert("로그인이 필요 합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    }
+}
 
 window.onload = async function () {
     const inputElement = document.querySelector('#room-name');
@@ -194,4 +200,5 @@ window.onload = async function () {
 
     const button = document.getElementById("chatbutton")
     button.addEventListener("click", makechat)
+    document.getElementById("create-chat-room-button").addEventListener("click", create_chat_room)
 }

@@ -763,23 +763,28 @@ export async function getMyFollowList(seller_information) {
 
 
 window.onload = async function () {
-    buildCalendar();
-    document.getElementById("prevCalendar").addEventListener("click", prevCalendar)
-    document.getElementById("nextCalendar").addEventListener("click", nextCalendar)
-    getToday();
-    document.getElementById("Attendance").addEventListener("click", attendancePoint);
-    profile();
-    const user_id = payload.user_id
-    const profile_data = await getUserProfileAPIView(user_id)
-    const wish = profile_data["product_wish_list"]
-    //console.log(wish)
-    if (wish == "") {
-        const wish_box = document.querySelector(".my-wish-none")
-        wish_box.innerText = "찜한 상품이 없습니다."
+    if (payload == null) {
+        alert("로그인이 필요 합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else {
-        pagination_wish(wish);
+        buildCalendar();
+        document.getElementById("prevCalendar").addEventListener("click", prevCalendar)
+        document.getElementById("nextCalendar").addEventListener("click", nextCalendar)
+        getToday();
+        document.getElementById("Attendance").addEventListener("click", attendancePoint);
+        profile();
+        const user_id = payload.user_id
+        const profile_data = await getUserProfileAPIView(user_id)
+        const wish = profile_data["product_wish_list"]
+        //console.log(wish)
+        if (wish == "") {
+            const wish_box = document.querySelector(".my-wish-none")
+            wish_box.innerText = "찜한 상품이 없습니다."
+        } else {
+            pagination_wish(wish);
+        }
+        subscription_info();
+        setEventListener();
+        await getMyFollowList(profile_data.seller_information)
     }
-    subscription_info();
-    setEventListener();
-    await getMyFollowList(profile_data.seller_information)
 }  
