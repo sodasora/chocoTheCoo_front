@@ -1,12 +1,11 @@
 import { BACK_BASE_URL, FRONT_BASE_URL, searchProductAPI, searchWhatAPI, sameCategoryProductView, getProductslist, viewProductslist, getCategoryView, getProductListAPIView } from './api.js'
 
-
 export async function goSearch(url) {
-    window.location.href = `${FRONT_BASE_URL}/index.html?url=${url}`;
+    window.location.href = `${FRONT_BASE_URL}/mobile-index.html?url=${url}`;
 }
 
 export async function goEditReview(keyword) {
-    window.location.href = `${FRONT_BASE_URL}/index.html?search=${keyword}`;
+    window.location.href = `${FRONT_BASE_URL}/mobile-index.html?search=${keyword}`;
 }
 
 export async function categoryview() {
@@ -18,7 +17,7 @@ export async function categoryview() {
     categories.forEach(category => {
         const categoryItem = document.createElement("a");
         categoryItem.setAttribute("id", `${category.id}`);
-        categoryItem.setAttribute("href", `index.html?category_id=${category.id}`);
+        categoryItem.setAttribute("href", `mobile-index.html?category_id=${category.id}`);
         categoryItem.innerText = `🍫${category.name}\n`
         categoryBox.appendChild(categoryItem);
         categorySelect.appendChild(categoryBox);
@@ -30,6 +29,7 @@ export async function keywordSeachView() {
     const keyword = answer.value;
     goEditReview(keyword)
 }
+
 export async function showSameCategory() {
     const urlParams = new URLSearchParams(window.location.search);
     const categoryId = urlParams.get('category_id');
@@ -102,66 +102,6 @@ export async function searchAnythingAPI() {
 
 export async function setEventListener() {
     document.getElementById("search-btn").addEventListener("click", keywordSeachView);
-    // 구매자 체크리스트    
-    // 체크리스트 출석체크
-    document.getElementById("go-mypage").addEventListener("click", function () {
-        window.location.href = "mypage.html";
-    });
-    // 체크리스트 포인트 충전
-    document.getElementById("go-mypoint").addEventListener("click", function () {
-        window.location.href = "pointcharge.html";
-    });
-    // 체크리스트 구독
-    document.getElementById("go-subscribe").addEventListener("click", function () {
-        window.location.href = "subscriptioninfo.html";
-    });
-    // 체크리스트 채팅
-    document.getElementById("go-chat").addEventListener("click", function () {
-        window.location.href = "chatindex.html";
-    });
-    // 체크리스트 결제
-    document.getElementById("go-cart").addEventListener("click", function () {
-        window.location.href = "cart.html";
-    });
-    // 체크리스트 구매내역 확인
-    document.getElementById("go-bill").addEventListener("click", function () {
-        window.location.href = "bill.html";
-    });
-    // 체크리스트 
-    document.getElementById("go-bill").addEventListener("click", function () {
-        window.location.href = "bill.html";
-    });
-
-    // 판매자 체크리스트
-    // 체크리스트 판매자 권한 신청
-    document.getElementById("go-seller").addEventListener("click", function () {
-        window.location.href = "seller.html";
-    });
-    // 체크리스트 판매자 상품 등록
-    document.getElementById("go-addproduct").addEventListener("click", function () {
-        window.location.href = "productregistration.html";
-    });
-    // 체크리스트 product-list체크
-    document.getElementById("go-productlist").addEventListener("click", function () {
-        window.location.href = "seller_productlist.html";
-    });
-    // 체크리스트 order-list체크
-    document.getElementById("go-orderlist").addEventListener("click", function () {
-        window.location.href = "seller_orderlist.html";
-    });
-    // 체크리스트 배송상태 체크
-    document.getElementById("go-statistics").addEventListener("click", function () {
-        window.location.href = "seller_orderlist.html";
-    });
-    // 체크리스트 판매자 statistics 체크
-    document.getElementById("go-statistics").addEventListener("click", function () {
-        window.location.href = "seller.html";
-    });
-    // 체크리스트 order-list체크
-    document.getElementById("go-storepage").addEventListener("click", function () {
-        window.location.href = "sellerpage.html";
-    });
-
 }
 
 window.onload = async function () {
