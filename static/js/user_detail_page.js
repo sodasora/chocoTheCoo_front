@@ -33,6 +33,12 @@ import {
     getEmailVerificationCodeAPI,
     // 이메일 정보 수정
     submitChangeEamilInformationAPI,
+    // 관리자 권한으로 판매자 정보 불러오기
+    getSellerInformationListAPI,
+    // 관리자 권한으로 판매 활동 거절
+    refusalOfSalesActivityAPI,
+    // 관리자 권한으로 판매 활동 승인
+    salesActivityApprovalAPI
 } from './api.js'
 import { handleLogout } from './loader.js'
 
@@ -797,37 +803,169 @@ async function getSellerInformation(response_json) {
 }
 
 
+export async function refusalOfSalesActivity(seller_id) {
+    const message = document.getElementById(`adminMessage_${seller_id}`).value
+    const information = {
+        seller_id: seller_id,
+        msg: message,
+    }
+    const response = await refusalOfSalesActivityAPI(information)
+    console.log(response)
+    if (response.status == 204) {
+        alert("거절 하셨습니다.")
+        location.reload();
+    } else if (response.status == 404) {
+        alert("판매자 정보를 찾을 수 없습니다.")
+    } else if (response.status == 401) {
+        alert("로그인이 필요 합니다.")
+    } else if (response.status == 410) {
+        alert("판매자 정보가 없습니다.")
+        location.reload();
+    } else if (response.status == 400) {
+        alert("권한이 없습니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    }
+
+}
+
+export async function salesActivityApproval(seller_id) {
+    const response = await salesActivityApprovalAPI(seller_id)
+    if (response.status == 200) {
+        alert("승인 되었습니다.")
+        location.reload();
+    } else if (response.status == 404) {
+        alert("판매자 정보를 찾을 수 없습니다.")
+    } else if (response.status == 401) {
+        alert("로그인이 필요 합니다.")
+    } else if (response.status == 400) {
+        alert("권한이 없습니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    }
+}
+
+
+async function admin_view() {
+    document.getElementById("container").style.display = "none"
+    document.getElementById("modal").style.display = "none"
+    const response = await getSellerInformationListAPI()
+    if (response.status == 200) {
+        const response_json = await response.json()
+        const adminContainer = document.getElementById("adminContainer")
+        await response_json.forEach((element) => {
+            const company_img = element.company_img == null ? "/static/images/store.gif" : element.company_img
+            adminContainer.innerHTML += `
+            <div class="seller-box">
+                <div class="seller-image-box" style="background-image: url(${company_img});">
+                </div>
+                <div class="seller-information-box">
+                    <div class="seller-left-box">
+                        <div class="seller-content-box">
+                            <div class="seller-label">상호 명</div>
+                            <div class="seller-content">${element.company_name}
+                            </div>
+                        </div>
+                        <div class="seller-content-box">
+                            <div class="seller-label">대표자 성함</div>
+                            <div class="seller-content">${element.business_owner_name}
+                            </div>
+                        </div>
+                        <div class="seller-content-box">
+                            <div class="seller-label">업체 연락처</div>
+                            <div class="seller-content">${element.contact_number}
+                            </div>
+                        </div>
+                        <div class="seller-content-box">
+                            <div class="seller-label">사업자 등록 번호</div>
+                            <div class="seller-content">${element.business_number}
+                            </div>
+                        </div>
+                        <div class="seller-content-box">
+                            <div class="seller-label">은행 명</div>
+                            <div class="seller-content">${element.bank_name}
+                            </div>
+                        </div>
+                        <div class="seller-content-box">
+                            <div class="seller-label">계좌 번호</div>
+                            <div class="seller-content">${element.account_number}
+                            </div>
+                        </div>
+                        <div class="seller-content-box">
+                            <div class="seller-label">예금주</div>
+                            <div class="seller-content">${element.account_holder}
+                            </div>
+                        </div>
+                        <div class="seller-content-box">
+                            <div class="seller-label">신청일</div>
+                            <div class="seller-content">${element.created_at}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="seller-right-box">
+                        <div class="seller-right-items">
+                            <div class="reject-button seller-control-button" id="approve_${element.user}">승인</div>
+                        </div>
+                        <div class="seller-right-items">
+
+                            <div class="approve-button seller-control-button" id="reject_${element.user}">거절</div>
+                        </div>
+                        <div class="seller-right-items admin-text">
+                            <label class="admin-label">거절 사유</label>
+                            <input class="admin-input" id="adminMessage_${element.user}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+    `
+            document.getElementById(`reject_${element.user}`).addEventListener("click", function () {
+                refusalOfSalesActivity(element.user)
+            });
+            document.getElementById(`approve_${element.user}`).addEventListener("click", function () {
+                salesActivityApproval(element.user)
+            });
+
+
+        });
+
+    } else {
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    }
+}
+
 
 async function getUserInformation() {
     // 사용자의 모든 정보 불러오기
     const response = await getUserInformationAPI()
     const response_json = await response.json()
 
-    if (response_json.phone_number == null) {
-
-
-        document.getElementById("cellPhoneNumberRegistered").style.display = "none"
+    if (response_json.is_admin == true) {
+        admin_view()
     } else {
-        document.getElementById("guideContainer").style.display = "none"
-    }
+        if (response_json.phone_number == null) {
+
+
+            document.getElementById("cellPhoneNumberRegistered").style.display = "none"
+        } else {
+            document.getElementById("guideContainer").style.display = "none"
+        }
 
 
 
-    // 사용자의 상세 정보 input value 조정
-    getUserDetailInformation(response_json)
+        // 사용자의 상세 정보 input value 조정
+        getUserDetailInformation(response_json)
 
-    // 주소지 및 통관번호 input value, drop down item value 조정
-    DeliveryInformation(response_json)
+        // 주소지 및 통관번호 input value, drop down item value 조정
+        DeliveryInformation(response_json)
 
-    // 판매자 정보 불러오기 및 view 조정
-    getSellerInformation(response_json)
+        // 판매자 정보 불러오기 및 view 조정
+        getSellerInformation(response_json)
 
-    if (response_json.login_type != "normal") {
-        // 소셜 로그인 계정일 경우
-        document.getElementById("navItemUserInformation").style.display = "none"
-    }
-    if (response_json.phone_number != null) {
-        document.getElementById("phoneNum").value = response_json.phone_number
+        if (response_json.login_type != "normal") {
+            // 소셜 로그인 계정일 경우
+            document.getElementById("navItemUserInformation").style.display = "none"
+        }
+        if (response_json.phone_number != null) {
+            document.getElementById("phoneNum").value = response_json.phone_number
+        }
     }
 }
 

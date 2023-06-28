@@ -1635,3 +1635,42 @@ export async function searchWhatAPI(url) {
 export const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 export const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
+
+export async function getSellerInformationListAPI() {
+	// 관리자 권한으로 판매 승인 대기 내역 가져오기
+	const response = await fetch(`${BACK_BASE_URL}/api/users/get/seller/list/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "GET",
+	});
+	return response
+}
+
+export async function refusalOfSalesActivityAPI(information) {
+	// 관리자 권한으로 판매 활동 거절
+	console.log(information)
+	console.log(information.seller_id)
+	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/permissions/${information.seller_id}/`, {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		body: JSON.stringify({
+			msg: information.msg
+		})
+	});
+	return response
+}
+export async function salesActivityApprovalAPI(seller_id) {
+	// 관리자 권한으로 판매 활동 승인
+
+	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/permissions/${seller_id}/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "PATCH",
+	});
+	return response
+}
