@@ -193,7 +193,7 @@ input {
 
 
 #container {
-    margin-top: 10rem;
+    margin-top: 25em !important;
     height: calc(130vh - 150px);
     width: 100%;
     display: flex;
@@ -499,6 +499,13 @@ input {
     margin-top: 5rem;
     font-size: 3rem;
     font-weight: bold;
+    display: flex;
+    justify-content: center;
+}
+
+.email-label {
+    display: flex;
+    justify-content: center;
 }
 
 #customsCodeSubmitInput {
