@@ -20,6 +20,8 @@ footer {
     width: 100%;
     height: fit-content;
     background-color: rgba(185, 147, 126, 0.842);
+    color: #522F18;
+    font-family: 'S-CoreDream-3Light';
 }
 
 li {
@@ -28,14 +30,13 @@ li {
 }
 
 .footer-wrapper-desktop .inner {
-    position: relative;
-    display: table;
-    width: 60%;
-    margin: 0 auto;
+    /* position: relative; */
+    /* display: table; */
+    /* margin: 0 auto; */
     padding-top: 10px;
 }
 
-.footer-wrapper-desktop .inner h1 img {
+.footer-wrapper-desktop .inner div img {
     /* 로고 */
     display: table-cell;
     width: 300px;
@@ -44,16 +45,18 @@ li {
 
 @media (min-width: 1080px) {
     .footer-region {
-        display: table-cell;
-        min-width: 570px;
+        /* display: table-cell; */
+        /* min-width: 570px; */
         vertical-align: top;
     }
 }
 
 .footer-region-columns {
     /* 푸터 카테고리 */
-    display: table;
+    display: flex;
     width: 100%;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .footer-region-columns .column {
@@ -62,7 +65,80 @@ li {
 }
 
 .github>img {
-    height: 25px;
+    width: 25px !important;
+    height: 25px !important;
 }
 
 /* **********푸터끝*********** */
+
+
+@media (max-width: 850px) {
+    .footer-region {
+        display: table-cell;
+        min-width: 570px;
+        /* vertical-align: top; */
+    }
+}
+
+.team-member-name {
+    margin-right: 20px;
+}
+
+.footer-left {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.footer-right {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-items {
+    margin: 1em;
+}
+
+.right-box-text {
+    height: 25px !important;
+    display: flex;
+    font-size: 1.3em;
+}
+
+.icons {
+    display: flex;
+}
+
+@media screen and (max-width: 1300px) {
+    .footer-left {
+        flex-direction: column;
+    }
+
+    .footer-right {
+        flex-direction: column;
+        align-items: start;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    /* .footer-left {} */
+
+    .footer-right {
+        display: none;
+    }
+
+    #footerLogo {
+        width: 15em;
+    }
+
+    .footer-items {
+        margin: 0;
+    }
+}
