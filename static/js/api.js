@@ -95,7 +95,7 @@ export async function postPointCheckoutView(amount, type) {
 		method: 'POST',
 		body: JSON.stringify({
 			"amount": amount,
-			"type": type
+			"payment_type": type
 		})
 	})
 	return response_point.json();
@@ -732,12 +732,18 @@ export async function writeReviewAPI(product_id, formdata) {
 	});
 	if (response.status == 201) {
 		alert("리뷰 등록 성공!")
-		window.location.href = `${FRONT_BASE_URL}//productdetail.html?product_id=${product_id}`;
+		window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`;
 	} else if (response.status == 406) {
 		alert("해당 상품 리뷰를 이미 작성했습니다.")
-		window.location.href = `${FRONT_BASE_URL}//productdetail.html?product_id=${product_id}`;
+		window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`;
+	} else if (response.status == 404){
+		alert("판매자가 삭제한 상품입니다 ㅠㅠ")
+		window.location.href = `${FRONT_BASE_URL}/mypage.html`
+	} else if (response.status ==400) {
+		alert("구매 이력이 없습니다")
+		window.location.href = `${FRONT_BASE_URL}/mypage.html`
 	} else {
-		alert(`"리뷰 등록 실패!"`)
+		alert("리뷰 등록 실패!")
 	}
 	return response.json();
 }
@@ -826,7 +832,6 @@ export async function getCheckedCart(queryString) {
 // 주문내역 생성
 export async function makeBills(delivery_id = null, delivery_data = null) {
 	let data;
-
 	if (delivery_data) {
 		data = JSON.stringify({
 			recipient: delivery_data.recipient,
