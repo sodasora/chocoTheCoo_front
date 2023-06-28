@@ -736,10 +736,10 @@ export async function writeReviewAPI(product_id, formdata) {
 	} else if (response.status == 406) {
 		alert("해당 상품 리뷰를 이미 작성했습니다.")
 		window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`;
-	} else if (response.status == 404){
+	} else if (response.status == 404) {
 		alert("판매자가 삭제한 상품입니다 ㅠㅠ")
 		window.location.href = `${FRONT_BASE_URL}/mypage.html`
-	} else if (response.status ==400) {
+	} else if (response.status == 400) {
 		alert("구매 이력이 없습니다")
 		window.location.href = `${FRONT_BASE_URL}/mypage.html`
 	} else {
@@ -1627,3 +1627,42 @@ export async function searchWhatAPI(url) {
 export const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 export const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
+
+export async function getSellerInformationListAPI() {
+	// 관리자 권한으로 판매 승인 대기 내역 가져오기
+	const response = await fetch(`${BACK_BASE_URL}/api/users/get/seller/list/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "GET",
+	});
+	return response
+}
+
+export async function refusalOfSalesActivityAPI(information) {
+	// 관리자 권한으로 판매 활동 거절
+	console.log(information)
+	console.log(information.seller_id)
+	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/permissions/${information.seller_id}/`, {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		body: JSON.stringify({
+			msg: information.msg
+		})
+	});
+	return response
+}
+export async function salesActivityApprovalAPI(seller_id) {
+	// 관리자 권한으로 판매 활동 승인
+
+	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/permissions/${seller_id}/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "PATCH",
+	});
+	return response
+}
