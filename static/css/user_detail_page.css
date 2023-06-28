@@ -7,11 +7,23 @@ button {
 }
 
 header {
-    font-size: 1.4em!important;
+    font-size: 1.4em !important;
 }
 
 footer {
-    font-size: 1.4em!important;
+    font-size: 1.4em !important;
+}
+
+.tooltip>.tooltip-inner {
+    font-family: 'S-CoreDream-3Light';
+    width: 30rem;
+    height: 5rem;
+    font-size: 1.5rem;
+    background-color: #522F18;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
 @font-face {
@@ -214,7 +226,7 @@ input {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 12%;
+    height: 8%;
     margin-top: 10%;
     background-color: #F8ECE0;
     font-size: 2.5rem;
@@ -237,6 +249,10 @@ input {
 
 }
 
+#setUserInformationView {
+    margin-top: 20%;
+}
+
 #setProfileView {
     width: 100%;
     height: 100%;
@@ -245,6 +261,7 @@ input {
     /* justify-content: center; */
     flex-direction: column;
     align-items: center;
+    margin-top: 10%;
 }
 
 #imageBox {
@@ -313,13 +330,13 @@ input {
 #profileSubmitButton {
     margin-top: 2%;
     width: 80%;
-    height: 40%;
+    height: 60%;
     padding-left: 5%;
     box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
     border-radius: 0.5rem;
     background-color: #522F18;
     color: white;
-    font-size: 2rem;
+    font-size: 3rem;
 }
 
 #profileMessageBox {
@@ -343,13 +360,13 @@ input {
 #userInformationSubmitButton {
     margin-top: 2%;
     width: 80%;
-    height: 40%;
+    height: 70%;
     padding-left: 5%;
     box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
     border-radius: 0.5rem;
     background-color: #522F18;
     color: white;
-    font-size: 2rem;
+    font-size: 3rem;
 }
 
 #setUserInformationMessageBox {
@@ -438,7 +455,6 @@ input {
 }
 
 #addressBox {
-    margin-top: 2rem;
     width: 100%;
 }
 
@@ -455,26 +471,26 @@ input {
 #addressSubmitButton {
     margin-top: 5%;
     width: 100%;
-    height: 3.5rem;
+    height: 5rem;
     padding-left: 5%;
     box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
     border-radius: 0.5rem;
     background-color: #522F18;
     color: white;
-    font-size: 2rem;
+    font-size: 3rem;
     margin-bottom: 2rem;
 }
 
 #addressUpdateButton {
     margin-top: 5%;
     width: 100%;
-    height: 3.5rem;
+    height: 5rem;
     padding-left: 5%;
     box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
     border-radius: 0.5rem;
     background-color: #522F18;
     color: white;
-    font-size: 2rem;
+    font-size: 3rem;
     margin-bottom: 2rem;
 }
 
@@ -486,18 +502,18 @@ input {
 }
 
 #customsCodeSubmitInput {
-    margin-top: 2%;
     width: 100%;
-    height: 3.5rem;
+    height: 5rem;
     padding-left: 5%;
     box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
     border-radius: 0.5rem;
+    font-size: 1.8rem;
 }
 
 #customsCodeSubmitButton {
-    margin-top: 5%;
+    margin-top: 10%;
     width: 100%;
-    height: 3.5rem;
+    height: 5rem;
     padding-left: 5%;
     box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
     border-radius: 0.5rem;
@@ -509,6 +525,8 @@ input {
 
 .sellerInputData {
     margin-top: 1rem;
+    padding-left: 3%;
+    font-size: 1.5rem;
     width: 100%;
     height: 4rem;
     box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
@@ -606,13 +624,13 @@ input {
 #addressDeleteButton {
     margin-top: 5%;
     width: 100%;
-    height: 3.5rem;
+    height: 5rem;
     padding-left: 5%;
     box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
     border-radius: 0.5rem;
     background-color: #FF6666;
     color: black;
-    font-size: 2rem;
+    font-size: 3rem;
     margin-bottom: 2rem;
 }
 
@@ -707,7 +725,7 @@ input {
 #submitPhoneNumber {
     margin-top: 5%;
     width: 100%;
-    height: 40%;
+    height: 5rem;
     padding-left: 5%;
     box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
     border-radius: 0.5rem;
@@ -730,7 +748,7 @@ input {
 #getAuthNumber {
     margin-top: 5%;
     width: 100%;
-    height: 40%;
+    height: 5rem;
     padding-left: 5%;
     box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
     border-radius: 0.5rem;
@@ -766,7 +784,7 @@ input {
 }
 
 #sellerImageBox {
-    height: 30rem;
+    height: 50rem;
     width: 100%;
 
     background-color: #7B4242;
@@ -782,7 +800,7 @@ input {
 
 #sellerProfileView {
     width: 80%;
-    height: 70%;
+    height: 80%;
     background-color: #C4A492;
     border-radius: 1rem;
     display: flex;
@@ -807,7 +825,7 @@ input {
 }
 
 #setSellerInformation {
-    width: 100%;
+    width: 80rem;
 }
 
 #sellerForm {
@@ -844,4 +862,165 @@ input {
     justify-content: center;
     align-items: center;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+#userCustomsCodeInformation {
+    margin-top: 30%;
+}
+
+#userEmailInformation {
+    padding-top: 15rem;
+}
+
+#getEmailVerificationCode {
+    margin-top: 5rem;
+    height: 5rem;
+}
+
+#submitChangeEamilInformation {
+    margin-top: 3rem;
+    height: 5rem;
+}
+
+#emailMessageBox {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1.8rem;
+    margin-top: 5rem;
+    background-color: #760c0c;
+    color: white;
+    height: 6rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+}
+
+#customsCodeMessageBox {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1.8rem;
+    margin-top: 5rem;
+    background-color: #760c0c;
+    color: white;
+    height: 6rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+}
+
+#sellerImageFile {
+    background-color: white;
+    font-size: 1.8rem;
+    width: 60%;
+    margin-top: auto;
+}
+
+
+#modal {
+    height: 90%;
+    width: 90%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #a15e00;
+    padding: 1% 1% 1% 1%;
+
+}
+
+#modal-header {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+#modal-page-box {
+    width: 100%;
+}
+
+
+#modal-page {
+    color: white;
+    font-size: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#modal-message-box {
+    width: 90%;
+    height: 100%;
+    color: white;
+    font-size: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#modal-close-button {
+
+    height: 5rem;
+    width: 5rem;
+    background-image: url("/static/images/cross.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+#modal-content-box {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#modal-left-button {
+    height: 20%;
+    width: 10%;
+    background-image: url("/static/images/left-arrow.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+#modal-image-box {
+    height: 100%;
+    width: 80%;
+    margin-left: 2%;
+    margin-right: 2%;
+    background-image: url("/static/images/user_detail/user_detail_0.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#modal-right-button {
+    height: 20%;
+    width: 10%;
+    background-image: url("/static/images/right-arrow.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+#modal-control-box {
+    display: flex;
+}
+
+#modal-skip-today {
+    margin-left: auto;
+    font-size: 3rem;
+    color: white;
+    cursor: pointer;
 }
