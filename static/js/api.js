@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5501"
+export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
@@ -1500,6 +1500,7 @@ export async function getCategoryView() {
 	return response.json();
 }
 
+ 
 // 동일 카테고리 상품 조회
 export async function sameCategoryProductView(category_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/?category=${category_id}`, {
