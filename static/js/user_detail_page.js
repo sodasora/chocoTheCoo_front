@@ -588,7 +588,7 @@ export function readURL(input) {
         };
         reader.readAsDataURL(input.files[0]);
     } else {
-        document.getElementById('profileView').src = "/static/images/image_199.png";
+        document.getElementById('profileView').src = "/static/images/pepe_choco.png";
     }
 }
 
@@ -663,7 +663,11 @@ export async function addressSearchAPI() {
             // iframe을 넣은 element를 안보이게 한다.
             // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
             element_wrap.style.display = 'none';
+            document.getElementById('postcode').readOnly = true;
+            document.getElementById('address').readOnly = true;
 
+
+            window.scrollTo(0, 0);
             // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
             document.body.scrollTop = currentScroll;
         },
@@ -695,6 +699,8 @@ async function getDeliveryData(delivery_data) {
 
     document.getElementById("addressSubmitButton").style.display = "none"
     document.getElementById("addressLoad").style.display = "none"
+    document.getElementById("postcode").readOnly = false
+    document.getElementById("address").readOnly = false
     document.getElementById("dropdownContent").style.display = "none"
 
     // 메시지창 초기화
@@ -710,7 +716,8 @@ export async function changeAddressView() {
     document.getElementById("address").value = ''
     document.getElementById("detailAddress").value = ''
     document.getElementById("delivery_id").value = ''
-
+    document.getElementById("postcode").readOnly = false
+    document.getElementById("address").readOnly = false
     //  버튼 View 변경
     document.getElementById("addressLoad").style.display = "block"
     document.getElementById("addressSubmitButton").style.display = "block"
@@ -750,7 +757,7 @@ async function DeliveryInformation(response_json) {
 async function getUserDetailInformation(response_json) {
     // 프로필 정보 기입
     if (response_json.profile_image == null) {
-        document.getElementById('profileView').src = "/static/images/image_199.png";
+        document.getElementById('profileView').src = "/static/images/pepe_choco.png";
     } else {
         document.getElementById('profileView').setAttribute("src", response_json.profile_image)
     }
