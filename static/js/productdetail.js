@@ -37,7 +37,7 @@ export async function sellerFollow(user_id) {
 
         document.getElementById("followerCount").innerText = `follower : ${response_json.followings}`
         const follow_button = document.getElementById("seller-follow-button")
-        response.status == 200 ? follow_button.innerText = "Follow" : follow_button.innerText = "Un Follow"
+        response.status == 200 ? follow_button.innerText = "Follow" : follow_button.innerText = "Unfollow"
     }
 
 }
@@ -50,7 +50,7 @@ export async function setSellerInformation(information) {
     document.getElementById("seller-contact_number").innerText = information.contact_number
     document.getElementById("followerCount").innerText = `follower : ${information.followings_count}`
     console.log(information)
-    information.is_follow == false ? follow_button.innerText = "Follow" : follow_button.innerText = "Un Follow"
+    information.is_follow == false ? follow_button.innerText = "Follow" : follow_button.innerText = "Unfollow"
 
 
     follow_button.addEventListener("click", function () {
@@ -65,6 +65,7 @@ export async function setSellerInformation(information) {
 export async function viewProductDetail() {
     const response = await getProductDetailAPIView(productId);
     const productStar = document.getElementById('productStar');
+    const productStarText = document.getElementById('avgStar');
     const productTitle = document.getElementById("product-title")
     const productImage = document.getElementById("product-image")
     const productPrice = document.getElementById("product-price")
@@ -73,11 +74,11 @@ export async function viewProductDetail() {
     const productLike = document.getElementById("productLike")
     const star = response.product_information.stars
     if (star) {
-        productStar.innerText = "⭐".repeat(star);
+        productStar.innerText = "⭐"
+        productStarText.innerText = star;
     }
     else {
-        productStar.innerText = "아직 등록된 리뷰가 없습니다"
-        productStar.style.fontSize = "0.7em"
+        productStarText.innerText = "0.0"
     }
     const likes = response.product_information.likes
     if (likes) {
