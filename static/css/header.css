@@ -173,6 +173,10 @@ header {
     opacity: 0;
 }
 
+#headerDropdownBox {
+    display: none;
+}
+
 #headerDropdown {
     display: none;
 }
@@ -213,6 +217,11 @@ header {
         align-items: center;
         justify-content: center;
         border: none;
+    }
+
+    #headerDropdownBox {
+        margin: 0;
+        display: block;
     }
 
     #headerDropdown {
