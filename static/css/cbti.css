@@ -1,3 +1,62 @@
-.section{
+.section2{
     text-align: center;
+    height: 40vw;
+    display: flex;
+    justify-content: center;
+    background-color:#FFEBDB;
+}
+.section2-header{
+    background-color:#FFEBDB;
+    height:10vw;
+    width:100%;
+}
+#header-image{
+    width:100%;
+    height: 100%;
+   
+}
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+#prev-button{
+    height: 30px;
+    width: 30px;
+    margin-top: 13vw;
+}
+
+#next-button{
+    height: 30px;
+    width: 30px;
+    margin-top: 13vw;
+}
+
+
+#carouselExampleControlsNoTouching {
+    font-family: 'TheJamsil5Bold';
+    background-color: #6E4538;
+    color: rgb(255, 183, 209);
+    border-radius: 1vw;
+    display: flex;
+    justify-content: center;
+    margin-top: 5vw;
+    padding-top: 10vw;
+    height: 30vw;
+    width: 45vw;
+    font-size: 20px;
+}
+
+#label-title{
+    margin-bottom: 2vw;
+    font-size: 25px;
+}
+
+#CBTI-result-btn{
+    background-color: antiquewhite;
+    color:#522F18;
+    border-color: #522F18;
+    margin-top: 3vw;
 }
