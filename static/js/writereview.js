@@ -1,11 +1,11 @@
 
-import { writeReviewAPI, showReviewDetailViewAPI, editReviewViewAPI, BACK_BASE_URL, FRONT_BASE_URL } from './api.js';
-
+import { writeReviewAPI, showReviewDetailViewAPI, editReviewViewAPI, BACK_BASE_URL, FRONT_BASE_URL, payload } from './api.js';
+const urlParams = new URLSearchParams(window.location.search);
+const productId = urlParams.get('product_id');
 
 // 후기 작성 
 export async function writeReview() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('product_id');
+
 
 
     console.log(productId)
@@ -128,10 +128,19 @@ export async function setEventListener() {
         document.getElementById("update-submit").style.visibility = "hidden"
     }
     // 이미지 미리보기
-    document.getElementById("formFile").addEventListener("change",function (event) { readURL(event.target); })
+    document.getElementById("formFile").addEventListener("change", function (event) { readURL(event.target); })
 }
 
 window.onload = async function () {
+    if (payload == null) {
+        alert("로그인이 필요 합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else if (productId == null) {
+        alert("상품 정보를 찾을 수 없습니다.")
+        window.location.replace(`${FRONT_BASE_URL}/index.html`)
+    }
+
     setEventListener()
     loadDefault()
+
 }

@@ -237,19 +237,24 @@ async function renderTotals() {
 
 
 window.onload = async function () {
-    renderCartList();
-    const checkAll = document.getElementById('checkAll');
-    checkAll.addEventListener('click', (e) => {
-        const cartCheck = document.querySelectorAll('.check-each');
-        if (checkAll.checked == true) {
-            cartCheck.forEach(check => {
-                check.checked = true;
-            });
-        }
-        else {
-            cartCheck.forEach(check => {
-                check.checked = false;
-            });
-        }
-    })
+    if (payload == null) {
+        alert("로그인이 필요 합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else {
+        renderCartList();
+        const checkAll = document.getElementById('checkAll');
+        checkAll.addEventListener('click', (e) => {
+            const cartCheck = document.querySelectorAll('.check-each');
+            if (checkAll.checked == true) {
+                cartCheck.forEach(check => {
+                    check.checked = true;
+                });
+            }
+            else {
+                cartCheck.forEach(check => {
+                    check.checked = false;
+                });
+            }
+        })
+    }
 }

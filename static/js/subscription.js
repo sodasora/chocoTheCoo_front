@@ -1,5 +1,5 @@
 import {
-    BACK_BASE_URL, FRONT_BASE_URL, patchSubscribeView, getSubscribeView, getPointStaticView, postSubscribeView, postPointServiceView
+    BACK_BASE_URL, FRONT_BASE_URL, patchSubscribeView, getSubscribeView, getPointStaticView, postSubscribeView, postPointServiceView, payload
 } from "./api.js";
 
 function leftPad(value) {
@@ -11,6 +11,11 @@ function leftPad(value) {
 }
 
 async function gosub() {
+    if (payload == null) {
+        alert("로그인이 필요 합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    }
+
     let today = new Date();
 
     const nowyear = today.getFullYear()

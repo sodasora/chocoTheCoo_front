@@ -630,7 +630,10 @@ export async function getProductDetailAPIView(product_id) {
 			method: "GET",
 		});
 	}
-
+	if (response.status == 404) {
+		alert("상품 정보를 찾을 수 없습니다.")
+		window.location.replace(`${FRONT_BASE_URL}/index.html`)
+	}
 
 	return response.json();
 }
@@ -971,6 +974,10 @@ export async function getChatroom(room_id) {
 		},
 		method: 'DELETE',
 	})
+	if (response.status != 200) {
+		alert("로그인이 필요 합니다.")
+		window.location.replace(`${FRONT_BASE_URL}/login.html`)
+	}
 	return response.status
 }
 
@@ -997,6 +1004,10 @@ export async function getChatLogAPI(id) {
 		},
 		method: 'GET',
 	})
+	if (response.status != 200) {
+		alert("로그인이 필요 합니다.")
+		window.location.replace(`${FRONT_BASE_URL}/login.html`)
+	}
 	return response.json()
 }
 
