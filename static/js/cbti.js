@@ -164,12 +164,44 @@ export async function printCBTIResult(mbti) {
       })
   }   
 
-
-export async function setEventListener() {
-    // 이벤트 리스너 추가
-    const EI_button = document.getElementById("CBTI-result-btn").addEventListener("click", cbtiResult)
-}
-
+  export async function setEventListener() {
+    function hasUncheckedRadio(radio1Id, radio2Id, message) {
+      const radio1 = document.getElementById(radio1Id);
+      const radio2 = document.getElementById(radio2Id);
+      if (!(radio1.checked || radio2.checked)) {
+        alert(message);
+        window.location.reload();
+        return true;
+      }
+      return false;
+    }
+  
+    // 1~12번 중 체크되지 않은 문항 있을때 경고문
+    document.getElementById("CBTI-result-btn").addEventListener("click", cbtiResult);
+    document.getElementById('CBTI-result-btn').addEventListener('click', function() {
+      const uncheckedQuestions = [
+        ['EI_one_1', 'EI_one_2', '1번이 작성되지 않았습니다.'],
+        ['EI_two_1', 'EI_two_2', '2번이 작성되지 않았습니다.'],
+        ['EI_three_1', 'EI_three_2', '3번이 작성되지 않았습니다.'],
+        ['NS_one_1', 'NS_one_2', '4번이 작성되지 않았습니다.'],
+        ['NS_two_1', 'NS_two_2', '5번이 작성되지 않았습니다.'],
+        ['NS_three_1', 'NS_three_2', '6번이 작성되지 않았습니다.'],
+        ['FT_one_1', 'FT_one_2', '7번이 작성되지 않았습니다.'],
+        ['FT_two_1', 'FT_two_2', '8번이 작성되지 않았습니다.'],
+        ['FT_three_1','FT_three_2','FT_three_3', 'FT_three_4', '9번이 작성되지 않았습니다.'],  // 라디오 버튼 ID에 주의하세요.
+        ['PJ_one_1', 'PJ_one_2', '10번이 작성되지 않았습니다.'],
+        ['PJ_two_1', 'PJ_two_2', '11번이 작성되지 않았습니다.'],
+        ['PJ_three_1','PJ_three_2', 'PJ_three_3', '12번이 작성되지 않았습니다.']  // 라디오 버튼 ID에 주의하세요.
+      ];
+  
+      for (const question of uncheckedQuestions) {
+        if (hasUncheckedRadio(...question)) {
+          break;
+        }
+      }
+    });
+  }
+  
 window.onload = async () => {
     setEventListener()
 }
