@@ -13,7 +13,7 @@
 }
 
 body {
-    margin: 220px 0 0 0;
+    margin-top: 12em;
     padding: 0;
 }
 
@@ -25,24 +25,18 @@ a {
 
 
 /* *********헤더 시작******** */
-/* .navbar {
-    background-color: rgba(185, 147, 126, 0.842);
-    font-family: '국립박물관문화재단클래식B';
-    height: 300px;
-    padding-top: 10px;
-} */
 
 header {
     display: block;
     background-color: #C4A492;
     font-family: '국립박물관문화재단클래식B';
-    height: 220px;
+    height: 12em;
     width: 100%;
     padding-top: 0;
     position: fixed;
     top: 0;
     left: 0;
-    border: solid 1px black;
+    /* border: solid 1px black; */
     filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.25));
     z-index: 100;
     /* 겹쳤을 때 항상 최상단으로 */
@@ -78,18 +72,19 @@ header {
 .main {
     justify-content: center;
     display: flex;
-    height: 30px;
+    height: auto;
 }
 
 .main>text {
     color: #522F18;
-    font-size: 60px !important;
+    font-size: 60px;
     cursor: pointer;
 }
 
 .top-category {
     display: flex;
     color: #522F18;
+    justify-content: center;
 }
 
 .nav-underline-header {
@@ -105,8 +100,7 @@ header {
 .nav-header {
     position: relative;
     display: flex;
-    width: 640px;
-    margin: 4em auto;
+    width: 40em;
 }
 
 .nav-header a {
@@ -180,3 +174,94 @@ header {
     transition: opacity 0.2s ease-out;
     opacity: 0;
 }
+
+#headerDropdown {
+    display: none;
+}
+
+@media screen and (max-width: 800px) {
+    .nav-title {
+        font-size: 0.1em !important;
+        margin-right: 1em;
+    }
+    #logoChoco {
+        display: flex!important;
+        font-size: 2.5em;
+    }
+
+    body {
+        margin-top: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    .main {
+
+        align-items: center;
+    }
+
+    .main>text {
+        /* padding: 0 0.5em; */
+        margin-right: 0.5em;
+        font-size: 2.5em !important;
+    }
+
+    header {
+        width: 100%;
+        height: 6em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: none;
+    }
+
+    #headerDropdown {
+        right: 3%;
+        width: auto;
+        height: 40px;
+        display: flex;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        z-index: 50000;
+    }
+
+    .dropdown-menu {
+        background-color: #C4A492;
+    }
+
+    .dropdown-menu>li {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dropdown-menu>li>button {
+        font-family: 'S-CoreDream-3Light';
+        color: #522F18 !important;
+        font-size: 1em;
+    }
+
+    .left-header {
+        display: none;
+    }
+
+    .right-header {
+        display: none;
+    }
+
+    .header {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+    }
+
+    .top-category {
+        display: none;
+    }
+}
+
+/* mobileLogin
+mobileSignUp
+mobileLogout */
