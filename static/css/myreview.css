@@ -36,12 +36,6 @@ button {
     margin-top: 20px;
 }
 
-
-.mypage-intro {
-    display: flex;
-    margin-top: 20px;
-}
-
 #myreview {
     font-family: '국립박물관문화재단클래식B';
     font-size: 4vw;
@@ -165,40 +159,54 @@ button {
 }
 
 @media screen and (max-width: 768px) {
-
-    .profile-card {
-        font-family: 'S-CoreDream-3Light';
-        font-size: 2vw;
-        width: 40vw;
-        height: auto;
-        text-align: center;
-        margin-top: 30px;
-        margin-left: 25px;
-        border: 2px solid white;
-        border-radius: 20px;
-        color: white;
-        margin-bottom: 20px;
+    .line {
+        width: 90%;
     }
 
-    .profile {
-        width: 30vw;
+    #my-review-list {
+        margin-right: 10px;
     }
 
-    #group {
-        display: flex;
+    .profile-section {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin-left: 5px;
+    }
+
+    .sub-button {
+        width: 80%;
+        margin-top: 10px;
+        margin-left: 35px;
     }
 
     .subscription-section {
-        margin-top: 40px;
+        width: 80%;
+    }
+
+    .profile {
+        width: 23vw;
+    }
+
+    .profile-card {
+        font-family: 'S-CoreDream-3Light';
+        font-size: 1.5vw;
+        width: 80%;
+        height: auto;
+        text-align: center;
+        margin-top: 30px;
+        margin-left: 30px;
+        border: 2px solid white;
+        border-radius: 20px;
+        color: white;
     }
 
     .subscription-card {
-        width: 40vw;
+        margin-left: 33px;
         height: auto;
+        width: 100%;
         padding: 20px;
         text-align: center;
-        margin-top: 10px;
-        margin-left: 30px;
         margin-bottom: 20px;
         border: 2px solid white;
         border-radius: 20px;

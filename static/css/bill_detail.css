@@ -12,6 +12,10 @@
     font-style: normal;
 }
 
+body {
+    background-color: #C4A492;
+}
+
 button {
     height: 4vh;
     font-size: 1vw;
@@ -270,9 +274,37 @@ button {
 
 @media screen and (max-width: 960px) {
 
-    .subscription-section,
     .profile-section,
+    .subscription-card,
     .sub-button {
         min-width: 390px;
+        height: fit-content;
+        margin: 5px;
+    }
+
+    .subscription-section {
+        margin: 5px;
+        min-width: 390px;
+    }
+
+    .col-md-8,
+    .col-md-4 {
+        width: 95%;
+    }
+
+    #deliveryInfo {
+        font-family: 'S-CoreDream-3Light';
+        background-color: aliceblue;
+        /* color: aliceblue; */
+        padding: 1em 2em;
+        min-width: 40vw;
+        width: 95%;
+        font-size: 2vw;
+        border-radius: 1em;
+        margin: 1em 0;
+    }
+
+    #orderLists {
+        font-size: 4vw;
     }
 }
