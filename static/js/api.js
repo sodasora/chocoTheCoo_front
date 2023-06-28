@@ -220,7 +220,6 @@ export async function submitChangeEamilInformationAPI(information) {
 		},
 		method: 'PUT',
 		body: JSON.stringify({
-			email: information.email,
 			verification_code: information.verification_code
 		})
 	})
@@ -1578,7 +1577,6 @@ export async function checkoutmyreview(product_id) {
 	return response
 }
 
-<<<<<<< HEAD
 export async function kakaoLoginAPI() {
 	// 카카오 로그인
 
@@ -1610,7 +1608,7 @@ export async function naverLoginAPI() {
 	const state = new Date().getTime().toString(36);
 	window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naver_id}&redirect_uri=${redirect_uri}&state=${state}`;
 }
-=======
+
 export async function searchWhatAPI(url) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${url}`, {
 		headers: {
@@ -1623,4 +1621,4 @@ export async function searchWhatAPI(url) {
 
 export const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 export const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
->>>>>>> d6ca52014d83475d7dc0dcc8b127e88d157237bb
+

@@ -187,7 +187,6 @@ export async function setEventListener() {
     document.getElementById("modal-left-button").addEventListener("click", modalLeftButton)
     document.getElementById("modal-right-button").addEventListener("click", modalRightButton)
 
-
 }
 
 

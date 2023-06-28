@@ -29,12 +29,14 @@ import {
     getAuthNumberAPI,
     // 휴대폰 인증 번호 제출
     submitVerificationNumbersAPI,
-    // 이메일 정보 수정
-    getEmailVerificationCodeAPI,
     // 변경 이메일 인증 코드 발급
+    getEmailVerificationCodeAPI,
+    // 이메일 정보 수정
     submitChangeEamilInformationAPI,
 } from './api.js'
 import { handleLogout } from './loader.js'
+
+let modal_image_index = 0
 
 async function getPayloadParse() {
     const payload = localStorage.getItem("payload");
@@ -91,9 +93,11 @@ export async function updateProfileInformation() {
     const profileMessageBox = document.getElementById("profileMessageBox")
     profileMessageBox.style.display = "flex"
     if (response.status == 200) {
+        alert("프로필 정보를 수정 했습니다.")
         location.reload();
-    } else if (response.status == 404) {
+    } else if (response.status == 404 || response.status == 401) {
         // 사용자 정보를 찾을 수 없음
+        alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 400) {
         // 입력 양식이 잘 못됨
@@ -128,14 +132,17 @@ export async function addressSubmit() {
         const response = await addressSubmitAPI(information)
         if (response.status == 200) {
             // 배송 정보 등록 완료
+            alert("새로운 배송 정보가 등록 되었습니다.")
             location.reload();
         } else {
             const response_json = await response.json()
             addressMessageBox.style.display = "flex"
             if (response.status == 404) {
                 // 사용자 정보를 찾을 수 없음 (로그인 필요) , 올바르지 않은 접근 방법
+                alert("로그인이 필요 합니다.")
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
             } else if (response.status == 401) {
+                alert("로그인이 필요 합니다.")
                 // 로그인을 하지 않았거나, 토큰 정보 오류
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
             } else if (response.status == 400) {
@@ -171,15 +178,18 @@ export async function addressUpdate() {
         const response_json = await response.json()
         if (response.status == 200) {
             // 배송 정보 수정 완료
+            alert("배송 정보를 수정 했습니다.")
             location.reload();
         } else {
             const addressMessageBox = document.getElementById("addressMessageBox")
             addressMessageBox.style.display = "flex"
             if (response.status == 404) {
                 // 사용자 정보를 찾을 수 없음 (로그인 필요)
+                alert("로그인이 필요 합니다.")
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
             } else if (response.status == 401) {
                 // 로그인을 하지 않았거나, 올바르지 않은 접근 방법
+                alert("로그인이 필요 합니다.")
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
             } else if (response.status == 400) {
                 //  유효성 검사 실패
@@ -199,6 +209,7 @@ export async function addressDelete() {
     // API 응답 처리
     if (response.status == 204) {
         // 배송 정보 삭제 완료
+        alert("배송 정보를 삭제 했습니다.")
         location.reload();
     } else {
         const addressMessageBox = document.getElementById("addressMessageBox")
@@ -207,6 +218,7 @@ export async function addressDelete() {
             addressMessageBox.innerText = "배송 정보를 찾을 수 없습니다."
         } else if (response.status == 401) {
             // 로그인을 하지 않았거나 올바르지 않은 접근 방법
+            alert("로그인이 필요 합니다.")
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else {
             console.log(response)
@@ -248,9 +260,11 @@ export async function createSellerInformation() {
         document.getElementById("createSellerInformationButton").style.display = "block"
     } else if (response.status == 404) {
         // 로그인 필요
+        alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 401) {
         // 로그인 필요
+        alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 422) {
         sellerMessageBox.innerText = "입력값에 오류가 있습니다. 너무 긴 입력값은 없는지 확인해 주세요."
@@ -272,12 +286,15 @@ export async function updateSellerInformation() {
 
     // API 응답 처리
     if (response.status == 200) {
+        alert("판매자 정보를 수정 했습니다.")
         location.reload();
     } else if (response.status == 404) {
         // 로그인 필요
+        alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 401) {
         // 로그인 필요
+        alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 422) {
         sellerMessageBox.innerText = "입력값에 오류가 있습니다. 너무 긴 입력값은 없는지 확인해 주세요."
@@ -297,12 +314,15 @@ export async function deleteSellerInformation() {
     // API 응답 처리
     if (response.status == 204) {
         // 삭제 완료
+        alert("판매자 정보를 삭제 했습니다.")
         location.reload();
     } else if (response.status == 404) {
         // 로그인 필요
+        alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 401) {
         // 로그인 필요
+        alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 400) {
         sellerMessageBox.innerText = "삭제할 판매자 정보가 없습니다."
@@ -346,12 +366,15 @@ export async function setCustomsCode() {
     } else {
         if (response.status == 200) {
             // 수정 완료
+            alert("통관 번호를 등록/수정 했습니다.")
             location.reload();
         } else if (response.status == 404) {
             // 로그인 필요
+            alert("로그인이 필요 합니다.")
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else if (response.status == 401) {
             //토큰 정보 오류
+            alert("로그인이 필요 합니다.")
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else if (response.status == 400) {
             customsCodeMessageBox.style.display = "flex"
@@ -380,8 +403,9 @@ export async function getAuthNumber() {
 
         } else {
             phoneMessageBox.style.display = "flex"
-            if (response.status == 404) {
+            if (response.status == 404 || response.status == 401) {
                 // 로그인 필요
+                alert("로그인이 필요 합니다.")
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
             } else {
                 const response_json = await response.json()
@@ -405,12 +429,14 @@ export async function submitVerificationNumbers() {
         const response = await submitVerificationNumbersAPI(information)
         if (response.status == 200) {
             // 인증 완료
+            alert("인증이 완료 되었습니다.")
             location.reload();
         } else {
 
             phoneMessageBox.style.display = "flex"
-            if (response.status == 404) {
+            if (response.status == 404 || response.status == 401) {
                 // 로그인 필요
+                alert("로그인이 필요 합니다.")
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
             } else {
                 const response_json = await response.json()
@@ -439,8 +465,9 @@ export async function getEmailVerificationCode() {
 
         } else {
 
-            if (response.status == 404) {
+            if (response.status == 404 || response.status == 401) {
                 // 로그인 필요
+                alert("로그인이 필요 합니다.")
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
             } else {
                 const response_json = await response.json()
@@ -452,11 +479,9 @@ export async function getEmailVerificationCode() {
 
 
 export async function submitChangeEamilInformation() {
-    const email = document.getElementById("email").value
     const verificationCode = document.getElementById("verificationCode").value
     const emailMessageBox = document.getElementById("emailMessageBox")
     const information = {
-        email: email,
         verification_code: verificationCode
     }
     if (verificationCode == "" || email == "") {
@@ -465,12 +490,15 @@ export async function submitChangeEamilInformation() {
         const response = await submitChangeEamilInformationAPI(information)
         if (response.status == 200) {
             // 인증 완료
-            location.reload();
+            alert("이메일 정보가 변경 되었습니다.")
+            handleLogout();
+            window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else {
 
             emailMessageBox.style.display = "flex"
-            if (response.status == 404) {
+            if (response.status == 404 || response.status == 401) {
                 // 로그인 필요
+                alert("로그인이 필요 합니다.")
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
             } else {
                 const response_json = await response.json()
@@ -810,6 +838,11 @@ export async function setEventListener() {
     document.getElementById("navItemUserEmail").addEventListener("click", navItemUserEmail)
     document.getElementById("navItemUserCustomsCodeInformation").addEventListener("click", navItemUserCustomsCodeInformation)
 
+    // modal 액션 
+    document.getElementById("modal-close-button").addEventListener("click", closeModal)
+    document.getElementById("modal-left-button").addEventListener("click", modalLeftButton)
+    document.getElementById("modal-right-button").addEventListener("click", modalRightButton)
+
 
     // 드랍 다운 메뉴
     const dropdownButton = document.querySelector(".dropdown-button");
@@ -908,6 +941,59 @@ phoneNum.onkeyup = function () {
     this.value = autoHypenPhone(this.value);
 }
 
+
+
+
+export async function closeModal() {
+    document.getElementById("modal").style.display = "none"
+    document.getElementById("header").style.display = "block"
+    document.getElementById("footer").style.display = "block"
+}
+
+export async function changeModal(eventValue) {
+    const message = [
+        "프로필 정보를 수정 합니다.",
+        "프로필 이미지를 등록 합니다.",
+        "닉네임 정보를 수정 합니다.",
+        "소개글을 입력하고 제출해 주세요.",
+        "비밀 번호 정보를 수정 합니다.",
+        "기존 비밀번호를 입력해 주세요.",
+        "새로운 비밀번호 정보를 입력하고 제출해 주세요.",
+        "배송 정보를 기록하기 위해서 연락처 정보가 필요 합니다.",
+        "휴대폰 번호를 등록하고 인증 번호를 발급 받아 주세요",
+        "발급 받은 인증 번호를 기록하고 인증을 완료해 주세요.",
+        "배송 정보를 기록해 주세요.",
+        "우편 번호 찾기를 통해 간편히 주소 정보를 찾아 보세요.",
+        "주소지 정보를 기로갛고 제출해 주세요.",
+        "등록하신 주소지 정보를 선택하고 수정 또는 삭제할 수 있습니다.",
+        "주소지 정보를 수정하고나 삭제를 통해 관리할 수 있습니다.",
+        "주소지 작성을 통해 수정을 중단하고 새로운 주소지 정보를 등록할 수 있습니다.",
+        "이메일 정보를 수정할 수 있습니다.",
+        "새로운 이메일 정보를 등록해 주세요.",
+        "발급받은 인증 코드를 등록하고 인증을 완료해 주세요.",
+        "사업자 정보를 등록/수정/삭제 할 수 있습니다.",
+        "로고 이미지를 등록해 주세요.",
+        "정보를 기입후 등록/수정/삭제 할 수 있습니다.",
+        "계정을 비 활성화 할 수 있습니다.",
+        "버튼을 눌러 계정을 비 활성화 합니다.",
+        "통관 번호를 등록/수정 할 수 있습니다.",
+        "통관 번호를 등록하고 제출 해 주세요.",
+    ]
+    document.getElementById("modal-image-box").style.backgroundImage = `url('/static/images/user_detail/user_detail_${eventValue}.png')`;
+    document.getElementById("modal-message-box").innerText = message[eventValue]
+    document.getElementById("modal-page").innerText = `${eventValue}/25`
+}
+
+export async function modalLeftButton() {
+    modal_image_index -= modal_image_index == 0 ? 0 : 1
+    changeModal(modal_image_index)
+}
+export async function modalRightButton() {
+    modal_image_index += modal_image_index == 25 ? 0 : 1
+    changeModal(modal_image_index)
+}
+
+
 window.onload = async () => {
     setEventListener()
     const payload_parse = await getPayloadParse()
@@ -916,4 +1002,18 @@ window.onload = async () => {
     } else {
         getUserInformation()
     }
-}   
+}
+
+
+// 
+
+
+
+
+
+
+let EI = 0
+
+
+// EI 
+

@@ -9,39 +9,73 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
     <!-- CSS -->
     <link rel="stylesheet" href="/static/css/user_detail_page.css">
 </head>
-<header></header>
+<header style="display: none;" id="header"></header>
 
 <body>
+    <div id="modal">
+        <div id="modal-header">
+            <span id="modal-message-box">
+                이메일 정보와 비밀번호를 입력해서 로그인 해주세요.
+            </span>
+            <div id="modal-close-button"></div>
+        </div>
+        <div id="modal-content-box">
+            <div id="modal-left-button"></div>
+            <div id="modal-image-box"></div>
+            <div id="modal-right-button"></div>
+        </div>
+        <div id="modal-page-box">
+            <span id="modal-page">0/25</span>
+        </div>
+    </div>
+
     <div id="container">
 
         <div id="leftBox">
             <div id="containerNavItems">
 
-                <div class="container-nav-item" id="navItemProfile">
+
+                <div class="container-nav-item" id="navItemProfile" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-html="true" data-bs-custom-class="custom-tooltip"
+                    data-bs-title="프로필 이미지, 닉네임,<br/> 자기 소개를 수정합니다.">
                     <span>프로필</span>
                 </div>
-                <div class="container-nav-item" id="navItemUserInformation">
-                    <span>회원 정보</span>
+                <div class="container-nav-item" id="navItemUserInformation" data-bs-toggle="tooltip"
+                    data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="비밀 번호 정보를 수정합니다.">
+                    <span>비밀 번호</span>
                 </div>
-                <div class="container-nav-item" id="navItemUserDetailInformation">
+                <div class="container-nav-item" id="navItemUserDetailInformation" id="navItemUserInformation"
+                    data-bs-html="true" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip" data-bs-title="주소지 정보를 <br/>추가 또는 수정합니다.">
                     <span>주소지</span>
                 </div>
-                <div class="container-nav-item" id="navItemUserPhoneNumber">
+                <div class="container-nav-item" id="navItemUserPhoneNumber" data-bs-toggle="tooltip" data-bs-html="true"
+                    data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                    data-bs-title="휴대폰 정보를 <br/>추가 또는 수정합니다.">
                     <span>연락처</span>
                 </div>
-                <div class="container-nav-item " id="navItemUserEmail">
+                <div class="container-nav-item " id="navItemUserEmail" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip" data-bs-title="이메일 정보를 수정합니다.">
                     <span>이메일</span>
                 </div>
-                <div class="container-nav-item" id="navItemSellerInformation">
+                <div class="container-nav-item" id="navItemSellerInformation" data-bs-toggle="tooltip"
+                    data-bs-html="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                    data-bs-title="판매자 정보를 <br/>추가 또는 수정합니다.">
                     <span id="navSellerInformation">판매자 권한 신청</span>
                 </div>
-                <div class="container-nav-item" id="navItemDeleteUserInformation">
+                <div class="container-nav-item" id="navItemDeleteUserInformation" data-bs-toggle="tooltip"
+                    data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="휴면 계정으로 전환합니다.">
                     <span>회원 탈퇴</span>
                 </div>
-                <div class="container-nav-item" id="navItemUserCustomsCodeInformation">
+                <div class="container-nav-item" id="navItemUserCustomsCodeInformation" data-bs-toggle="tooltip"
+                    data-bs-html="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                    data-bs-title="통관 번호를 <br/>추가 또는 수정합니다.">
                     <span>통관번호</span>
                 </div>
             </div>
@@ -49,13 +83,16 @@
         <div id="rightBox">
             <div id="contentBox">
                 <!-- 프로필 수정 -->
-                <div id="setProfileView" style="display: none;" class="view-items">
+                <div id="setProfileView" class="view-items" style="display: none;">
                     <div id="imageBox">
                         <!-- <div id="profileView"></div> -->
-                        <img id="profileView">
+                        <img id="profileView" data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                            data-bs-custom-class="custom-tooltip" data-bs-title="이미지를 미리 볼 수 있습니다.">
 
                         <p id="profileImageText">프로필 이미지</p>
-                        <input type="file" id="profileImageFile">
+                        <input type="file" id="profileImageFile" data-bs-toggle="tooltip" data-bs-html="true"
+                            data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                            data-bs-title="프로필 이미지를 등록해 주세요.">
                     </div>
                     <!-- 미개발 -->
                     <div class="profileInputBox" style="display: none;">
@@ -65,46 +102,61 @@
                         <label id="nickNameLabel" class="profileLable">
                             별명
                         </label>
-                        <input id="nickName" class="profileInput">
+                        <input id="nickName" class="profileInput" data-bs-toggle="tooltip" data-bs-html="true"
+                            data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                            data-bs-title="닉네임은 공백없이 2~20자<br/> 사이로 작성해 주세요.">
                     </div>
                     <div class="profileInputBox">
                         <label id="BioLabel" class="profileLable">
                             소개
                         </label>
-                        <input id="bio" class="profileInput">
+                        <input id="bio" class="profileInput" data-bs-toggle="tooltip" data-bs-html="true"
+                            data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                            data-bs-title="사용자의 소개글을 입력해 주세요.">
                     </div>
                     <div>
                         <div class="profileMessageBox">
                             <span id="profileMessage"></span>
                         </div>
                     </div>
-                    <div id="profileMessageBox" style="display: none;">
+                    <div id="profileMessageBox" style="display: none;" data-bs-toggle="tooltip" data-bs-html="true"
+                        data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                        data-bs-title="문제점이 생겼을 경우 안내해 드리고 있습니다.">
                     </div>
                     <div class="profileInputBox">
-                        <button type="button" id="profileSubmitButton">제출</button>
+                        <button type="button" id="profileSubmitButton" data-bs-toggle="tooltip" data-bs-html="true"
+                            data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                            data-bs-title="제공하신 프로필 정보로 최신화 합니다.">제출</button>
                     </div>
                 </div>
                 <!-- 프로필 수정 끝 -->
                 <!-- 회원 정보 수정 -->
-                <div id="setUserInformationView" style="display: none;" class="view-items">
+                <div id="setUserInformationView" class="view-items" style="display: none;">
                     <form style="width: 100%;">
                         <div class="profileInputBox">
                             <label class="profileLable">
                                 기존 비밀번호
                             </label>
-                            <input id="password" class="profileInput" type="password" autocomplete="on">
+                            <input id="password" class="profileInput" type="password" autocomplete="on"
+                                data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip" data-bs-title="기존에 사용하신 <br/> 비밀번호를 입력해 주세요.">
                         </div>
                         <div class="profileInputBox">
                             <label class="profileLable">
                                 새로운 비밀번호
                             </label>
-                            <input id="newPassword" class="profileInput" type="password" autocomplete="on">
+                            <input id="newPassword" class="profileInput" type="password" autocomplete="on"
+                                data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip"
+                                data-bs-title="영문자,숫자,특수문자를 포함한<br/> 5자의 조건을 충족해야 합니다.">
                         </div>
                         <div class="profileInputBox">
                             <label class="profileLable">
                                 비밀번호 확인
                             </label>
-                            <input id="newPassword2" class="profileInput" type="password" autocomplete="on">
+                            <input id="newPassword2" class="profileInput" type="password" autocomplete="on"
+                                data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip" data-bs-title="다시 한번 비밀 번호를 입력해 주세요.">
                         </div>
                         <div class="profileInputBox">
                             <label class="passwordGuide">
@@ -112,7 +164,9 @@
                             </label>
                         </div>
                         <div class="profileInputBox">
-                            <button type="button" id="userInformationSubmitButton">제출</button>
+                            <button type="button" id="userInformationSubmitButton" data-bs-toggle="tooltip"
+                                data-bs-html="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                data-bs-title="사용자 비밀 번호 정보를<br/> 수정합니다.">제출</button>
                         </div>
                         <div class="profileInputBox">
                             <div id="setUserInformationMessageBox" style="display: none;">
@@ -133,7 +187,9 @@
                     <div id="cellPhoneNumberRegistered">
                         <div class="dropdown">
                             <div>
-                                <button type="button" class="dropdown-button" id="addressLoad">등록된 주소지</button>
+                                <button type="button" class="dropdown-button" id="addressLoad" data-bs-toggle="tooltip"
+                                    data-bs-html="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                    data-bs-title="등록된 주소지<br/> 정보를 불러 옵니다.">등록된 주소지</button>
                                 <div class="dropdown-content" id="dropdownContent">
                                     <!-- 주소지 정보 불러오기 -->
                                 </div>
@@ -144,21 +200,35 @@
                         <div id="addressBox">
                             <label class="detailInputLable">주소지</label>
                             <input id="delivery_id" hidden>
-                            <input class="address-input-item" type="text" id="postcode" placeholder="우편번호">
+                            <input class="address-input-item" type="text" id="postcode" placeholder="우편번호"
+                                data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip" data-bs-title="우편 번호를 입력해 주세요.">
                             <input class="address-input-item" type="button" id="Postcode" value="우편번호 찾기"><br>
-                            <input class="address-input-item" type="text" id="address" placeholder="주소"><br>
-                            <input class="address-input-item" type="text" id="detailAddress" placeholder="상세 주소">
+                            <input class="address-input-item" type="text" id="address" placeholder="주소"
+                                data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip" data-bs-title="주소 정보를 입력해 주세요."><br>
+                            <input class="address-input-item" type="text" id="detailAddress" placeholder="상세 주소"
+                                data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip" data-bs-title="상세 주소를 입력해 주세요.">
                             <label class="detailInputLable">수령인</label>
-                            <input class="address-input-item" type="text" id="recipient" placeholder="수령인">
+                            <input class="address-input-item" type="text" id="recipient" placeholder="수령인"
+                                data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip" data-bs-title="수령인의 이름을 적어 주세요.">
                             <div id="wrap"
                                 style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
                                 <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
                                     style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" alt="접기 버튼">
                             </div>
                         </div>
-                        <button type="button" id="addressSubmitButton">제출</button>
-                        <button type="button" id="addressUpdateButton" style="display: none;">수정</button>
-                        <button type="button" id="addressDeleteButton" style="display: none;">삭제</button>
+                        <button type="button" id="addressSubmitButton" data-bs-toggle="tooltip" data-bs-html="true"
+                            data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                            data-bs-title="새로운 주소지를 입력 합니다.">제출</button>
+                        <button type="button" id="addressUpdateButton" style="display: none;" data-bs-toggle="tooltip"
+                            data-bs-html="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                            data-bs-title="등록된 주소지 정보를 수정 합니다.">수정</button>
+                        <button type="button" id="addressDeleteButton" style="display: none;" data-bs-toggle="tooltip"
+                            data-bs-html="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                            data-bs-title="등록된 주소지 정보를 삭제 합니다.">삭제</button>
                         <div id="addressMessageBox" style="display: none;"></div>
                     </div>
                 </div>
@@ -169,23 +239,31 @@
                             휴대폰 번호
                         </label>
                         <div class="phoneNumberBox">
-                            <input type="text" id="phoneNum" maxlength="13" class="phone_number_input_items">
+                            <input type="text" id="phoneNum" maxlength="13" class="phone_number_input_items"
+                                data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip" data-bs-title="휴대폰 번호를 <br/> 공백 없이 입력해 주세요.">
                         </div>
                     </div>
-                    <div class="input-itme-box" style="display: none;" id="phone_auth_box">
+                    <div class="input-itme-box" style="margin-top: 2rem;">
+                        <button type="button" id="getAuthNumber" data-bs-toggle="tooltip" data-bs-html="true"
+                            data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                            data-bs-title="휴대폰 번호를 입력하고 <br/>인증 번호를 발급 받아 주세요."> 핸드폰 인증 번호 발급 받기 </button>
+                    </div>
+                    <div class="input-itme-box" style="display: none; margin-top: 5rem" id="phone_auth_box">
                         <label class="input-text-items">
                             인증 번호
                         </label>
                         <div class="phoneNumberBox">
                             <input type="text" id="verification_numbers" class="phone_number_input_items"
-                                placeholder="인증 번호를 입력해 주세요">
+                                placeholder="인증 번호를 입력해 주세요" data-bs-toggle="tooltip" data-bs-html="true"
+                                data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                data-bs-title="발급받은 인증 번호를<br/> 입력해 주세요.">
                         </div>
                     </div>
-                    <div class="input-itme-box" style="margin-top: 2rem;">
-                        <button type="button" id="getAuthNumber"> 핸드폰 인증 번호 발급 받기 </button>
-                    </div>
                     <div class="input-itme-box" id="submit_auth_number_button_box" style="display: none;">
-                        <button type="button" id="submitPhoneNumber"> 핸드폰 인증 번호 제출 </button>
+                        <button type="button" id="submitPhoneNumber" data-bs-toggle="tooltip" data-bs-html="true"
+                            data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                            data-bs-title="인증 번호를 작성하고<br/> 제출해 주세요."> 핸드폰 인증 번호 제출 </button>
                     </div>
                     <div id="phoneMessageBox" style="display: none;">
                     </div>
@@ -195,67 +273,91 @@
                 <div id="setSellerInformation" class="view-items" style="display: none;">
                     <form id="sellerForm">
                         <div id="sellerImageBox">
-                            <img id="sellerProfileView">
+                            <img id="sellerProfileView" data-bs-toggle="tooltip" data-bs-html="true"
+                                data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                data-bs-title="등록하신 사진을 <br/>미리 확인할 수 있습니다.">
 
                             <p id="SellerImageText">상호 이미지</p>
-                            <input type="file" id="sellerImageFile">
+                            <input type="file" id="sellerImageFile" data-bs-toggle="tooltip" data-bs-html="true"
+                                data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                data-bs-title="로고 이미지를 등록해 주세요.">
                         </div>
                         <div class="sellerInputBox">
                             <label class="sellerInputLable">
                                 대표자 성함
                             </label>
-                            <input class="sellerInputData" id="business_owner_name">
+                            <input class="sellerInputData" id="business_owner_name" data-bs-toggle="tooltip"
+                                data-bs-html="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                data-bs-title="대표님의 성함을 입력해 주세요.">
                         </div>
                         <div class="sellerInputBox">
                             <label class="sellerInputLable">
                                 업체 연락처
                             </label>
-                            <input class="sellerInputData" id="contact_number">
+                            <input class="sellerInputData" id="contact_number" data-bs-toggle="tooltip"
+                                data-bs-html="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                data-bs-title="업체 연락처 정보를 입력해 주세요.">
                         </div>
                         <div class="sellerInputBox">
                             <label class="sellerInputLable">
                                 업체명
                             </label>
-                            <input class="sellerInputData" id="company_name">
+                            <input class="sellerInputData" id="company_name" data-bs-toggle="tooltip"
+                                data-bs-html="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                data-bs-title="업체 이름을 입력해 주세요.">
                         </div>
                         <div class="sellerInputBox">
                             <label class="sellerInputLable">
                                 사업자 등록 번호
                             </label>
-                            <input class="sellerInputData" id="business_number">
+                            <input class="sellerInputData" id="business_number" data-bs-toggle="tooltip"
+                                data-bs-html="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                data-bs-title="사업자 등록 번호를 입력해 주세요.">
                         </div>
                         <div class="sellerInputBox">
                             <label class="sellerInputLable">
                                 예금주
                             </label>
-                            <input class="sellerInputData" id="account_holder">
+                            <input class="sellerInputData" id="account_holder" data-bs-toggle="tooltip"
+                                data-bs-html="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                data-bs-title="입금 계좌의 예금주 정보를 입력해 주세요.">
                         </div>
                         <div class="sellerInputBox">
                             <label class="sellerInputLable">
                                 계좌 번호
                             </label>
-                            <input class="sellerInputData" id="account_number">
+                            <input class="sellerInputData" id="account_number" data-bs-toggle="tooltip"
+                                data-bs-html="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                data-bs-title="입금 계좌 번호 정보를 입력해 주세요.">
                         </div>
                         <div class="sellerInputBox">
                             <label class="sellerInputLable">
                                 은행 명
                             </label>
-                            <input class="sellerInputData" id="bank_name">
+                            <input class="sellerInputData" id="bank_name" data-bs-toggle="tooltip" data-bs-html="true"
+                                data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                data-bs-title="입금 계좌의 은행 이름을 입력해 주세요.">
                         </div>
                         <div id="sellerMessageBox" style="display: none;">
 
                         </div>
                         <div style="margin-top: 5%;">
-                            <button type="button" class="seller-submit-button"
-                                id="createSellerInformationButton">제출</button>
+                            <button type="button" class="seller-submit-button" id="createSellerInformationButton"
+                                data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip"
+                                data-bs-title="등록하신 정보를 관리자 심사후 판매 활동을 할 수 있습니다.">제출</button>
                         </div>
                         <div style="margin-top: 5%;">
                             <button type="button" class="seller-submit-button" style="display: none;"
-                                id="updateSellerInformationButton">수정</button>
+                                id="updateSellerInformationButton" data-bs-toggle="tooltip" data-bs-html="true"
+                                data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                data-bs-title="판매자 정보를 수정합니다.">수정</button>
                         </div>
                         <div style="margin-top: 5%;">
                             <button type="button" class="seller-submit-button" style="display: none;"
-                                id="deleteSellerInformationButton">삭제</button>
+                                id="deleteSellerInformationButton" data-bs-toggle="tooltip" data-bs-html="true"
+                                data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                data-bs-title="판매자 정보를 삭제할 경우, 팔로워를 모두 잃게 됩니다.">삭제</button>
                         </div>
                     </form>
                 </div>
@@ -268,7 +370,9 @@
                         </span>
                     </div>
                     <div class="deleteUserInformationBox">
-                        <button type="button" id="deleteUserInformationButton">
+                        <button type="button" id="deleteUserInformationButton" data-bs-toggle="tooltip"
+                            data-bs-html="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                            data-bs-title="휴면 계정으로 전환 합니다.">
                             휴면 계정으로 전환
                         </button>
                     </div>
@@ -276,11 +380,14 @@
                 <!-- 회원 탈퇴 끝 -->
                 <div id="userCustomsCodeInformation" style="display: none;" class="view-items">
                     <label class="detailInputLable">통관 번호</label>
-                    <input id="customsCodeSubmitInput" type="text">
+                    <input id="customsCodeSubmitInput" type="text" data-bs-toggle="tooltip" data-bs-html="true"
+                        data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="통관 번호를 입력해 주세요.">
                     <div id="customsCodeMessageBox" style="display: none;">
 
                     </div>
-                    <button type="button" id="customsCodeSubmitButton">제출</button>
+                    <button type="button" id="customsCodeSubmitButton" data-bs-toggle="tooltip" data-bs-html="true"
+                        data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                        data-bs-title="통관 번호를 입력하시고 제출해 주세요.">제출</button>
                 </div>
                 <div id="userEmailInformation" style="display: none;" class="view-items">
                     <div class="input-itme-box" style="margin-top: 3%;" id="emailBox">
@@ -288,7 +395,9 @@
                             이메일
                         </label>
                         <div class="phoneNumberBox">
-                            <input type="text" class="phone_number_input_items" id="email">
+                            <input type="text" class="phone_number_input_items" id="email" data-bs-toggle="tooltip"
+                                data-bs-html="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                                data-bs-title="변경하실 이메일 정보를 입력해 주세요.">
                         </div>
                     </div>
                     <div class="input-itme-box" style="margin-top: 3%; display: none;" id="verificationCodeBox">
@@ -296,7 +405,9 @@
                             인증 코드
                         </label>
                         <div class="phoneNumberBox">
-                            <input type="text" class="phone_number_input_items" id="verificationCode">
+                            <input type="text" class="phone_number_input_items" id="verificationCode"
+                                data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip" data-bs-title="발급받은 인증 코드를 입력해 주세요.">
                         </div>
                     </div>
                     <div id="emailMessageBox" style="display: none;">
@@ -304,13 +415,17 @@
                     </div>
 
                     <div class="input-itme-box">
-                        <button type="button" class="change-email-information-button" id="getEmailVerificationCode"> 이메일
+                        <button type="button" class="change-email-information-button" id="getEmailVerificationCode"
+                            data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                            data-bs-custom-class="custom-tooltip" data-bs-title="변경하실 이메일로 인증 코드를 발급 받습니다."> 이메일
                             인증 번호 발급
                         </button>
                     </div>
 
                     <div class="input-itme-box" id="submitChangeEamilInformationBox" style="display: none;">
-                        <button type="button" class="change-email-information-button" id="submitChangeEamilInformation">
+                        <button type="button" class="change-email-information-button" id="submitChangeEamilInformation"
+                            data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="top"
+                            data-bs-custom-class="custom-tooltip" data-bs-title="이메일 인증을 통해 이메일을 변경 합니다.">
                             이메일 인증 번호 제출
                         </button>
                     </div>
@@ -331,6 +446,6 @@
     <script type="module" src="/static/js/user_detail_page.js"></script>
     <script src="/static/js/loader.js" type="module"></script>
 </body>
-<footer></footer>
+<footer style="display: none;" id="footer"></footer>
 
 </html>
