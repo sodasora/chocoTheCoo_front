@@ -21,7 +21,7 @@ export async function categoryview() {
         categoryItem.setAttribute("href", `index.html?category_id=${category.id}`);
         categoryItem.innerText = `🍫${category.name}\n`
         categoryBox.appendChild(categoryItem);
-    categorySelect.appendChild(categoryBox);
+        categorySelect.appendChild(categoryBox);
     });
 }
 
@@ -30,7 +30,6 @@ export async function keywordSeachView() {
     const keyword = answer.value;
     goEditReview(keyword)
 }
-
 export async function showSameCategory() {
     const urlParams = new URLSearchParams(window.location.search);
     const categoryId = urlParams.get('category_id');
@@ -60,7 +59,7 @@ export async function showSearchKeywordProduct() {
     }
 }
 
-export async function searchAnythingAPI(){
+export async function searchAnythingAPI() {
     const urlParams = new URLSearchParams(window.location.search);
     const url = new URLSearchParams();
 
@@ -76,26 +75,26 @@ export async function searchAnythingAPI(){
     const ordering = document.getElementById("ordering")
 
     // 카테고리 검색 카테고리 ID가 url에 있을때
-    if(categoryId){
+    if (categoryId) {
         categories.forEach(category => {
 
             url += `category=${categoryId}`
         });
     }
     // 검색창 입력어로 검색 : 키워드가 url에 있을때
-    else if(keyword) {
+    else if (keyword) {
         search.addEventListener("click", function () {
-            
+
             url += `search=${keyword}`
         })
     }
     // 정렬 : 정렬 규칙이 url에 있을 때 
-    else if(ordering){
-    ordering.addEventListener("click", function () {
-        
-        url += `ordering=${ordering}`
-        window.location.href = url
-    });
+    else if (ordering) {
+        ordering.addEventListener("click", function () {
+
+            url += `ordering=${ordering}`
+            window.location.href = url
+        });
     }
 
     goSearch(url)
@@ -118,7 +117,7 @@ export async function setEventListener() {
     });
     // 체크리스트 채팅
     document.getElementById("go-chat").addEventListener("click", function () {
-        window.location.href = "chatroom.html";
+        window.location.href = "chatindex.html";
     });
     // 체크리스트 결제
     document.getElementById("go-cart").addEventListener("click", function () {
@@ -166,7 +165,6 @@ export async function setEventListener() {
 }
 
 window.onload = async function () {
-    
     categoryview()
     setEventListener()
     const product = await getProductListAPIView();
@@ -210,7 +208,7 @@ async function setLocalStorage(response) {
         window.location.reload();
     } else {
         alert(response_json["error"]);
-        window.history.back();
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
     }
 }
 async function getKakaoToken(kakao_code) {

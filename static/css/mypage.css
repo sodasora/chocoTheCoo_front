@@ -141,8 +141,9 @@ button {
   max-width: 400px;
 }
 
-/* .tooltip{
-  inset: auto auto 100px 100px; 위치
+/* 위치
+.tooltip {
+  inset: auto auto 100px 100px;
 } */
 
 #month-total {

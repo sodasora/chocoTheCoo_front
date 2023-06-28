@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5500"
+export const FRONT_BASE_URL = "http://127.0.0.1:5501"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
@@ -95,7 +95,7 @@ export async function postPointCheckoutView(amount, type) {
 		method: 'POST',
 		body: JSON.stringify({
 			"amount": amount,
-			"type": type
+			"payment_type": type
 		})
 	})
 	return response_point.json();
@@ -220,7 +220,6 @@ export async function submitChangeEamilInformationAPI(information) {
 		},
 		method: 'PUT',
 		body: JSON.stringify({
-			email: information.email,
 			verification_code: information.verification_code
 		})
 	})
@@ -459,9 +458,9 @@ export async function deleteSellerInformationAPI() {
 	return response
 }
 
-export async function deleteUserInformationAPI(user_id) {
-	// 판매자 정보 삭제
-	const response = await fetch(`${BACK_BASE_URL}/api/users/profile/${user_id}/`, {
+export async function deleteUserInformationAPI() {
+	// 휴면 계정으로 전환
+	const response = await fetch(`${BACK_BASE_URL}/api/users/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`
 		},
@@ -737,10 +736,10 @@ export async function writeReviewAPI(product_id, formdata) {
 	} else if (response.status == 406) {
 		alert("해당 상품 리뷰를 이미 작성했습니다.")
 		window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`;
-	} else if (response.status == 404){
+	} else if (response.status == 404) {
 		alert("판매자가 삭제한 상품입니다 ㅠㅠ")
 		window.location.href = `${FRONT_BASE_URL}/mypage.html`
-	} else if (response.status ==400) {
+	} else if (response.status == 400) {
 		alert("구매 이력이 없습니다")
 		window.location.href = `${FRONT_BASE_URL}/mypage.html`
 	} else {
@@ -1261,6 +1260,9 @@ export async function viewProductslist(product) {
 			newCard.setAttribute("class", "card");
 			newCard.setAttribute("id", e.id);
 
+			const newImageCard = document.createElement("div");
+			newImageCard.setAttribute("class", "image-card")
+
 			newCard.onclick = function () {
 				productDetail(e.id);
 			};
@@ -1277,7 +1279,8 @@ export async function viewProductslist(product) {
 				img.setAttribute("src", '/static/images/기본이미지.gif')
 			}
 
-			newCard.appendChild(img);
+			newImageCard.appendChild(img);
+			newCard.appendChild(newImageCard);
 
 			const newCardBody = document.createElement("div");
 			newCardBody.setAttribute("class", "card-body");
@@ -1288,25 +1291,29 @@ export async function viewProductslist(product) {
 			newCardTitle.innerText = e.name;
 			newCardBody.appendChild(newCardTitle);
 
+			const newCarddesc = document.createElement("div")
+			newCarddesc.setAttribute("class", "carddesc")
+
 			const newCardStar = document.createElement("div");
 			newCardStar.setAttribute("class", "card-star")
 
-			if (e.stars == null) {
+			if (e.stars == 0) {
 				newCardStar.innerText = "아직 리뷰별점이 없습니다."
 			} else {
 				newCardStar.innerText = "⭐" + e.stars + "점"
 			}
-			newCard.appendChild(newCardStar);
+			newCarddesc.appendChild(newCardStar);
 
 			const newCardText = document.createElement("p");
 			newCardText.setAttribute("class", "card-text");
 			newCardText.innerText = "상품가격 : " + e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
-			newCard.appendChild(newCardText)
+			newCarddesc.appendChild(newCardText)
 
 			const newCardFooter = document.createElement("p");
 			newCardFooter.setAttribute("class", "card-footer");
 			newCardFooter.innerText = "상품수량 : " + e.amount + "개";
-			newCard.appendChild(newCardFooter)
+			newCarddesc.appendChild(newCardFooter)
+			newCard.appendChild(newCarddesc)
 			newCol.appendChild(newCard);
 			list.appendChild(newCol);
 		})
@@ -1583,6 +1590,38 @@ export async function checkoutmyreview(product_id) {
 	return response
 }
 
+export async function kakaoLoginAPI() {
+	// 카카오 로그인
+
+	// 백엔드 서버로부터 kakao API 반환
+	const response = await fetch(`${BACK_BASE_URL}/api/users/kakao/login/`, { method: 'GET' })
+	const kakao_id = await response.json()
+	// Resource server와 약속된 REDIRECT URI 설정
+	const redirect_uri = REDIRECT_URI
+	// 요청할 데이터 설정
+	const scope = 'profile_nickname,profile_image,account_email'
+	// 사용자를 Resource Server로 이동
+	// Resource Server는 사용자를 Redirect URI로 안내
+	window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${kakao_id}&redirect_uri=${redirect_uri}&response_type=code&scope=${scope}`
+}
+
+export async function googleLoginAPI() {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/google/login/`, { method: 'GET' })
+	const google_id = await response.json()
+	const redirect_uri = REDIRECT_URI
+	const scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
+	const param = `scope=${scope}&include_granted_scopes=true&response_type=token&state=pass-through value&prompt=consent&client_id=${google_id}&redirect_uri=${redirect_uri}`
+	window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${param}`
+}
+
+export async function naverLoginAPI() {
+	const response = await fetch(`${BACK_BASE_URL}/api/users/naver/login/`, { method: 'GET' });
+	const naver_id = await response.json();
+	const redirect_uri = `${FRONT_BASE_URL}/index.html`;
+	const state = new Date().getTime().toString(36);
+	window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naver_id}&redirect_uri=${redirect_uri}&state=${state}`;
+}
+
 export async function searchWhatAPI(url) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${url}`, {
 		headers: {
@@ -1595,3 +1634,43 @@ export async function searchWhatAPI(url) {
 
 export const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 export const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+
+export async function getSellerInformationListAPI() {
+	// 관리자 권한으로 판매 승인 대기 내역 가져오기
+	const response = await fetch(`${BACK_BASE_URL}/api/users/get/seller/list/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "GET",
+	});
+	return response
+}
+
+export async function refusalOfSalesActivityAPI(information) {
+	// 관리자 권한으로 판매 활동 거절
+	console.log(information)
+	console.log(information.seller_id)
+	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/permissions/${information.seller_id}/`, {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json',
+			"Authorization": `Bearer ${access_token}`
+		},
+		body: JSON.stringify({
+			msg: information.msg
+		})
+	});
+	return response
+}
+export async function salesActivityApprovalAPI(seller_id) {
+	// 관리자 권한으로 판매 활동 승인
+
+	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/permissions/${seller_id}/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+		method: "PATCH",
+	});
+	return response
+}

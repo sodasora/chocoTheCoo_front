@@ -10,5 +10,29 @@
     height: 500px;
     margin-top: 30px;
     margin-bottom: 40px;
-    width: 40vw;
+    width: 50vw;
+}
+
+.help-text {
+    position: absolute;
+    object-fit: cover;
+    width: 20px;
+    height: 20px;
+    left: -30px;
+    top: 10px;
+    z-index: 1;
+}
+
+.tooltip>.tooltip-inner {
+    max-width: 300px;
+}
+
+input {
+    width: 30vw;
+    height: auto;
+    font-size: 2vw;
+}
+
+.card-title {
+    font-size: 2vw;
 }

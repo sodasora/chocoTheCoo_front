@@ -1,5 +1,6 @@
-import { BACK_BASE_URL, REDIRECT_URI, FRONT_BASE_URL, handleLoginAPI, getVerificationCodeAPI, setUserInformationAPI } from './api.js'
+import { BACK_BASE_URL, REDIRECT_URI, FRONT_BASE_URL, handleLoginAPI, getVerificationCodeAPI, setUserInformationAPI, kakaoLoginAPI, googleLoginAPI, naverLoginAPI } from './api.js'
 
+let modal_image_index = 0
 
 async function injectFooter() {
     // 푸터 html 불러오기
@@ -71,6 +72,9 @@ export async function getVerificationCode() {
                 item.style.display = "block";
             });
             email.readOnly = true
+            const container = document.getElementById("container");
+            // 높이 값 설정 
+            container.style.height = "calc(150vh - 50px)";
         } else if (response.status == 404) {
             message.innerText = "이메일 정보를 찾을 수 없습니다."
         }
@@ -129,41 +133,60 @@ export async function handleEvent() {
 }
 
 
-
-
-
-async function kakaoLoginBtn() {
-    // 카카오 로그인
-
-    // 백엔드 서버로부터 kakao API 반환
-    const response = await fetch(`${BACK_BASE_URL}/api/users/kakao/login/`, { method: 'GET' })
-    const kakao_id = await response.json()
-    // Resource server와 약속된 REDIRECT URI 설정
-    const redirect_uri = REDIRECT_URI
-    // 요청할 데이터 설정
-    const scope = 'profile_nickname,profile_image,account_email'
-    // 사용자를 Resource Server로 이동
-    // Resource Server는 사용자를 Redirect URI로 안내
-    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${kakao_id}&redirect_uri=${redirect_uri}&response_type=code&scope=${scope}`
+export async function closeModal() {
+    document.getElementById("modal").style.display = "none"
 }
 
-async function googleLoginBtn() {
-    const response = await fetch(`${BACK_BASE_URL}/api/users/google/login/`, { method: 'GET' })
-    const google_id = await response.json()
-    const redirect_uri = REDIRECT_URI
-    const scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
-    const param = `scope=${scope}&include_granted_scopes=true&response_type=token&state=pass-through value&prompt=consent&client_id=${google_id}&redirect_uri=${redirect_uri}`
-    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${param}`
+export async function changeModal(eventValue) {
+    const message = [
+        "이메일 정보와 비밀번호를 입력해서 로그인 해주세요.",
+        "소셜 계정으로 간편한 가입과 로그인이 가능 합니다.",
+        "가입된 계정이 없다면 회원 가입을 진행해 주세요.",
+        "휴면 계정이시거나, 비밀번호를 잊어 버리셨다면\n 비밀번호를 재 설정 해 주세요.",
+        "비밀 번호를 재 설정하기 위해서, 이메일 정보를 입력하고 인증 번호를 발급 받아 주세요.",
+        "이메일로 전송해드린 인증 코드를 작성해 주세요.",
+        "새로운 비밀번호를 입력해 주세요.",
+        "빈칸 없이 입력해 주셨다면 제출 버튼을 눌러 주세요.",
+        "인증 코드를 발급 받지 못했다면, 다시 발급 받아 주세요.",
+    ]
+
+    document.getElementById("modal-image-box").style.backgroundImage = `url('/static/images/login_guide/login_guide_${eventValue}.png')`;
+    document.getElementById("modal-message-box").innerText = message[eventValue]
+    document.getElementById("modal-page").innerText = `${eventValue}/8`
 }
 
-async function naverLoginBtn() {
-    const response = await fetch(`${BACK_BASE_URL}/api/users/naver/login/`, { method: 'GET' });
-    const naver_id = await response.json();
-    const redirect_uri = `${FRONT_BASE_URL}/index.html`;
-    const state = new Date().getTime().toString(36);
-    window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naver_id}&redirect_uri=${redirect_uri}&state=${state}`;
+export async function modalLeftButton() {
+    modal_image_index -= modal_image_index == 0 ? 0 : 1
+    changeModal(modal_image_index)
+}
+export async function modalRightButton() {
+    modal_image_index += modal_image_index == 8 ? 0 : 1
+    changeModal(modal_image_index)
 }
 
+function getTodayString() {
+    // 오늘 날짜 가져오기
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+function checkSkipToday() {
+    const skipToday = localStorage.getItem('login-modal-skip-today');
+    const today = getTodayString();
+    if (skipToday === today) {
+        closeModal();
+    }
+}
+
+function hideModalForToday() {
+    closeModal();
+
+    const today = getTodayString();
+    localStorage.setItem('login-modal-skip-today', today);
+}
 
 export async function setEventListener() {
     // html 요소 이벤트 리스너 추가
@@ -174,21 +197,35 @@ export async function setEventListener() {
     for (var i = 0; i < elements.length; i++) {
         elements[i].addEventListener("click", handleEvent);
     }
-    document.getElementById("kakaoBtn").addEventListener("click", kakaoLoginBtn)
-    document.getElementById("naverBtn").addEventListener("click", naverLoginBtn)
-    document.getElementById("googleBtn").addEventListener("click", googleLoginBtn)
     document.getElementById("password").addEventListener("keydown", (event) => {
         if (event.key == "Enter") {
             handleLogin()
         }
     })
+
+
+    document.getElementById("kakaoBtn").addEventListener("click", kakaoLoginAPI)
+    document.getElementById("naverBtn").addEventListener("click", naverLoginAPI)
+    document.getElementById("googleBtn").addEventListener("click", googleLoginAPI)
+    document.getElementById("modal-close-button").addEventListener("click", closeModal)
+    document.getElementById("modal-left-button").addEventListener("click", modalLeftButton)
+    document.getElementById("modal-right-button").addEventListener("click", modalRightButton)
+    document.getElementById("modal-skip-today").addEventListener("click", hideModalForToday)
+    document.getElementById('modal-skip-today').addEventListener('click', hideModalForToday);
+
 }
+
+
+
+
+
 
 
 window.onload = async () => {
     // 로그인 안한 사용자만 접근 가능
     setEventListener();
     // injectFooter();
+    checkSkipToday()
     const payload = localStorage.getItem("payload");
     const payload_parse = JSON.parse(payload)
     if (payload_parse != null) {

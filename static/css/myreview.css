@@ -12,6 +12,9 @@
     font-style: normal;
 }
 
+body {
+    background-color: #C4A492;
+}
 
 button {
     height: 4vh;
@@ -159,4 +162,57 @@ button {
     color: #0b5ed7;
     font-weight: 600;
     text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+
+    .profile-card {
+        font-family: 'S-CoreDream-3Light';
+        font-size: 2vw;
+        width: 40vw;
+        height: auto;
+        text-align: center;
+        margin-top: 30px;
+        margin-left: 25px;
+        border: 2px solid white;
+        border-radius: 20px;
+        color: white;
+        margin-bottom: 20px;
+    }
+
+    .profile {
+        width: 30vw;
+    }
+
+    #group {
+        display: flex;
+    }
+
+    .subscription-section {
+        margin-top: 40px;
+    }
+
+    .subscription-card {
+        width: 40vw;
+        height: auto;
+        padding: 20px;
+        text-align: center;
+        margin-top: 10px;
+        margin-left: 30px;
+        margin-bottom: 20px;
+        border: 2px solid white;
+        border-radius: 20px;
+        font-family: 'S-CoreDream-3Light';
+        font-size: 1.5vw;
+        color: white;
+        font-weight: bold;
+    }
+
+    #review {
+        width: 80%;
+    }
+
+    #button-review {
+        width: 23vw;
+    }
 }
