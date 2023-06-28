@@ -210,7 +210,7 @@ async function setLocalStorage(response) {
         window.location.reload();
     } else {
         alert(response_json["error"]);
-        window.history.back();
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
     }
 }
 async function getKakaoToken(kakao_code) {
