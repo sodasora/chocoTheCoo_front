@@ -535,14 +535,17 @@ export async function getCartList() {
 			"Authorization": `Bearer ${access_token}`,
 		}
 	})
-
+	const response_json = await response.json();
 	if (response.status == 200) {
-		const response_json = await response.json();
 		return response_json;
+	} else if (response.status == 400) {
+		alert(response_json)
+		window.location.href = `${FRONT_BASE_URL}/user_detail_page.html`;
 	} else {
 		console.log(response.status);
 	}
 }
+
 
 // 상품 등록하기
 export async function registProductAPIView(formdata) {
