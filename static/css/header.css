@@ -12,6 +12,10 @@
     font-style: normal;
 }
 
+html {
+    background-color: #C4A492;
+}
+
 body {
     margin-top: 12em;
     padding: 0;
@@ -273,3 +277,9 @@ header {
 /* mobileLogin
 mobileSignUp
 mobileLogout */
+
+.dropdown-item {
+    border-radius: 0.7em;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+}

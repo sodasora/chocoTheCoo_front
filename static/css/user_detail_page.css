@@ -1150,3 +1150,19 @@ input {
     color: white;
     cursor: pointer;
 }
+
+.dropdown-menu-header {
+    font-size: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.dropdown-menu-header>li {
+    width: 155px !important;
+    font-size: 1em;
+}
+
+#headerDropdown {
+    height: 35px !important;
+    width: auto;
+}
