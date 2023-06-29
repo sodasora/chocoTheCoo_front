@@ -775,13 +775,10 @@ async function getUserDetailInformation(response_json) {
 
 async function getSellerInformation(response_json) {
     const seller_information = response_json.user_seller
+    document.getElementById("sellerProfileView").style.backgroundImage = "url('/static/images/store.gif')";
     if (seller_information != null) {
 
-        if (seller_information.company_img == null) {
-
-            document.getElementById("sellerProfileView").style.backgroundImage = "url('/static/images/store.gif')";
-            // .style.src = "/static/images/store.gif";
-        } else {
+        if (seller_information.company_img != null) {
             document.getElementById("sellerProfileView").style.backgroundImage = `url(${BACK_BASE_URL}${seller_information.company_img})`;
             // .setAttribute("src", response_json.profile_image)
         }

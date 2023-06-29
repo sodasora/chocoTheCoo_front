@@ -68,6 +68,10 @@ button {
 
 /* 휴대 기기 */
 @media (max-width: 425px) {
+    #modal {
+        display: none !important;
+    }
+
     #leftBox {
         display: none !important;
     }

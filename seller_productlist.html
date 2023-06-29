@@ -25,38 +25,44 @@
 
 <body>
     <div class="seller_nav">
-        <a href="/seller.html"><h1>&nbsp;&nbsp;상품 통계 및 현황</h1></a>
+        <a href="/seller.html">
+            <h1>&nbsp;&nbsp;상품 통계 및 현황</h1>
+        </a>
     </div>
-    <container class="container">
-        <h2>상품별현황</h2>
-        <div class="card mb-4">
-            <div class="card-body">
-                <table class="table table-hover table-striped">
-                    <colgroup>
-                        <col width=10%>
-                        <col width=10%>
-                        <col width=10%>
-                        <col width=10%>
-                        <col width=10%>
-                        <col width=10%>
-                        <col width=10%>
-                        <col width=10%>
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th>상품등록일</th>
-                            <th>상품명</th>
-                            <th>상품이미지</th>
-                            <th>상품가격</th>
-                            <th>재고수량</th>
-                            <th>누적판매수</th>
-                            <th>평점</th>
-                            <th>좋아요</th>
-                        </tr>
-                    </thead>
-                    <tbody id="product-list">
-                        <!-- ↓ 예시 html 실제로는 js에서 불러옴 ↓ -->
-                        <!-- <tr>
+    <div class="productContainer">
+
+        <div class="productList">
+            <!-- <div class="productTitile">
+                <h2>상품별현황</h2>
+            </div> -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <table class="table table-hover table-striped">
+                        <colgroup>
+                            <col width=10%>
+                            <col width=10%>
+                            <col width=10%>
+                            <col width=10%>
+                            <col width=10%>
+                            <col width=10%>
+                            <col width=10%>
+                            <col width=10%>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>상품등록일</th>
+                                <th>상품명</th>
+                                <th>상품이미지</th>
+                                <th>상품가격</th>
+                                <th>재고수량</th>
+                                <th>누적판매수</th>
+                                <th>평점</th>
+                                <th>좋아요</th>
+                            </tr>
+                        </thead>
+                        <tbody id="product-list">
+                            <!-- ↓ 예시 html 실제로는 js에서 불러옴 ↓ -->
+                            <!-- <tr>
                             <td>23-06-09</td>
                             <td>에그몽</td>
                             <td><div class="product-img" style="background-image: url('/static/images/누적판매량.png');"></div></td>
@@ -66,16 +72,17 @@
                             <td>4.7점</td>
                             <td>1000개</td>
                         </tr> -->
-                        <!-- ↑ 예시 html 실제로는 js에서 불러옴 ↑ -->
-                    </tbody>
-                </table>
+                            <!-- ↑ 예시 html 실제로는 js에서 불러옴 ↑ -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="product-buttons"></div>
             </div>
-            <div id="product-buttons"></div>
         </div>
 
 
 
-    </container>
+    </div>
     <!-- script -->
     <script src="/static/js/api.js" type="module"></script>
     <script src="/static/js/seller_loader.js" type="module"></script>
