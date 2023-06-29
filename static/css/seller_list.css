@@ -28,20 +28,34 @@
     }
 }
 
+@font-face {
+    font-family: 'SUIT-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 /* nav bar */
 .seller_nav {
     display: flex;
+    justify-content: center;
     height: 70px;
     background: #B9937E;
     align-items: center;
+    font-family: 'SUIT-Regular';
+
 }
 
 .seller_nav h1 {
     font-size: 40px;
     color: #fff;
 }
+.container {
+    font-family: 'SUIT-Regular';
+}
 
 .productContainer {
+    font-family: 'SUIT-Regular';
+
     display: flex;
     flex-direction: column;
     background-color: #C4A492;
@@ -118,4 +132,28 @@ td>text {
 
 ion-icon {
     padding-top: 0.5rem;
+}
+
+.title-container {
+    height: auto;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    background-color: #743837;
+}
+
+.image-box {
+    width: 180%;
+    height: 14rem;
+    background-image: url("/static/images/storeforseller.png");
+    background-size: cover;
+    background-color: #743837;
+    background-position: center;
+    background-repeat: no-repeat
+}
+
+@media screen and (max-width: 768px) {
+    .image-box {
+        display: none;
+    }
 }
