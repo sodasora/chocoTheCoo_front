@@ -1,6 +1,10 @@
 import { FRONT_BASE_URL, payload, OrderItemToCart, changebillstatus, patchSubscribeView, getBillDetail, getSubscribeView, getUserProfileAPIView, getMyReviewView } from './api.js'
 
 window.onload = async function () {
+    if (payload == null) {
+        alert("로그인이 필요 합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    }
     renderBillDetails();
     subscription_info();
     profile();
