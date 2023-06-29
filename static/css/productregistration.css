@@ -17,22 +17,18 @@
 .section1 {
     /* background-color: #C4A492; */
     font-family: 'TheJamsil5Bold';
-    background-color: antiquewhite;
+    background-color: #C4A492;
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
-    /* padding-bottom: 5vh; */
 }
 
 .productBox {
-
     height: 40em;
     width: 50vw;
-    background-color: antiquewhite;
-    /* border: 1px solid #412d1f; */
+    background-color: #C4A492;
     border-radius: 2vw;
-    margin-top: 6em;
     margin-bottom: 5em;
 }
 
@@ -126,9 +122,7 @@
 }
 
 #profileView {
-    margin-top: 10em;
-    margin-left: 2em;
-    margin-right: 2em;
+    /* margin-top: 1em; */
     min-width: 20em;
     min-height: 27em;
     max-width: 20em;
@@ -136,7 +130,6 @@
 }
 
 .preview-card {
-    margin-left: 2em;
     min-width: 10em;
     min-height: 13em;
     max-width: 10em;
@@ -144,13 +137,12 @@
 }
 
 .preview-section {
-    /* transform: translate(-5%, -25%); */
-    margin: 10em o o 2em;
+    margin: 5em 0 0 2em;
     border-radius: 10px;
 
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1022px) {
     .preview-section {
         display: none;
     }
@@ -162,15 +154,21 @@
     width: auto;
     display: flex;
     justify-content: center;
-    background-color: antiquewhite;
+    background-color: #743837;
 }
 
 .image-box {
-    width: 35rem;
-    height: 20rem;
-    background-image: url("/static/images/realrealSeller2.gif");
+    width: 180%;
+    height: 14rem;
+    background-image: url("/static/images/productregist.png");
     background-size: 100% 100%;
-    background-color: transparent;
+    background-color: #743837;
     background-position: center;
     background-repeat: no-repeat
+}
+
+@media screen and (max-width: 768px) {
+    .image-box {
+        display: none;
+    }
 }
