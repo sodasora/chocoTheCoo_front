@@ -74,7 +74,15 @@ async function getUserDeliveryInformationAPI(user_id) {
 async function loadCheckedCart() {
     const url = new URL(window.location.href);
     const queryString = url.search.substring(1);
+    if (queryString == "") {
+        alert("카트 정보를 찾을 수 없습니다.")
+        window.location.replace(`${FRONT_BASE_URL}/index.html`)
+    }
     const checkedCart = await getCheckedCart(queryString);
+    if (checkedCart.length == 0) {
+        alert("카트 정보를 찾을 수 없습니다.")
+        window.location.replace(`${FRONT_BASE_URL}/index.html`)
+    }
     const cartCheck = document.getElementById("orderCart")
     checkedCart.forEach((e) => {
         const row = document.createElement("div");

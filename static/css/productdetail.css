@@ -76,9 +76,9 @@ body {
     width: 100%;
     justify-content: space-between !important;
     padding: 1em;
-    background-color:antiquewhite ;
-    border-bottom-right-radius:1em ;
-    border-bottom-left-radius:1em ;
+    background-color: antiquewhite;
+    border-bottom-right-radius: 1em;
+    border-bottom-left-radius: 1em;
 }
 
 .star-box {
@@ -114,8 +114,8 @@ body {
 }
 
 #top-image {
-    border-top-left-radius:1em ;
-    border-top-right-radius:1em ;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
     object-fit: cover;
     width: 100%;
 }
@@ -457,7 +457,7 @@ body {
 
 .reviewDetailNickname {
     height: 100%;
-    width: 10%;
+    width: 50%;
     margin-left: 5%;
 }
 

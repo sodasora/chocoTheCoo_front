@@ -110,6 +110,7 @@
     color: white;
     margin-top: 1em;
 }
+
 .editbutton {
     border-radius: 10px;
     border: 1px solid #3a271b;
@@ -120,6 +121,7 @@
     color: white;
     margin-top: 1em;
 }
+
 .submit {
     display: flex;
     justify-content: center;
