@@ -1,142 +1,142 @@
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+
 .section1 {
-    background-color: #C4A492;
+    /* background-color: #C4A492; */
+    font-family: 'TheJamsil5Bold';
+    background-color: antiquewhite;
+    width:100%;
     height: 100%;
     display: flex;
     justify-content: center;
-    padding-bottom: 5vh;
+    /* padding-bottom: 5vh; */
 }
 
 .productBox {
-    width: 90vw;
-    max-width: 1100px;
-    height: 1000px;
+    
+    height: 40em;
+    width: 50vw;
     background-color: antiquewhite;
-    border: 1px solid #412d1f;
-    border-radius: 10px;
-    margin-top: 200px;
+    /* border: 1px solid #412d1f; */
+    border-radius: 2vw;
+    margin-top: 6em;
+    margin-bottom: 5em;
 }
 
-.form-select {
-    margin: 7vh 0 0 5vw;
-    width: 47vw;
-    max-width: 500px;
-    height: 40px;
+#category-select {
+    width: 50vw;
+    margin-bottom: 1em;
+    margin-top: 2em;
+    border-radius: 0.5em;
+}
+
+#name {
+    /* margin: 1vh 0 0 5vw; */
+    width: 90vw;
+    height: 40px; 
     font-size: 20px;
+    border-radius: 0.5em;
 }
 
-.col-sm-10 {
-    margin: 20px 0 20px 0;
-    width: 80vw;
-    max-width: 980px;
-    height: 40px;
+#price{
+    width: 90vw;
+    height: 40px; 
     font-size: 20px;
-}
-#productimagefont {
-    margin: 7vh 0 0 5vw;
-}
-#exampleFormControlTextarea1 {
-    margin: 2vh 0 0 5vw;
-    width: 80vw;
-    max-width: 1000px;
-    height: 40vh;
-    font-size: calc(12px + 1vmin);
-    border-radius: 5px;
+    border-radius: 0.5em;
 }
 
-.form-control{
-    margin: 2.2vh 0 0 5vw;
-    width: 47vw;
-    max-width: 500px;
-    height:40px;
-}
-.submitbutton {
-    border-radius: 10px;
-    border: 1px solid #3a271b;
-    width:100px;
-    height: 50px;
-    margin: 0 0 0 460px;
+#amount {
+    width: 90vw;
+    height: 40px; 
     font-size: 20px;
-    background-color: white;
-    color: #3a271b;
+    border-radius: 0.5em;
 }
 
-.previewbutton{
-    border-radius: 10px;
-    border: 1px solid #3a271b;
-    width:150px;
-    height: 60px;
-    margin: 0 0 0 400px;
-    font-size: 20px;
-    background-color: white;
-    color: #3a271b;
+.content1 {
+    width: 70vw !important;
 }
-.editbutton{
-    border-radius: 10px;
-    border: 1px solid #3a271b;
-    width:100px;
-    height: 50px;
-    margin: 0 0 0 460px;
-    font-size: 20px;
-    background-color: white;
-    color: #3a271b;
+#content{
+    width: 50vw;
+    border-radius: 0.5em;
 }
-#content {
-    margin: 2vh 0 0 5vw;
-    width: 80vw;
-    max-width: 980px;
-    height: 40vh;
-}
-
-.sellerlogo{
-    background-color: #C4A492;
-    height:100px;
-    text-align: center;
-}
-
-#sellerLogo {
-    min-width: 100px;
-    margin-left: 500px;
-}
-
-#profileView{
-    min-width: 500px;
-    min-height: 500px;
-    max-width: 500px;
-    max-height: 500px;
-}
-.preview-card {
-    font-family: 'S-CoreDream-3Light';
-    font-size: 1.3em;
-    width: 630px;
-    height: 600px;
-    text-align: center;
-    margin: 300px 0 0 0;
-    border-radius: 20px;
-}
-.preview-section{
-    border-radius: 10px;
-    height: 1000px;
-    width:630px;
-    margin: 300px 0 0 40px;
-    background-image: url('/static/images/미리보기배경.png');
-}
-
 #basic-addon1{
     border-color: antiquewhite;
     background-color: #412d1f;
     color:white;
     height: 40px;
-    margin-top: 2.1%;
+    width: 6em;
+    display: flex;
+    justify-content: center;
+    border-radius: 0.5em;
 }
-#registproduct{
-    margin-left: 3.7%;
-    width: 48vw;
-    height: 40px;
+#formbox{
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
 }
-.mb-3 {
-    margin-bottom: 1rem!important;
-    margin-left:3px;
+#formFile {
+    width: 100%;
 }
-#content {
-    width: 47vw;
+.input-group {
+    width:100%;
 }
+#registproduct1{
+    width: 100%;
+}
+
+
+.submitbutton {
+    border-radius: 10px;
+    border: 1px solid #3a271b;
+    width:100px;
+    height: 50px;
+    font-size: 20px;
+    background-color: #3a271b;
+    color: white;
+    margin-top: 1em;
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+}
+
+.editgroup {
+    display: flex;
+    justify-content: center;
+}
+
+#profileView{
+    margin-top: 10em;
+    margin-left: 2em;
+    margin-right:2em;
+    min-width: 20em;
+    min-height: 27em;
+    max-width: 20em;
+    max-height: 27em;
+}
+.preview-card {
+    margin-left: 2em;
+    min-width: 10em;
+    min-height: 13em;
+    max-width: 10em;
+    max-height: 13em;
+}
+.preview-section{
+    /* transform: translate(-5%, -25%); */
+    margin: 10em o o 2em;
+    border-radius: 10px;
+    
+}
+ 
+@media screen and (max-width: 768px) {
+    .preview-section {
+      display: none;
+    }
+}
+  
