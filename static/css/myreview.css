@@ -16,15 +16,52 @@ body {
     background-color: #C4A492;
 }
 
-button {
+.button-sets>button,
+#button-content>button,
+.subscription-section>button,
+#sub-button {
     height: 4vh;
     font-size: 1vw;
-    margin-top: 1.2vw;
     background-color: rgba(109, 86, 68, 0.822);
     color: white;
     border-radius: 10px;
+    border: none;
+    font-family: 'S-CoreDream-3Light';
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
 }
 
+#sub-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-width: 10em !important;
+    width: 80%;
+    margin: 1em 0;
+}
+
+.button_page.active,
+.button_page:hover {
+    color: #0b5ed7;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.button_page {
+    height: 4vh;
+    font-size: 1vw;
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+    border: none;
+    font-family: 'S-CoreDream-3Light';
+}
+
+#group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
 .section {
     background-color: #C4A492;
@@ -33,6 +70,7 @@ button {
 
 .mypage-intro {
     display: flex;
+    align-items: center;
     margin-top: 20px;
 }
 
@@ -42,6 +80,7 @@ button {
     font-weight: bold;
     padding-left: 40px;
     color: white;
+    margin-bottom: 0;
 }
 
 .line {
@@ -58,7 +97,6 @@ button {
     height: auto;
     text-align: center;
     margin-top: 30px;
-    margin-left: 60px;
     border: 2px solid white;
     border-radius: 20px;
     color: white;
@@ -73,8 +111,6 @@ button {
     height: 18vw;
     padding: 20px;
     text-align: center;
-    margin-top: 10px;
-    margin-left: 60px;
     margin-bottom: 20px;
     border: 2px solid white;
     border-radius: 20px;
@@ -103,10 +139,6 @@ button {
     margin-bottom: 1.5vw;
 }
 
-.sub-button {
-    margin-left: 24vw;
-}
-
 .card {
     width: 60vw;
     min-height: 20vh;
@@ -117,6 +149,8 @@ button {
 
 .card-body {
     display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 0.8vw;
 }
 
@@ -126,7 +160,10 @@ button {
 }
 
 .card-text {
+    word-break: break-all;
+    padding: 1em;
     margin-left: 20px;
+    width: 100%;
 }
 
 .review-title {
@@ -147,8 +184,14 @@ button {
 }
 
 #button-review {
+    cursor: pointer;
+    position: absolute;
+    top: 1em;
+    right: 1em;
     margin-top: 0px;
     margin-left: auto;
+    height: 30px;
+    width: 30px;
 }
 
 .button_page.active,
@@ -168,16 +211,17 @@ button {
     }
 
     .profile-section {
+        display: flex;
         width: 100%;
         justify-content: center;
         align-items: center;
-        margin-left: 5px;
     }
 
     .sub-button {
         width: 80%;
         margin-top: 10px;
         margin-left: 35px;
+        font-size: 1.2em!important;
     }
 
     .subscription-section {
@@ -195,14 +239,13 @@ button {
         height: auto;
         text-align: center;
         margin-top: 30px;
-        margin-left: 30px;
         border: 2px solid white;
         border-radius: 20px;
         color: white;
+        font-size: 1.2em!important;
     }
 
     .subscription-card {
-        margin-left: 33px;
         height: auto;
         width: 100%;
         padding: 20px;
@@ -214,6 +257,7 @@ button {
         font-size: 1.5vw;
         color: white;
         font-weight: bold;
+        font-size: 1.2em;
     }
 
     #review {

@@ -108,7 +108,7 @@ button {
     width: 180%;
     height: 14rem;
     background-image: url("/static/images/storeforseller.png");
-    background-size: 100% 100%;
+    background-size: cover;
     background-color: #743837;
     background-position: center;
     background-repeat: no-repeat

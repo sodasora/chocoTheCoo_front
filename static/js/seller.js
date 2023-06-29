@@ -60,14 +60,17 @@ let total_star_score = 0
 let is_score_products = seller_products.filter(function (product) {
     return product.stars; //평점 존재하는 상품만 필터
 });
-for (const is_score_product of is_score_products) {
-    total_star_score += is_score_product.stars
+let avg_star_score = "0.0"
+let max_star_score = "0.0"
+if (is_score_products.length != 0) {
+    for (const is_score_product of is_score_products) {
+        total_star_score += is_score_product.stars
+    }
+    avg_star_score = (Math.round((total_star_score / is_score_products.length) * 10) / 10).toFixed(1);
+    // 8) 최고평점
+    max_star_score = Math.max(...is_score_products.map(product => product.stars)).toFixed(1);
 }
-let avg_star_score = (Math.round((total_star_score / is_score_products.length) * 10) / 10).toFixed(1);
-// 8) 최고평점
-let max_star_score = Math.max(...is_score_products.map(product => product.stars)).toFixed(1);
 //########## ↑ 정보 정의 ↑ ##########//
-
 
 //########## ↓ 상단-현황박스 정보 입력 ↓ ##########//
 // 1) 총 누적판매량
@@ -133,7 +136,7 @@ async function sellerProfile() {
     document.getElementById("month_sent").innerText = seller_data["month_sent"]
     document.getElementById("month_sent_charge").innerText = (seller_data["month_sent"] * 3000).toLocaleString({ style: 'currency', currency: 'KRW' }) //배송비 3000원
     document.getElementById("firstday").innerText = firstday
-    document.getElementById("today").innerHTML = `<text id="today" class="status-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~${today}</text>`
+    document.getElementById("today").innerHTML = `<text id="today" class="status-text">~${today}</text>`
     document.getElementById("term").innerHTML = `<text  id="term" class="unit-text">초코더쿠와 함께한 기간: ${term}일</text>`
 
     document.getElementById("unpaid_sent").innerText = seller_data["unpaid_sent"]

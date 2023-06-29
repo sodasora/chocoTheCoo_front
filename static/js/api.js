@@ -1140,128 +1140,130 @@ export async function getProductslist(product) {
 	const next_page = page_num + 1
 	const paginate = document.getElementById('product-buttons')
 	// console.log(product.next)
+	if (paginate) {
 
-	if (product_count <= 9) {
-		paginate.remove();
-	} else {
-		if (product.previous == null) {
-			// Create elements
-			const li1 = document.createElement('li');
-			li1.className = 'gw-pagebtn';
-			const a1 = document.createElement('a');
-			a1.id = 'page_item_pre';
-			a1.className = 'gw-pagenum gw-p-move';
-			a1.dataset.page = pre_page;
-			const span1 = document.createElement('span');
-			const li2 = document.createElement('li');
-			li2.className = 'gw-pagebtn';
-			const a2 = document.createElement('a');
-			a2.id = 'gw-pagenum';
-			a2.innerText = `${page_num} / ${page_count}`;
-			const li3 = document.createElement('li');
-			li3.className = 'gw-pagebtn';
-			const a3 = document.createElement('a');
-			a3.id = 'page_item_next';
-			a3.className = 'gw-pagenum gw-p-move';
-			a3.dataset.page = next_page;
-			const span2 = document.createElement('span');
-			const button1 = document.createElement('button');
-			button1.id = 'next-buttons';
-			button1.innerText = '다음';
-			button1.addEventListener('click', () => pageMove(product.next));
-
-			// Append elements
-			paginate.innerHTML = '';
-			paginate.appendChild(li1);
-			paginate.appendChild(li2);
-			paginate.appendChild(li3);
-			li1.appendChild(a1);
-			li2.appendChild(a2);
-			li3.appendChild(a3);
-			span2.appendChild(button1);
-			a1.appendChild(span1);
-			a3.appendChild(span2);
-		} else if (product.next == null) {
-			// Create elements
-			const li1 = document.createElement('li');
-			li1.className = 'gw-pagebtn';
-			const a1 = document.createElement('a');
-			a1.id = 'page_item_pre';
-			a1.className = 'gw-pagenum gw-p-move';;
-			a1.dataset.page = pre_page;
-			const span1 = document.createElement('span');
-			const li2 = document.createElement('li');
-			li2.className = 'gw-pagebtn';
-			const a2 = document.createElement('a');
-			a2.id = 'gw-pagenum';
-			a2.innerText = `${page_num} / ${page_count}`;
-			const li3 = document.createElement('li');
-			li3.className = 'gw-pagebtn';
-			const a3 = document.createElement('a');
-			a3.id = 'page_item_next';
-			a3.className = 'gw-pagenum gw-p-move';
-			const span2 = document.createElement('span');
-			const button1 = document.createElement('button');
-			button1.id = 'previous-buttons';
-			button1.innerText = '이전';
-			button1.addEventListener('click', () => pageMove(product.previous));
-
-			// Append elements
-			li1.appendChild(a1);
-			li2.appendChild(a2);
-			li3.appendChild(a3);
-			a1.appendChild(span2);
-			a3.appendChild(span1);
-			span2.appendChild(button1);
-			paginate.innerHTML = '';
-			paginate.appendChild(li1);
-			paginate.appendChild(li2);
-			paginate.appendChild(li3);
+		if (product_count <= 9) {
+			paginate.remove();
 		} else {
-			// Create elements
-			const li1 = document.createElement('li');
-			li1.className = 'gw-pagebtn';
-			const a1 = document.createElement('a');
-			a1.id = 'page_item_pre';
-			a1.className = 'gw-pagenum gw-p-move';
-			a1.dataset.page = pre_page;
-			const span1 = document.createElement('span');
-			const button1 = document.createElement('button');
-			button1.id = 'previous-buttons';
-			button1.innerText = '이전';
-			button1.addEventListener('click', () => pageMove(product.previous));
-			const li2 = document.createElement('li');
-			li2.className = 'gw-pagebtn';
-			const a2 = document.createElement('a');
-			a2.id = 'gw-pagenum';
-			a2.innerText = `${page_num} / ${page_count}`;
-			const li3 = document.createElement('li');
-			li3.className = 'gw-pagebtn';
-			const a3 = document.createElement('a');
-			a3.id = 'page_item_next';
-			a3.className = 'gw-pagenum gw-p-move';
-			a3.dataset.page = next_page;
-			const span2 = document.createElement('span');
-			const button2 = document.createElement('button');
-			button2.id = 'next-buttons';
-			button2.innerText = '다음';
-			button2.addEventListener('click', () => pageMove(product.next));
+			if (product.previous == null) {
+				// Create elements
+				const li1 = document.createElement('li');
+				li1.className = 'gw-pagebtn';
+				const a1 = document.createElement('a');
+				a1.id = 'page_item_pre';
+				a1.className = 'gw-pagenum gw-p-move';
+				a1.dataset.page = pre_page;
+				const span1 = document.createElement('span');
+				const li2 = document.createElement('li');
+				li2.className = 'gw-pagebtn';
+				const a2 = document.createElement('a');
+				a2.id = 'gw-pagenum';
+				a2.innerText = `${page_num} / ${page_count}`;
+				const li3 = document.createElement('li');
+				li3.className = 'gw-pagebtn';
+				const a3 = document.createElement('a');
+				a3.id = 'page_item_next';
+				a3.className = 'gw-pagenum gw-p-move';
+				a3.dataset.page = next_page;
+				const span2 = document.createElement('span');
+				const button1 = document.createElement('button');
+				button1.id = 'next-buttons';
+				button1.innerText = '다음';
+				button1.addEventListener('click', () => pageMove(product.next));
 
-			// Append elements
-			span1.appendChild(button1);
-			span2.appendChild(button2);
-			paginate.innerHTML = '';
-			paginate.appendChild(li1);
-			paginate.appendChild(li2);
-			paginate.appendChild(li3);
-			a1.appendChild(span1);
-			a3.appendChild(span2);
-			li1.appendChild(a1);
-			li2.appendChild(a2);
-			li3.appendChild(a3);
+				// Append elements
+				paginate.innerHTML = '';
+				paginate.appendChild(li1);
+				paginate.appendChild(li2);
+				paginate.appendChild(li3);
+				li1.appendChild(a1);
+				li2.appendChild(a2);
+				li3.appendChild(a3);
+				span2.appendChild(button1);
+				a1.appendChild(span1);
+				a3.appendChild(span2);
+			} else if (product.next == null) {
+				// Create elements
+				const li1 = document.createElement('li');
+				li1.className = 'gw-pagebtn';
+				const a1 = document.createElement('a');
+				a1.id = 'page_item_pre';
+				a1.className = 'gw-pagenum gw-p-move';;
+				a1.dataset.page = pre_page;
+				const span1 = document.createElement('span');
+				const li2 = document.createElement('li');
+				li2.className = 'gw-pagebtn';
+				const a2 = document.createElement('a');
+				a2.id = 'gw-pagenum';
+				a2.innerText = `${page_num} / ${page_count}`;
+				const li3 = document.createElement('li');
+				li3.className = 'gw-pagebtn';
+				const a3 = document.createElement('a');
+				a3.id = 'page_item_next';
+				a3.className = 'gw-pagenum gw-p-move';
+				const span2 = document.createElement('span');
+				const button1 = document.createElement('button');
+				button1.id = 'previous-buttons';
+				button1.innerText = '이전';
+				button1.addEventListener('click', () => pageMove(product.previous));
+
+				// Append elements
+				li1.appendChild(a1);
+				li2.appendChild(a2);
+				li3.appendChild(a3);
+				a1.appendChild(span2);
+				a3.appendChild(span1);
+				span2.appendChild(button1);
+				paginate.innerHTML = '';
+				paginate.appendChild(li1);
+				paginate.appendChild(li2);
+				paginate.appendChild(li3);
+			} else {
+				// Create elements
+				const li1 = document.createElement('li');
+				li1.className = 'gw-pagebtn';
+				const a1 = document.createElement('a');
+				a1.id = 'page_item_pre';
+				a1.className = 'gw-pagenum gw-p-move';
+				a1.dataset.page = pre_page;
+				const span1 = document.createElement('span');
+				const button1 = document.createElement('button');
+				button1.id = 'previous-buttons';
+				button1.innerText = '이전';
+				button1.addEventListener('click', () => pageMove(product.previous));
+				const li2 = document.createElement('li');
+				li2.className = 'gw-pagebtn';
+				const a2 = document.createElement('a');
+				a2.id = 'gw-pagenum';
+				a2.innerText = `${page_num} / ${page_count}`;
+				const li3 = document.createElement('li');
+				li3.className = 'gw-pagebtn';
+				const a3 = document.createElement('a');
+				a3.id = 'page_item_next';
+				a3.className = 'gw-pagenum gw-p-move';
+				a3.dataset.page = next_page;
+				const span2 = document.createElement('span');
+				const button2 = document.createElement('button');
+				button2.id = 'next-buttons';
+				button2.innerText = '다음';
+				button2.addEventListener('click', () => pageMove(product.next));
+
+				// Append elements
+				span1.appendChild(button1);
+				span2.appendChild(button2);
+				paginate.innerHTML = '';
+				paginate.appendChild(li1);
+				paginate.appendChild(li2);
+				paginate.appendChild(li3);
+				a1.appendChild(span1);
+				a3.appendChild(span2);
+				li1.appendChild(a1);
+				li2.appendChild(a2);
+				li3.appendChild(a3);
+			}
 		}
+		viewProductslist(product)
 	}
-	viewProductslist(product)
 }
 
 // 페이지네이션: 상품정보가져오기

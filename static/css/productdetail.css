@@ -203,13 +203,13 @@ body {
 
 
 .review-items {
-    height: 10rem;
+    height: 12rem;
     width: 100%;
     display: flex;
     justify-content: space-around;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     margin-bottom: 3rem;
-    background-color: aliceblue;
+    background-color: antiquewhite;
     border-radius: 1em;
 }
 
@@ -224,15 +224,16 @@ body {
     width: 70%;
     height: 100%;
     /* box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); */
-    padding: 1% 1% 1% 1%;
+    padding: 3%;
 }
 
 .review-image-tag {
-    /* width: 80%; */
+    width: 150px;
+    height: 150px;
     margin: 0 1em;
-    height: 80%;
     border-radius: 1em;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+    object-fit: cover;
 }
 
 .review-owner-box {
@@ -267,7 +268,7 @@ body {
 
 .review-star {
     height: 100%;
-    width: 15%;
+    width: 20%;
 }
 
 .review-information-box {
@@ -277,9 +278,11 @@ body {
 .review-owner-image {
     width: 2.5rem;
     height: 2.5rem;
-    background-size: contain;
+    border-radius: 50%;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
 }
 
 .review-owenr-nick-name {
@@ -348,13 +351,15 @@ body {
 }
 
 .reviewDetailContainer {
+    padding: 1em;
     height: 30rem;
     width: 100%;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 .reviewDetailTopContainer {
-    height: 30%;
+    /* padding: 3%; */
+    /* height: 30%; */
     width: 100%;
     display: flex;
 }
@@ -363,7 +368,7 @@ body {
 .reviewDetailBottomContainer {
     height: 60%;
     width: 100%;
-    padding: 3% 3% 3% 3%;
+    padding: 3% 0 3% 0;
 }
 
 .reviewDetailControlContainer {
@@ -375,24 +380,26 @@ body {
 }
 
 .reviewDetailImageBox {
-    height: 100%;
-    width: 35%;
-    background-size: contain;
+    height: 130px;
+    width: 130px;
+    border-radius: 1em;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url("/static/images/좋아요x.png");
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
 }
 
 .reviewDetailTitleContainer {
     height: 100%;
-    width: 65%;
-    padding: 1% 1% 1% 1%;
+    width: 80%;
+    padding: 0 3%;
 }
 
 
 .reviewDetailOwnerInformationBox {
     width: 100%;
-    height: 20%;
+    height: 40%;
     display: flex;
 }
 
@@ -410,8 +417,6 @@ body {
 .review-control-box {
     margin-left: auto;
 }
-
-
 
 .reviewDetailCreated_at {
     margin-left: auto;
@@ -436,23 +441,27 @@ body {
 
 .reviewDetailProfileGroup {
     display: flex;
+    align-items: center;
     height: 100%;
     width: 50%;
 }
 
 .reviewDetailLikeGroup {
+    align-items: center;
     display: flex;
     height: 100%;
     width: 50%;
 }
 
 .reviewDetailProfileImage {
-    width: 2rem;
-    height: 2rem;
-    background-size: contain;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50%;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url("/static/images/google.png");
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
 }
 
 .reviewDetailNickname {
@@ -464,11 +473,11 @@ body {
 .reviewDetailLikeCount {
     height: 100%;
     width: 10%;
-    margin-left: 60%;
+    margin-left: auto;
 }
 
 .reviewDetailLikeButton {
-    margin-left: auto;
+    cursor: pointer;
     width: 2rem;
     height: 2rem;
     background-size: contain;
@@ -484,7 +493,7 @@ body {
     padding: 2% 2% 2% 2%;
     border-radius: 1rem;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-    background-color: bisque;
+    background-color: white
 }
 
 .review-detail-button {
@@ -569,7 +578,7 @@ nav a:nth-child(3):hover~.nav-underline {
 #sellerInformationContainer {
     height: 30rem;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-    background-color: blanchedalmond;
+    background-color: antiquewhite;
     border-radius: 1em;
 }
 

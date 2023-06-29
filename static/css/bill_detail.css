@@ -16,13 +16,44 @@ body {
     background-color: #C4A492;
 }
 
-button {
+.button-sets>button,
+#button-content>button,
+.subscription-section>button,
+#sub-button {
     height: 4vh;
     font-size: 1vw;
-    margin-top: 1.2vw;
     background-color: rgba(109, 86, 68, 0.822);
     color: white;
     border-radius: 10px;
+    border: none;
+    font-family: 'S-CoreDream-3Light';
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
+}
+
+#sub-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-width: 10em !important;
+    width: 25vw;
+    margin: 1em 0;
+}
+
+.button_page.active,
+.button_page:hover {
+    color: #0b5ed7;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.button_page {
+    height: 4vh;
+    font-size: 1vw;
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+    border: none;
+    font-family: 'S-CoreDream-3Light';
 }
 
 #myBillDetail {
@@ -31,6 +62,14 @@ button {
     font-weight: bold;
     padding-left: 40px;
     color: white;
+    margin-bottom: 0;
+}
+
+.subscription-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .section {
@@ -41,6 +80,7 @@ button {
 
 .mypage-intro {
     display: flex;
+    align-items: center;
     margin-top: 20px;
 }
 
@@ -70,18 +110,29 @@ button {
     min-width: 40vw;
     width: 95%;
     font-size: 1.3em;
+
 }
 
 .order-list {
     display: flex;
+    align-items: center;
     color: aliceblue;
     margin: 1em 0;
 }
 
+.order-img {
+    width: 130px;
+    height: 130px;
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    align-items: center;
+}
+
 .pd-info-thumb {
     object-fit: cover;
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
     border-radius: 4px;
 }
@@ -89,9 +140,15 @@ button {
 .order-context {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     margin: 0 1em;
     margin-bottom: 0.2em;
+}
+
+.order-context>div {
+    word-break: keep-all;
+    font-size: 0.8em;
+    margin: 0.2em 0;
 }
 
 .deli-col {
@@ -121,11 +178,12 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 5em;
+    margin-bottom: 2.5em;
 }
 
 .pd-cart-icon {
     margin-left: auto;
+    margin-bottom: 1em;
     width: 2em;
     height: 2em;
     cursor: pointer;
@@ -141,7 +199,9 @@ button {
 #button-content {
     display: flex;
     flex-direction: column;
-    margin-bottom: 5em;
+    justify-content: center;
+    align-items: center;
+    /* margin-bottom: 5em; */
     margin-left: auto;
 }
 
@@ -242,7 +302,7 @@ button {
 
     .col-md-8,
     .col-md-4 {
-        width: 95%;
+        width: 100%;
     }
 
     .profile-card {
@@ -264,32 +324,46 @@ button {
 
     .subscription-section {
         width: 50%;
+        margin-bottom: 1.5em !important;
     }
 
     .subscription-card {
         width: 100%;
         margin: 0;
     }
+
+    #confirmbutton {
+        width: 100px;
+        font-size: 0.7em;
+    }
 }
 
 @media screen and (max-width: 960px) {
+    .order-context {
+        margin: 0.2em 0;
+        margin-left: 1em !important;
+    }
+
+    .button-sets>button {
+        font-size: 1em;
+    }
 
     .profile-section,
     .subscription-card,
     .sub-button {
-        min-width: 390px;
+        min-width: 350px;
         height: fit-content;
         margin: 5px;
     }
 
     .subscription-section {
         margin: 5px;
-        min-width: 390px;
+        min-width: 350px;
     }
 
     .col-md-8,
     .col-md-4 {
-        width: 95%;
+        width: 100%;
     }
 
     #deliveryInfo {
@@ -299,12 +373,30 @@ button {
         padding: 1em 2em;
         min-width: 40vw;
         width: 95%;
-        font-size: 2vw;
+        font-size: 1.1em;
         border-radius: 1em;
         margin: 1em 0;
     }
 
-    #orderLists {
-        font-size: 4vw;
+    .profile-card {
+        font-size: 1.5em !important;
+    }
+
+    .subscription-card {
+        font-size: 1.5em;
+    }
+
+    #sub-button {
+        font-size: 1.4em;
+    }
+
+    #confirmbutton {
+        width: 100px;
+        font-size: 0.7em !important;
+    }
+
+    .ord-pd-name {
+        font-size: 1em !important;
+        word-break: break-all !important;
     }
 }

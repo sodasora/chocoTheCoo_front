@@ -55,6 +55,7 @@ async function renderBillOrders(bill) {
         orderList.classList.add("order-list")
 
         const imgDiv = document.createElement('div');
+        imgDiv.classList.add("order-img")
         imgDiv.style.padding = '0';
         imgDiv.style.margin = '0';
 
@@ -70,6 +71,7 @@ async function renderBillOrders(bill) {
 
         const firstText = document.createElement('div');
         firstText.innerText = `${e.name}`
+        firstText.classList.add('ord-pd-name')
         firstText.style.fontWeight = 'bold';
         firstText.style.fontSize = '1.2em';
 
