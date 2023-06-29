@@ -19,9 +19,7 @@ async function paginationView_product(product) {
         if (!product[id].image) {
             product[id].image = "/static/images/기본상품.png" // 상품이미지 없으면 기본이미지 대체
         }
-        if (!product[id].stars) {
-            product[id].stars = "리뷰없음" // 리뷰없으면 표시
-        }
+
         const content = document.createElement("tr");
         content.onclick = function () {
             productDetail(product[id].id);
@@ -68,23 +66,29 @@ async function paginationView_product(product) {
         })
 
         const priceTd = document.createElement('td');
-        const priceText = document.createTextNode(product[id].price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' }));
+        const priceText = document.createTextNode((product[id].price).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' }));
         priceTd.appendChild(priceText);
 
         const amountTd = document.createElement('td');
-        const amountText = document.createTextNode(product[id].amount.toLocaleString());
+        const amountText = document.createTextNode((product[id].amount).toLocaleString());
         amountTd.appendChild(amountText);
 
         const salesTd = document.createElement('td');
-        const salesText = document.createTextNode(product[id].sales.toLocaleString());
+        const salesText = document.createTextNode((product[id].sales).toLocaleString());
         salesTd.appendChild(salesText);
 
         const scoreTd = document.createElement('td');
         const starScoreDiv = document.createElement('div');
         starScoreDiv.id = 'star-score';
         scoreTd.appendChild(starScoreDiv);
-        const scoreText = document.createTextNode(`⭐${product[id].stars.toFixed(1)}`);
-        scoreTd.appendChild(scoreText);
+        if (product[id].stars) {
+            console.log(product[id].stars)
+            const scoreText = document.createTextNode(`⭐${(product[id].stars).toFixed(1)}`);
+            scoreTd.appendChild(scoreText);
+        } else {
+            const scoreText = document.createTextNode("리뷰없음")
+            scoreTd.appendChild(scoreText);
+        }
 
         const likesTd = document.createElement('td');
         const likesImg = document.createElement('img');
