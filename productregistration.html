@@ -21,13 +21,15 @@
 <header></header>
 
 <body>
-   
+
+    <div class="title-container">
+        <div class="image-box"></div>
+    </div>
     <div class="section1">
-        
-        
+
         <form class="product-form">
             <div class="productBox">
-            <h3>  상품 등록 </h3>
+                <h3> 상품 등록 </h3>
 
                 <select class="form-select" id="category-select" aria-label="Default select example">
                     <option selected>상품 카테고리</option>
@@ -35,28 +37,30 @@
                 </select>
 
                 <div class="col-sm-12" id="registproduct">
-                    <div class="input-group mb-3" id="registproduct1" >
+                    <div class="input-group mb-3" id="registproduct1">
                         <span class="input-group-text" id="basic-addon1">상품명</span>
-                        <input type="text" class="form-control"id="name" placeholder="상품 이름">
+                        <input type="text" class="form-control" id="name" placeholder="상품 이름">
                     </div>
                 </div>
 
-                <div class="col-sm-12" id="registproduct">
-                    <div class="input-group mb-3" id="registproduct1" >
-                        <span class="input-group-text" id="basic-addon1">상품 가격</span>
-                        <input type="number" step="1000" min="0" max="1000000" class="form-control" id="price" placeholder="상품 가격">
-                    </div>
-                </div>
-
-                
                 <div class="col-sm-12" id="registproduct">
                     <div class="input-group mb-3" id="registproduct1">
-                    <span class="input-group-text" id="basic-addon1">상품 수량</span>
-                    <input type="number" step="10" min="0" max="1000000" class="form-control" id="amount" placeholder="상품 수량">
-                    </div>    
+                        <span class="input-group-text" id="basic-addon1">상품 가격</span>
+                        <input type="number" step="1000" min="0" max="1000000" class="form-control" id="price"
+                            placeholder="상품 가격">
+                    </div>
                 </div>
-                
-                <div class = "content1">
+
+
+                <div class="col-sm-12" id="registproduct">
+                    <div class="input-group mb-3" id="registproduct1">
+                        <span class="input-group-text" id="basic-addon1">상품 수량</span>
+                        <input type="number" step="10" min="0" max="1000000" class="form-control" id="amount"
+                            placeholder="상품 수량">
+                    </div>
+                </div>
+
+                <div class="content1">
                     <div class="col-sm-10">
                         <textarea class="form-control" id="content" rows="3" placeholder="상품 설명을 적어주세요!">
                         </textarea>
@@ -65,12 +69,12 @@
                 <div class="mb-3" id="formbox">
                     <input class="form-control" type="file" id="formFile">
                 </div>
-                <div class="submit">               
+                <div class="submit">
                     <button class="submitbutton" type="button" id="registrate">제출하기</button>
-                </div> 
-                <div class="editgroup"> 
+                </div>
+                <div class="editgroup">
                     <button class="editbutton" type="button" id="edit">수정하기</button>
-                </div>  
+                </div>
             </div>
         </form>
 
@@ -78,17 +82,18 @@
             <div class="preview-card">
                 <img src="/static/images/미리보기배경.png" id="profileView">
             </div>
-            
-        </div>
-            
 
         </div>
+
 
     </div>
-    
+
+    </div>
+
 </body>
 <footer></footer>
 <script src="static/js/productregistration.js" type="module"></script>
 <script src="/static/js/api.js" type="module"></script>
 <script src="/static/js/seller_loader.js" type="module"></script>
+
 </html>

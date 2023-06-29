@@ -1,3 +1,33 @@
+@media (max-width: 1024px) {
+    tbody {
+        font-size: 1em !important;
+    }
+}
+
+@media (max-width: 768px) {
+    tbody {
+        font-size: 0.7em !important;
+    }
+
+    .productList {
+        width: 90%;
+    }
+}
+
+@media (max-width: 425px) {
+    th {
+        font-size: 0.2em !important;
+    }
+
+    tbody {
+        font-size: 0.2em !important;
+    }
+
+    .productList {
+        width: 100% !important;
+    }
+}
+
 /* nav bar */
 .seller_nav {
     display: flex;
@@ -11,13 +41,18 @@
     color: #fff;
 }
 
-.container {
+.productContainer {
     display: flex;
     flex-direction: column;
-    padding: 20px 100px;
-    margin: auto;
-    max-width: 1350px;
     background-color: #C4A492;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.productList {
+    margin-top: 2%;
+    width: 80%;
 }
 
 /* 상품이미지 */
@@ -31,7 +66,7 @@
 }
 
 /* 상품이미지 크게보기 */
-.product-img-zoom{
+.product-img-zoom {
     display: none;
     background-position: center;
     background-size: cover;
