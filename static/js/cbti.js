@@ -106,6 +106,21 @@ const cbtiName = {
     ISFP:  "화이트 초콜렛"
 }
 
+// 라디오 체크시 다음페이지 다음 페이지 넘어감
+export async function myTest() {
+    // 페이지 이동
+    const carouselElement = document.getElementById("carouselExampleControlsNoTouching");
+    // 부트스트랩 적용된 영역 불러오기
+    const carousel = new bootstrap.Carousel(carouselElement, {
+      // 부트스트랩 설정
+      touch: false,
+      interval: false
+    });
+    // 페이지 이동
+    console.log(carousel);
+    carousel.next();
+  }
+
 export async function cbtiResult() {
     // E일 때 1, I일 때 0
     const EI_one_1 = document.getElementById("EI_one_1").checked ? 1 : 0;
@@ -139,6 +154,8 @@ export async function cbtiResult() {
     mbti += FT >= 2 ? "T" : "F";
     mbti += PJ >= 2 ? "P" : "J";
 
+    
+
     printCBTIResult(mbti)
 }
  
@@ -165,17 +182,18 @@ export async function printCBTIResult(mbti) {
   }   
 
   export async function setEventListener() {
+
     function hasUncheckedRadio(radio1Id, radio2Id, message) {
       const radio1 = document.getElementById(radio1Id);
       const radio2 = document.getElementById(radio2Id);
       if (!(radio1.checked || radio2.checked)) {
         alert(message);
-        window.location.reload();
         return true;
       }
       return false;
     }
   
+    
     // 1~12번 중 체크되지 않은 문항 있을때 경고문
     document.getElementById("CBTI-result-btn").addEventListener("click", cbtiResult);
     document.getElementById('CBTI-result-btn').addEventListener('click', function() {
@@ -203,5 +221,14 @@ export async function printCBTIResult(mbti) {
   }
   
 window.onload = async () => {
+      
+   const formCheckInputs = document.querySelectorAll('input.last[type="radio"]');
+  // 라디오 버튼이 있는 모든 클래스 속성 불러오기
+  
+   formCheckInputs.forEach(function (input) {
+    // 라이도 버튼이 있는 모든 클래스 속성에 이벤트 리스너 할당
+    input.addEventListener("click", myTest);
+  });
+  
     setEventListener()
 }
