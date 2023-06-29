@@ -133,7 +133,7 @@ async function sellerProfile() {
     document.getElementById("month_sent").innerText = seller_data["month_sent"]
     document.getElementById("month_sent_charge").innerText = (seller_data["month_sent"] * 3000).toLocaleString({ style: 'currency', currency: 'KRW' }) //배송비 3000원
     document.getElementById("firstday").innerText = firstday
-    document.getElementById("today").innerHTML = `<text id="today" class="status-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~${today}</text>`
+    document.getElementById("today").innerHTML = `<text id="today" class="status-text">~${today}</text>`
     document.getElementById("term").innerHTML = `<text  id="term" class="unit-text">초코더쿠와 함께한 기간: ${term}일</text>`
 
     document.getElementById("unpaid_sent").innerText = seller_data["unpaid_sent"]
