@@ -110,6 +110,7 @@
     color: white;
     margin-top: 1em;
 }
+
 .editbutton {
     border-radius: 10px;
     border: 1px solid #3a271b;
@@ -120,6 +121,7 @@
     color: white;
     margin-top: 1em;
 }
+
 .submit {
     display: flex;
     justify-content: center;
@@ -173,9 +175,6 @@
     background-size: 100% 100%;
     background-color: #743837;
     background-position: center;
-<<<<<<< HEAD
-    background-repeat: no-repeat;
-=======
     background-repeat: no-repeat
 }
 
@@ -183,5 +182,4 @@
     .image-box {
         display: none;
     }
->>>>>>> 9fcf6907f93d35efa8a1945ef0d5017d4eca1dda
 }
