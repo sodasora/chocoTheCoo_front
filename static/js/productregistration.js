@@ -1,4 +1,4 @@
-import { BACK_BASE_URL,  FRONT_BASE_URL, getCategoryView, registProductAPIView, getProductDetailAPIView, editProductDetailAPIView, getSellerPermissionAPIView} from './api.js'
+import { BACK_BASE_URL, FRONT_BASE_URL, getCategoryView, registProductAPIView, getProductDetailAPIView, editProductDetailAPIView, getSellerPermissionAPIView, payload } from './api.js'
 
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('product_id');
@@ -6,14 +6,14 @@ const productId = urlParams.get('product_id');
 
 
 
-export async function categoryview(){
+export async function categoryview() {
     const categories = await getCategoryView();
 
     const categorySelect = document.getElementById(`category-select`);
 
-    categories.forEach( category => {
+    categories.forEach(category => {
         const option = document.createElement(`option`);
-        option.value = category.id ;
+        option.value = category.id;
         option.textContent = category.name;
         // option.setAttribute(`id`, );
         categorySelect.appendChild(option);
@@ -24,39 +24,39 @@ export async function registProduct() {
     const payload = localStorage.getItem("payload");
     const payload_parse = JSON.parse(payload);
     const seller_id = payload_parse.user_id //로그인한 유저id
-    
+
     const name = document.getElementById("name").value;
     const content = document.getElementById("content").value;
     const image = document.getElementById("formFile").files[0];
     const price = document.getElementById("price").value;
     const amount = document.getElementById("amount").value;
     const category = document.getElementById("category-select").value;
-    
+
     const formdata = new FormData();
 
     console.log(name, content, price, amount)
     console.log(image)
-    
+
     formdata.append('name', name)
     formdata.append('content', content)
     formdata.append('price', price)
     formdata.append('amount', amount)
     formdata.append('seller_id', seller_id)
     formdata.append('category', category)
-    if(image){
+    if (image) {
         formdata.append('image', image)
     }
-    
+
     for (const pair of formdata.entries()) {
-    console.log(pair[0] + ':', pair[1]);
+        console.log(pair[0] + ':', pair[1]);
     }
-    
+
 
     try {
 
-       registProductAPIView(formdata);
-        
-        
+        registProductAPIView(formdata);
+
+
     } catch (error) {
         console.error(error);
     }
@@ -78,7 +78,7 @@ export function readURL(input) {
 
 //상품 수정하기
 // 이전 상품 정보 불러오기
-export async function loadDefault(){
+export async function loadDefault() {
     const product = await getProductDetailAPIView(productId);
 
     const name = document.getElementById("name");
@@ -95,7 +95,7 @@ export async function loadDefault(){
 
 //상품 수정하기
 // 수정된 상품 정보 저장
-export async function editProductSubmit(){
+export async function editProductSubmit() {
     const name = document.getElementById("name").value;
     const content = document.getElementById("content").value;
     const image = document.getElementById("formFile").files[0];
@@ -106,31 +106,31 @@ export async function editProductSubmit(){
 
     console.log(name, content, price, amount)
     console.log(image)
-    
+
     formdata.append('name', name)
     formdata.append('content', content)
     formdata.append('price', price)
     formdata.append('amount', amount)
 
-    if(image){
+    if (image) {
         formdata.append('image', image)
     }
-    
+
     for (const pair of formdata.entries()) {
-    console.log(pair[0] + ':', pair[1]);
+        console.log(pair[0] + ':', pair[1]);
     }
-    
+
 
     try {
 
         const response = await editProductDetailAPIView(productId, formdata);
         console.log(response);
-        
-        
+
+
     } catch (error) {
         console.error(error);
     }
-    
+
 }
 
 export async function setEventListener() {
@@ -147,18 +147,23 @@ export async function setEventListener() {
     }
     // html 아이디 불러오기
     document.getElementById("formFile").addEventListener("change", function (event) { readURL(event.target); });
-    
+
 }
 
 
-window.onload = async function() {
+window.onload = async function () {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('product_id');
-    if(productId){
+    if (payload == null) {
+        alert("로그인이 필요 합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else if (payload.is_seller == false) {
+        alert("판매 활동 권한이 없습니다.")
+        window.location.replace(`${FRONT_BASE_URL}/user_detail_page.html`)
+    } else if (productId) {
         loadDefault()
     }
     setEventListener()
     categoryview()
 
 }
-    
