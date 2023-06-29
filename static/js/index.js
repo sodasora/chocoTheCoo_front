@@ -25,11 +25,35 @@ export async function categoryview() {
     });
 }
 
+
+export async function categoryview_mobile() {
+    const categories = await getCategoryView();
+    const categorySelect = document.getElementById("categorymenu-mobile");
+    const categoryBox = document.createElement("div");
+    categoryBox.setAttribute("class", "category-box-mobile")
+
+    categories.forEach(category => {
+        const categoryItem = document.createElement("a");
+        categoryItem.setAttribute("id", `${category.id}`);
+        categoryItem.setAttribute("href", `index.html?category_id=${category.id}`);
+        categoryItem.innerText = `🍫${category.name}\n`
+        categoryBox.appendChild(categoryItem);
+        categorySelect.appendChild(categoryBox);
+    });
+}
+
 export async function keywordSeachView() {
     const answer = document.getElementById("search-keyword");
     const keyword = answer.value;
     goEditReview(keyword)
 }
+
+export async function keywordSeachView_mobile() {
+    const answer = document.getElementById("search-keyword-mobile");
+    const keyword = answer.value;
+    goEditReview(keyword)
+}
+
 export async function showSameCategory() {
     const urlParams = new URLSearchParams(window.location.search);
     const categoryId = urlParams.get('category_id');
@@ -100,6 +124,48 @@ export async function searchAnythingAPI() {
     goSearch(url)
 }
 
+export async function searchAnythingAPI_mobile() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const url = new URLSearchParams();
+
+    const categoryId = urlParams.get('category_id');
+    const categories = await getCategoryView();
+
+    const products = await searchProductAPI(keyword);
+    const product = products.results;
+
+    const search = document.getElementById("search-mobile");
+    const keyword = urlParams.get('search');
+
+    const ordering = document.getElementById("ordering")
+
+    // 카테고리 검색 카테고리 ID가 url에 있을때
+    if (categoryId) {
+        categories.forEach(category => {
+
+            url += `category=${categoryId}`
+        });
+    }
+    // 검색창 입력어로 검색 : 키워드가 url에 있을때
+    else if (keyword) {
+        search.addEventListener("click", function () {
+
+            url += `search=${keyword}`
+        })
+    }
+    // 정렬 : 정렬 규칙이 url에 있을 때 
+    else if (ordering) {
+        ordering.addEventListener("click", function () {
+
+            url += `ordering=${ordering}`
+            window.location.href = url
+        });
+    }
+
+    goSearch(url)
+}
+
+
 export async function setEventListener() {
     document.getElementById("search-btn").addEventListener("click", keywordSeachView);
     // 구매자 체크리스트    
@@ -161,15 +227,22 @@ export async function setEventListener() {
     document.getElementById("go-storepage").addEventListener("click", function () {
         window.location.href = "sellerpage.html";
     });
-    document.getElementById("go-CBTI").addEventListener("click", function() {
+    document.getElementById("go-CBTI").addEventListener("click", function () {
         window.location.href = "cbti.html";
     });
 
 }
 
+
+export async function setEventListener_mobile() {
+    document.getElementById("search-btn-mobile").addEventListener("click", keywordSeachView_mobile);
+}
+
 window.onload = async function () {
     categoryview()
     setEventListener()
+    categoryview_mobile()
+    setEventListener_mobile()
     const product = await getProductListAPIView();
     // console.log(product)
     const choco = document.getElementById("chocobanner")
@@ -214,6 +287,7 @@ async function setLocalStorage(response) {
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     }
 }
+
 async function getKakaoToken(kakao_code) {
     // Resource Server로부터 응답받은 accesstoken을 백엔드 서버로 발송
     const response = await fetch(`${BACK_BASE_URL}/api/users/kakao/login/`, {
