@@ -227,8 +227,21 @@ export async function setEventListener() {
     document.getElementById("go-storepage").addEventListener("click", function () {
         window.location.href = "sellerpage.html";
     });
+    // CBTI
     document.getElementById("go-CBTI").addEventListener("click", function () {
         window.location.href = "cbti.html";
+    });
+    // 회원가입
+    document.getElementById("go-signup").addEventListener("click", function () {
+        window.location.href = "signup.html";
+    });
+    // 로그인
+    document.getElementById("go-login").addEventListener("click", function () {
+        window.location.href = "login.html";
+    });
+    // go-edituser
+    document.getElementById("go-edituser").addEventListener("click", function () {
+        window.location.href = "user_detail_page.html"
     });
 
 }

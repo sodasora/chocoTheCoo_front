@@ -1,10 +1,18 @@
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+  }
+
 .section2{
     text-align: center;
-    height: 60vw;
+    height: 130vw;
     display: flex;
     justify-content: center;
     background-color:#FFEBDB;
 }
+
 .section2-header{
     background-color:#FFEBDB;
     height:10vw;
@@ -15,23 +23,18 @@
     height: 100%;
    
 }
-@font-face {
-    font-family: 'TheJamsil5Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-  }
+
 
 #prev-button{
     height: 30px;
     width: 30px;
-    margin-top: 13vw;
+    margin-top: 30vw;
 }
 
 #next-button{
     height: 30px;
     width: 30px;
-    margin-top: 13vw;
+    margin-top: 30vw;
 }
 
 
@@ -43,14 +46,14 @@
     display: flex;
     justify-content: center;
     margin-top: 2vw;
-    height: 45vw;
+    height: 80vw;
     width: 70vw;
-    font-size: 1.5vw;
+    font-size: 1.8vw;
 }
 
 #label-title{
-    padding-top: 6vw;
-    margin-bottom: 2vw;
+    padding-top: 9vw;
+    margin-bottom: 3vw;
 }
 
 #CBTI-result-btn{
@@ -61,7 +64,7 @@
 }
 
 #cbti-main{
-    height: 45vw;
+    height: 80vw;
     width: 70vw;
 }
 
