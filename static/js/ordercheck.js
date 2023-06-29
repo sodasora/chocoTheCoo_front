@@ -23,7 +23,7 @@ async function getDeliveryData(element) {
 }
 
 async function DeliveryInformation(response_json) {
-    const dropdown_content = document.querySelector(".dropdown-content");
+    const dropdown_content = document.querySelector("#dropdownContent");
     const delivery_data = response_json;
 
     Object.values(delivery_data).forEach((element) => {
@@ -63,13 +63,14 @@ async function getUserDeliveryInformationAPI(user_id) {
     } else if (response.status == 400) {
         //  유효성 검사 실패
         addressMessageBox.innerText = response_json.err.non_field_errors
-    } else if (response.status == 200){
+    } else if (response.status == 200) {
         // 예외 처리
         // console.log(response_json)
         return response;
-    } 
+    }
 }
 
+// 체크했던 장바구니 목록을 가져와서 상품 목록 띄워주기
 async function loadCheckedCart() {
     const url = new URL(window.location.href);
     const queryString = url.search.substring(1);
@@ -118,7 +119,7 @@ async function loadCheckedCart() {
     return renderPaymentInfo();
 }
 
-
+// 결제 진행, bill생성 요청 => 쿼리 파라미터로 장바구니 => 주문 생성
 async function makePurchaseOrder() {
     const deli = document.getElementById("orderDeliveryId").getAttribute("data-deliveryId");
     if (deli == 0) {
@@ -126,16 +127,20 @@ async function makePurchaseOrder() {
         const postcode = document.getElementById("postalCode").value
         const address = document.getElementById("address").value
         const detailAddress = document.getElementById("detailAddress").value
-        const delivery_data = {
-            recipient: recipient,
-            postcode: postcode,
-            address: address,
-            detailAddress: detailAddress
-        };
-        let bill = await makeBills(null, delivery_data)
-        const url = new URL(window.location.href);
-        const queryString = url.search.substring(1);
-        makeOrders(queryString, bill.id);
+        if (!recipient || !postcode || !address || !detailAddress) {
+            alert("주소를 입력해주세요")
+        } else {
+            const delivery_data = {
+                recipient: recipient,
+                postcode: postcode,
+                address: address,
+                detailAddress: detailAddress
+            };
+            let bill = await makeBills(null, delivery_data)
+            const url = new URL(window.location.href);
+            const queryString = url.search.substring(1);
+            makeOrders(queryString, bill.id);
+        }
     } else {
         let bill = await makeBills(deli);
         const url = new URL(window.location.href);
@@ -157,7 +162,8 @@ async function renderPaymentInfo() {
     priceTotalData.innerText = `${priceTotal.toLocaleString()}원`;
 
     const deliveryFee = document.querySelector(".delivery-fee-total");
-    const deliveryFeeData = (priceEach.length * (!payload.subscribe_data) * 3000)
+    // const deliveryFeeData = (priceEach.length * (!payload.subscribe_data) * 3000)
+    const deliveryFeeData = 0
     deliveryFee.innerText = `${deliveryFeeData.toLocaleString()}원`;
 
     const totalPrice = document.querySelector(".real-total");
@@ -205,7 +211,7 @@ window.onload = async () => {
 
     }
     const registDelivery = document.getElementById("registDelivery")
-    const dropdown = document.querySelector(".dropdown");
+    const dropdown = document.querySelector("#addressLoad");
     const dropdownContent = document.getElementById("dropdownContent");
 
     dropdown.addEventListener("mouseover", function () {
@@ -228,6 +234,7 @@ window.onload = async () => {
         document.getElementById("address").value = ""
         document.getElementById("detailAddress").value = ""
         document.getElementById("postalCode").value = ""
+        document.getElementById("orderDeliveryId").setAttribute("data-deliveryId", 0)
 
 
     })
@@ -262,8 +269,6 @@ async function renderModalBtns() {
         makePurchaseOrder();
     })
     const modalBtnBox = document.getElementById("modalBtnBox");
-
-
     const user_agent = navigator.userAgent.toLowerCase();
 
     if (user_agent.indexOf('mac') !== -1) {

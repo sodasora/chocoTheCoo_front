@@ -33,23 +33,31 @@
         <text id="nav-title">ChocoTheCoo</text>
         <div class="dropdown" id="headerDropdownBox">
             <img type="button" src="static/images/dropdown_choco.png" alt="" id="headerDropdown"
-                class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-            <ul class="dropdown-menu">
+                class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <ul class="dropdown-menu dropdown-menu-header" aria-labelledby="headerDropdown">
                 <!-- 비 로그인 시 보여주는 항목 -->
-                <li><button onclick="location.href='login.html';" id="mobileLogin" class="dropdown-item" type="button">🔑 로그인</button></li>
-                <li><button onclick="location.href='signup.html';" id="mobileSignUp" class="dropdown-item" type="button">🍫 회원가입</button></li>
-                <li><button onclick="location.href='cart.html';" class="dropdown-item" type="button">🛒 Cart</button></li>
-                <li><button onclick="location.href='pointcharge.html';" class="dropdown-item" type="button">💯 MyPoint</button></li>
-                <li><button onclick="location.href='mypage.html';" class="dropdown-item" type="button">🪪 MyPage</button></li>
-                <li><button onclick="location.href='seller.html';" class="dropdown-item" type="button">💰 SellerPage</button></li>
-                <li><button onclick="location.href='chatindex.html';" class="dropdown-item" type="button">💬 Chatting</button></li>
-                <li><button onclick="location.href='cbti.html';" class="dropdown-item" type="button">😋 CBTI</button></li>
+                <li><button onclick="location.href='login.html';" id="mobileLogin" class="dropdown-item"
+                        type="button">🔑 로그인</button></li>
+                <li><button onclick="location.href='signup.html';" id="mobileSignUp" class="dropdown-item"
+                        type="button">🍫 회원가입</button></li>
+                <li><button onclick="location.href='cart.html';" id="mobileCart" class="dropdown-item" type="button">
+                        🛒 Cart</button></li>
+                <li><button onclick="location.href='pointcharge.html';" id="mobilePoint" class="dropdown-item"
+                        type="button">💯 MyPoint</button></li>
+                <li><button onclick="location.href='mypage.html';" id="mobileMyPage" class="dropdown-item"
+                        type="button">🪪 MyPage</button></li>
+                <li><button onclick="location.href='seller.html';" id="mobileSellerPage" class="dropdown-item"
+                        type="button">💰 SellerPage</button></li>
+                <li><button onclick="location.href='chatindex.html';" id="mobileChat" class="dropdown-item"
+                        type="button">💬 Chatting</button></li>
+                <li><button onclick="location.href='cbti.html';" id="mobileCBTI" class="dropdown-item" type="button">😋
+                        CBTI</button></li>
                 <!-- 로그인 시 보여주는 항목 -->
                 <li><button class="dropdown-item" type="button" id="mobileLogout">👋 로그아웃</button></li>
             </ul>
         </div>
     </div>
-    <div class="top-category">
+    <div class="top-category top-category-header">
         <nav class="nav-header">
             <a id="charge" style='cursor:pointer' onclick="location.href='pointcharge.html';">Mypoint</a>
             <a id="mypage" style='cursor:pointer' onclick="location.href='mypage.html';">MyPage</a>

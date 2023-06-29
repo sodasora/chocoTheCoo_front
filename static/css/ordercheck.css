@@ -20,7 +20,6 @@
     margin: 1em auto;
     padding-left: 1em;
     background-color: aliceblue;
-    min-width: 30vw;
     border-radius: 10px;
     padding: 0.5vh 1em;
     /* box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5); */
@@ -171,6 +170,9 @@
     background-color: #ddd;
 }
 
+/* #orderCheckDropDown:hover .dropdown-item{
+    display: block;
+} */
 
 .dropdown:hover .dropdown-button {
     background-color: #ddd;
@@ -232,21 +234,6 @@
     align-items: center;
 }
 
-
-@media screen and (max-width:1750px) {
-    .address-item {
-        min-width: 58vh;
-    }
-
-    .cart-check {
-        min-width: 58vh;
-    }
-
-    .pay-check {
-        min-width: 58vh;
-    }
-}
-
 .modal-btn1 {
     border: none;
     border-radius: 1em;
@@ -263,4 +250,32 @@
     color: rgb(255, 255, 255);
     font-size: large;
     font-weight: bold;
+}
+
+@media screen and (max-width:1750px) {
+    .address-item {
+        min-width: 58vh;
+    }
+
+    .cart-check {
+        min-width: 58vh;
+    }
+
+    .pay-check {
+        min-width: 58vh;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .address-item {
+        min-width: 45vh;
+    }
+
+    .cart-check {
+        min-width: 45vh;
+    }
+
+    .pay-check {
+        min-width: 45vh;
+    }
 }

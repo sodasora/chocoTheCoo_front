@@ -6,7 +6,6 @@ async function renderCartList() {
     const cartItems = await getCartList();
     const cartBox = document.querySelector('#cartList');
     cartItems.forEach(e => {
-
         const cartItemDiv = document.createElement('div');
         cartItemDiv.classList.add('row', 'cart-item');
 
@@ -47,14 +46,14 @@ async function renderCartList() {
         pdInfoText.textContent = `${e.product.name}`;
 
         const priceAmountDiv = document.createElement('div');
-        priceAmountDiv.style.display = 'flex';
-        priceAmountDiv.style.justifyContent = 'center';
+        priceAmountDiv.classList.add('pd-price-amount');
 
         const priceDiv = document.createElement('div');
         priceDiv.classList.add('pd-price');
         priceDiv.textContent = `${e.product.price.toLocaleString()}원`;
 
         const multiplyDiv = document.createElement('div');
+        multiplyDiv.classList.add("pd-multiply");
         multiplyDiv.textContent = ' × ';
 
         const amountDiv = document.createElement('select');
@@ -109,7 +108,8 @@ async function renderCartList() {
         col3Div.setAttribute('data-deliveryFee', '3000');
 
         const col4Div = document.createElement('div');
-        const feeData = ((!payload.subscribe_data) * 3000).toLocaleString()
+        // const feeData = ((!payload.subscribe_data) * 3000).toLocaleString()
+        const feeData = 0
         col4Div.classList.add('col-2', 'pd-deliveryfee');
 
         col4Div.textContent = `${feeData} 원`
@@ -173,7 +173,7 @@ async function renderTotals() {
     sumPrice.forEach(e => {
         // console.log(e);
         totalPrice += parseInt(e.dataset.price);
-        totalDeliveryFee += parseInt(e.dataset.deliveryfee);
+        // totalDeliveryFee += parseInt(e.dataset.deliveryfee);
     })
 
     // console.log(totalPrice);

@@ -63,7 +63,7 @@ input {
 .category {
   /* margin-top: 5%; */
   position: fixed;
-  left: 13%;
+  left: 12.5%;
   top: 55%;
   transform: translate(-50%, -50%);
   font-size: 40px;
@@ -73,7 +73,7 @@ input {
   padding: 1em 0;
   height: auto;
   width: 20vw;
-  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 /* 오른쪽 사이드 카테고리 */
@@ -81,15 +81,15 @@ input {
   /* margin-top: 5%; */
   align-items: center;
   position: fixed;
-  left: 87%;
+  left: 87.5%;
   top: 55%;
   transform: translate(-50%, -50%);
   font-size: 40px;
   font-family: '국립박물관문화재단클래식B';
   background-color: #a5705163;
   border-radius: 1em;
-  padding: 1em 0;
-  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.5);
+  padding: 1em;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5);
   width: 20vw;
   height: auto;
 }
@@ -123,7 +123,7 @@ input {
 }
 
 .category-box>a {
-  font-size: 0.8em;
+  font-size: 25px;
 
 }
 
@@ -150,11 +150,12 @@ button {
 
 #chocobanner {
   position: relative;
-  left: -1%;
   height: 30vh;
-  width: 50vw;
+  width: 47vw;
   margin-top: 20px;
   cursor: pointer;
+  border-radius: 1em;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 
@@ -181,6 +182,8 @@ button {
   width: auto;
   font-size: 1vw;
   overflow: auto;
+  border-radius: 0.5em;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .card-title {
@@ -242,11 +245,11 @@ button {
 }
 
 .carousel-control-prev {
-  margin-top: 11vw;
+  margin: auto;
 }
 
 .carousel-control-next {
-  margin-top: 11vw;
+  margin: auto;
 }
 
 .carousel-inner {
@@ -260,6 +263,18 @@ button {
 
 .section-mobile {
   display: none;
+}
+
+@media screen and (max-width: 1080px) {
+  .menu {
+    margin-left: 1vw;
+  }
+}
+
+@media screen and (max-width: 1180px) {
+  .form-check {
+    padding-left: 3vw;
+  }
 }
 
 @media screen and (max-width: 768px) {
