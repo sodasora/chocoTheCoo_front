@@ -19,8 +19,9 @@ const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('product_id');
 
 
-export async function goSellerPage() {
-
+export async function goSellerPage(user_id) {
+    const url = `${FRONT_BASE_URL}/index.html?user_id=${user_id}`
+    window.location.href = url;
 }
 
 export async function sellerFollow(user_id) {
@@ -44,15 +45,17 @@ export async function sellerFollow(user_id) {
 export async function setSellerInformation(information) {
     const follow_button = document.getElementById("seller-follow-button")
     const company_img = information.company_img == null ? "/static/images/pepe.jpg" : information.company_img
-    document.getElementById("seller-company_img").style.backgroundImage = `url(${company_img})`
+    const sellerProfile = document.getElementById("seller-company_img")
+    sellerProfile.style.backgroundImage = `url(${company_img})`
     document.getElementById("seller-company_name").innerText = information.company_name
     document.getElementById("seller-business_owner_name").innerText = information.business_owner_name
     document.getElementById("seller-contact_number").innerText = information.contact_number
     document.getElementById("followerCount").innerText = `follower : ${information.followings_count}`
-    console.log(information)
     information.is_follow == false ? follow_button.innerText = "Follow" : follow_button.innerText = "Unfollow"
 
-
+    sellerProfile.addEventListener("click", function () {
+        goSellerPage(information.user)
+    });
     follow_button.addEventListener("click", function () {
         sellerFollow(information.user)
     });
@@ -464,7 +467,6 @@ export async function setEventListener() {
     document.getElementById("reviewView").addEventListener("click", reviewView)
     document.getElementById("detailView").addEventListener("click", productInformationView)
     document.getElementById("sellerpage").addEventListener("click", sellerpageView)
-    document.getElementById("seller-company_img").addEventListener("click", goSellerPage)
 }
 
 

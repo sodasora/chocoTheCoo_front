@@ -55,10 +55,11 @@ async function pagination_review(review) {
         const newBody = document.createElement("div")
         newBody.setAttribute("class", "card-body")
 
-        const neweditbutton = document.createElement("button")
-        neweditbutton.setAttribute("class", "button")
+        const neweditbutton = document.createElement("img")
+        neweditbutton.setAttribute("src", "static/images/editBtn.svg")
+        // neweditbutton.setAttribute("class", "button")
         neweditbutton.setAttribute("id", "button-review")
-        neweditbutton.innerText = "수정하기"
+        // neweditbutton.innerText = "수정하기"
         neweditbutton.addEventListener("click", function () {
             goEditReview(review[id].product, review[id].id)
         })

@@ -60,14 +60,17 @@ let total_star_score = 0
 let is_score_products = seller_products.filter(function (product) {
     return product.stars; //평점 존재하는 상품만 필터
 });
-for (const is_score_product of is_score_products) {
-    total_star_score += is_score_product.stars
+let avg_star_score = "0.0"
+let max_star_score = "0.0"
+if (is_score_products.length != 0) {
+    for (const is_score_product of is_score_products) {
+        total_star_score += is_score_product.stars
+    }
+    avg_star_score = (Math.round((total_star_score / is_score_products.length) * 10) / 10).toFixed(1);
+    // 8) 최고평점
+    max_star_score = Math.max(...is_score_products.map(product => product.stars)).toFixed(1);
 }
-let avg_star_score = (Math.round((total_star_score / is_score_products.length) * 10) / 10).toFixed(1);
-// 8) 최고평점
-let max_star_score = Math.max(...is_score_products.map(product => product.stars)).toFixed(1);
 //########## ↑ 정보 정의 ↑ ##########//
-
 
 //########## ↓ 상단-현황박스 정보 입력 ↓ ##########//
 // 1) 총 누적판매량

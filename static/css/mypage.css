@@ -12,13 +12,17 @@
   font-style: normal;
 }
 
-button {
+.button-sets>button,
+#button-content>button,
+.subscription-section>button {
   height: 4vh;
   font-size: 1vw;
-  margin-top: 1.2vw;
   background-color: rgba(109, 86, 68, 0.822);
   color: white;
   border-radius: 10px;
+  border: none;
+  font-family: 'S-CoreDream-3Light';
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
 }
 
 #wish-buttons {
@@ -35,13 +39,25 @@ button {
   text-decoration: underline;
 }
 
+.button_page {
+  height: 4vh;
+  font-size: 1vw;
+  /* background-color: rgba(109, 86, 68, 0.822); */
+  color: rgb(0, 0, 0);
+  border-radius: 5px;
+  border: none;
+  font-family: 'S-CoreDream-3Light';
+}
+
 .section {
   background-color: #C4A492;
-  height: auto;
+  height: 100%;
+  margin-top: 10em;
 }
 
 .mypage-intro {
   display: flex;
+  align-items: center;
   margin-top: 20px;
 }
 
@@ -51,6 +67,7 @@ button {
   font-weight: bold;
   padding-left: 40px;
   color: white;
+  margin-bottom: 0;
 }
 
 .card-list {
@@ -236,7 +253,6 @@ td {
   height: auto;
   text-align: center;
   margin-top: 30px;
-  margin-left: 60px;
   border: 2px solid white;
   border-radius: 20px;
   color: white;
@@ -251,8 +267,6 @@ td {
   height: 18vw;
   padding: 20px;
   text-align: center;
-  margin-top: 10px;
-  margin-left: 60px;
   margin-bottom: 20px;
   border: 2px solid white;
   border-radius: 20px;
@@ -345,7 +359,13 @@ td {
 }
 
 .sub-button {
-  margin-left: 24vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-width: 10em !important;
+  width: 25vw;
+  margin: 1em 0;
 }
 
 #bookmarkList {
@@ -413,8 +433,25 @@ td {
   color: white;
 }
 
+.subscription-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 @media screen and (max-width: 768px) {
+  .sub-button {
+    width: 100%;
+  }
+
   .col-md-4 {
     justify-content: center;
     align-items: center;
@@ -591,20 +628,16 @@ td {
   }
 
   .profile-section {
-    width: 100%;
+    /* width: 100%; */
+
     justify-content: center;
     align-items: center;
-    margin-left: 20px;
+    /* margin-left: 20px; */
   }
 
-  .sub-button {
-    width: 100%;
-    margin-left: 30px;
-  }
 
   .subscription-section {
-    width: 80%;
-    margin-left: 20px;
+    margin: 0 10%;
   }
 
   .profile {
@@ -618,14 +651,12 @@ td {
     height: auto;
     text-align: center;
     margin-top: 30px;
-    margin-left: 30px;
     border: 2px solid white;
     border-radius: 20px;
     color: white;
   }
 
   .subscription-card {
-    margin-left: 30px;
     height: auto;
     width: 100%;
     padding: 20px;
@@ -791,5 +822,12 @@ td {
   .seller-follow:hover {
     background-color: black;
     color: white;
+  }
+
+}
+
+@media screen and (max-width: 550px) {
+  .section {
+    margin-top: 0!important
   }
 }

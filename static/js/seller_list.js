@@ -128,12 +128,14 @@ async function paginationView_product(product) {
 
     const renderContent = (page) => {
         // 목록 리스트 초기화
-        while (contents.hasChildNodes()) {
-            contents.removeChild(contents.lastChild);
-        }
-        // 글의 최대 개수를 넘지 않는 선에서, 화면에 maxContent개의 글 생성
-        for (let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++) {
-            contents.appendChild(makeContent(id - 1));
+        if (contents) {
+            while (contents.hasChildNodes()) {
+                contents.removeChild(contents.lastChild);
+            }
+            // 글의 최대 개수를 넘지 않는 선에서, 화면에 maxContent개의 글 생성
+            for (let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++) {
+                contents.appendChild(makeContent(id - 1));
+            }
         }
     };
 
@@ -159,22 +161,24 @@ async function paginationView_product(product) {
 
     const renderButton = (page) => {
         // 버튼 리스트 초기화
-        while (buttons.hasChildNodes()) {
-            buttons.removeChild(buttons.lastChild);
-        }
-        // 화면에 최대 maxButton개의 페이지 버튼 생성
-        for (let id = page; id < page + maxButton && id <= maxPage; id++) {
-            buttons.appendChild(makeButton(id));
-        }
-        // 첫 버튼 활성화(class="active")
-        buttons.children[0].classList.add("active");
+        if (buttons) {
+            while (buttons.hasChildNodes()) {
+                buttons.removeChild(buttons.lastChild);
+            }
+            // 화면에 최대 maxButton개의 페이지 버튼 생성
+            for (let id = page; id < page + maxButton && id <= maxPage; id++) {
+                buttons.appendChild(makeButton(id));
+            }
+            // 첫 버튼 활성화(class="active")
+            buttons.children[0].classList.add("active");
 
-        buttons.prepend(prev);
-        buttons.appendChild(next);
+            buttons.prepend(prev);
+            buttons.appendChild(next);
 
-        // 이전, 다음 페이지 버튼이 필요한지 체크
-        if (page - maxButton < 1) buttons.removeChild(prev);
-        if (page + maxButton > maxPage) buttons.removeChild(next);
+            // 이전, 다음 페이지 버튼이 필요한지 체크
+            if (page - maxButton < 1) buttons.removeChild(prev);
+            if (page + maxButton > maxPage) buttons.removeChild(next);
+        }
     };
 
     const render = (page) => {
@@ -463,12 +467,14 @@ async function paginationView_order(order) {
 
     const renderContent = (page) => {
         // 목록 리스트 초기화
-        while (contents.hasChildNodes()) {
-            contents.removeChild(contents.lastChild);
-        }
-        // 글의 최대 개수를 넘지 않는 선에서, 화면에 maxContent개의 글 생성
-        for (let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++) {
-            contents.appendChild(makeContent(id - 1));
+        if (contents) {
+            while (contents.hasChildNodes()) {
+                contents.removeChild(contents.lastChild);
+            }
+            // 글의 최대 개수를 넘지 않는 선에서, 화면에 maxContent개의 글 생성
+            for (let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++) {
+                contents.appendChild(makeContent(id - 1));
+            }
         }
     };
 
@@ -494,22 +500,25 @@ async function paginationView_order(order) {
 
     const renderButton = (page) => {
         // 버튼 리스트 초기화
-        while (buttons.hasChildNodes()) {
-            buttons.removeChild(buttons.lastChild);
-        }
-        // 화면에 최대 maxButton개의 페이지 버튼 생성
-        for (let id = page; id < page + maxButton && id <= maxPage; id++) {
-            buttons.appendChild(makeButton(id));
-        }
-        // 첫 버튼 활성화(class="active")
-        buttons.children[0].classList.add("active");
+        if (buttons) {
 
-        buttons.prepend(prev);
-        buttons.appendChild(next);
+            while (buttons.hasChildNodes()) {
+                buttons.removeChild(buttons.lastChild);
+            }
+            // 화면에 최대 maxButton개의 페이지 버튼 생성
+            for (let id = page; id < page + maxButton && id <= maxPage; id++) {
+                buttons.appendChild(makeButton(id));
+            }
+            // 첫 버튼 활성화(class="active")
+            buttons.children[0].classList.add("active");
 
-        // 이전, 다음 페이지 버튼이 필요한지 체크
-        if (page - maxButton < 1) buttons.removeChild(prev);
-        if (page + maxButton > maxPage) buttons.removeChild(next);
+            buttons.prepend(prev);
+            buttons.appendChild(next);
+
+            // 이전, 다음 페이지 버튼이 필요한지 체크
+            if (page - maxButton < 1) buttons.removeChild(prev);
+            if (page + maxButton > maxPage) buttons.removeChild(next);
+        }
     };
 
     const render = (page) => {
@@ -536,11 +545,9 @@ const user_id = payload_parse.user_id //로그인한 유저id
 
 // 로그인한 판매자의 전체 상품 목록 불러오기
 const seller_products = await getAllProductListAPIView(user_id)
-console.log('seller_products', seller_products)
 
 // 로그인한 판매자의 전체 주문 목록 불러오기
 const seller_orders = await getSellerOrderListView()
-console.log('seller_orders', seller_orders)
 
 // 상품목록 Json 배열에 데이터 추가하기
 // for (let i = 0; i < seller_orders.length; i++) {
@@ -552,5 +559,12 @@ console.log('seller_orders', seller_orders)
 // ↑상품 목록 가져오기 관련 코드↑ //
 
 // 상품 목록, 주문 목록 페이지네이션 실행
-paginationView_product(seller_products)
-paginationView_order(seller_orders)
+if (seller_products.length > 0) {
+    console.log('seller_products', seller_products)
+    paginationView_product(seller_products)
+}
+
+if (seller_orders.length > 0) {
+    console.log('seller_orders', seller_orders)
+    paginationView_order(seller_orders)
+}
