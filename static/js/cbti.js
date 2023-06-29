@@ -119,7 +119,7 @@ export async function myTest() {
     // 페이지 이동
     console.log(carousel);
     carousel.next();
-  }
+ }
 
 export async function cbtiResult() {
     // E일 때 1, I일 때 0
