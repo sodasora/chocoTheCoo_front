@@ -52,9 +52,20 @@ async function injectHeader() {
         const login = document.getElementById("login")
         signup.style.display = "none";
         login.style.display = "none";
+        
+        const mobileSignup = document.getElementById("mobileSignUp")
+        const mobileLogin = document.getElementById("mobileLogin")
+        mobileSignup.style.display = "none";
+        mobileLogin.style.display = "none";
 
+        // 로그아웃
         const logout = document.getElementById("logout")
         logout.addEventListener("click", function () {
+            handleLogout()
+        })
+        
+        const mobileLogout = document.getElementById("mobileLogout")
+        mobileLogout.addEventListener("click", function () {
             handleLogout()
         })
 

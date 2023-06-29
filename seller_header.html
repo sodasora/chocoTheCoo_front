@@ -23,7 +23,7 @@
             <ul id="login" style="cursor: pointer;" onclick="location.href='login.html';"> 로그인 &nbsp; &nbsp; </ul>
             <!-- 로그인 후 -->
             <img id="cart" style='cursor:pointer' src="static/images/shopping-cart.png" alt="cart"
-            onclick="location.href='cart.html'">
+                onclick="location.href='cart.html'">
             <ul id="intro" style='cursor:pointer' onclick="location.href='/user_detail_page.html';"> </ul>
             <ul id="charge" style='cursor:pointer' onclick="location.href='pointcharge.html';"> 포인트충전</ul>
             <ul id="mypage" style='cursor:pointer' onclick="location.href='mypage.html';"> 마이페이지 </ul>
@@ -32,9 +32,33 @@
         </div>
     </div>
     <div class="main">
+        <div id="logoChoco" style="display: none;">🍫&nbsp;</div>
         <text id="nav-title">ChocoTheCoo</text>
+        <div class="dropdown" id="headerDropdownBox">
+            <img type="button" src="static/images/dropdown_choco.png" alt="" id="headerDropdown"
+                class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <ul class="dropdown-menu dropdown-menu-header" aria-labelledby="headerDropdown">
+                <!-- 비 로그인 시 보여주는 항목 -->
+                <li><button onclick="location.href='login.html';" id="mobileLogin" class="dropdown-item"
+                        type="button">🔑 로그인</button></li>
+                <li><button onclick="location.href='signup.html';" id="mobileSignUp" class="dropdown-item"
+                        type="button">🍫 회원가입</button></li>
+                <li><button onclick="location.href='sellerpage.html';" id="mobilePoint" class="dropdown-item"
+                        type="button">🏪 Store Page</button></li>
+                <li><button onclick="location.href='productregistration.html';" id="mobileMyPage" class="dropdown-item"
+                        type="button">📦 Product add</button></li>
+                <li><button onclick="location.href='seller.html';" id="mobileSellerPage" class="dropdown-item"
+                        type="button">📈 Statistics</button></li>
+                <li><button onclick="location.href='seller_productlist.html';" id="mobileChat" class="dropdown-item"
+                        type="button">📋 Product-List</button></li>
+                <li><button onclick="location.href='seller_orderlist.html';" id="mobileCBTI" class="dropdown-item" type="button">😋
+                        Order-List</button></li>
+                <!-- 로그인 시 보여주는 항목 -->
+                <li><button class="dropdown-item" type="button" id="mobileLogout">👋 로그아웃</button></li>
+            </ul>
+        </div>
     </div>
-    <div class="top-category">
+    <div class="top-category top-category-header">
         <nav class="nav-header">
             <a href="sellerpage.html">Store Page</a>
             <a href="productregistration.html">Product add</a>
