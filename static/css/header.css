@@ -235,17 +235,17 @@ header {
         z-index: 50000;
     }
 
-    .dropdown-menu {
+    .dropdown-menu-header {
         background-color: #C4A492;
     }
 
-    .dropdown-menu>li {
+    .dropdown-menu-header>li {
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    .dropdown-menu>li>button {
+    .dropdown-menu-header>li>button {
         font-family: 'S-CoreDream-3Light';
         color: #522F18 !important;
         font-size: 1em;

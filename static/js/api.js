@@ -883,6 +883,10 @@ export async function makeOrders(queryString, bill_id) {
 		alert("잘못된 URL입니다. 장바구니부터 다시 시도해주세요.")
 		window.history.back();
 	}
+	else if (response.status == 403) {
+		alert("포인트가 부족합니다!")
+		window.location.href = "/pointcharge.html"
+	}
 }
 
 export async function setCustomsCodeAPI(information) {
