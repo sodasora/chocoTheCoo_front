@@ -221,7 +221,7 @@ async function renderTotals() {
             params.set('cart_id', cart_id_list.join(","));
             console.log(cart_id_list);
             const queryString = params.toString();
-            // window.location.href = `${FRONT_BASE_URL}/ordercheck.html?` + `${queryString}`;
+            window.location.href = `${FRONT_BASE_URL}/ordercheck.html?` + `${queryString}`;
         }
         else {
             alert('선택된 상품이 없습니다.');
