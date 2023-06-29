@@ -42,10 +42,10 @@
         <div class="address-select">
             <div class="dropdown" id="addressLoad">
                 <div>
-                    <div>
-                        <button class="dropdown-button address-display centered">다른 주소 선택</button>
-                    </div>
-                    <div class="dropdown-content" id="dropdownContent">
+                    <button type="button" data-bs-toggle="dropdown"
+                        class="dropdown-toggle dropdown-button address-display centered">다른 주소 선택</button>
+
+                    <div class="dropdown-menu dropdown-content" id="dropdownContent">
                         <p id="registDelivery" class="dropdown-item centered">주소 등록하기</p>
                         <!-- 주소지 정보 드롭다운 -->
                     </div>
@@ -55,7 +55,8 @@
                 <!-- <div id="addressBox">
                 </div> -->
                 <input id="delivery_id" hidden>
-                <input style="display: none;" class="address-input-item centered" type="button" id="Postcode" value="우편번호 찾기">
+                <input style="display: none;" class="address-input-item address-item centered" type="button" id="Postcode"
+                    value="우편번호 찾기">
                 <div id="wrap"
                     style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
                     <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
