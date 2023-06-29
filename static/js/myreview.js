@@ -279,9 +279,13 @@ async function subscription_info() {
 }
 
 window.onload = async function () {
+    if (payload == null) {
+        alert("로그인이 필요 합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    }
+
     profile();
     subscription_info();
-
     const review_data = await getMyReviewView()
     if (review_data != "") {
         pagination_review(review_data);

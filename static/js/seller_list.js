@@ -523,8 +523,10 @@ const payload_parse = JSON.parse(payload);
 if (payload_parse == null) {
     alert("로그인이 필요 합니다.")
     window.location.replace(`${FRONT_BASE_URL}/login.html`)
+} else if (payload_parse.is_seller == false) {
+    alert("판매 활동 권한이 필요합니다.")
+    window.location.replace(`${FRONT_BASE_URL}/user_detail_page.html`)
 }
-
 const user_id = payload_parse.user_id //로그인한 유저id
 
 
