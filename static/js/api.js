@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5500"
+export const FRONT_BASE_URL = "http://127.0.0.1:5501"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
@@ -1020,6 +1020,10 @@ export async function getChatroominfo(room_id) {
 		},
 		method: 'GET',
 	})
+	if (response.status == 404) {
+		alert("채팅방 을 찾을 수 없습니다.")
+		window.location.replace(`${FRONT_BASE_URL}/index.html`)
+	}
 	return response.json()
 }
 
@@ -1500,7 +1504,7 @@ export async function getCategoryView() {
 	return response.json();
 }
 
- 
+
 // 동일 카테고리 상품 조회
 export async function sameCategoryProductView(category_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/?category=${category_id}`, {
