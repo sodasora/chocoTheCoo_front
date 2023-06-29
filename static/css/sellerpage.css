@@ -1,7 +1,7 @@
 #product-content {
     display: flex;
     justify-content: center;
-    margin: 10em 10% 0 10%;
+    margin: 3em 10% 0 10%;
 }
 
 .section2 {
@@ -19,7 +19,7 @@
 
 .card {
     font-family: 'S-CoreDream-3Light';
-    height: 25vw;
+    height: 32em;
     min-height: max-content;
     width: auto;
     font-size: 1vw;
@@ -106,7 +106,7 @@ button {
 
 .image-box {
     width: 180%;
-    height: 14rem;
+    height: 10rem;
     background-image: url("/static/images/storeforseller.png");
     background-size: 100% 100%;
     background-color: #743837;
