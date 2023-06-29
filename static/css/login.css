@@ -199,6 +199,10 @@ button {
         display: none;
     }
 
+    #formBox {
+        margin-top: 0% !important;
+    }
+
     /* #leftBox {
         background-color: black !important;
     } */
@@ -212,10 +216,6 @@ button {
 
     #rightBox {
         background-image: none !important;
-    }
-
-    a {
-        color: bisque;
     }
 
     #signupView {
@@ -259,21 +259,6 @@ button {
         margin-bottom: 3rem;
     }
 
-    #leftInnerContainer {
-        padding-top: 10rem !important;
-    }
-
-    #titleBox {
-        display: flex !important;
-        margin-top: 5rem !important;
-        background-color: bisque;
-        border-radius: 3rem;
-        width: 95%;
-        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-    }
-
-
-
     .title {
         display: none;
     }
@@ -284,15 +269,38 @@ button {
 
     }
 
-    #formBox {
-        font-size: 2rem !important;
+    #leftBox {
+        width: 100% !important;
     }
 
-    #leftInnerContainer {
-        position: absolute;
-        left: 0;
-        right: 0;
-        margin: auto;
+    input {
+        background-color: white !important;
+    }
+
+    button {
+        background-color: white !important;
+    }
+
+    #titleBox {
+        display: flex !important;
+        height: 20rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 5rem;
+        font-weight: bold;
+        background-color: #a15e00;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    #mobileTitle {
+        color: white;
+    }
+
+    #rightBox {
+        display: none !important;
     }
 }
 
@@ -500,21 +508,9 @@ button {
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
-#titleBox {
-    font-size: 6rem;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-}
 
 
-#mobileTitle {
-    color: #a15e00;
-}
+
 
 #passwordGuide {
     font-size: 2rem;

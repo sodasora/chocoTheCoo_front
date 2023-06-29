@@ -77,6 +77,14 @@ footer {
 
 /* 휴대 기기 */
 @media (max-width: 425px) {
+    #setSellerInformation {
+        width: 50rem !important;
+    }
+
+    #modal {
+        display: none !important;
+    }
+
     #deleteUserInformationButton {
         width: 80% !important;
     }
