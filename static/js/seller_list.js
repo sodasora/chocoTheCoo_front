@@ -335,6 +335,13 @@ async function paginationView_order(order) {
         const strong = document.createElement('strong');
         strong.textContent = order[id].order_status.name;
         strong.style.fontSize = '1.5em';
+        if (order[id].order_status.id == 2 ){
+            strong.style= "color: red; font-weight: bold;"; // 주문확인중(2) - 빨강
+        }else if (order[id].order_status.id == 3){
+            strong.style= "color: orange; font-weight: bold;"; // 배송준비중(3) - 주황
+        }else if (order[id].order_status.id == 5){
+            strong.style= "color: green; font-weight: bold;"; // 배송완료(5) - 초록
+        }
 
         div3.textContent = '상태: ';
         div3.appendChild(strong);
@@ -420,6 +427,13 @@ async function paginationView_order(order) {
 
         const orderStatusTd = document.createElement('td');
         const orderStatusText = document.createTextNode(order[id].order_status.name);
+        if (order[id].order_status.id == 2 ){
+            orderStatusTd.style= "color: red; font-weight: bold;"; // 주문확인중(2) - 빨강
+        }else if (order[id].order_status.id == 3){
+            orderStatusTd.style= "color: orange; font-weight: bold;"; // 배송준비중(3) - 주황
+        }else if (order[id].order_status.id == 5){
+            orderStatusTd.style= "color: green; font-weight: bold;"; // 배송완료(5) - 초록
+        }
         orderStatusTd.appendChild(orderStatusText);
 
         const amountTd = document.createElement('td');
@@ -549,22 +563,19 @@ const seller_products = await getAllProductListAPIView(user_id)
 // 로그인한 판매자의 전체 주문 목록 불러오기
 const seller_orders = await getSellerOrderListView()
 
-// 상품목록 Json 배열에 데이터 추가하기
-// for (let i = 0; i < seller_orders.length; i++) {
-//     // 상품리스트에서 상품이미지 조회 - 상품이미지는 post 요청으로 넘어오지 않으므로 Product 에서 조회
-//     const product = await getProductDetailAPIView(seller_orders[i].product_id);
-//     seller_orders[i]['image'] = product.image;
-// }
-
-// ↑상품 목록 가져오기 관련 코드↑ //
+// ↑상품 목록 가져오기 관련 코드↑ // 
 
 // 상품 목록, 주문 목록 페이지네이션 실행
 if (seller_products.length > 0) {
-    console.log('seller_products', seller_products)
+    // console.log('seller_products', seller_products)
     paginationView_product(seller_products)
 }
 
 if (seller_orders.length > 0) {
-    console.log('seller_orders', seller_orders)
+
+    seller_orders.sort(function(a, b) {
+        return a.order_status.id - b.order_status.id; // "주문상태" 기준으로 오름차순 정렬
+    });
+    // console.log('seller_orders', seller_orders)
     paginationView_order(seller_orders)
 }
