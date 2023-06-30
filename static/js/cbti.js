@@ -138,9 +138,9 @@ export async function cbtiResult() {
     // T일때 1, F일 때 0
     const FT_one_1 = document.getElementById("FT_one_1").checked ? 0 : 1;
     const FT_two_1 = document.getElementById("FT_two_1").checked ? 1 : 0;
-    const FT_three_3 = document.getElementById("FT_three_3").checked ? 0 : 1;
+    const FT_three_1 = document.getElementById("FT_three_1").checked ? 1 : 0;
 
-    FT = FT_one_1 + FT_two_1 + FT_three_3;
+    FT = FT_one_1 + FT_two_1 + FT_three_1;
 
     // P일때 1, J일때 0
     const PJ_one_1 = document.getElementById("PJ_one_1").checked ? 1 : 0;
@@ -160,10 +160,12 @@ export async function cbtiResult() {
 }
  
 export async function printCBTIResult(mbti) {
-    const title = cbtiName[mbti] || "다른 MBTI 타입";
-    const result = cbti[mbti] || "다른 MBTI 타입";
+    const title = cbtiName[mbti];
+    const result = cbti[mbti];
     const response = await searchProductAPI(title);
+    console.log(response)
     console.log(title)
+  
     const productId = response.results[0].id;
     const imageUrl = response.results[0].image; 
 
@@ -191,7 +193,7 @@ export async function printCBTIResult(mbti) {
       }
       return false;
     }
-  
+    
     // 1~12번 중 체크되지 않은 문항 있을때 경고문
     document.getElementById('CBTI-result-btn').addEventListener('click', function(event) {
       event.preventDefault();
@@ -205,10 +207,10 @@ export async function printCBTIResult(mbti) {
         ['NS_three_1', 'NS_three_2', '6번이 작성되지 않았습니다.'],
         ['FT_one_1', 'FT_one_2', '7번이 작성되지 않았습니다.'],
         ['FT_two_1', 'FT_two_2', '8번이 작성되지 않았습니다.'],
-        ['FT_three_1', 'FT_three_2', 'FT_three_3', 'FT_three_4', '9번이 작성되지 않았습니다.'],
+        ['FT_three_1', 'FT_three_2', '9번이 작성되지 않았습니다.'],
         ['PJ_one_1', 'PJ_one_2', '10번이 작성되지 않았습니다.'],
         ['PJ_two_1', 'PJ_two_2', '11번이 작성되지 않았습니다.'],
-        ['PJ_three_1', 'PJ_three_2', 'PJ_three_3', '12번이 작성되지 않았습니다.']
+        ['PJ_three_1', 'PJ_three_2', '12번이 작성되지 않았습니다.']
       ];
   
       for (const question of uncheckedQuestions) {
