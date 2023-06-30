@@ -183,7 +183,7 @@ export async function printCBTIResult(mbti) {
   })
 }
 
-  export async function setEventListener() {
+export async function setEventListener() {
     document.getElementById("modal-button").addEventListener("click", function() {
       window.location.reload();
   });
