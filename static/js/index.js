@@ -263,7 +263,7 @@ window.onload = async function () {
     categoryview_mobile()
     setEventListener_mobile()
     const product = await getProductListAPIView();
-    // console.log(product)
+    console.log(product)
     const choco = document.getElementById("chocobanner")
     choco.addEventListener("click", function () {
         window.location.href = "subscriptioninfo.html";

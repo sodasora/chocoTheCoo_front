@@ -86,7 +86,7 @@ async function get_chat_log() {
 let chatSocket
 let nowPage = 1
 let backurl = BACK_BASE_URL.substring(7,)
-console.log(backurl)
+// console.log(backurl)
 function socketSwap(roomId) {
     if (chatSocket) {
         chatSocket.close()
@@ -97,7 +97,8 @@ function socketSwap(roomId) {
     if (roomId != null) {
         chatSocket = new WebSocket(
             'ws://' + backurl +
-            '/ws/chat/' + roomId + '/?token=' + access_token);
+            '/ws/chat/' + roomId + '/?token=' + access_token
+        );
 
         console.log(chatSocket)
 
