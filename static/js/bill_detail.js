@@ -88,7 +88,7 @@ async function renderBillOrders(bill) {
         const fifthText = document.createElement('img');
         fifthText.classList.add('pd-cart-icon');
         fifthText.src = `/static/images/shopping-cart.png`;
-        fifthText.setAttribute('data-orderItem', `${e.order_items}`)
+        fifthText.setAttribute('data-orderItem', `${e.id}`)
         fifthText.addEventListener('click', () => OrderItemToCart(e.id))
 
         const textDiv = document.createElement('div');
