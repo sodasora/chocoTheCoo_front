@@ -36,3 +36,27 @@ input {
 .card-title {
     font-size: 2vw;
 }
+
+.title-container {
+    height: auto;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    background-color: #743837;
+}
+
+.image-box {
+    width: 180%;
+    height: 14rem;
+    background-image: url("/static/images/point.png");
+    background-size: cover;
+    background-color: #743837;
+    background-position: center;
+    background-repeat: no-repeat
+}
+
+@media screen and (max-width: 768px) {
+    .image-box {
+        display: none;
+    }
+}
