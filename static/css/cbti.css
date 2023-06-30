@@ -7,7 +7,7 @@
 
 .section2 {
     text-align: center;
-    height: 33em;
+    height: 100%;
     display: flex;
     justify-content: center;
     background-color: #C4A492;
@@ -46,15 +46,15 @@
     border-radius: 1vw;
     display: flex;
     justify-content: center;
-    height: 100%;
-    width: 100%;
+    height: 40em;
+    width: 40em;
     font-size: 1rem;
     max-width: 30em;
 }
 
 #label-title {
     font-size: 1.2em;
-    padding-top: 6em;
+    padding-top: 10em;
     margin-bottom: 1em;
 }
 
