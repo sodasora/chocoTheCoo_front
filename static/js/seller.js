@@ -1,4 +1,5 @@
-import { FRONT_BASE_URL, BACK_BASE_URL, getAllProductListAPIView, getSellerOrderListView, getSellerPermissionAPIView, getProductDetailAPIView } from './api.js';
+import { FRONT_BASE_URL, getAllProductListAPIView, getSellerOrderListView, getSellerPermissionAPIView } from './api.js';
+import { productDetail } from './sellerpage.js';
 
 const payload = localStorage.getItem("payload");
 const payload_parse = JSON.parse(payload);
@@ -25,13 +26,6 @@ const seller_orders_unsent = seller_orders.filter(function (order) {
     return 1 < order.order_status.id && order.order_status.id <= 3;
 });
 // console.log('seller_orders_unsent', seller_orders_unsent)
-
-// 상품목록 Json 배열에 데이터 추가하기
-for (let i = 0; i < seller_orders.length; i++) {
-    // 상품리스트에서 상품이미지 조회 - 상품이미지는 post 요청으로 넘어오지 않으므로 Product 에서 조회
-    const product = await getProductDetailAPIView(seller_orders[i].product_id);
-    seller_orders[i]['image'] = product.image;
-}
 
 
 //########## ↓ 정보 정의 ↓ ##########//
@@ -166,6 +160,9 @@ function listView_product(product, type) {
         }
         const content = document.createElement("div");
         content.setAttribute("class", 'under-column');
+        content.onclick = function () {
+            productDetail(product[id].id);
+        };
 
         // type에 따른 분기 type: [sells, likes, stars]
         if (type === 'sells') {
@@ -186,6 +183,7 @@ function listView_product(product, type) {
             </div>
             </div>
             `;
+
             return content;
         }
         else if (type === 'likes') {
@@ -229,14 +227,14 @@ function listView_order(order, type) {
     const contents = document.getElementById(`${type}_under-column-dox`);
     contents.innerHTML = '';
     // console.log("주문확인", order);
-    // console.log("type", type);
-
+    
     const makeContent = (id) => {
         if (!order[id].image) {
             order[id].image = "/static/images/기본상품.png" // 상품이미지 없으면 기본이미지 대체
         }
         const content = document.createElement("div");
         content.setAttribute("class", 'under-column');
+        content.addEventListener('click', () =>{window.location.replace(`${FRONT_BASE_URL}/seller_orderlist.html`)})
         content.innerHTML = `
         <text>${id + 1}.<img style="width: 50px;" src="${order[id].image}" alt="상품이미지">
         ${order[id].name}</text>
@@ -255,44 +253,22 @@ function listView_order(order, type) {
 
 
 // 상품리스트 불러오기
+seller_products.sort(function(a, b) {
+    return b.sales - a.sales; // "sales" 기준으로 내림차순 정렬
+});
 listView_product(seller_products, 'sells')
+
+seller_products.sort(function(a, b) {
+    return b.likes - a.likes; // "likes" 기준으로 내림차순 정렬
+});
 listView_product(seller_products, 'likes')
+
+seller_products.sort(function(a, b) {
+    return b.stars - a.stars; // "stars" 기준으로 내림차순 정렬
+});
 listView_product(seller_products, 'stars')
+
 // 주문리스트 불러오기
 listView_order(seller_orders_unsent, 'orders')
 
 //########## ↑ 하단-상품리스트 불러오기 ↑ ##########//
-
-
-// // 그래프 애니메이션 함수
-// const barAnimation = (bars, index, currentValue, targetValue, duration, updateInterval) => {
-//     const increment = (targetValue - currentValue) / (duration / updateInterval);
-//     let currentWidth = currentValue;
-
-//     const interval = setInterval(() => {
-//         currentWidth += increment;
-//         bars[index].style.width = currentWidth + '%';
-
-//         if (Math.abs(currentWidth - targetValue) < Math.abs(increment)) {
-//             // 목표값에 도달한 경우
-//             bars[index].style.width = targetValue + '%';
-//             clearInterval(interval);
-//         }
-//     }, updateInterval);
-// };
-
-// //막대그래프 효과
-// const bars = await document.querySelectorAll(`.sells.bar`); // 특정 class 선택
-// console.log('bars', bars);
-// const animationDuration = 1000; // 애니메이션 지속 시간 (ms)
-// const updateInterval = 50000; // 갱신 주기 (ms)
-
-//     for (let index = 0; index < seller_products.length; index++) {
-//         // 각 막대에 대해 애니메이션 실행
-//         const currentValue = 0;
-//         const targetValue = seller_products[index].sales / seller_products[index].total_sales * 100
-//         barAnimation(bars, index, currentValue, targetValue, animationDuration, updateInterval);
-//     }
-
-
-
