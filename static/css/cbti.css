@@ -30,13 +30,16 @@
 #prev-button {
     height: 30px;
     width: 30px;
-    margin-top: 8em;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-image: url("/static/images/left-arrow.png");
 }
 
 #next-button {
     height: 30px;
     width: 30px;
-    margin-top: 8em;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 
@@ -137,13 +140,19 @@
 }
 
 #left-arrow {
-    margin-top: 12em;
-    width:3em;
-    height:3em;
+    width: 3em;
+    height: 3em;
 }
 
 #right-arrow {
-    margin-top: 12em;
-    width:3em;
-    height:3em;
+    width: 3em;
+    height: 3em;
+}
+
+.carousel-control-prev {
+    margin: auto !important;
+}
+
+.carousel-control-next {
+    margin: auto !important;
 }
