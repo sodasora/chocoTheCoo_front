@@ -99,7 +99,7 @@ const cbtiName = {
   INTJ: "민트 초콜렛",
   ISTJ: "다크 초콜렛",
   INFJ: "아몬드 초콜렛",
-  ISFJ: "밀크 초콜렛",
+  ISFJ: "헤이즐넛 블랙 초콜렛",
   INTP: "밀크 초콜렛",
   ISTP: "다크 초콜렛",
   INFP: "커피 초콜렛",
@@ -183,7 +183,7 @@ export async function printCBTIResult(mbti) {
   })
 }
 
-  export async function setEventListener() {
+export async function setEventListener() {
     document.getElementById("modal-button").addEventListener("click", function() {
       window.location.reload();
   });
