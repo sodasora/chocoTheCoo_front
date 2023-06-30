@@ -183,20 +183,19 @@ export async function printCBTIResult(mbti) {
 
   export async function setEventListener() {
 
-    function hasUncheckedRadio(radio1Id, radio2Id, message) {
+    function hasUncheckedRadio(radio1Id, radio2Id) {
       const radio1 = document.getElementById(radio1Id);
       const radio2 = document.getElementById(radio2Id);
       if (!(radio1.checked || radio2.checked)) {
-        
         return true;
       }
       return false;
     }
   
-    
     // 1~12번 중 체크되지 않은 문항 있을때 경고문
-    document.getElementById("CBTI-result-btn").addEventListener("click", cbtiResult);
-    document.getElementById('CBTI-result-btn').addEventListener('click', function() {
+    document.getElementById('CBTI-result-btn').addEventListener('click', function(event) {
+      event.preventDefault();
+      let hasUncheckedQuestion = false;
       const uncheckedQuestions = [
         ['EI_one_1', 'EI_one_2', '1번이 작성되지 않았습니다.'],
         ['EI_two_1', 'EI_two_2', '2번이 작성되지 않았습니다.'],
@@ -206,16 +205,22 @@ export async function printCBTIResult(mbti) {
         ['NS_three_1', 'NS_three_2', '6번이 작성되지 않았습니다.'],
         ['FT_one_1', 'FT_one_2', '7번이 작성되지 않았습니다.'],
         ['FT_two_1', 'FT_two_2', '8번이 작성되지 않았습니다.'],
-        ['FT_three_1','FT_three_2','FT_three_3', 'FT_three_4', '9번이 작성되지 않았습니다.'],  // 라디오 버튼 ID에 주의하세요.
+        ['FT_three_1', 'FT_three_2', 'FT_three_3', 'FT_three_4', '9번이 작성되지 않았습니다.'],
         ['PJ_one_1', 'PJ_one_2', '10번이 작성되지 않았습니다.'],
         ['PJ_two_1', 'PJ_two_2', '11번이 작성되지 않았습니다.'],
-        ['PJ_three_1','PJ_three_2', 'PJ_three_3', '12번이 작성되지 않았습니다.']  // 라디오 버튼 ID에 주의하세요.
+        ['PJ_three_1', 'PJ_three_2', 'PJ_three_3', '12번이 작성되지 않았습니다.']
       ];
   
       for (const question of uncheckedQuestions) {
-        if (hasUncheckedRadio(...question)) {
+        if (hasUncheckedRadio(...question.slice(0, 2))) {
+          hasUncheckedQuestion = true;
+          alert(question[2]);
           break;
         }
+      }
+  
+      if (!hasUncheckedQuestion) {
+        cbtiResult();
       }
     });
   }
