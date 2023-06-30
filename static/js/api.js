@@ -1574,6 +1574,10 @@ export async function searchProductAPI(keyword) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/?search=${keyword}`, {
 		method: "GET",
 	});
+	if(!keyword){
+		alert("상품이 존재하지 않습니다ㅠㅠ");
+		window.location.reload();
+	}
 	return response.json();
 }
 
