@@ -183,15 +183,19 @@ export async function printCBTIResult(mbti) {
   })
 }
 
-export async function setEventListener() {
-
-  function hasUncheckedRadio(radio1Id, radio2Id) {
-    const radio1 = document.getElementById(radio1Id);
-    const radio2 = document.getElementById(radio2Id);
-    if (!(radio1.checked || radio2.checked)) {
-      return true;
+  export async function setEventListener() {
+    document.getElementById("modal-button").addEventListener("click", function() {
+      window.location.reload();
+  });
+    function hasUncheckedRadio(radio1Id, radio2Id) {
+      const radio1 = document.getElementById(radio1Id);
+      const radio2 = document.getElementById(radio2Id);
+      if (!(radio1.checked || radio2.checked)) {
+        return true;
+      }
+      return false;
     }
-
+    
     // 1~12번 중 체크되지 않은 문항 있을때 경고문
     document.getElementById('CBTI-result-btn').addEventListener('click', function (event) {
       event.preventDefault();
@@ -256,7 +260,7 @@ export async function setEventListener() {
       cbtiResult();
     }
   });
-}
+
 
 window.onload = async () => {
 
