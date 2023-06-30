@@ -64,6 +64,9 @@
     border-color: #522F18;
     margin-top: 3vw;
 }
+.modal-body{
+    background-color: white;
+}
 
 #cbti-main {
     height: 80vw;
@@ -71,13 +74,29 @@
 }
 
 /* 모달창 */
-#staticBackdrop {
-    color: #522F18;
+#staticBackdrop{
+    color:#522F18;
+    height:100%;
+    width:100%;
 }
 
 #modal-button {
     background-color: rgb(255, 183, 209);
     color: #522F18;
+}
+
+.cbti-result-description {
+    word-break: break-all;
+  /*같은 단어나열도 줄넘어가기*/
+    white-space: pre-line;
+  /*엔터 인식 + 줄 넘어가기*/
+}
+
+.cbti-result-description {
+    word-break: break-all;
+  /*같은 단어나열도 줄넘어가기*/
+    white-space: pre-line;
+  /*엔터 인식 + 줄 넘어가기*/
 }
 
 .carousel-item {
@@ -115,4 +134,16 @@
     height: 3rem;
     width: 10rem;
     cursor: pointer;
+}
+
+#left-arrow {
+    margin-top: 12em;
+    width:3em;
+    height:3em;
+}
+
+#right-arrow {
+    margin-top: 12em;
+    width:3em;
+    height:3em;
 }

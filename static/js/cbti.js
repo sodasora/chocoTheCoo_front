@@ -187,7 +187,7 @@ export async function printCBTIResult(mbti) {
       const radio1 = document.getElementById(radio1Id);
       const radio2 = document.getElementById(radio2Id);
       if (!(radio1.checked || radio2.checked)) {
-        alert(message);
+        
         return true;
       }
       return false;
