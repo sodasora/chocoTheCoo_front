@@ -38,7 +38,7 @@ import {
     // 관리자 권한으로 판매 활동 거절
     refusalOfSalesActivityAPI,
     // 관리자 권한으로 판매 활동 승인
-    salesActivityApprovalAPI
+    salesActivityApprovalAPI,
 } from './api.js'
 import { handleLogout } from './loader.js'
 
@@ -262,8 +262,11 @@ export async function createSellerInformation() {
 
     // API 응답 처리
     if (response.status == 200) {
-        sellerMessageBox.innerText = "판매자 권한을 신청했습니다. 관리자 검증 후 판매 활동을 할 수 있습니다."
-        document.getElementById("createSellerInformationButton").style.display = "block"
+        alert("테스트 기간 동안 판매 활동이 자동 승인 됩니다.\n 다시 로그인 해주세요.")
+        handleLogout()
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        // sellerMessageBox.innerText = "판매자 권한을 신청했습니다. 관리자 검증 후 판매 활동을 할 수 있습니다."
+        // document.getElementById("createSellerInformationButton").style.display = "block"
     } else if (response.status == 404) {
         // 로그인 필요
         alert("로그인이 필요 합니다.")
