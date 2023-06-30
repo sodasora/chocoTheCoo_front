@@ -782,7 +782,7 @@ async function getSellerInformation(response_json) {
     if (seller_information != null) {
 
         if (seller_information.company_img != null) {
-            document.getElementById("sellerProfileView").style.backgroundImage = `url(${BACK_BASE_URL}${seller_information.company_img})`;
+            document.getElementById("sellerProfileView").style.backgroundImage = `url(${seller_information.company_img})`;
             // .setAttribute("src", response_json.profile_image)
         }
 
