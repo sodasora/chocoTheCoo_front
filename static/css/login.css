@@ -525,7 +525,6 @@ button {
     transform: translate(-50%, -50%);
     background-color: #a15e00;
     padding: 1% 1% 1% 1%;
-
 }
 
 #modal-header {
@@ -534,8 +533,6 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-
-
 }
 
 #modal-page-box {

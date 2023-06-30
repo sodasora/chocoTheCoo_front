@@ -12,6 +12,14 @@
     font-style: normal;
 }
 
+@media (max-width: 425px) {
+    #modal {
+        height: 40% !important;
+        width: 75% !important;
+    }
+}
+
+
 
 body {
     background-color: #C4A492;
@@ -732,4 +740,33 @@ nav a:nth-child(3):hover~.nav-underline {
         left: 66%;
     }
 
+}
+
+#modal {
+    height: 30rem;
+    width: 30rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1% 1% 1% 1%;
+    background-image: url("/static/images/기본상품.png");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#modal-close-button {
+    margin-left: auto;
+    margin-bottom: auto;
+    height: 3rem;
+    width: 3rem;
+    background-image: url("/static/images/cross.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
 }
