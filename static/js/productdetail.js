@@ -138,6 +138,14 @@ export async function deleteProduct() {
 }
 
 
+export async function closeModal() {
+    document.getElementById("modal").style.display = "none"
+}
+
+export async function showReviewDetailImage(review_image) {
+    document.getElementById("modal").style.display = "flex"
+    document.getElementById("modal").style.backgroundImage = `url(${review_image})`;
+}
 
 
 export async function reviewLike(review) {
@@ -181,7 +189,7 @@ export async function getReviewData(element) {
     review_list.innerHTML += `
     <div class="review-items" id=reviewItem_${element.id}>
         <div class="review-left-box">
-            <img src="${review_image}" class="review-image-tag">
+            <img src="${review_image}" class="review-image-tag" id="review_modal_image${element.id}">
         </div>
         <div class="review-right-box">
             <div class="review-owner-box">
@@ -295,7 +303,7 @@ export async function getReviewDetailData(element) {
     const reviewDetailInnerHTML = `
     <div class="reviewDetailContainer">
     <div class="reviewDetailTopContainer">
-        <div class="reviewDetailImageBox" style="background-image: url(${review_image});">
+        <div class="reviewDetailImageBox" style="background-image: url(${review_image});" id="review_detail_image_${element.id}">
         </div>
         <div class="reviewDetailTitleContainer">
             <div class="reviewDetailOwnerInformationBox">
@@ -344,6 +352,10 @@ export async function getReviewDetailData(element) {
         reviewLike(element);
     });
 
+    const review_detail_image = document.getElementById(`review_detail_image_${element.id}`)
+    review_detail_image.addEventListener("click", function () {
+        showReviewDetailImage(review_image);
+    });
 
     if (payload != null) {
         if (payload.user_id == element.user.id) {
@@ -467,6 +479,7 @@ export async function setEventListener() {
     document.getElementById("reviewView").addEventListener("click", reviewView)
     document.getElementById("detailView").addEventListener("click", productInformationView)
     document.getElementById("sellerpage").addEventListener("click", sellerpageView)
+    document.getElementById("modal-close-button").addEventListener("click", closeModal)
 }
 
 
