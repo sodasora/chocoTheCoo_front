@@ -17,6 +17,12 @@
     margin: 0 5em;
 }
 
+.seller_nav{
+    color:white;
+    display: flex;
+    justify-content: center;
+    font-family: 'SUIT-Regular';
+}
 .card {
     font-family: 'S-CoreDream-3Light';
     height: 32em;

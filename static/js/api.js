@@ -1,8 +1,8 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5501"
-export const BACK_BASE_URL = "http://127.0.0.1:8000"
+export const FRONT_BASE_URL = "http://127.0.0.1:5500"
+// export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
-// export const BACK_BASE_URL = "https://backend.chocothecoo.com"
-// export const REDIRECT_URI = FRONT_BASE_URL
+export const BACK_BASE_URL = "https://backend.chocothecoo.com"
+// // export const REDIRECT_URI = FRONT_BASE_URL
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
 export const payload = JSON.parse(localStorage.getItem("payload"))
@@ -1139,14 +1139,18 @@ export async function getProductslist(product) {
 	const pre_page = 1
 	const next_page = page_num + 1
 	const paginate = document.getElementById('product-buttons')
-	// console.log(product.next)
-	if (paginate) {
 
+	const originalUrl = "http://backend:8000/api";
+	const modifiedUrl = originalUrl.replace("http://backend:8000/api", "https://backend.chocothecoo.com/api");
+
+	if (paginate) {
 		if (product_count <= 9) {
 			paginate.remove();
 		} else {
 			if (product.previous == null) {
-				// Create elements
+
+				const next = modifiedUrl + product.next.split("api")[1]
+
 				const li1 = document.createElement('li');
 				li1.className = 'gw-pagebtn';
 				const a1 = document.createElement('a');
@@ -1169,7 +1173,7 @@ export async function getProductslist(product) {
 				const button1 = document.createElement('button');
 				button1.id = 'next-buttons';
 				button1.innerText = '다음';
-				button1.addEventListener('click', () => pageMove(product.next));
+				button1.addEventListener('click', () => pageMove(next));
 
 				// Append elements
 				paginate.innerHTML = '';
@@ -1184,6 +1188,9 @@ export async function getProductslist(product) {
 				a3.appendChild(span2);
 			} else if (product.next == null) {
 				// Create elements
+
+				const previous = modifiedUrl + product.previous.split("api")[1]
+
 				const li1 = document.createElement('li');
 				li1.className = 'gw-pagebtn';
 				const a1 = document.createElement('a');
@@ -1205,7 +1212,7 @@ export async function getProductslist(product) {
 				const button1 = document.createElement('button');
 				button1.id = 'previous-buttons';
 				button1.innerText = '이전';
-				button1.addEventListener('click', () => pageMove(product.previous));
+				button1.addEventListener('click', () => pageMove(previous));
 
 				// Append elements
 				li1.appendChild(a1);
@@ -1220,6 +1227,10 @@ export async function getProductslist(product) {
 				paginate.appendChild(li3);
 			} else {
 				// Create elements
+
+				const previous = modifiedUrl + product.previous.split("api")[1]
+				const next = modifiedUrl + product.next.split("api")[1]
+
 				const li1 = document.createElement('li');
 				li1.className = 'gw-pagebtn';
 				const a1 = document.createElement('a');
@@ -1230,7 +1241,8 @@ export async function getProductslist(product) {
 				const button1 = document.createElement('button');
 				button1.id = 'previous-buttons';
 				button1.innerText = '이전';
-				button1.addEventListener('click', () => pageMove(product.previous));
+				button1.addEventListener('click', () => pageMove(previous));
+				console.log(product.previous.slice(4))
 				const li2 = document.createElement('li');
 				li2.className = 'gw-pagebtn';
 				const a2 = document.createElement('a');
@@ -1246,7 +1258,7 @@ export async function getProductslist(product) {
 				const button2 = document.createElement('button');
 				button2.id = 'next-buttons';
 				button2.innerText = '다음';
-				button2.addEventListener('click', () => pageMove(product.next));
+				button2.addEventListener('click', () => pageMove(next));
 
 				// Append elements
 				span1.appendChild(button1);
@@ -1350,10 +1362,11 @@ export async function viewProductslist(product) {
 // 페이지 이동 시 함수 response에서 받아온 next url로 현재 페이지 찾기.
 // 이전이나 다음이 각각 첫페이지나 마지막 페이지면 예외 처리.
 async function pageMove(move) {
-	// console.log(move);
+	console.log(move);
 	let pageSize = 9;
 
 	// const url = `${BACK_BASE_URL}/api/products/?page=${move}`
+	// console.log(url)
 	const response = await fetch(move, {
 		method: 'GET',
 	})
@@ -1383,10 +1396,15 @@ async function pageMove(move) {
 		next_page = page_num + 1
 	}
 
+	const originalUrl = "http://backend:8000/api";
+	const modifiedUrl = originalUrl.replace("http://backend:8000/api", "https://backend.chocothecoo.com/api");
+
 	// 페이지 박스 번호 갱신하기
 	let paginate = document.getElementById('product-buttons')
 	if (product.previous == null) {
-		// Create elements
+		const next = modifiedUrl + product.next.split("api")[1]
+		console.log(next)
+
 		const li1 = document.createElement('li');
 		li1.className = 'gw-pagebtn';
 		const a1 = document.createElement('a');
@@ -1408,7 +1426,7 @@ async function pageMove(move) {
 		const button1 = document.createElement('button');
 		button1.id = 'next-buttons';
 		button1.innerText = '다음';
-		button1.addEventListener('click', () => pageMove(product.next));
+		button1.addEventListener('click', () => pageMove(next));
 
 		// Append elements
 		paginate.innerHTML = '';
@@ -1423,6 +1441,10 @@ async function pageMove(move) {
 		a3.appendChild(span2);
 	} else if (product.next == null) {
 		// Create elements
+
+		const previous = modifiedUrl + product.previous.split("api")[1]
+		console.log(previous)
+
 		const li1 = document.createElement('li');
 		li1.className = 'gw-pagebtn';
 		const a1 = document.createElement('a');
@@ -1444,7 +1466,7 @@ async function pageMove(move) {
 		const button1 = document.createElement('button');
 		button1.id = 'previous-buttons';
 		button1.innerText = '이전';
-		button1.addEventListener('click', () => pageMove(product.previous));
+		button1.addEventListener('click', () => pageMove(previous));
 
 		// Append elements
 		li1.appendChild(a1);
@@ -1459,18 +1481,23 @@ async function pageMove(move) {
 		paginate.appendChild(li3);
 	} else {
 		// Create elements
+
+		const previous = modifiedUrl + product.previous.split("api")[1]
+		console.log(previous)
+		const next = modifiedUrl + product.next.split("api")[1]
+		console.log(next)
+
 		const li1 = document.createElement('li');
 		li1.className = 'gw-pagebtn';
 		const a1 = document.createElement('a');
 		a1.id = 'page_item_pre';
 		a1.className = 'gw-pagenum gw-p-move';
-		// a1.addEventListener('click', () => pageMove(product.previous));
 		a1.dataset.page = pre_page;
 		const span1 = document.createElement('span');
 		const button1 = document.createElement('button');
 		button1.id = 'previous-buttons';
 		button1.innerText = '이전';
-		button1.addEventListener('click', () => pageMove(product.previous));
+		button1.addEventListener('click', () => pageMove(previous));
 		const li2 = document.createElement('li');
 		li2.className = 'gw-pagebtn';
 		const a2 = document.createElement('a');
@@ -1486,7 +1513,7 @@ async function pageMove(move) {
 		const button2 = document.createElement('button');
 		button2.id = 'next-buttons';
 		button2.innerText = '다음';
-		button2.addEventListener('click', () => pageMove(product.next));
+		button2.addEventListener('click', () => pageMove(next));
 
 		// Append elements
 		span1.appendChild(button1);
@@ -1574,6 +1601,10 @@ export async function searchProductAPI(keyword) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/?search=${keyword}`, {
 		method: "GET",
 	});
+	if(!keyword){
+		alert("상품이 존재하지 않습니다ㅠㅠ");
+		window.location.reload();
+	}
 	return response.json();
 }
 
