@@ -167,6 +167,12 @@ export async function searchAnythingAPI_mobile() {
 
 
 export async function setEventListener() {
+    // 검색어 엔터 누르면 이동
+    document.getElementById("search-keyword").addEventListener("keydown", (event) => {
+        if (event.key == "Enter") {
+            keywordSeachView()
+        }
+    })
     document.getElementById("search-btn").addEventListener("click", keywordSeachView);
     // 구매자 체크리스트    
     // 체크리스트 출석체크
