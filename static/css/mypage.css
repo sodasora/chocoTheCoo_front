@@ -87,6 +87,7 @@
   font-size: 1.5vw;
   font-weight: bold;
   padding-bottom: 10px;
+  border-radius: 5px;
   color: rgba(100, 81, 66, 0.822);
 }
 
@@ -106,7 +107,9 @@
   font-size: 1.5vw;
   font-weight: bold;
   padding-bottom: 10px;
+  border-radius: 5px;
   color: rgba(100, 81, 66, 0.822);
+
 }
 
 .points-list {
@@ -156,7 +159,7 @@
 
 /* 크기변경 */
 .tooltip>.tooltip-inner {
-  max-width: 400px;
+  max-width: 300px;
 }
 
 /* 위치
@@ -164,25 +167,28 @@
   inset: auto auto 100px 100px;
 } */
 
-#month-total {
+#month-plus {
   font-family: 'S-CoreDream-3Light';
-  font-size: 30px;
+  font-size: 1.5vw;
   font-weight: bold;
   margin-left: 40px;
   color: white;
 }
 
-#total-reward {
+#month-minus {
   font-family: 'S-CoreDream-3Light';
-  font-size: 30px;
+  font-size: 1.5vw;
   font-weight: bold;
-  margin-left: 50px;
+  margin-left: 20px;
   color: white;
 }
 
-#totalpoint {
-  margin-top: 10px;
+#total-reward {
+  font-family: 'S-CoreDream-3Light';
+  font-size: 1.5vw;
   font-weight: bold;
+  margin-left: 20px;
+  color: white;
 }
 
 td {
@@ -315,6 +321,7 @@ td {
 }
 
 .my-wish-none {
+  margin-top: 20px;
   margin-left: 30px;
   color: white;
   font-family: 'S-CoreDream-3Light';
@@ -551,37 +558,30 @@ td {
   }
 
   .help-text3 {
-    position: absolute;
-    object-fit: cover;
-    width: 20px;
-    height: 20px;
-    left: 10px;
-    z-index: 1;
+    display: none;
   }
 
-  /* 크기변경 */
-  .tooltip>.tooltip-inner {
-    max-width: 400px;
-  }
-
-  /* 위치
-  .tooltip {
-    inset: auto auto 100px 100px;
-  } */
-
-  #month-total {
+  #month-plus {
     font-family: 'S-CoreDream-3Light';
-    font-size: 30px;
+    font-size: 1.7vw;
     font-weight: bold;
     margin-left: 40px;
     color: white;
   }
 
+  #month-minus {
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1.7vw;
+    font-weight: bold;
+    margin-left: 20px;
+    color: white;
+  }
+
   #total-reward {
     font-family: 'S-CoreDream-3Light';
-    font-size: 30px;
+    font-size: 1.7vw;
     font-weight: bold;
-    margin-left: 50px;
+    margin-left: 20px;
     color: white;
   }
 
@@ -829,7 +829,7 @@ td {
 
 @media screen and (max-width: 550px) {
   .section {
-    margin-top: 0!important
+    margin-top: 0 !important
   }
 }
 
@@ -853,6 +853,6 @@ td {
 
 @media screen and (max-width: 768px) {
   .image-box {
-      display: none;
+    display: none;
   }
 }
