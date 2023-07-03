@@ -876,20 +876,22 @@ export async function makeOrders(queryString, bill_id) {
 		},
 		method: 'POST'
 	})
+	const response_json = await response.json()
+
 	if (response.status == 201) {
 		deleteCartItemAll(queryString, bill_id);
-	}
-	else if (response.status == 404) {
-		alert("잘못된 상품 정보입니다.")
+	} else if (response_json.err == "no_cart") {
+		alert("장바구니 정보를 다시 확인해주세요")
 		window.history.back();
-	}
-	else if (response.status == 400) {
-		alert("잘못된 URL입니다. 장바구니부터 다시 시도해주세요.")
+	} else if (response_json.err == "incorrect_product") {
+		alert("상품 정보가 부정확합니다")
 		window.history.back();
-	}
-	else if (response.status == 403) {
-		alert("포인트가 부족합니다!")
-		window.location.href = "/pointcharge.html"
+	} else if (response_json.err == "insufficient_balance") {
+		alert("결제를 위한 포인트가 부족합니다")
+		window.history.back();
+	} else if (response_json.err == "out_of_stock") {
+		alert("구매하려는 수량이 상품의 재고보다 많습니다")
+		window.history.back();
 	}
 }
 
@@ -1600,7 +1602,7 @@ export async function searchProductAPI(keyword) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/?search=${keyword}`, {
 		method: "GET",
 	});
-	if(!keyword){
+	if (!keyword) {
 		alert("상품이 존재하지 않습니다ㅠㅠ");
 		window.location.reload();
 	}
