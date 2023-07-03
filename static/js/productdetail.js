@@ -44,7 +44,7 @@ export async function sellerFollow(user_id) {
 }
 export async function setSellerInformation(information) {
     const follow_button = document.getElementById("seller-follow-button")
-    const company_img = information.company_img == null ? "/static/images/pepe.jpg" : information.company_img
+    const company_img = information.company_img == null ? "/static/images/store.gif" : information.company_img
     const sellerProfile = document.getElementById("seller-company_img")
     sellerProfile.style.backgroundImage = `url(${company_img})`
     document.getElementById("seller-company_name").innerText = information.company_name
@@ -182,8 +182,8 @@ export async function getReviewData(element) {
         star += '<img class="review-star" src="/static/images/별점.png">';
     }
 
-    const review_image = element.image == null ? '/static/images/store.gif' : element.image
-    const profile_image = element.user.profile_image == null ? '/static/images/avatar.png' : element.user.profile_image
+    const review_image = element.image == null ? '/static/images/review_default.png' : element.image
+    const profile_image = element.user.profile_image == null ? '/static/images/default.jpg' : element.user.profile_image
     const like_image = element.is_like == false ? '/static/images/좋아요x.png' : '/static/images/좋아요.png'
 
     review_list.innerHTML += `
@@ -231,8 +231,8 @@ export async function closeReview(element) {
         star += '<img class="review-star" src="/static/images/별점.png">';
     }
 
-    const review_image = element.image == null ? '/static/images/store.gif' : element.image
-    const profile_image = element.user.profile_image == null ? '/static/images/avatar.png' : element.user.profile_image
+    const review_image = element.image == null ? '/static/images/review_default.png' : element.image
+    const profile_image = element.user.profile_image == null ? '/static/images/default.jpg' : element.user.profile_image
     const like_image = element.is_like == false ? '/static/images/좋아요x.png' : '/static/images/좋아요.png'
 
     const reviewData = `
@@ -296,8 +296,8 @@ export async function getReviewDetailData(element) {
 
 
 
-    const review_image = element.image == null ? '/static/images/store.gif' : element.image
-    const profile_image = element.user.profile_image == null ? '/static/images/avatar.png' : element.user.profile_image
+    const review_image = element.image == null ? '/static/images/review_default.png' : element.image
+    const profile_image = element.user.profile_image == null ? '/static/images/default.jpg' : element.user.profile_image
     const like_image = element.is_like == false ? '/static/images/좋아요x.png' : '/static/images/좋아요.png'
 
     const reviewDetailInnerHTML = `

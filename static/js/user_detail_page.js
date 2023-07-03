@@ -96,6 +96,9 @@ export async function updateProfileInformation() {
         profile_image: profile_image
     };
     const response = await updateProfileInformationAPI(information)
+    console.log(response)
+    const response_json = await response.json()
+    console.log(response_json)
     const profileMessageBox = document.getElementById("profileMessageBox")
     profileMessageBox.style.display = "flex"
     if (response.status == 200) {
@@ -107,6 +110,9 @@ export async function updateProfileInformation() {
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 400) {
         // 입력 양식이 잘 못됨
+        if (response_json.profile_image != null) {
+            profileMessageBox.innerText = "유효한 프로필 이미지가 아닙니다."
+        }
         profileMessageBox.innerText = "닉네임이 올바르지 않습니다. 공백없이 2~20자 내외로 작성해 주세요."
     }
 }
@@ -590,20 +596,34 @@ export async function navItemUserEmail() {
 
 export function readURL(input) {
     // 사용자가 등록한 프로필 이미지 미리보기 기능 제공
-    if (input.files && input.files[0]) {
+    const fileType = input.files[0].type;
+    const ImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    if (!ImageTypes.includes(fileType)) {
+        alert("지원되지 않는 파일 형식입니다. 이미지 파일을 선택해 주세요.");
+        input.value = ''
+    }
+    else if (input.files && input.files[0]) {
+
+
         var reader = new FileReader();
         reader.onload = function (e) {
             document.getElementById('profileView').src = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
     } else {
-        document.getElementById('profileView').src = "/static/images/pepe_choco.png";
+        document.getElementById('profileView').src = "/static/images/default.jpg";
     }
 }
 
 export function readSellerURL(input) {
     // 사용자가 등록한 프로필 이미지 미리보기 기능 제공
-    if (input.files && input.files[0]) {
+    const fileType = input.files[0].type;
+    const ImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    if (!ImageTypes.includes(fileType)) {
+        alert("지원되지 않는 파일 형식입니다. 이미지 파일을 선택해 주세요.");
+        input.value = ''
+    }
+    else if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
             document.getElementById('sellerProfileView').src = e.target.result;
@@ -766,7 +786,7 @@ async function DeliveryInformation(response_json) {
 async function getUserDetailInformation(response_json) {
     // 프로필 정보 기입
     if (response_json.profile_image == null) {
-        document.getElementById('profileView').src = "/static/images/pepe_choco.png";
+        document.getElementById('profileView').src = "/static/images/default.jpg";
     } else {
         document.getElementById('profileView').setAttribute("src", response_json.profile_image)
     }
@@ -1112,7 +1132,7 @@ export async function changeModal(eventValue) {
         "발급 받은 인증 번호를 기록하고 인증을 완료해 주세요.",
         "배송 정보를 기록해 주세요.",
         "우편 번호 찾기를 통해 간편히 주소 정보를 찾아 보세요.",
-        "주소지 정보를 기로갛고 제출해 주세요.",
+        "주소지 정보를 확인하고 제출해 주세요.",
         "등록하신 주소지 정보를 선택하고 수정 또는 삭제할 수 있습니다.",
         "주소지 정보를 수정하고나 삭제를 통해 관리할 수 있습니다.",
         "주소지 작성을 통해 수정을 중단하고 새로운 주소지 정보를 등록할 수 있습니다.",
