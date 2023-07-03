@@ -1,4 +1,57 @@
-import { getProductslist, viewProductslist, getSellerProductListAPIView, BACK_BASE_URL, FRONT_BASE_URL, getSellerPermissionAPIView, payload } from './api.js';
+import { 
+  getProductslist, 
+  viewProductslist, 
+  getSellerProductListAPIView, 
+  sellerFollowAPI, 
+  BACK_BASE_URL, 
+  FRONT_BASE_URL, 
+  getSellerPermissionAPIView, 
+  payload 
+} from './api.js';
+const urlParams = new URLSearchParams(window.location.search);
+const sellerId = urlParams.get('seller');
+
+// 판매자 정보 보기
+export async function sellerProfileView() {
+  const follow_button = document.getElementById("seller-follow-button");
+  const seller = await getSellerPermissionAPIView(sellerId);
+  console.log(seller)
+  const company_img = seller.company_imgg == null ? "/static/images/store.gif" : seller.company_img;
+  const sellerProfile = document.getElementById("user-image");
+  sellerProfile.setAttribute("src", `${company_img}`);
+  
+  const name = seller.business_owner_name;
+  const brand = seller.company_name;
+  const contact = seller.contact_number;
+  const following = seller.followings_count;
+  // console.log(logo);
+  document.getElementById("user-name").innerText = name;
+  document.getElementById("user-brand").innerText = brand;
+  document.getElementById("user-contact").innerText = contact;
+  document.getElementById("user-follow").innerText = following;
+  follow_button.addEventListener("click", function () {
+    sellerFollow(sellerId)
+});
+}
+
+export async function sellerFollow(user_id) {
+  const response = await sellerFollowAPI(user_id);
+  const response_json = await response.json()
+  if (response.status == 404) {
+      alert("판매자 정보가 삭제되었거나, 로그인이 필요합니다.")
+  } else if (response.status == 401) {
+      alert("로그인이 필요합니다.")
+      window.location.replace(`${FRONT_BASE_URL}/login.html`)
+  } else if (response.status == 400) {
+      alert(response_json.err)
+  } else {
+
+      document.getElementById("user-follow").innerText = response_json.followings
+      const follow_button = document.getElementById("seller-follow-button")
+      response.status == 200 ? follow_button.innerText = "Follow" : follow_button.innerText = "Unfollow"
+  }
+
+}
 
 export async function productDetail(product_id) {
   window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
@@ -7,8 +60,8 @@ export async function productDetail(product_id) {
 //등록한 상품들 전체 보기
 export async function sellerPageAPI() {
   try {
-    const user_id = payload.user_id //로그인한 유저id
-    const product = await getSellerProductListAPIView(user_id);
+    // sellerId에 해당하는 판매자 스토어 보여줘야함
+    const product = await getSellerProductListAPIView(sellerId);
     if (product.count != 0) {
       if ((product.next == null) & (product.previous == null)) {
         viewProductslist(product);
@@ -28,6 +81,7 @@ export async function sellerPageAPI() {
 }
 
 window.onload = async function () {
+  sellerProfileView()
   if (payload == null) {
     alert("로그인이 필요 합니다.")
     window.location.replace(`${FRONT_BASE_URL}/login.html`)
