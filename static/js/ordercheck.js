@@ -68,7 +68,6 @@ async function getUserDeliveryInformationAPI(user_id) {
         addressMessageBox.innerText = response_json.err.non_field_errors
     } else if (response.status == 200) {
         // 예외 처리
-        // console.log(response_json)
         return response;
     }
 }
@@ -133,15 +132,19 @@ async function loadCheckedCart() {
 // 결제 진행, bill생성 요청 => 쿼리 파라미터로 장바구니 => 주문 생성
 async function makePurchaseOrder() {
     const deli = document.getElementById("orderDeliveryId").getAttribute("data-deliveryId");
+    const saveDelivery = document.getElementById("saveDelivery").checked;
+
     if (deli == 0) {
-        const recipient = document.getElementById("recipient").value
-        const postcode = document.getElementById("postalCode").value
-        const address = document.getElementById("address").value
-        const detailAddress = document.getElementById("detailAddress").value
+        const recipient = document.getElementById("recipient").value;
+        const postcode = document.getElementById("postalCode").value;
+        const address = document.getElementById("address").value;
+        const detailAddress = document.getElementById("detailAddress").value;
         if (!recipient || !postcode || !address || !detailAddress) {
             alert("주소를 입력해주세요")
         } else {
             const delivery_data = {
+                new_delivery: true,
+                save_delivery: saveDelivery,
                 recipient: recipient,
                 postcode: postcode,
                 address: address,

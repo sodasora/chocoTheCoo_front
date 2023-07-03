@@ -825,6 +825,8 @@ export async function makeBills(delivery_id = null, delivery_data = null) {
 	let data;
 	if (delivery_data) {
 		data = JSON.stringify({
+			new_delivery: delivery_data.new_delivery,
+			save_delivery: delivery_data.save_delivery,
 			recipient: delivery_data.recipient,
 			postal_code: delivery_data.postcode,
 			address: delivery_data.address,
@@ -1052,7 +1054,6 @@ export async function getBillList() {
 
 	if (response.status == 200) {
 		const response_json = await response.json();
-		// console.log(response_json);
 		return response_json;
 	} else {
 		console.log(response.status);
