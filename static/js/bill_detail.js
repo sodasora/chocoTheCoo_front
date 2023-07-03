@@ -47,9 +47,13 @@ export async function gowritereview(product_id) {
     window.location.href = `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}`
 }
 
+export async function goEditReview(product_id, review_id) {
+    window.location.href = `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}&review_id=${review_id}`;
+}
+
 async function renderBillOrders(bill) {
     const orderListBox = document.getElementById("orderLists")
-    const orderItemList = bill.order_items
+    const orderItemList = bill.orderitem_set
     orderItemList.forEach(e => {
         const orderList = document.createElement("div")
         orderList.classList.add("order-list")
@@ -103,18 +107,7 @@ async function renderBillOrders(bill) {
         content.appendChild(fifthText)
 
         const productId = e.product_id
-
-        if (e.order_status == "구매확정") {
-            // 리뷰 작성 가기
-            const goreview = document.createElement('button');
-            goreview.innerText = `리뷰쓰기`;
-            goreview.setAttribute(`id`, 'reviewbutton');
-
-            goreview.onclick = function () {
-                gowritereview(productId)
-            }
-            content.appendChild(goreview)
-        } else if (e.order_status == "배송완료") {
+        if (e.order_status == "배송완료") {
             const productId = e.id;
             const goconfirm = document.createElement('button');
             goconfirm.innerText = `구매확정하기`;
@@ -124,14 +117,30 @@ async function renderBillOrders(bill) {
                 window.location.reload();
             }
             content.appendChild(goconfirm)
-        }
+        } else if (e.is_reviewed.reviewed == true){
+            const goReviewEdit = document.createElement('button');
+            goReviewEdit.innerText = `리뷰수정`
+            goReviewEdit.setAttribute(`id`, 'reviewEditButton');
+            goReviewEdit.addEventListener("click", function () {
+                goEditReview(productId, e.is_reviewed.review_id)
+            })
+            content.appendChild(goReviewEdit)
+        } else if (e.order_status == "구매확정") {
+            // 리뷰 작성 가기
+            const goreview = document.createElement('button');
+            goreview.innerText = `리뷰쓰기`;
+            goreview.setAttribute(`id`, 'reviewbutton');
 
+            goreview.onclick = function () {
+                gowritereview(productId)
+            }
+            content.appendChild(goreview)
+        }  
         orderList.appendChild(imgDiv);
         orderList.appendChild(textDiv);
         orderList.appendChild(content);
         orderListBox.appendChild(orderList);
     });
-
 }
 
 let today = new Date();

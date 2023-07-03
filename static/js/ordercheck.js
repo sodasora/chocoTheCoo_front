@@ -9,6 +9,8 @@ import {
     getPointStaticView,
 } from "./api.js"
 
+
+// 유저의 기존 배송정보 가져와서 넣어주기
 async function getDeliveryData(element) {
     const postal_code = document.getElementById("postalCode");
     postal_code.value = element.postal_code;
@@ -22,6 +24,7 @@ async function getDeliveryData(element) {
     delivery_id.setAttribute("data-deliveryId", element.id)
 }
 
+// 드롭다운에 배송정보 옵션 만들기
 async function DeliveryInformation(response_json) {
     const dropdown_content = document.querySelector("#dropdownContent");
     const delivery_data = response_json;
@@ -65,7 +68,6 @@ async function getUserDeliveryInformationAPI(user_id) {
         addressMessageBox.innerText = response_json.err.non_field_errors
     } else if (response.status == 200) {
         // 예외 처리
-        // console.log(response_json)
         return response;
     }
 }
@@ -130,15 +132,19 @@ async function loadCheckedCart() {
 // 결제 진행, bill생성 요청 => 쿼리 파라미터로 장바구니 => 주문 생성
 async function makePurchaseOrder() {
     const deli = document.getElementById("orderDeliveryId").getAttribute("data-deliveryId");
+    const saveDelivery = document.getElementById("saveDelivery").checked;
+
     if (deli == 0) {
-        const recipient = document.getElementById("recipient").value
-        const postcode = document.getElementById("postalCode").value
-        const address = document.getElementById("address").value
-        const detailAddress = document.getElementById("detailAddress").value
+        const recipient = document.getElementById("recipient").value;
+        const postcode = document.getElementById("postalCode").value;
+        const address = document.getElementById("address").value;
+        const detailAddress = document.getElementById("detailAddress").value;
         if (!recipient || !postcode || !address || !detailAddress) {
             alert("주소를 입력해주세요")
         } else {
             const delivery_data = {
+                new_delivery: true,
+                save_delivery: saveDelivery,
                 recipient: recipient,
                 postcode: postcode,
                 address: address,
@@ -157,6 +163,7 @@ async function makePurchaseOrder() {
     }
 }
 
+// 결제 정보창에 총 상품 금액, 배송비, 결제금액, 포인트 띄워주기
 async function renderPaymentInfo() {
     const priceEach = document.querySelectorAll(".product-price");
 
@@ -238,13 +245,12 @@ window.onload = async () => {
 
     registDelivery.addEventListener("click", function () {
         document.getElementById("dropdownContent").style.display = "none";
+        document.getElementById("saveDeliveryBox").style.display = "flex";
         document.getElementById("Postcode").style.display = "block";
         document.getElementById("address").value = ""
         document.getElementById("detailAddress").value = ""
         document.getElementById("postalCode").value = ""
         document.getElementById("orderDeliveryId").setAttribute("data-deliveryId", 0)
-
-
     })
 
     dropdownContent.style.display = "none";
@@ -259,7 +265,7 @@ window.onload = async () => {
     document.getElementById("btnFoldWrap").addEventListener("click", foldPostcode)
 }
 
-
+// 모달 버튼 렌더링
 async function renderModalBtns() {
     const button1 = document.createElement("button");
     button1.setAttribute("type", "button");
@@ -273,12 +279,13 @@ async function renderModalBtns() {
     button2.textContent = "취소";
 
     button1.addEventListener("click", function () {
-        console.log("완")
         makePurchaseOrder();
     })
     const modalBtnBox = document.getElementById("modalBtnBox");
     const user_agent = navigator.userAgent.toLowerCase();
 
+    // 맥이면 취소 / 결제
+    // 윈도우면 결제 / 취소 순으로 버튼 렌더링
     if (user_agent.indexOf('mac') !== -1) {
         modalBtnBox.appendChild(button2);
         modalBtnBox.appendChild(button1);

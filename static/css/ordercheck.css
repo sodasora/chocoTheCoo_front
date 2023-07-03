@@ -26,8 +26,14 @@
     border: none;
 }
 
+#helpTextDeli {
+    width: 20px;
+    height: 20px;
+    margin-left: 0.4em;
+}
+
 #wrap {
-    width: 100%!important;
+    width: 100% !important;
     /* margin: auto!important; */
 }
 
@@ -196,6 +202,17 @@
     padding: 0.5em 1em;
     font-size: large;
     font-weight: bold;
+}
+
+#saveDeliveryBox {
+    display: none;
+    background-color: transparent;
+    justify-content: end;
+    align-items: center;
+}
+
+#saveDelivery {
+    margin-right: 1em;
 }
 
 #recipient {
