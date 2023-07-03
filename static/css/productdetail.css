@@ -588,11 +588,12 @@ nav a:nth-child(3):hover~.nav-underline {
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     background-color: antiquewhite;
     border-radius: 1em;
+    padding: 1em;
 }
 
 .seller-top-box {
-    height: 40%;
-    width: 100%;
+    /* height: 40%; */
+    /* width: 100%; */
 
     display: flex;
     flex-direction: column;
@@ -611,8 +612,8 @@ nav a:nth-child(3):hover~.nav-underline {
 }
 
 .seller-logo-image {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     background-size: cover;
