@@ -96,9 +96,7 @@ export async function updateProfileInformation() {
         profile_image: profile_image
     };
     const response = await updateProfileInformationAPI(information)
-    console.log(response)
     const response_json = await response.json()
-    console.log(response_json)
     const profileMessageBox = document.getElementById("profileMessageBox")
     profileMessageBox.style.display = "flex"
     if (response.status == 200) {
@@ -531,7 +529,7 @@ export async function submitChangeEamilInformation() {
 
 async function changeView(ElementID) {
     // 화면 초기화
-    const nav_items = document.querySelectorAll(".container-nav-item")
+    const nav_items = document.querySelectorAll(".chart-button")
     nav_items.forEach((item) => {
         item.style.backgroundColor = "#F8ECE0"
         item.style.color = "black"
@@ -830,7 +828,6 @@ export async function refusalOfSalesActivity(seller_id) {
         msg: message,
     }
     const response = await refusalOfSalesActivityAPI(information)
-    console.log(response)
     if (response.status == 204) {
         alert("거절 하셨습니다.")
         location.reload();

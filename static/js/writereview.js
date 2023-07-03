@@ -5,40 +5,43 @@ const productId = urlParams.get('product_id');
 
 // 후기 작성 
 export async function writeReview() {
-
-
-
-    console.log(productId)
     // const products = await  getProductListAPIView();
 
     const name = document.getElementById("review-title").value;
     const star = document.getElementById("give-star").value;
     const image = document.getElementById("formFile").files[0];
     const content = document.getElementById("review-content").value;
+    const delivery_evaluation = document.getElementById("delivery_evaluation").value;
+    const service_evaluation = document.getElementById("service_evaluation").value;
+    const feedback_evaluation = document.getElementById("feedback_evaluation").value;
 
-    const formdata = new FormData();
+    if (name == '') {
+        alert("리뷰 제목을 입력해 주세요.")
+    } else if (content == '') {
+        alert("리뷰 내용을 입력해 주세요.")
+    } else {
+        const formdata = new FormData();
+        formdata.append('title', name)
+        formdata.append('content', content)
+        formdata.append('star', star)
+        formdata.append('delivery_evaluation', delivery_evaluation)
+        formdata.append('service_evaluation', service_evaluation)
+        formdata.append('feedback_evaluation', feedback_evaluation)
+        if (image) {
+            formdata.append('image', image)
+        }
 
+        for (const pair of formdata.entries()) {
+            console.log(pair[0] + ':', pair[1]);
+        }
 
+        try {
+            const response = await writeReviewAPI(productId, formdata);
 
-    formdata.append('title', name)
-    formdata.append('content', content)
-    formdata.append('star', star)
-    console.log(formdata)
-    if (image) {
-        formdata.append('image', image)
+        } catch (error) {
+            console.error(error);
+        }
     }
-
-    for (const pair of formdata.entries()) {
-        console.log(pair[0] + ':', pair[1]);
-    }
-
-    try {
-        const response = await writeReviewAPI(productId, formdata);
-
-    } catch (error) {
-        console.error(error);
-    }
-
 }
 
 // 이전 리뷰들 불러오기 : showReviewDetailViewAPI에서 정보 받아오기
@@ -52,60 +55,66 @@ export async function loadDefault() {
     const title = document.getElementById("review-title");
     const content = document.getElementById("review-content");
     const star = document.getElementById("give-star");
-
-    console.log(review.title);
     title.value = review.title;
     content.value = review.content;
     star.value = review.star;
+    document.getElementById("delivery_evaluation").value = review.delivery_evaluation
+    document.getElementById("service_evaluation").value = review.service_evaluation
+    document.getElementById("feedback_evaluation").value = review.feedback_evaluation
+
+    if (review.image != null) {
+        document.getElementById("preViewItem").style.display = "flex"
+        document.getElementById('preView').setAttribute("src", review.image)
+    }
 
 }
 
 // 수정한 리뷰 api.js의 editReviewAPI에 전송
 export async function editReview() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('product_id');
-    const reviewId = urlParams.get('review_id');
-
-    const review = await showReviewDetailViewAPI(productId, reviewId);
-    console.log(review.content)
-
     const title = document.getElementById("review-title").value;
     const content = document.getElementById("review-content").value;
-    const star = document.getElementById("give-star").value;
+    if (title == '') {
+        alert("리뷰 제목을 입력해 주세요.")
+    } else if (content == '') {
+        alert("리뷰 내용을 입력해 주세요.")
+    } else {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('product_id');
+        const reviewId = urlParams.get('review_id');
+        const star = document.getElementById("give-star").value;
+        const image = document.getElementById("formFile").files[0];
+        const delivery_evaluation = document.getElementById("delivery_evaluation").value;
+        const service_evaluation = document.getElementById("service_evaluation").value;
+        const feedback_evaluation = document.getElementById("feedback_evaluation").value;
+        const formdata = new FormData();
+        formdata.append('title', title);
+        formdata.append('content', content);
+        formdata.append('star', star);
+        formdata.append('delivery_evaluation', delivery_evaluation)
+        formdata.append('service_evaluation', service_evaluation)
+        formdata.append('feedback_evaluation', feedback_evaluation)
+        if (image) {
+            formdata.append('image', image)
+        }
+        try {
+            const response = await editReviewViewAPI(productId, reviewId, formdata);
 
-    const image = document.getElementById("formFile").files[0];
-
-
-    const formdata = new FormData();
-
-    console.log(title, content, star);
-    formdata.append('title', title);
-    formdata.append('content', content);
-    formdata.append('star', star);
-    if (image) {
-        formdata.append('image', image)
+        } catch (error) {
+            console.error(error);
+        }
     }
-
-    for (const pair of formdata.entries()) {
-        console.log(pair[0] + ':', pair[1]);
-    }
-
-    console.log(formdata);
-
-
-    try {
-        const response = await editReviewViewAPI(productId, reviewId, formdata);
-
-    } catch (error) {
-        console.error(error);
-    }
-
 }
 
 // 이미지 미리보기 함수
 export function readURL(input) {
-    // 사용자가 등록한 이미지 미리보기 기능 제공
-    if (input.files && input.files[0]) {
+    const fileType = input.files[0].type;
+    const ImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    if (!ImageTypes.includes(fileType)) {
+        alert("지원되지 않는 파일 형식입니다. 이미지 파일을 선택해 주세요.");
+        input.value = ''
+    }
+    else if (input.files && input.files[0]) {
+        document.getElementById("preViewItem").style.display = "flex"
         var reader = new FileReader();
         reader.onload = function (e) {
             document.getElementById('preView').src = e.target.result;

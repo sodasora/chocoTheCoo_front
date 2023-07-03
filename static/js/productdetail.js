@@ -63,6 +63,101 @@ export async function setSellerInformation(information) {
 }
 
 
+export async function getChart(information, evaluation) {
+    var context = document
+        .getElementById('myChart')
+        .getContext('2d');
+    var myChart = new Chart(context, {
+        type: 'pie', // 차트의 형태
+        data: { // 차트에 들어갈 데이터
+            labels: [
+                //x 축
+                information.good, information.normal, information.bad,
+            ],
+            datasets: [
+                { //데이터
+                    label: 'test1', //차트 제목
+                    fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                    data: [
+                        evaluation.good, evaluation.normal, evaluation.bad,
+                    ],
+                    backgroundColor: [
+                        //색상
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                    ],
+                    borderColor: [
+                        //경계선 색상
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                    ],
+                    borderWidth: 1 //경계선 굵기
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }
+                ]
+            }
+        }
+    });
+}
+
+export async function setChartButton() {
+    const nav_items = document.querySelectorAll(".chart-button")
+    nav_items.forEach((item) => {
+        item.style.backgroundColor = "antiquewhite"
+        item.style.color = "black"
+    })
+}
+
+export async function setChart(delivery_evaluation, feedback_evaluation, service_evaluation) {
+    const delivery_information = {
+        good: "빨라요 😁",
+        normal: "보통 😐",
+        bad: "느려요 😥",
+    }
+    const service_information = {
+        good: "친절 해요 😁",
+        normal: "보통 😐",
+        bad: "불친절 해요 😥",
+    }
+    const feedback_information = {
+        good: "재구매 의사 있어요 😁",
+        normal: "좀 더 생각해 봐야 될 것 같아요 😐",
+        bad: "재구매 의사 없어요 😥",
+    }
+    document.getElementById("deliveryEvaluation").addEventListener("click", function () {
+        setChartButton()
+        getChart(delivery_information, delivery_evaluation)
+        document.getElementById("deliveryEvaluation").style.backgroundColor = "#522F18"
+        document.getElementById("deliveryEvaluation").style.color = "white"
+
+    })
+    document.getElementById("serviceEvaluation").addEventListener("click", function () {
+        setChartButton()
+        getChart(service_information, service_evaluation)
+        document.getElementById("serviceEvaluation").style.backgroundColor = "#522F18"
+        document.getElementById("serviceEvaluation").style.color = "white"
+
+    })
+    document.getElementById("feedbackEvaluation").addEventListener("click", function () {
+        setChartButton()
+        getChart(feedback_information, feedback_evaluation)
+        document.getElementById("feedbackEvaluation").style.backgroundColor = "#522F18"
+        document.getElementById("feedbackEvaluation").style.color = "white"
+
+    })
+    getChart(delivery_information, delivery_evaluation)
+}
 
 // 상품 정보보기
 export async function viewProductDetail() {
@@ -111,6 +206,8 @@ export async function viewProductDetail() {
     await showReview(response.product_reviews)
     // 판매자 정보 불러오기
     await setSellerInformation(response.seller)
+
+    await setChart(response.delivery_evaluation, response.feedback_evaluation, response.service_evaluation)
 
     if (payload != null && payload.user_id == response.seller.user) {
         document.getElementById("productControlBox").style.display = "block"
@@ -181,7 +278,6 @@ export async function getReviewData(element) {
     for (let i = 0; i < element.star; i++) {
         star += '<img class="review-star" src="/static/images/별점.png">';
     }
-
     const review_image = element.image == null ? '/static/images/review_default.png' : element.image
     const profile_image = element.user.profile_image == null ? '/static/images/default.jpg' : element.user.profile_image
     const like_image = element.is_like == false ? '/static/images/좋아요x.png' : '/static/images/좋아요.png'
@@ -293,9 +389,6 @@ export async function getReviewDetailData(element) {
     for (let i = 0; i < element.star; i++) {
         star += '<img class="review-detail-star" src="/static/images/별점.png">';
     }
-
-
-
     const review_image = element.image == null ? '/static/images/review_default.png' : element.image
     const profile_image = element.user.profile_image == null ? '/static/images/default.jpg' : element.user.profile_image
     const like_image = element.is_like == false ? '/static/images/좋아요x.png' : '/static/images/좋아요.png'
@@ -329,6 +422,17 @@ export async function getReviewDetailData(element) {
         <div class="reviewDetailContext"><span>${element.content}</span></div>
     </div>
     <div class="reviewDetailControlContainer">
+        <div class="review-evaluation-box">
+            <div class="review-evaluation">
+            배송 : ${element.delivery_evaluation}
+            </div>
+            <div class="review-evaluation review-evaluation-center">
+            서비스 : ${element.service_evaluation}
+            </div>
+            <div class="review-evaluation">
+            재구매 의향 : ${element.feedback_evaluation}
+            </div>
+        </div>
         <div class="review-control-box">
             <button class="review-control-button" id="editReviewInformation_${element.id}">수정</button>
             <button class="review-control-button" id="closeReviewDetailInformation_${element.id}">접기</button>
@@ -373,7 +477,6 @@ export async function getReviewDetailData(element) {
 // 전체 후기 조회
 export async function showReview(reviews) {
     try {
-
         await reviews.forEach((element) => {
             getReviewData(element)
 

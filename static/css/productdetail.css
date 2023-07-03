@@ -350,7 +350,8 @@ body {
 }
 
 .review-control-button {
-    height: 100%;
+    height: 50%;
+    margin-top: auto;
     width: 4rem;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     background-color: transparent;
@@ -374,16 +375,17 @@ body {
 
 
 .reviewDetailBottomContainer {
-    height: 60%;
+    height: 50%;
     width: 100%;
     padding: 3% 0 3% 0;
 }
 
 .reviewDetailControlContainer {
-    height: 10%;
+    height: 20%;
     width: 100%;
     display: flex;
     padding: 1% 3% 1% 1%;
+
 
 }
 
@@ -424,6 +426,7 @@ body {
 
 .review-control-box {
     margin-left: auto;
+    display: flex;
 }
 
 .reviewDetailCreated_at {
@@ -566,6 +569,7 @@ nav a:nth-child(3):hover~.nav-underline {
 }
 
 .productContentBox {
+    margin-top: 5%;
     width: 100%;
     height: 30rem;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
@@ -770,4 +774,60 @@ nav a:nth-child(3):hover~.nav-underline {
     background-position: center;
     background-repeat: no-repeat;
     cursor: pointer;
+}
+
+.review-evaluation-box {
+    height: 100%;
+    width: 100%;
+}
+
+.review-evaluation {
+    height: 33%;
+    width: 100%;
+}
+
+.review-evaluation-center {
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.chart-box {
+    background-color: white;
+    border-radius: 2rem;
+}
+
+.chart-button-box {
+    height: 7rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.chart-button {
+    background-color: antiquewhite;
+    width: 10rem;
+    height: 3rem;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+}
+
+.chart-button:hover {
+    background-color: #522F18;
+    color: white;
+}
+
+#deliveryEvaluation {
+    background-color: #522F18;
+    color: white;
+}
+
+.chart-button-center {
+    margin-left: 10%;
+    margin-right: 10%;
 }

@@ -1,3 +1,9 @@
+@media (max-width: 425px) {
+    #preView {
+        height: 10rem !important;
+    }
+}
+
 @font-face {
     font-family: 'SUIT-Regular';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
@@ -5,17 +11,18 @@
     font-style: normal;
 }
 
-.section2{
+.section2 {
     /* background-color: #C4A492; */
     font-family: 'SUIT-Regular';
     background-color: #C4A492;
     width: 100%;
-    height: 45em;
+    height: 80em;
     display: flex;
     justify-content: center;
 }
+
 form {
-    margin-top:4em;
+    margin-top: 4em;
     height: 35em;
     width: 50vw;
     background-color: #C4A492;
@@ -23,7 +30,7 @@ form {
     margin-bottom: 2em;
 }
 
-.title-box{
+.title-box {
     /* margin: 1vh 0 0 5vw; */
     width: 100%;
     height: 2em;
@@ -31,7 +38,8 @@ form {
     border-radius: 0.5em;
     margin-bottom: 0.5em;
 }
-#give-star{
+
+#give-star {
     /* margin: 1vh 0 0 5vw; */
     width: 100%;
     height: 2em;
@@ -39,6 +47,7 @@ form {
     border-radius: 0.5em;
     margin-bottom: 0.5em;
 }
+
 #reviewBox {
     /* margin: 1vh 0 0 5vw; */
     width: 100%;
@@ -49,41 +58,44 @@ form {
 }
 
 #reviewsubmitbutton {
-    width:6em;
-    height:3em;
+    width: 6em;
+    height: 3em;
     margin: 30px 0 0 0;
-    --bs-btn-padding-y: 0.7rem; 
-    --bs-btn-padding-x: 1.7rem; 
+    --bs-btn-padding-y: 0.7rem;
+    --bs-btn-padding-x: 1.7rem;
     --bs-btn-font-size: 1.5rem;
     background-color: #522F18;
-    color:white;
+    color: white;
 }
+
 .button1 {
     justify-content: center;
     display: flex;
 }
+
 .button2 {
     justify-content: center;
     display: flex;
 }
 
-#edit{
-    width:6em;
-    height:3em;
+#edit {
+    width: 6em;
+    height: 3em;
     margin: 30px 0 0 0;
-    --bs-btn-padding-y: 0.7rem; 
-    --bs-btn-padding-x: 1.7rem; 
+    --bs-btn-padding-y: 0.7rem;
+    --bs-btn-padding-x: 1.7rem;
     --bs-btn-font-size: 1.5rem;
     background-color: #522F18;
-    color:white;
+    color: white;
 }
 
 
-.file-box{
+.file-box {
     width: 100%;
     height: 2em;
     font-size: 20px;
     border-radius: 0.5em;
+    margin-top: 1rem;
 }
 
 .title-container {
@@ -108,4 +120,19 @@ form {
     .image-box {
         display: none;
     }
+}
+
+#preViewItem {
+    margin-bottom: 2%;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#preView {
+    border-radius: 1rem;
+    width: 20rem;
+    height: 20rem;
 }
