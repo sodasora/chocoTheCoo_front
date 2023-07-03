@@ -32,10 +32,13 @@ export async function registProduct() {
     const amount = document.getElementById("amount").value;
     const category = document.getElementById("category-select").value;
 
-    const formdata = new FormData();
+    // 유효성 검사 추가
+    if (!name || !content || !price || !amount ) {
+        alert("모든 필드를 입력하셔야합니다! 입력 안한 부분은 없는지 확인해주세요~❤");
+        return;
+    }
 
-    console.log(name, content, price, amount)
-    console.log(image)
+    const formdata = new FormData();
 
     formdata.append('name', name)
     formdata.append('content', content)
@@ -43,6 +46,7 @@ export async function registProduct() {
     formdata.append('amount', amount)
     formdata.append('seller_id', seller_id)
     formdata.append('category', category)
+
     if (image) {
         formdata.append('image', image)
     }
@@ -51,16 +55,13 @@ export async function registProduct() {
         console.log(pair[0] + ':', pair[1]);
     }
 
-
     try {
-
         registProductAPIView(formdata);
-
-
     } catch (error) {
         console.error(error);
     }
 }
+
 // 이미지 미리보기
 // 이미지 미리보기 js 함수
 export function readURL(input) {
@@ -85,11 +86,13 @@ export async function loadDefault() {
     const content = document.getElementById("content");
     const price = document.getElementById("price");
     const amount = document.getElementById("amount");
+    const category = document.getElementById("category-select");
 
     name.value = product.name;
     content.value = product.content;
     price.value = product.price;
     amount.value = product.amount;
+    category.value = product.category;
 }
 
 
