@@ -169,7 +169,7 @@
 
 #month-plus {
   font-family: 'S-CoreDream-3Light';
-  font-size: 1.7vw;
+  font-size: 1.5vw;
   font-weight: bold;
   margin-left: 40px;
   color: white;
@@ -177,7 +177,7 @@
 
 #month-minus {
   font-family: 'S-CoreDream-3Light';
-  font-size: 1.7vw;
+  font-size: 1.5vw;
   font-weight: bold;
   margin-left: 20px;
   color: white;
@@ -185,7 +185,7 @@
 
 #total-reward {
   font-family: 'S-CoreDream-3Light';
-  font-size: 1.7vw;
+  font-size: 1.5vw;
   font-weight: bold;
   margin-left: 20px;
   color: white;
@@ -853,6 +853,6 @@ td {
 
 @media screen and (max-width: 768px) {
   .image-box {
-      display: none;
+    display: none;
   }
 }
