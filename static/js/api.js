@@ -1544,15 +1544,12 @@ export async function getCategoryView() {
 // 동일 카테고리 상품 조회
 export async function sameCategoryProductView(category_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/?category=${category_id}`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
 		method: "GET",
 	});
 	return response.json();
 }
 
-
+// 장바구니 담기
 export async function addToCartAPI(product, amount) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/`, {
 		method: 'POST',
@@ -1574,6 +1571,7 @@ export async function addToCartAPI(product, amount) {
 	}
 }
 
+// 상품 좋아요
 export async function addToLikeAPI(productId) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/wish/${productId}/`, {
 		method: 'POST',
@@ -1585,7 +1583,7 @@ export async function addToLikeAPI(productId) {
 	return response
 }
 
-
+// 리뷰 좋아요
 export async function reviewLikeAPI(review_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/review/${review_id}/`, {
 		method: 'POST',
@@ -1597,6 +1595,7 @@ export async function reviewLikeAPI(review_id) {
 	return response
 }
 
+// 상품 검색
 export async function searchProductAPI(keyword) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/?search=${keyword}`, {
 		method: "GET",
@@ -1608,7 +1607,7 @@ export async function searchProductAPI(keyword) {
 	return response.json();
 }
 
-
+// 판매자 팔로우하기
 export async function sellerFollowAPI(user_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/follow/${user_id}/`, {
 		headers: {
