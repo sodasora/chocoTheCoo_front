@@ -20,7 +20,7 @@ const productId = urlParams.get('product_id');
 
 
 export async function goSellerPage(user_id) {
-    const url = `${FRONT_BASE_URL}/index.html?user_id=${user_id}`
+    const url = `${FRONT_BASE_URL}/sellerpage.html?seller=${user_id}`
     window.location.href = url;
 }
 
@@ -402,16 +402,12 @@ export async function showReview(reviews) {
 }
 
 
-export async function getSellerInformation() {
-    const response = await getSellerInformationAPI()
-    if (response.status == 200) {
+// export async function getSellerInformation() {
+//     const response = await getSellerInformationAPI()
+//     if (response.status == 200) {
 
-    }
-}
-
-export async function sellerpage() {
-
-}
+//     }
+// }
 
 async function addToCart() {
     if (payload == null) {

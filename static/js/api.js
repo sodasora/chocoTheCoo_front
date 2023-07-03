@@ -549,7 +549,7 @@ export async function getCartList() {
 
 
 // 상품 등록하기
-export async function registProductAPIView(formdata) {
+export async function registProductAPIView(formdata, seller) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/`, {
 		method: 'POST',
 		headers: {
@@ -559,29 +559,13 @@ export async function registProductAPIView(formdata) {
 	});
 	if (response.status === 201) {
 		alert('상품등록 완료!')
-		window.location.replace(`${FRONT_BASE_URL}/sellerpage.html`)
+		window.location.replace(`${FRONT_BASE_URL}/sellerpage.html?seller=${seller}`)
 	} else {
-		alert('상품 등록 실패')
+		alert('카테고리가 입력되지 않아 상품 등록에 실패했습니다.');
 	}
 
 	return response.json();
 }
-
-
-// 상품 상세 페이지 수정 하기 
-
-// export async function editProductDetailAPIView(product_id, formdata) {
-// 	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
-// 		headers: {
-// 			"Authorization": `Bearer ${access_token}`,
-// 		},
-// 		method: "PUT",
-// 		body: formdata
-// 	});
-// 	return response.json();
-// }
-
-
 
 // 상품 정보 전체 불러오기
 // # 상품 전체 조회
@@ -841,6 +825,8 @@ export async function makeBills(delivery_id = null, delivery_data = null) {
 	let data;
 	if (delivery_data) {
 		data = JSON.stringify({
+			new_delivery: delivery_data.new_delivery,
+			save_delivery: delivery_data.save_delivery,
 			recipient: delivery_data.recipient,
 			postal_code: delivery_data.postcode,
 			address: delivery_data.address,
@@ -876,20 +862,22 @@ export async function makeOrders(queryString, bill_id) {
 		},
 		method: 'POST'
 	})
+	const response_json = await response.json()
+
 	if (response.status == 201) {
 		deleteCartItemAll(queryString, bill_id);
-	}
-	else if (response.status == 404) {
-		alert("잘못된 상품 정보입니다.")
+	} else if (response_json.err == "no_cart") {
+		alert("장바구니 정보를 다시 확인해주세요")
 		window.history.back();
-	}
-	else if (response.status == 400) {
-		alert("잘못된 URL입니다. 장바구니부터 다시 시도해주세요.")
+	} else if (response_json.err == "incorrect_product") {
+		alert("상품 정보가 부정확합니다")
 		window.history.back();
-	}
-	else if (response.status == 403) {
-		alert("포인트가 부족합니다!")
-		window.location.href = "/pointcharge.html"
+	} else if (response_json.err == "insufficient_balance") {
+		alert("결제를 위한 포인트가 부족합니다")
+		window.history.back();
+	} else if (response_json.err == "out_of_stock") {
+		alert("구매하려는 수량이 상품의 재고보다 많습니다")
+		window.history.back();
 	}
 }
 
@@ -1066,7 +1054,6 @@ export async function getBillList() {
 
 	if (response.status == 200) {
 		const response_json = await response.json();
-		// console.log(response_json);
 		return response_json;
 	} else {
 		console.log(response.status);
@@ -1345,7 +1332,11 @@ export async function viewProductslist(product) {
 
 			const newCardText = document.createElement("p");
 			newCardText.setAttribute("class", "card-text");
-			newCardText.innerText = "상품가격 : " + e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
+			// newCardText.innerText = "상품가격 : " + e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' });
+			newCardText.innerText = "상품가격 : " + 
+  			(e.price
+    		? e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
+    		: "데이터 없음");
 			newCarddesc.appendChild(newCardText)
 
 			const newCardFooter = document.createElement("p");
