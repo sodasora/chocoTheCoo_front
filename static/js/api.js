@@ -1007,7 +1007,7 @@ export async function getChatLogAPI(id) {
 	return response.json()
 }
 
-// 채팅방 삭제하기
+// 채팅방 정보 불러오기
 export async function getChatroominfo(room_id) {
 	const response = await fetch(`${BACK_BASE_URL}/chat/room/${room_id}/`, {
 		headers: {
