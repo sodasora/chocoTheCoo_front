@@ -95,10 +95,17 @@ function socketSwap(roomId) {
     }
 
     if (roomId != null) {
+        // 배포
         chatSocket = new WebSocket(
             'ws://' + backurl +
-            '/ws/chat/' + roomId + '/?token=' + access_token
+            '/chat/' + roomId + '/?token=' + access_token
         );
+
+        // 로컬
+        // chatSocket = new WebSocket(
+        //     'ws://' + backurl +
+        //     '/ws/chat/' + roomId + '/?token=' + access_token
+        // );
 
         console.log(chatSocket)
 

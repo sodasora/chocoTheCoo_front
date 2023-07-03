@@ -147,6 +147,10 @@ async function Choicelist() {
                 newP.setAttribute("style", "color:blue;")
                 newP.innerText = `${point_date}` + " 정산: " + point[id].point + "p"
             }
+            if (point[id].point_category == "환불") {
+                newP.setAttribute("style", "color:blue;")
+                newP.innerText = `${point_date}` + " 환불: " + point[id].point + "p"
+            }
             return newP
         }
 
@@ -239,13 +243,6 @@ async function Choicelist() {
     minus_statistic.setAttribute("id", "totalminus")
     minus_statistic.innerText = "총 이용포인트: " + response_point_statistic_json["day_minus"].toLocaleString() + "p"
     newstatistic.appendChild(minus_statistic)
-
-    const statistic = document.createElement("div")
-    statistic.setAttribute("class", "point-statistic")
-    statistic.setAttribute("id", "totalpoint")
-    statistic.innerText = "총포인트: " + response_point_statistic_json["day_total_point"].toLocaleString() + "p"
-    newstatistic.appendChild(statistic)
-
 }
 
 
@@ -314,6 +311,10 @@ async function getToday() {
             if (point[id].point_category == "정산") {
                 newP.setAttribute("style", "color:blue;")
                 newP.innerText = `${point_date}` + " 정산: " + point[id].point.toLocaleString() + "p"
+            }
+            if (point[id].point_category == "환불") {
+                newP.setAttribute("style", "color:blue;")
+                newP.innerText = `${point_date}` + " 환불: " + point[id].point + "p"
             }
             return newP
         }
@@ -408,21 +409,17 @@ async function getToday() {
     minus_statistic.innerText = "오늘 이용포인트: " + response_point_statistic_json["day_minus"].toLocaleString() + "p"
     newstatistic.appendChild(minus_statistic)
 
-    const statistic = document.createElement("div")
-    statistic.setAttribute("class", "point-statistic")
-    statistic.setAttribute("id", "totalpoint")
-    statistic.innerText = "오늘 총포인트: " + response_point_statistic_json["day_total_point"].toLocaleString() + "p"
-    newstatistic.appendChild(statistic)
+    const newmonth_plus = document.getElementById("month-plus")
+    newmonth_plus.setAttribute("class", "point-statistic")
+    newmonth_plus.innerText = "이번달 획득포인트: " + response_point_statistic_json["month_plus"].toLocaleString() + "p"
 
-    const newmonth_total = document.getElementById("month-total")
-    newmonth_total.setAttribute("class", "point-statistic")
-    newmonth_total.setAttribute("style", "font-size:2vw;")
-    newmonth_total.innerText = "이번달 총 리워드: " + response_point_statistic_json["month_total_point"].toLocaleString() + "p"
+    const newmonth_minus = document.getElementById("month-minus")
+    newmonth_minus.setAttribute("class", "point-statistic")
+    newmonth_minus.innerText = "이번달 이용포인트: " + response_point_statistic_json["month_minus"].toLocaleString() + "p"
 
     const new_total = document.getElementById("total-reward")
     new_total.setAttribute("class", "point-statistic")
-    new_total.setAttribute("style", "font-size:2vw;")
-    new_total.innerText = "총 리워드: " + response_point_statistic_json["total_point"].toLocaleString() + "p"
+    new_total.innerText = "현재 포인트 총액: " + response_point_statistic_json["total_point"].toLocaleString() + "p"
 
 }
 

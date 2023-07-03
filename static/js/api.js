@@ -1140,8 +1140,11 @@ export async function getProductslist(product) {
 	const next_page = page_num + 1
 	const paginate = document.getElementById('product-buttons')
 
+	// 배포
 	const originalUrl = "http://backend:8000/api";
 	const modifiedUrl = originalUrl.replace("http://backend:8000/api", "https://backend.chocothecoo.com/api");
+
+	//로컬일 때는 product.next, product.previous
 
 	if (paginate) {
 		if (product_count <= 9) {
@@ -1396,8 +1399,11 @@ async function pageMove(move) {
 		next_page = page_num + 1
 	}
 
+	// 배포
 	const originalUrl = "http://backend:8000/api";
 	const modifiedUrl = originalUrl.replace("http://backend:8000/api", "https://backend.chocothecoo.com/api");
+
+	//로컬일 때는 product.next, product.previous
 
 	// 페이지 박스 번호 갱신하기
 	let paginate = document.getElementById('product-buttons')
@@ -1600,7 +1606,7 @@ export async function searchProductAPI(keyword) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/?search=${keyword}`, {
 		method: "GET",
 	});
-	if(!keyword){
+	if (!keyword) {
 		alert("상품이 존재하지 않습니다ㅠㅠ");
 		window.location.reload();
 	}
