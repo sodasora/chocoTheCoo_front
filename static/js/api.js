@@ -561,27 +561,11 @@ export async function registProductAPIView(formdata) {
 		alert('상품등록 완료!')
 		window.location.replace(`${FRONT_BASE_URL}/sellerpage.html`)
 	} else {
-		alert('상품 등록 실패')
+		alert('카테고리가 입력되지 않아 상품 등록에 실패했습니다.');
 	}
 
 	return response.json();
 }
-
-
-// 상품 상세 페이지 수정 하기 
-
-// export async function editProductDetailAPIView(product_id, formdata) {
-// 	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
-// 		headers: {
-// 			"Authorization": `Bearer ${access_token}`,
-// 		},
-// 		method: "PUT",
-// 		body: formdata
-// 	});
-// 	return response.json();
-// }
-
-
 
 // 상품 정보 전체 불러오기
 // # 상품 전체 조회
