@@ -549,7 +549,7 @@ export async function getCartList() {
 
 
 // 상품 등록하기
-export async function registProductAPIView(formdata) {
+export async function registProductAPIView(formdata, seller) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/`, {
 		method: 'POST',
 		headers: {
@@ -559,7 +559,7 @@ export async function registProductAPIView(formdata) {
 	});
 	if (response.status === 201) {
 		alert('상품등록 완료!')
-		window.location.replace(`${FRONT_BASE_URL}/sellerpage.html`)
+		window.location.replace(`${FRONT_BASE_URL}/sellerpage.html?seller=${seller}`)
 	} else {
 		alert('카테고리가 입력되지 않아 상품 등록에 실패했습니다.');
 	}
@@ -1332,7 +1332,11 @@ export async function viewProductslist(product) {
 
 			const newCardText = document.createElement("p");
 			newCardText.setAttribute("class", "card-text");
-			newCardText.innerText = "상품가격 : " + e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
+			// newCardText.innerText = "상품가격 : " + e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' });
+			newCardText.innerText = "상품가격 : " + 
+  			(e.price
+    		? e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
+    		: "데이터 없음");
 			newCarddesc.appendChild(newCardText)
 
 			const newCardFooter = document.createElement("p");
