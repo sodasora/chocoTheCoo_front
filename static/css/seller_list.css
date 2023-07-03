@@ -89,6 +89,27 @@
     height: 150px;
 }
 
+/* 품절,삭제 상태 이미지 */
+.soldout, .delete{
+    /* position: absolute; */
+    height:40px;
+    width:40px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+}
+
+/* 품절,삭제 상태 확대이미지 */
+.soldoutZoom, .deleteZoom{
+    position: absolute;
+    height:150px;
+    width:150px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+}
 
 tr,
 td {
@@ -156,4 +177,16 @@ ion-icon {
     .image-box {
         display: none;
     }
+}
+
+/* 재고수량변경버튼 */
+.amountBtn{
+    display: inline-block;
+    height: auto;
+    width: fit-content;
+    border-radius: 15%;
+}
+
+.amountBtn:hover{
+    color: #0b5ed7;
 }

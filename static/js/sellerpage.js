@@ -6,25 +6,31 @@ import {
   BACK_BASE_URL, 
   FRONT_BASE_URL, 
   getSellerPermissionAPIView, 
-  payload 
+  payload,
+  getUserInformationAPI
 } from './api.js';
+
 const urlParams = new URLSearchParams(window.location.search);
-const sellerId = urlParams.get('seller');
+let sellerId = urlParams.get('seller');
+if (!sellerId){ // 판매자가 자신의 스토어를 조회할 때 
+  sellerId = payload.user_id // 로그인한 유저id
+}
 
 // 판매자 정보 보기
 export async function sellerProfileView() {
-  const follow_button = document.getElementById("seller-follow-button");
   const seller = await getSellerPermissionAPIView(sellerId);
-  console.log(seller)
-  const company_img = seller.company_imgg == null ? "/static/images/store.gif" : seller.company_img;
+  // console.log(seller)
+  const follow_button = document.getElementById("seller-follow-button");
+  // 팔로우 유무에 따라 표시
+  seller.is_like == false ? follow_button.innerText = "Follow" : follow_button.innerText = "Unfollow"
+  // 스토어 이미지 없을 시 기본 이미지
+  const company_img = seller.company_img == null ? "/static/images/store.gif" : seller.company_img;
   const sellerProfile = document.getElementById("user-image");
   sellerProfile.setAttribute("src", `${company_img}`);
-  
   const name = seller.business_owner_name;
   const brand = seller.company_name;
   const contact = seller.contact_number;
   const following = seller.followings_count;
-  // console.log(logo);
   document.getElementById("user-name").innerText = name;
   document.getElementById("user-brand").innerText = brand;
   document.getElementById("user-contact").innerText = contact;
@@ -60,8 +66,14 @@ export async function productDetail(product_id) {
 //등록한 상품들 전체 보기
 export async function sellerPageAPI() {
   try {
-    // sellerId에 해당하는 판매자 스토어 보여줘야함
-    const product = await getSellerProductListAPIView(sellerId);
+    // 판매자 스토어 페이지 판별
+    const getParams = window.location.search;
+    const userParams = getParams.split("=")[1];
+    let seller_id = userParams
+    if (!seller_id){ // 판매자가 자신의 스토어를 조회할 때
+      seller_id = payload.user_id // 로그인한 유저id
+    }
+    const product = await getSellerProductListAPIView(seller_id);
     if (product.count != 0) {
       if ((product.next == null) & (product.previous == null)) {
         viewProductslist(product);
@@ -82,13 +94,5 @@ export async function sellerPageAPI() {
 
 window.onload = async function () {
   sellerProfileView()
-  if (payload == null) {
-    alert("로그인이 필요 합니다.")
-    window.location.replace(`${FRONT_BASE_URL}/login.html`)
-  } else if (payload.is_seller == false) {
-    alert("판매 활동 권한이 필요합니다.")
-    console.log(payload.is_seller)
-    window.location.replace(`${FRONT_BASE_URL}/user_detail_page.html`)
-  }
   sellerPageAPI()
 }
