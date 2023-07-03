@@ -71,6 +71,7 @@ export async function viewProductDetail() {
     const productStarText = document.getElementById('avgStar');
     const productTitle = document.getElementById("product-title")
     const productImage = document.getElementById("product-image")
+    
     const productPrice = document.getElementById("product-price")
     const productAmount = document.getElementById("product-amount");
     const productContent = document.getElementById("productContent")
@@ -91,15 +92,15 @@ export async function viewProductDetail() {
     const like_image = response.in_wishlist == false ? '/static/images/좋아요x.png' : '/static/images/좋아요.png'
     const likeBtn = document.getElementById("addToLike")
     likeBtn.setAttribute("src", like_image)
-
+    
     productTitle.innerText = response.name
     productContent.innerText = response.content
     productPrice.innerText = response.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
     productAmount.innerText = "수량:  " + response.amount + " 개";
     const newImage = document.createElement("img");
-    newImage.setAttribute('id', 'imagePut')
-
-
+    newImage.setAttribute('id', 'imagePut');
+    
+    
     if (response.image != null) {
         newImage.setAttribute("src", `${response.image}`)
         productImage.appendChild(newImage)
@@ -107,15 +108,29 @@ export async function viewProductDetail() {
         newImage.setAttribute("src", "/static/images/기본이미지.gif");
         productImage.appendChild(newImage)
     }
+    // 품절일 경우 품절관련 표시
+    if (response.item_state == 2) {
+        // 이미지 soldout 표시
+        const soldoutImage = document.createElement("img");
+        soldoutImage.setAttribute("src", "/static/images/soldout.png");
+        soldoutImage.setAttribute("class", "soldout");
+        productImage.appendChild(soldoutImage)
+        // 재고량 품절표시
+        productAmount.innerText = "품절"
+        // 장바구니 버튼 숨기기
+        document.getElementById('cart-box').style = 'display: none;';
+        document.getElementById('product-soldout-content').style = 'display: block;';
+    }
+    
     // 리뷰 정보 불러오기
     await showReview(response.product_reviews)
     // 판매자 정보 불러오기
     await setSellerInformation(response.seller)
-
+    
     if (payload != null && payload.user_id == response.seller.user) {
         document.getElementById("productControlBox").style.display = "block"
     }
-
+    
 }
 
 // 상품 수정하기
@@ -125,13 +140,13 @@ export async function goEditProduct() {
 
 // 상품 삭제하기
 export async function deleteProduct() {
-
+    
     try {
         const deleteConfirm = confirm("정말 삭제하시겠습니까?")
         if (deleteConfirm) {
             deletetProductDetailAPIView(productId);
         }
-
+        
     } catch (error) {
         console.error(error);
     }
