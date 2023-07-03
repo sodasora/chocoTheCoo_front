@@ -560,27 +560,11 @@ export async function registProductAPIView(formdata) {
 		alert('상품등록 완료!')
 		window.location.replace(`${FRONT_BASE_URL}/sellerpage.html`)
 	} else {
-		alert('상품 등록 실패')
+		alert('카테고리가 입력되지 않아 상품 등록에 실패했습니다.');
 	}
 
 	return response.json();
 }
-
-
-// 상품 상세 페이지 수정 하기 
-
-// export async function editProductDetailAPIView(product_id, formdata) {
-// 	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
-// 		headers: {
-// 			"Authorization": `Bearer ${access_token}`,
-// 		},
-// 		method: "PUT",
-// 		body: formdata
-// 	});
-// 	return response.json();
-// }
-
-
 
 // 상품 정보 전체 불러오기
 // # 상품 전체 조회
@@ -1139,8 +1123,11 @@ export async function getProductslist(product) {
 	const next_page = page_num + 1
 	const paginate = document.getElementById('product-buttons')
 
+	// 배포
 	const originalUrl = "http://backend:8000/api";
 	const modifiedUrl = originalUrl.replace("http://backend:8000/api", "https://backend.chocothecoo.com/api");
+
+	//로컬일 때는 product.next, product.previous
 
 	if (paginate) {
 		if (product_count <= 9) {
@@ -1395,8 +1382,11 @@ async function pageMove(move) {
 		next_page = page_num + 1
 	}
 
+	// 배포
 	const originalUrl = "http://backend:8000/api";
 	const modifiedUrl = originalUrl.replace("http://backend:8000/api", "https://backend.chocothecoo.com/api");
+
+	//로컬일 때는 product.next, product.previous
 
 	// 페이지 박스 번호 갱신하기
 	let paginate = document.getElementById('product-buttons')

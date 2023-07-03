@@ -1,6 +1,5 @@
 #product-content {
-    display: flex;
-    justify-content: center;
+    text-align: center;
     margin: 3em 10% 0 10%;
 }
 
