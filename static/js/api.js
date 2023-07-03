@@ -825,6 +825,8 @@ export async function makeBills(delivery_id = null, delivery_data = null) {
 	let data;
 	if (delivery_data) {
 		data = JSON.stringify({
+			new_delivery: delivery_data.new_delivery,
+			save_delivery: delivery_data.save_delivery,
 			recipient: delivery_data.recipient,
 			postal_code: delivery_data.postcode,
 			address: delivery_data.address,
@@ -860,20 +862,22 @@ export async function makeOrders(queryString, bill_id) {
 		},
 		method: 'POST'
 	})
+	const response_json = await response.json()
+
 	if (response.status == 201) {
 		deleteCartItemAll(queryString, bill_id);
-	}
-	else if (response.status == 404) {
-		alert("잘못된 상품 정보입니다.")
+	} else if (response_json.err == "no_cart") {
+		alert("장바구니 정보를 다시 확인해주세요")
 		window.history.back();
-	}
-	else if (response.status == 400) {
-		alert("잘못된 URL입니다. 장바구니부터 다시 시도해주세요.")
+	} else if (response_json.err == "incorrect_product") {
+		alert("상품 정보가 부정확합니다")
 		window.history.back();
-	}
-	else if (response.status == 403) {
-		alert("포인트가 부족합니다!")
-		window.location.href = "/pointcharge.html"
+	} else if (response_json.err == "insufficient_balance") {
+		alert("결제를 위한 포인트가 부족합니다")
+		window.history.back();
+	} else if (response_json.err == "out_of_stock") {
+		alert("구매하려는 수량이 상품의 재고보다 많습니다")
+		window.history.back();
 	}
 }
 
@@ -1050,7 +1054,6 @@ export async function getBillList() {
 
 	if (response.status == 200) {
 		const response_json = await response.json();
-		// console.log(response_json);
 		return response_json;
 	} else {
 		console.log(response.status);

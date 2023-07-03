@@ -107,7 +107,17 @@ async function renderBillOrders(bill) {
         content.appendChild(fifthText)
 
         const productId = e.product_id
-        if (e.is_reviewed.reviewed == true){
+        if (e.order_status == "배송완료") {
+            const productId = e.id;
+            const goconfirm = document.createElement('button');
+            goconfirm.innerText = `구매확정하기`;
+            goconfirm.setAttribute(`id`, 'confirmbutton');
+            goconfirm.onclick = async function () {
+                await changebillstatus(productId, 6)
+                window.location.reload();
+            }
+            content.appendChild(goconfirm)
+        } else if (e.is_reviewed.reviewed == true){
             const goReviewEdit = document.createElement('button');
             goReviewEdit.innerText = `리뷰수정`
             goReviewEdit.setAttribute(`id`, 'reviewEditButton');
@@ -125,24 +135,12 @@ async function renderBillOrders(bill) {
                 gowritereview(productId)
             }
             content.appendChild(goreview)
-        } else if (e.order_status == "배송완료") {
-            const productId = e.id;
-            const goconfirm = document.createElement('button');
-            goconfirm.innerText = `구매확정하기`;
-            goconfirm.setAttribute(`id`, 'confirmbutton');
-            goconfirm.onclick = async function () {
-                await changebillstatus(productId, 6)
-                window.location.reload();
-            }
-            content.appendChild(goconfirm)
-        }
-
+        }  
         orderList.appendChild(imgDiv);
         orderList.appendChild(textDiv);
         orderList.appendChild(content);
         orderListBox.appendChild(orderList);
     });
-
 }
 
 let today = new Date();
