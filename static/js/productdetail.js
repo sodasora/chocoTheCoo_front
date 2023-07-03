@@ -20,7 +20,7 @@ const productId = urlParams.get('product_id');
 
 
 export async function goSellerPage(user_id) {
-    const url = `${FRONT_BASE_URL}/index.html?user_id=${user_id}`
+    const url = `${FRONT_BASE_URL}/sellerpage.html?user_id=${user_id}`
     window.location.href = url;
 }
 
