@@ -38,7 +38,7 @@ import {
     // 관리자 권한으로 판매 활동 거절
     refusalOfSalesActivityAPI,
     // 관리자 권한으로 판매 활동 승인
-    salesActivityApprovalAPI
+    salesActivityApprovalAPI,
 } from './api.js'
 import { handleLogout } from './loader.js'
 
@@ -262,8 +262,11 @@ export async function createSellerInformation() {
 
     // API 응답 처리
     if (response.status == 200) {
-        sellerMessageBox.innerText = "판매자 권한을 신청했습니다. 관리자 검증 후 판매 활동을 할 수 있습니다."
-        document.getElementById("createSellerInformationButton").style.display = "block"
+        alert("테스트 기간 동안 판매 활동이 자동 승인 됩니다.\n 다시 로그인 해주세요.")
+        handleLogout()
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        // sellerMessageBox.innerText = "판매자 권한을 신청했습니다. 관리자 검증 후 판매 활동을 할 수 있습니다."
+        // document.getElementById("createSellerInformationButton").style.display = "block"
     } else if (response.status == 404) {
         // 로그인 필요
         alert("로그인이 필요 합니다.")
@@ -779,7 +782,7 @@ async function getSellerInformation(response_json) {
     if (seller_information != null) {
 
         if (seller_information.company_img != null) {
-            document.getElementById("sellerProfileView").style.backgroundImage = `url(${BACK_BASE_URL}${seller_information.company_img})`;
+            document.getElementById("sellerProfileView").style.backgroundImage = `url(${seller_information.company_img})`;
             // .setAttribute("src", response_json.profile_image)
         }
 
@@ -845,6 +848,8 @@ async function admin_view() {
     document.getElementById("adminContainer").style.display = "flex"
     document.getElementById("container").style.display = "none"
     document.getElementById("modal").style.display = "none"
+    document.getElementById("header").style.display = "block"
+    document.getElementById("footer").style.display = "block"
     const response = await getSellerInformationListAPI()
     if (response.status == 200) {
         const response_json = await response.json()
@@ -935,37 +940,37 @@ async function getUserInformation() {
     const response = await getUserInformationAPI()
     const response_json = await response.json()
 
-    if (response_json.is_admin == true) {
-        admin_view()
+    // if (response_json.is_admin == true) {
+    //     admin_view()
+    // } else {
+    if (response_json.phone_number == null) {
+
+
+        document.getElementById("cellPhoneNumberRegistered").style.display = "none"
     } else {
-        if (response_json.phone_number == null) {
-
-
-            document.getElementById("cellPhoneNumberRegistered").style.display = "none"
-        } else {
-            document.getElementById("guideContainer").style.display = "none"
-        }
+        document.getElementById("guideContainer").style.display = "none"
+    }
 
 
 
-        // 사용자의 상세 정보 input value 조정
-        getUserDetailInformation(response_json)
+    // 사용자의 상세 정보 input value 조정
+    getUserDetailInformation(response_json)
 
-        // 주소지 및 통관번호 input value, drop down item value 조정
-        DeliveryInformation(response_json)
+    // 주소지 및 통관번호 input value, drop down item value 조정
+    DeliveryInformation(response_json)
 
-        // 판매자 정보 불러오기 및 view 조정
-        getSellerInformation(response_json)
+    // 판매자 정보 불러오기 및 view 조정
+    getSellerInformation(response_json)
 
-        if (response_json.login_type != "normal") {
-            // 소셜 로그인 계정일 경우
-            document.getElementById("navItemUserInformation").style.display = "none"
-        }
-        if (response_json.phone_number != null) {
-            document.getElementById("phoneNum").value = response_json.phone_number
-        }
+    if (response_json.login_type != "normal") {
+        // 소셜 로그인 계정일 경우
+        document.getElementById("navItemUserInformation").style.display = "none"
+    }
+    if (response_json.phone_number != null) {
+        document.getElementById("phoneNum").value = response_json.phone_number
     }
 }
+// }
 
 
 export async function setEventListener() {

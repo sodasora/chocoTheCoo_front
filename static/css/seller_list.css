@@ -53,7 +53,7 @@
     font-family: 'SUIT-Regular';
 }
 
-.productContainer {
+.productContainer,.orderContainer {
     font-family: 'SUIT-Regular';
 
     display: flex;
@@ -64,7 +64,7 @@
     text-align: center;
 }
 
-.productList {
+.productList, .orderList {
     margin-top: 2%;
     width: 80%;
 }

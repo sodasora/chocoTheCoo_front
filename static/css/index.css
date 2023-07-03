@@ -97,6 +97,7 @@ input {
 .section {
   background-color: #C4A492;
   height: auto;
+  min-height: 70vh;
 }
 
 #product-content {

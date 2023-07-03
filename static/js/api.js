@@ -1,8 +1,9 @@
 export const FRONT_BASE_URL = "http://127.0.0.1:5500"
-// export const BACK_BASE_URL = "http://127.0.0.1:8000"
+export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
-export const BACK_BASE_URL = "https://backend.chocothecoo.com"
+// export const BACK_BASE_URL = "https://backend.chocothecoo.com"
 // // export const REDIRECT_URI = FRONT_BASE_URL
+
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
 export const payload = JSON.parse(localStorage.getItem("payload"))
@@ -1047,7 +1048,6 @@ export async function getBillDetail(bill_id) {
 
 	if (response.status == 200) {
 		const response_json = await response.json();
-		console.log(response_json);
 		return response_json;
 	} else {
 		console.log(response.status);
@@ -1550,15 +1550,12 @@ export async function getCategoryView() {
 // 동일 카테고리 상품 조회
 export async function sameCategoryProductView(category_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/?category=${category_id}`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
 		method: "GET",
 	});
 	return response.json();
 }
 
-
+// 장바구니 담기
 export async function addToCartAPI(product, amount) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/`, {
 		method: 'POST',
@@ -1580,6 +1577,7 @@ export async function addToCartAPI(product, amount) {
 	}
 }
 
+// 상품 좋아요
 export async function addToLikeAPI(productId) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/wish/${productId}/`, {
 		method: 'POST',
@@ -1591,7 +1589,7 @@ export async function addToLikeAPI(productId) {
 	return response
 }
 
-
+// 리뷰 좋아요
 export async function reviewLikeAPI(review_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/review/${review_id}/`, {
 		method: 'POST',
@@ -1603,6 +1601,7 @@ export async function reviewLikeAPI(review_id) {
 	return response
 }
 
+// 상품 검색
 export async function searchProductAPI(keyword) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/?search=${keyword}`, {
 		method: "GET",
@@ -1614,7 +1613,7 @@ export async function searchProductAPI(keyword) {
 	return response.json();
 }
 
-
+// 판매자 팔로우하기
 export async function sellerFollowAPI(user_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/follow/${user_id}/`, {
 		headers: {
