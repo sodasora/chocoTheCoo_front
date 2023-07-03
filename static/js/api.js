@@ -1,7 +1,7 @@
 export const FRONT_BASE_URL = "http://127.0.0.1:5500"
-// export const BACK_BASE_URL = "http://127.0.0.1:8000"
+export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
-export const BACK_BASE_URL = "https://backend.chocothecoo.com"
+// export const BACK_BASE_URL = "https://backend.chocothecoo.com"
 // // export const REDIRECT_URI = FRONT_BASE_URL
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
@@ -1047,7 +1047,6 @@ export async function getBillDetail(bill_id) {
 
 	if (response.status == 200) {
 		const response_json = await response.json();
-		console.log(response_json);
 		return response_json;
 	} else {
 		console.log(response.status);
