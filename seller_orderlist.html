@@ -32,37 +32,39 @@
             <h1>상품 통계 및 현황</h1>
         </a>
     </div>
-    <container class="container">
 
-        <h2>주문현황</h2>
-        <div class="card mb-4">
-            <div class="card-body">
-                <table class="table table-hover table-striped">
-                    <colgroup>
-                        <col width=10%>
-                        <col width=10%>
-                        <col width=10%>
-                        <col width=10%>
-                        <col width=10%>
-                        <col width=10%>
-                        <col width=10%>
-                        <col width=30%>
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th>주문등록일</th>
-                            <th>상품명</th>
-                            <th>상품이미지</th>
-                            <th>주문상태</th>
-                            <th>주문수량</th>
-                            <th>상품가격</th>
-                            <th>주문가격</th>
-                            <th>배송지</th>
-                        </tr>
-                    </thead>
-                    <tbody id="order-list">
-                        <!-- ↓ 예시 html 실제로는 js에서 불러옴 ↓ -->
-                        <!-- <tr>
+    <div class="orderContainer">
+
+        <div class="orderList">
+            <h2>주문현황</h2>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <table class="table table-hover table-striped">
+                        <colgroup>
+                            <col width=10%>
+                            <col width=10%>
+                            <col width=10%>
+                            <col width=10%>
+                            <col width=10%>
+                            <col width=10%>
+                            <col width=10%>
+                            <col width=30%>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>주문등록일</th>
+                                <th>상품명</th>
+                                <th>상품이미지</th>
+                                <th>주문상태</th>
+                                <th>주문수량</th>
+                                <th>상품가격</th>
+                                <th>주문가격</th>
+                                <th>배송지</th>
+                            </tr>
+                        </thead>
+                        <tbody id="order-list">
+                            <!-- ↓ 예시 html 실제로는 js에서 불러옴 ↓ -->
+                            <!-- <tr>
                             <th>23-06-09</th>
                             <th>에그몽</th>
                             <th><div class="product-img" style="background-image: url('/static/images/누적판매량.png');"></div></th>
@@ -73,16 +75,17 @@
                             <th>1000개</th>
                             <th>주소</th>
                         </tr> -->
-                        <!-- ↑ 예시 html 실제로는 js에서 불러옴 ↑ -->
-                    </tbody>
-                </table>
+                            <!-- ↑ 예시 html 실제로는 js에서 불러옴 ↑ -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="order-buttons"></div>
             </div>
-            <div id="order-buttons"></div>
+
+            <!-- Modal -->
+
         </div>
-
-        <!-- Modal -->
-
-    </container>
+    </div>
     <!-- script -->
     <script src="/static/js/api.js" type="module"></script>
     <script src="/static/js/seller_loader.js" type="module"></script>
