@@ -47,9 +47,13 @@ export async function gowritereview(product_id) {
     window.location.href = `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}`
 }
 
+export async function goEditReview(product_id, review_id) {
+    window.location.href = `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}&review_id=${review_id}`;
+}
+
 async function renderBillOrders(bill) {
     const orderListBox = document.getElementById("orderLists")
-    const orderItemList = bill.order_items
+    const orderItemList = bill.orderitem_set
     orderItemList.forEach(e => {
         const orderList = document.createElement("div")
         orderList.classList.add("order-list")
@@ -103,8 +107,15 @@ async function renderBillOrders(bill) {
         content.appendChild(fifthText)
 
         const productId = e.product_id
-
-        if (e.order_status == "구매확정") {
+        if (e.is_reviewed.reviewed == true){
+            const goReviewEdit = document.createElement('button');
+            goReviewEdit.innerText = `리뷰수정`
+            goReviewEdit.setAttribute(`id`, 'reviewEditButton');
+            goReviewEdit.addEventListener("click", function () {
+                goEditReview(productId, e.is_reviewed.review_id)
+            })
+            content.appendChild(goReviewEdit)
+        } else if (e.order_status == "구매확정") {
             // 리뷰 작성 가기
             const goreview = document.createElement('button');
             goreview.innerText = `리뷰쓰기`;
