@@ -58,7 +58,6 @@ export async function handleSignup() {
             password.value = ''
             password2.value = ''
             const response_json = await response.json()
-            console.log(response_json)
 
             if (response_json.err.non_field_errors == null) {
                 if (response_json.err.nickname != null) {

@@ -1,6 +1,5 @@
-import { FRONT_BASE_URL, changebillstatus, getAllProductListAPIView, getSellerOrderListView, getProductDetailAPIView } from './api.js';
+import { FRONT_BASE_URL, changebillstatus, getAllProductListAPIView, getSellerOrderListView, editProductDetailAPIView } from './api.js';
 import { productDetail } from './sellerpage.js';
-
 
 
 // 상품목록 페이지네이션
@@ -21,9 +20,6 @@ async function paginationView_product(product) {
         }
 
         const content = document.createElement("tr");
-        content.onclick = function () {
-            productDetail(product[id].id);
-        };
         // content.innerHTML = `
         // <td><text>${product[id].created_at.substr(0, 10)}</text></td>
         // <td><text>${product[id].name}</text></td>
@@ -44,6 +40,7 @@ async function paginationView_product(product) {
         nameTd.appendChild(nameText);
 
         const productImgTd = document.createElement('td');
+        productImgTd.style = "position:relative;";
         const productImgDiv = document.createElement('div');
         productImgDiv.classList.add('product-img');
         productImgDiv.style.backgroundImage = `url(${product[id].image})`;
@@ -53,9 +50,13 @@ async function paginationView_product(product) {
         const productImgDivZoom = document.createElement("div");
         productImgDivZoom.classList.add("product-img-zoom");
         productImgDivZoom.style.backgroundImage = `url(${product[id].image})`;
+        productImgDivZoom.style.cursor = `pointer`;
+        productImgDivZoom.onclick = function () { // 해당 상품 상세보기로 이동
+            productDetail(product[id].id);
+        };
         productImgTd.appendChild(productImgDivZoom)
 
-        // 이미지 확대보기 Tooltip 효과주기
+        // 이미지 확대보기 Zoom 효과주기
         productImgTd.addEventListener("mouseover", function () {
             productImgDivZoom.style.display = "flex";
             productImgDiv.style.display = "none";
@@ -65,13 +66,108 @@ async function paginationView_product(product) {
             productImgDiv.style.display = "inline-block";
         })
 
+
+
         const priceTd = document.createElement('td');
         const priceText = document.createTextNode((product[id].price).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' }));
         priceTd.appendChild(priceText);
 
         const amountTd = document.createElement('td');
-        const amountText = document.createTextNode((product[id].amount).toLocaleString());
+        let amountText = document.createTextNode((product[id].amount).toLocaleString());
+        
+        // 품절(2)일 경우 표시 변경
+        if (product[id].item_state == 2) {
+            // 제목 취소선 표시
+            nameTd.style = "text-decoration: line-through;"
+            // 수량 품절표시
+            amountText = document.createTextNode("품절");
+            amountTd.style = 'font-weight: bold;';
+            // 상품이미지 품절표시
+            const soldoutImg = document.createElement("img");
+            soldoutImg.setAttribute('src', '/static/images/soldout.png');
+            soldoutImg.setAttribute('class', 'soldout');
+            productImgDiv.appendChild(soldoutImg);
+            // 상품확대이미지 품절표시
+            const soldoutImgZoom = document.createElement("img");
+            soldoutImgZoom.setAttribute('src', '/static/images/soldout.png');
+            soldoutImgZoom.setAttribute('class', 'soldoutZoom');
+            productImgDivZoom.appendChild(soldoutImgZoom);
+        // 삭제된 상품(6)일 경우 표시 변경
+        }else if(product[id].item_state == 6){
+            // 제목 취소선 표시
+            nameTd.style = "text-decoration: red line-through;"
+            // 수량 삭제표시
+            amountText = document.createTextNode("삭제상품");
+            amountTd.style = 'font-weight: bold;';
+            // 가격 삭제표시
+            priceTd.style = "text-decoration: red line-through;"
+            // 상품이미지 삭제표시
+            const deleteImg = document.createElement("img");
+            deleteImg.setAttribute('src', '/static/images/품절.png');
+            deleteImg.setAttribute('class', 'delete');
+            productImgDiv.appendChild(deleteImg);
+            // 상품확대이미지 삭제표시
+            const deleteImgZoom = document.createElement("img");
+            deleteImgZoom.setAttribute('src', '/static/images/품절.png');
+            deleteImgZoom.setAttribute('class', 'deleteZoom');
+            productImgDivZoom.appendChild(deleteImgZoom);
+        }
         amountTd.appendChild(amountText);
+        
+        // 재고수량 마우스호버 효과주기
+        amountTd.addEventListener("mouseover", function () {
+            amountTd.style = 'font-weight: bold;';
+            amountTd.style.cursor = 'pointer';
+        })
+        amountTd.addEventListener("mouseleave", function () {
+            amountTd.style = 'font-weight: none;';
+            amountTd.style.cursor = 'none';
+        })
+        
+        const amountDiv = document.createElement('div');
+        amountDiv.style = "text-align: center; justify-content: center;";
+        const amountInput = document.createElement('input');
+        amountInput.setAttribute('value', product[id].amount);
+        amountInput.setAttribute('type', 'number');
+        amountInput.setAttribute('step', '10');
+        amountInput.setAttribute('min', '0');
+        amountInput.setAttribute('max', '1000');
+        const inboundBtn = document.createElement('button');
+        inboundBtn.setAttribute('class', 'amountBtn');
+        inboundBtn.setAttribute('type', 'button');
+        inboundBtn.innerText = "변경";
+        const outboundBtn = document.createElement('button');
+        outboundBtn.setAttribute('class', 'amountBtn');
+        outboundBtn.setAttribute('type', 'button');
+        outboundBtn.innerText = "취소";
+        amountDiv.appendChild(amountInput);
+        amountDiv.appendChild(inboundBtn);
+        amountDiv.appendChild(outboundBtn);
+        
+        
+        
+        amountTd.addEventListener("click", function () { // 해당 상품 재고변경 활성화
+            amountTd.replaceChild(amountDiv,amountText);
+        });
+        inboundBtn.addEventListener("click", async function () { // 변경버튼 - 해당 상품 재고변경 비활성화
+            const productId = product[id].id
+            const formdata = new FormData()
+            formdata.append('name', product[id].name)
+            formdata.append('content', product[id].content)
+            formdata.append('price', product[id].price)
+            formdata.append('amount', amountInput.value)
+            const response = await editProductDetailAPIView(productId, formdata)
+            if (response.status == 200){
+                alert(`재고수량이 ${amountInput.value}개로 변경되었습니다.`)
+            window.location.reload();
+            }
+        });
+        outboundBtn.addEventListener("click", function () { // 취소버튼 - 해당 상품 재고변경 비활성화
+            alert(`재고수량 변경이 취소되었습니다.`)
+            window.location.reload();
+        });
+
+
 
         const salesTd = document.createElement('td');
         const salesText = document.createTextNode((product[id].sales).toLocaleString());
@@ -82,7 +178,6 @@ async function paginationView_product(product) {
         starScoreDiv.id = 'star-score';
         scoreTd.appendChild(starScoreDiv);
         if (product[id].stars) {
-            console.log(product[id].stars)
             const scoreText = document.createTextNode(`⭐${(product[id].stars).toFixed(1)}`);
             scoreTd.appendChild(scoreText);
         } else {
