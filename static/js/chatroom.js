@@ -167,7 +167,6 @@ function socketSwap(roomId) {
                     message_time.innerText = time + ' ' + sender
                 }
 
-
                 const content = document.createElement("li");
                 content.setAttribute("class", "image")
 
@@ -184,8 +183,6 @@ function socketSwap(roomId) {
                 element.appendChild(content);
                 element.appendChild(wrapper);
                 element.appendChild(message_time);
-                // element.appendChild(readcheck);
-
                 message_list.appendChild(element);
                 message_list.scrollTop = message_list.scrollHeight;
             }
@@ -210,6 +207,9 @@ function socketSwap(roomId) {
             const messageInputDom = chatMessageInput;
             const message = messageInputDom.value;
             if (message === '') {
+                return
+            }
+            if (message.replace(/\s/g, "") === '') {
                 return
             }
             chatSocket.send(JSON.stringify({
