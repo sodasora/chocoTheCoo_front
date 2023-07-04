@@ -787,12 +787,19 @@ export async function getStatusView(status_id) {
 
 // 판매자 정보 조회
 export async function getSellerPermissionAPIView(user_id) {
-	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/permissions/${user_id}/`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
-		method: "GET",
-	});
+	let response = ""
+	if (access_token == null) {
+		response = await fetch(`${BACK_BASE_URL}/api/users/seller/permissions/${user_id}/`, {
+			method: "GET",
+		});
+	} else {
+		response = await fetch(`${BACK_BASE_URL}/api/users/seller/permissions/${user_id}/`, {
+			headers: {
+				"Authorization": `Bearer ${access_token}`,
+			},
+			method: "GET",
+		});
+	}
 	return response.json();
 }
 
@@ -1682,7 +1689,7 @@ export async function naverLoginAPI() {
 }
 
 export async function searchWhatAPI(url) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/?${url}`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${url}`, {
 		method: "GET",
 	});
 	return response.json();
