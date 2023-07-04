@@ -86,21 +86,27 @@ function socketSwap(roomId) {
         nowPage = 1
     }
 
+    let backurl = BACK_BASE_URL.substring(7,)
+
     if (roomId != null) {
-        // 배포
+        // 도커 환경
         // chatSocket = new WebSocket(
-        //     'ws://backend.chocothecoo.com/chat/' + roomId + '/?token=' + access_token
+        //     'ws://127.0.0.1/ws/chat/' + roomId + '/?id=' + payload.user_id
         // );
 
         // 도커 환경
-        // chatSocket = new WebSocket(
-        //     'ws://127.0.0.1/chat/' + roomId + '/?token=' + access_token
-        // );
+        chatSocket = new WebSocket(
+            'ws://' + backurl + '/ws/chat/' + roomId + '/?id=' + payload.user_id
+        );
 
         // 로컬
-        chatSocket = new WebSocket(
-            'ws://127.0.0.1:8000/ws/chat/' + roomId + '/?token=' + access_token
-        );
+        // chatSocket = new WebSocket(
+        //     'ws://127.0.0.1:8000/ws/chat/' + roomId + '/?id=' + payload.user_id
+        // );
+
+        // chatSocket = new WebSocket(
+        //     'ws://' + backurl + '/ws/chat/' + roomId + '/?id=' + payload.user_id
+        // );
 
         // console.log(chatSocket)
 
