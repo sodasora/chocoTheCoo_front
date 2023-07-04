@@ -2,7 +2,6 @@ export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
-// // export const REDIRECT_URI = FRONT_BASE_URL
 
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
@@ -579,11 +578,8 @@ export async function getProductListAPIView() {
 
 // 특정 판매자의 상품 정보 전체 불러오기
 // # 특정 판매자의 상품 전체 조회
-export async function getSellerProductListAPIView(user_id) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/?user_id=${user_id}`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
+export async function getSellerProductListAPIView(seller_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/?user_id=${seller_id}`, {
 		method: "GET",
 	});
 	return response.json();
@@ -791,12 +787,19 @@ export async function getStatusView(status_id) {
 
 // 판매자 정보 조회
 export async function getSellerPermissionAPIView(user_id) {
-	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/permissions/${user_id}/`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
-		method: "GET",
-	});
+	let response = ""
+	if (access_token == null) {
+		response = await fetch(`${BACK_BASE_URL}/api/users/seller/permissions/${user_id}/`, {
+			method: "GET",
+		});
+	} else {
+		response = await fetch(`${BACK_BASE_URL}/api/users/seller/permissions/${user_id}/`, {
+			headers: {
+				"Authorization": `Bearer ${access_token}`,
+			},
+			method: "GET",
+		});
+	}
 	return response.json();
 }
 
@@ -1007,7 +1010,7 @@ export async function getChatLogAPI(id) {
 	return response.json()
 }
 
-// 채팅방 삭제하기
+// 채팅방 정보 불러오기
 export async function getChatroominfo(room_id) {
 	const response = await fetch(`${BACK_BASE_URL}/chat/room/${room_id}/`, {
 		headers: {
@@ -1333,10 +1336,10 @@ export async function viewProductslist(product) {
 			const newCardText = document.createElement("p");
 			newCardText.setAttribute("class", "card-text");
 			// newCardText.innerText = "상품가격 : " + e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' });
-			newCardText.innerText = "상품가격 : " + 
-  			(e.price
-    		? e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
-    		: "데이터 없음");
+			newCardText.innerText = "상품가격 : " +
+				(e.price
+					? e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
+					: "데이터 없음");
 			newCarddesc.appendChild(newCardText)
 
 			const newCardFooter = document.createElement("p");
@@ -1346,6 +1349,17 @@ export async function viewProductslist(product) {
 			newCard.appendChild(newCarddesc)
 			newCol.appendChild(newCard);
 			list.appendChild(newCol);
+
+			// 품절(2)일 경우 표시변경
+			if (e.item_state == 2) {
+				// 갯수 품절표시
+				newCardFooter.innerText = '품절'
+				// 이미지 soldout 표시
+				const soldoutImage = document.createElement("img");
+				soldoutImage.setAttribute("src", "/static/images/soldout.png");
+				soldoutImage.style = "position:absolute; top:0; left:0; width:100%; opacity:0.8;";
+				newImageCard.appendChild(soldoutImage)
+			}
 		})
 	} else {
 		list.innerText = "상품 정보가 없습니다."
@@ -1676,9 +1690,6 @@ export async function naverLoginAPI() {
 
 export async function searchWhatAPI(url) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${url}`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
 		method: "GET",
 	});
 	return response.json();

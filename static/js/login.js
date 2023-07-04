@@ -98,7 +98,6 @@ export async function setUserInformation() {
     } else {
         const response = await setUserInformationAPI()
         const response_json = await response.json()
-        console.log(response_json)
         if (response.status == 200) {
             window.location.reload()
         } else if (response.status == 404) {

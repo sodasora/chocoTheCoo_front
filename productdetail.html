@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="static/css/footer.css">
     <link rel="stylesheet" href="static/css/productdetail.css">
 
+    <!-- chart JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 <header></header>
 
@@ -44,7 +46,9 @@
                 </div>
                 <div class="text-box-items text-box-fourth">
                     <div class="contentBox" id="product-content">상품 내용</div>
-                    <div class="centered cart-box">
+                    <div class="contentBox" id="product-soldout-content" style="display: none;">상품이 품절되었습니다. 입고를 기다려주세요.
+                    </div>
+                    <div class="centered cart-box" id="cart-box">
                         <div class="help-box">
                             <img class="help-btn" src="/static/images/helpbtn.png" data-bs-toggle="tooltip"
                                 data-bs-placement="top" title="장바구니 결제 후, 마이페이지 구매내역에서 리뷰쓰기가 가능합니다.">
@@ -71,16 +75,28 @@
 
         </div>
 
+        <div id="productInformation" class="option-container">
+            <div class="chart-button-box">
+                <div class="chart-button" id="deliveryEvaluation">
+                    배송 만족도
+                </div>
+                <div class="chart-button chart-button-center" id="serviceEvaluation">
+                    서비스 만족도
+                </div>
+                <div class="chart-button" id="feedbackEvaluation">
+                    재구매 의사
+                </div>
+            </div>
+            <div class="chart-container">
+                <div class="chart-box">
+                    <!--차트가 그려질 부분-->
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
 
-
-        <div id="review-List" class="option-container">
-            <!--댓글 불러오는 공간-->
-
-        </div>
-
-        <div id="productInformation" class="option-container" style="display: none;">
             <div class="productContentBox">
                 <div class="product-content">
+
                     <span id="productContent">
 
                     </span>
@@ -89,11 +105,16 @@
 
         </div>
 
+        <div id="review-List" class="option-container" style="display: none;">
+            <!--리뷰 정보 불러오기 -->
+
+        </div>
+
         <div id="modal" style="display: none;">
             <div id="modal-close-button"></div>
         </div>
 
-        <div id="sellerInformationContainer" class="option-container">
+        <div id="sellerInformationContainer" class="option-container" style="display: none;">
             <div class="seller-top-box">
                 <div class="seller-logo-image" id="seller-company_img">
 
@@ -104,7 +125,7 @@
                 <div id="seller-follow-button">
                     Follow
                 </div>
-                <p id="followerCount">follower : 10</p>
+                <p id="followerCount">follower : </p>
                 <p id="seller-company_name"></p>
                 <p id="seller-business_owner_name"></p>
                 <p id="seller-contact_number"></p>

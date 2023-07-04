@@ -4,6 +4,7 @@ import { BACK_BASE_URL, FRONT_BASE_URL, getCartList, deleteCartItem, changeCartI
 
 async function renderCartList() {
     const cartItems = await getCartList();
+    console.log(cartItems)
     const cartBox = document.querySelector('#cartList');
     cartItems.forEach(e => {
         const cartItemDiv = document.createElement('div');
