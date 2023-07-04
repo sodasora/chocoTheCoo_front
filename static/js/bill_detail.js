@@ -22,23 +22,23 @@ async function renderBillDetails() {
     const deli = document.getElementById("deliveryInfo")
 
     const recipient = document.querySelector(".recipient")
-    recipient.innerHTML = bill.recipient
+    recipient.innerText = bill.recipient
 
     // const phone = document.querySelector(".phone-num")
     // phone.innerHTML = bill.phone
 
     const address1 = document.querySelector(".address1")
-    address1.innerHTML = bill.address
+    address1.innerText = bill.address
 
     const address2 = document.querySelector(".address2")
-    address2.innerHTML = bill.detail_address
+    address2.innerText = bill.detail_address
 
     const billStatus = document.querySelector(".deli-status")
-    billStatus.innerHTML = bill.bill_order_status
+    billStatus.innerText = bill.bill_order_status
 
     const billDate = document.querySelector(".deli-date")
     const billCreated = bill.created_at.split('T')[0]
-    billDate.innerHTML = billCreated
+    billDate.innerText = billCreated
 
     renderBillOrders(bill);
 }
