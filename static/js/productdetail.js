@@ -785,9 +785,27 @@ export async function setEventListener() {
     document.getElementById("edit-btn").addEventListener("click", goEditProduct)
     document.getElementById("addToLike").addEventListener("click", addToLike)
     document.getElementById("addToCart").addEventListener("click", addToCart)
-    document.getElementById("reviewView").addEventListener("click", reviewView)
-    document.getElementById("detailView").addEventListener("click", productInformationView)
-    document.getElementById("sellerpage").addEventListener("click", sellerpageView)
+    const reviewViewBtn = document.getElementById("reviewView");
+    reviewViewBtn.addEventListener("click", function (e) {
+        reviewViewBtn.classList.add("is-current");
+        detailViewBtn.classList.remove("is-current");
+        sellerpageBtn.classList.remove("is-current");
+        reviewView();
+    })
+    const detailViewBtn = document.getElementById("detailView");
+    detailViewBtn.addEventListener("click", function (e) {
+        detailViewBtn.classList.add("is-current")
+        reviewViewBtn.classList.remove("is-current");
+        sellerpageBtn.classList.remove("is-current");
+        productInformationView();
+    })
+    const sellerpageBtn = document.getElementById("sellerpage");
+    sellerpageBtn.addEventListener("click", function (e) {
+        sellerpageBtn.classList.add("is-current")
+        reviewViewBtn.classList.remove("is-current");
+        detailViewBtn.classList.remove("is-current");
+        sellerpageView();
+    })
     document.getElementById("modal-close-button").addEventListener("click", closeModal)
 }
 
