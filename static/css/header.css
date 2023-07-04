@@ -95,7 +95,7 @@ header {
     bottom: -2px;
     width: 20%;
     height: 2px;
-    background: #522F18;
+    background: transparent;
     transition: all .3s ease-in-out;
 }
 
@@ -116,42 +116,52 @@ header {
 
 .nav-header a:nth-child(1).is-current~.nav-underline {
     left: 0;
+    background: #522F18;
 }
 
 .nav-header a:nth-child(2).is-current~.nav-underline {
     left: 20%;
+    background: #522F18;
 }
 
 .nav-header a:nth-child(3).is-current~.nav-underline {
     left: 40%;
+    background: #522F18;
 }
 
 .nav-header a:nth-child(4).is-current~.nav-underline {
     left: 60%;
+    background: #522F18;
 }
 
 .nav-header a:nth-child(5).is-current~.nav-underline {
     left: 80%;
+    background: #522F18;
 }
 
 .nav-header a:nth-child(1):hover~.nav-underline {
     left: 0;
+    background: #522F18;
 }
 
 .nav-header a:nth-child(2):hover~.nav-underline {
     left: 20%;
+    background: #522F18;
 }
 
 .nav-header a:nth-child(3):hover~.nav-underline {
     left: 40%;
+    background: #522F18;
 }
 
 .nav-header a:nth-child(4):hover~.nav-underline {
     left: 60%;
+    background: #522F18;
 }
 
 .nav-header a:nth-child(5):hover~.nav-underline {
     left: 80%;
+    background: #522F18;
 }
 
 .back-to-top.show {

@@ -223,11 +223,11 @@ window.onload = async function () {
 
     choco.addEventListener("click", function () {
         window.location.href = "subscriptioninfo.html";
-    
-        })
+
+    })
 
     const product = await searchWhatAPI(url);
-    
+
     if ((product.next == null) & (product.previous == null)) {
         viewProductslist(product);
     } else {
