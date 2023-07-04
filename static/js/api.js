@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5501"
+export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
@@ -1329,10 +1329,10 @@ export async function viewProductslist(product) {
 			const newCardText = document.createElement("p");
 			newCardText.setAttribute("class", "card-text");
 			// newCardText.innerText = "상품가격 : " + e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' });
-			newCardText.innerText = "상품가격 : " + 
-  			(e.price
-    		? e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
-    		: "데이터 없음");
+			newCardText.innerText = "상품가격 : " +
+				(e.price
+					? e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
+					: "데이터 없음");
 			newCarddesc.appendChild(newCardText)
 
 			const newCardFooter = document.createElement("p");
@@ -1344,7 +1344,7 @@ export async function viewProductslist(product) {
 			list.appendChild(newCol);
 
 			// 품절(2)일 경우 표시변경
-			if (e.item_state == 2){ 
+			if (e.item_state == 2) {
 				// 갯수 품절표시
 				newCardFooter.innerText = '품절'
 				// 이미지 soldout 표시
