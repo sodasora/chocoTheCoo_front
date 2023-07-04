@@ -62,12 +62,20 @@ export async function setSellerInformation(information) {
 
 }
 
+let myChart;
 
 export async function getChart(information, evaluation) {
+
     var context = document
         .getElementById('myChart')
         .getContext('2d');
-    var myChart = new Chart(context, {
+
+    if (myChart) {
+        // 이전 차트의 데이터 값이 남아있으면 삭제
+        myChart.destroy();
+    }
+
+    myChart = new Chart(context, {
         type: 'pie', // 차트의 형태
         data: { // 차트에 들어갈 데이터
             labels: [
@@ -83,9 +91,9 @@ export async function getChart(information, evaluation) {
                     ],
                     backgroundColor: [
                         //색상
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(255, 99, 132)',
+                        'rgba(54, 162, 235)',
+                        'rgba(255, 206, 86)',
                     ],
                     borderColor: [
                         //경계선 색상
@@ -98,14 +106,21 @@ export async function getChart(information, evaluation) {
             ]
         },
         options: {
+            aspectRatio: 2,
+            cutoutPercentage: 2,
             scales: {
                 yAxes: [
                     {
                         ticks: {
-                            beginAtZero: true
-                        }
+                            beginAtZero: true,
+                            display: false,
+                        },
+                        gridLines: {
+                            display: false,
+                            drawBorder: false,
+                        },
                     }
-                ]
+                ],
             }
         }
     });
