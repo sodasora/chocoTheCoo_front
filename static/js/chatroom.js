@@ -86,20 +86,12 @@ function socketSwap(roomId) {
         nowPage = 1
     }
 
+    let backurl = BACK_BASE_URL.substring(7,)
+
     if (roomId != null) {
-        // 배포
-        // chatSocket = new WebSocket(
-        //     'ws://backend.chocothecoo.com/chat/' + roomId + '/?token=' + access_token
-        // );
 
-        // 도커 환경
-        // chatSocket = new WebSocket(
-        //     'ws://127.0.0.1/chat/' + roomId + '/?token=' + access_token
-        // );
-
-        // 로컬
         chatSocket = new WebSocket(
-            'ws://127.0.0.1:8000/ws/chat/' + roomId + '/?token=' + access_token
+            'ws://' + backurl + '/ws/chat/' + roomId + '/?id=' + payload.user_id
         );
 
         // console.log(chatSocket)
@@ -196,12 +188,12 @@ function socketSwap(roomId) {
         let chatMessageInput = document.querySelector("#chatMessageInput");
 
         // 엔터키(keyCode 13)를 누르면 전송 버튼(chatMessageSend)을 클릭
-        // chatMessageInput.focus();
-        // chatMessageInput.onkeyup = function (e) {
-        //     if (e.keyCode === 13) {  // enter, return
-        //         chatMessageSend.click();
-        //     }
-        // };
+        chatMessageInput.focus();
+        chatMessageInput.onkeyup = function (e) {
+            if (e.keyCode === 13) {  // enter, return
+                chatMessageSend.click();
+            }
+        };
 
         chatMessageSend.onclick = function (e) {
             const messageInputDom = chatMessageInput;
