@@ -1,28 +1,40 @@
 @font-face {
-    font-family: '국립박물관문화재단클래식B';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/국립박물관문화재단클래식B.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
     font-family: 'S-CoreDream-3Light';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
 
 body {
     background-color: #C4A492;
 }
 
 .container {
-    width: 70%;
+    width: 80%;
+}
+
+.row {
+    justify-content: center;
+    font-family: 'S-CoreDream-3Light';
+}
+
+.card-header {
+    font-family: 'TheJamsil5Bold';
 }
 
 .card {
     margin-top: 30px;
+}
+
+#ImageFile {
+    margin-bottom: 10px;
 }
 
 .chat-message>div {
@@ -65,5 +77,6 @@ body {
 
 .profile_image {
     width: 6rem;
-    border-radius: 50px;
+    margin-top: 10px;
+    border-radius: 10px;
 }
