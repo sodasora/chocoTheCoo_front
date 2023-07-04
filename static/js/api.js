@@ -1682,10 +1682,7 @@ export async function naverLoginAPI() {
 }
 
 export async function searchWhatAPI(url) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/${url}`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
+	const response = await fetch(`${BACK_BASE_URL}/api/products/?${url}`, {
 		method: "GET",
 	});
 	return response.json();
