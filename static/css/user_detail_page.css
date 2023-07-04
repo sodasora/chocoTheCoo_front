@@ -285,6 +285,7 @@ input {
 }
 
 #profileView {
+    object-fit: cover;
     background-color: #522F18;
     margin-top: 10%;
     height: 25rem;
