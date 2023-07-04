@@ -1689,7 +1689,7 @@ export async function naverLoginAPI() {
 }
 
 export async function searchWhatAPI(url) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/?${url}`, {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/${url}`, {
 		method: "GET",
 	});
 	return response.json();
