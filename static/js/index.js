@@ -1,4 +1,4 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, searchProductAPI, sameCategoryProductView, getProductslist, viewProductslist, getCategoryView, getProductListAPIView, searchWhatAPI } from './api.js'
+import { BACK_BASE_URL, FRONT_BASE_URL, getProductslist, viewProductslist, getCategoryView, getProductListAPIView, searchWhatAPI } from './api.js'
 
 
 export async function goSearch(url) {
@@ -14,7 +14,7 @@ export async function categoryview() {
     categories.forEach(category => {
         const categoryItem = document.createElement("a");
         categoryItem.setAttribute("id", `${category.id}`);
-        categoryItem.setAttribute("href", `index.html?category_id=${category.id}`);
+        categoryItem.setAttribute("href", `index.html?category=${category.id}`);
         categoryItem.innerText = `🍫${category.name}\n`
         categoryBox.appendChild(categoryItem);
         categorySelect.appendChild(categoryBox);
@@ -31,7 +31,7 @@ export async function categoryview_mobile() {
     categories.forEach(category => {
         const categoryItem = document.createElement("a");
         categoryItem.setAttribute("id", `${category.id}`);
-        categoryItem.setAttribute("href", `index.html?category_id=${category.id}`);
+        categoryItem.setAttribute("href", `index.html?category=${category.id}`);
         categoryItem.innerText = `🍫${category.name}\n`
         categoryBox.appendChild(categoryItem);
         categorySelect.appendChild(categoryBox);
@@ -44,72 +44,58 @@ export async function keywordSeachView_mobile() {
     goSearch(keyword)
 }
 
-export async function showSameCategory() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const categoryId = urlParams.get('category_id');
-    console.log(categoryId);
-    const response = await sameCategoryProductView(categoryId);
-
-    const product = response.results;
-    if ((product.next == null) & (product.previous == null)) {
-        viewProductslist(response)
-    } else {
-        getProductslist(response)
-    }
-
-} 
 // 카테고리, 키워드검색, 정렬 goSearch로 보내기 
 export async function searchAnythingAPI() {
     const urlParams = new URLSearchParams(window.location.search);
-    const categoryId = urlParams.get("category_id");
+    const categoryId = urlParams.get("category");
     const ordering = urlParams.get("ordering");
 
     const answer = document.getElementById("search-keyword");
     const keyword = answer.value;
-    
+
     let url = "";
-  
+
     // 카테고리 검색 카테고리 ID가 url에 있을때
     if (categoryId) {
-      url += `category=${categoryId}`;
+        url += `category=${categoryId}`;
     }
-  
+
     // 검색창 입력어로 검색 : 키워드가 url에 있을때
     if (keyword) {
-      url += (url.length > 0 ? '&' : '') + `search=${keyword}`;
+        url += (url.length > 0 ? '&' : '') + `search=${keyword}`;
     }
-  
+
     if (ordering) {
-      url += (url.length > 0 ? '&' : '') + `ordering=${ordering}`;
+        url += (url.length > 0 ? '&' : '') + `ordering=${ordering}`;
     }
-  
+
     goSearch(url);
-  }
+}
 // 카테고리, 키워드검색, 정렬 모바일버전 
 export async function searchAnythingAPI_mobile() {
     const urlParams = new URLSearchParams(window.location.search);
-    const categoryId = urlParams.get("category_id");
+    const categoryId = urlParams.get("category");
     const ordering = urlParams.get("ordering");
 
     const answer = document.getElementById("search-keyword-mobile");
     const keyword = answer.value;
-    
+
     let url = "";
-  
+
     // 카테고리 검색 카테고리 ID가 url에 있을때
     if (categoryId) {
-      url += `category=${categoryId}`;
+        url += `category=${categoryId}`;
     }
-  
+
     // 검색창 입력어로 검색 : 키워드가 url에 있을때
     if (keyword) {
-      url += (url.length > 0 ? '&' : '') + `search=${keyword}`;
+        url += (url.length > 0 ? '&' : '') + `search=${keyword}`;
     }
-  
+
     if (ordering) {
-      url += (url.length > 0 ? '&' : '') + `ordering=${ordering}`;
+        url += (url.length > 0 ? '&' : '') + `ordering=${ordering}`;
     }
-  
+
     goSearch(url);
 }
 // 카테고리, 키워드검색, 정렬 상품들 보여주기(알잘딱깔센으로..!) 
@@ -122,27 +108,18 @@ export async function showSearchAnythingProduct() {
     // 카테고리 검색 카테고리 ID가 url에 있을때
     if (categoryId) {
         url += `category=${categoryId}`;
-      }
-    
-      // 검색창 입력어로 검색 : 키워드가 url에 있을때
-      if (keyword) {
-        url += (url.length > 0 ? '&' : '') + `search=${keyword}`;
-      }
-    
-      if (ordering) {
-        url += (url.length > 0 ? '&' : '') + `ordering=${ordering}`;
-      }
-    
-    const products = await searchWhatAPI(url);
-    console.log(products);
-    const product = products.results;
-
-    console.log(product)
-    if ((product.next == null) & (product.previous == null)) {
-        viewProductslist(products)
-    } else {
-        getProductslist(products)
     }
+
+    // 검색창 입력어로 검색 : 키워드가 url에 있을때
+    if (keyword) {
+        url += (url.length > 0 ? '&' : '') + `search=${keyword}`;
+    }
+
+    if (ordering) {
+        url += (url.length > 0 ? '&' : '') + `ordering=${ordering}`;
+    }
+    return url;
+
 }
 
 
@@ -184,7 +161,6 @@ export async function setEventListener() {
     document.getElementById("go-bill").addEventListener("click", function () {
         window.location.href = "bill.html";
     });
-
     // 판매자 체크리스트
     // 체크리스트 판매자 권한 신청
     document.getElementById("go-seller").addEventListener("click", function () {
@@ -230,9 +206,7 @@ export async function setEventListener() {
     document.getElementById("go-edituser").addEventListener("click", function () {
         window.location.href = "user_detail_page.html"
     });
-
 }
-
 
 export async function setEventListener_mobile() {
     document.getElementById("search-btn-mobile").addEventListener("click", keywordSeachView_mobile);
@@ -243,21 +217,18 @@ window.onload = async function () {
     setEventListener()
     categoryview_mobile()
     setEventListener_mobile()
-    const product = await getProductListAPIView();
+    // const product = await getProductListAPIView();
     const choco = document.getElementById("chocobanner")
+    const url = await showSearchAnythingProduct();
+
     choco.addEventListener("click", function () {
         window.location.href = "subscriptioninfo.html";
-    })
+    
+        })
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const categoryId = urlParams.get('category_id');
-    const search = urlParams.get('search');
-    const ordering = urlParams.get('ordering');
-    if (categoryId) {
-        showSameCategory()
-    } else if(categoryId || search || ordering){
-        showSearchAnythingProduct()
-    } else if ((product.next == null) & (product.previous == null)) {
+    const product = await searchWhatAPI(url);
+    
+    if ((product.next == null) & (product.previous == null)) {
         viewProductslist(product);
     } else {
         getProductslist(product);

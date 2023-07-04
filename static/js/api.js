@@ -1111,7 +1111,7 @@ async function productDetail(product_id) {
 	window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
 }
 
-//페이지네이션 : 리스트 가져오기
+//페이지네이션 : 리스트 가져오기 페이지 네이션 할때 
 export async function getProductslist(product) {
 	// console.log(product)
 	let pageSize = 9;
@@ -1271,10 +1271,10 @@ export async function getProductslist(product) {
 	}
 }
 
-// 페이지네이션: 상품정보가져오기
+// 페이지네이션: 상품정보가져오기 페이지 네이션 안들어갈때
 export async function viewProductslist(product) {
 	const list = document.getElementById("product-content");
-
+	console.log(product)
 	if (product.results != "") {
 		//초기화
 		while (list.hasChildNodes()) {
@@ -1413,6 +1413,7 @@ async function pageMove(move) {
 	// 페이지 박스 번호 갱신하기
 	let paginate = document.getElementById('product-buttons')
 	if (product.previous == null) {
+		console.log(product)
 		const next = modifiedUrl + product.next.split("api")[1]
 		console.log(next)
 
@@ -1551,15 +1552,6 @@ export async function getCategoryView() {
 	return response.json();
 }
 
-
-// 동일 카테고리 상품 조회
-export async function sameCategoryProductView(category_id) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/?category=${category_id}`, {
-		method: "GET",
-	});
-	return response.json();
-}
-
 // 장바구니 담기
 export async function addToCartAPI(product, amount) {
 	const response = await fetch(`${BACK_BASE_URL}/api/users/carts/`, {
@@ -1688,8 +1680,14 @@ export async function naverLoginAPI() {
 	window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naver_id}&redirect_uri=${redirect_uri}&state=${state}`;
 }
 
-export async function searchWhatAPI(url) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/${url}`, {
+export async function searchWhatAPI(url=null) {
+	let apiUrl = ""
+	if (url !== null){
+		apiUrl = `${BACK_BASE_URL}/api/products/?${url}`
+	} else {
+		apiUrl = `${BACK_BASE_URL}/api/products/`
+	}
+	const response = await fetch(apiUrl, {
 		method: "GET",
 	});
 	return response.json();
