@@ -27,16 +27,16 @@ body {
     border-radius: 10px;
     border: none;
     font-family: 'S-CoreDream-3Light';
-    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);   
 }
 
-#sub-button {
+.sub-button {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     min-width: 10em !important;
-    width: 80%;
+    width: 25vw;
     margin: 1em 0;
 }
 
@@ -104,6 +104,8 @@ body {
 
 .profile {
     width: 23vw;
+    height: 23vw;
+    object-fit: cover;
 }
 
 .subscription-card {
