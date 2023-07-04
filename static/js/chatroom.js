@@ -188,12 +188,12 @@ function socketSwap(roomId) {
         let chatMessageInput = document.querySelector("#chatMessageInput");
 
         // 엔터키(keyCode 13)를 누르면 전송 버튼(chatMessageSend)을 클릭
-        // chatMessageInput.focus();
-        // chatMessageInput.onkeyup = function (e) {
-        //     if (e.keyCode === 13) {  // enter, return
-        //         chatMessageSend.click();
-        //     }
-        // };
+        chatMessageInput.focus();
+        chatMessageInput.onkeyup = function (e) {
+            if (e.keyCode === 13) {  // enter, return
+                chatMessageSend.click();
+            }
+        };
 
         chatMessageSend.onclick = function (e) {
             const messageInputDom = chatMessageInput;
