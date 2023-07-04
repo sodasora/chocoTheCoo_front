@@ -23,24 +23,46 @@
         <div class="image-box"></div>
     </div>
     <div class="section2">
-        
+
         <form>
             <fieldset class="postField container" name="postField" id="postField2">
                 <div class="title-box">
                     <input type="text" class="form-control" id="review-title" placeholder="제목">
                 </div>
+                <label>상품 별점 주기</label>
                 <select class="form-select" id="give-star" aria-label="Default select example">
-                    <option selected>상품 별점 주기</option>
-                    <option value="1">⭐</option>
-                    <option value="2">⭐⭐</option>
-                    <option value="3">⭐⭐⭐</option>
-                    <option value="4">⭐⭐⭐⭐</option>
                     <option value="5">⭐⭐⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="1">⭐</option>
+                </select>
+                <label>배송 평가</label>
+                <select class="form-select" id="delivery_evaluation" aria-label="Default select example">
+                    <option value="good">빨라요😁</option>
+                    <option value="normal">보통이에요😐</option>
+                    <option value="bad">느려요😥</option>
+                </select>
+                <label>서비스 평가</label>
+                <select class="form-select" id="service_evaluation" aria-label="Default select example">
+                    <option value="good">친절해요😁</option>
+                    <option value="normal">보통이에요😐</option>
+                    <option value="bad">불친절해요😥</option>
+                </select>
+                <label>재구매 의사</label>
+                <select class="form-select" id="feedback_evaluation" aria-label="Default select example">
+                    <option value="good">재구매 의사 있어요😁</option>
+                    <option value="normal">좀 더 생각해 봐야 될 것 같아요😐</option>
+                    <option value="bad">재구매 의사 없어요😥</option>
                 </select>
                 <div class="mb-3 file-box">
                     <input class="form-control" type="file" id="formFile">
-                    <img id="preView"></img>
+
                 </div>
+                <div class="input-group" id="preViewItem" style="display: none;">
+                    <img id="preView">
+                </div>
+
                 <div class="input-group" id="reviewBox">
                     <span class="input-group-text">내용</span>
                     <textarea class="form-control" aria-label="With textarea" id="review-content"></textarea>
