@@ -94,6 +94,24 @@ input {
   height: auto;
 }
 
+#orderingBox {
+  font-family: 'S-CoreDream-3Light';
+  font-size: 0.45em;
+  font-weight: 100 !important;
+  margin-top: 1em;
+  border: none;
+  border-radius: 0.25em;
+  width: 35%;
+  background-color: #C4A492;
+  color: rgba(255, 255, 255, 0.861);
+  margin-left: 20px;
+}
+
+#orderingBox>div {
+  font-weight: 100 !important;
+  cursor: pointer;
+}
+
 .section {
   background-color: #C4A492;
   height: auto;
@@ -101,7 +119,7 @@ input {
 }
 
 #product-content {
-  margin-top: 10px;
+  /* margin-top: 10px; */
   padding: 20px;
   text-align: center;
 }

@@ -56,6 +56,13 @@
                         <input type="text" id="search-keyword" placeholder="검색어 입력">
                         <button type="button" class="btn btn-light" id="search-btn">🔍</button>
                     </div>
+                    <select id="orderingBox" class="ordering-box">
+                        <option id="orderingRecent" class="ordering-items">최신순</option>
+                        <option id="orderingSale" class="ordering-items">판매량순</option>
+                        <option id="orderingLike" class="ordering-items">좋아요순</option>
+                        <option id="orderingCheap" class="ordering-items">낮은 가격순</option>
+                        <option id="orderingExpensive" class="ordering-items">높은 가격순</option>
+                    </select>
                     <div class="menu" id="categorymenu">
                         <p>category</p>
                     </div>
@@ -173,7 +180,7 @@
                                         <img src="static/images/go.png">
                                         회원정보 수정
                                     </label><br>
-                                
+
                                 </div>
                             </div>
                         </div>
