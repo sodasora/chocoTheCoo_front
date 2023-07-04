@@ -67,7 +67,7 @@ export async function registProduct() {
 export function readURL(input) {
     // 사용자가 등록한 프로필 이미지 미리보기 기능 제공
     if (input.files && input.files[0]) {
-        var reader = new FileReader();
+        const reader = new FileReader();
         reader.onload = function (e) {
             document.getElementById('profileView').src = e.target.result;
         };

@@ -192,8 +192,8 @@ export async function setEventListener() {
     document.getElementById("loginButton").addEventListener("click", handleLogin)
     document.getElementById("submitButton").addEventListener("click", setUserInformation)
     document.getElementById("verificationButton").addEventListener("click", getVerificationCode)
-    var elements = document.getElementsByClassName("change-action");
-    for (var i = 0; i < elements.length; i++) {
+    const elements = document.getElementsByClassName("change-action");
+    for (let i = 0; i < elements.length; i++) {
         elements[i].addEventListener("click", handleEvent);
     }
     document.getElementById("password").addEventListener("keydown", (event) => {
