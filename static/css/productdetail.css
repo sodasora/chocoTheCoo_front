@@ -109,9 +109,18 @@ body {
     width: 100%;
 }
 
+/* 상품 이미지 */
 #imagePut {
     width: 100%;
     object-fit: cover;
+}
+
+/* 품절상태 이미지 */
+.soldout{
+    position: absolute;
+    width:40%;
+    min-width: 390px;
+    opacity: 0.8;
 }
 
 

@@ -548,7 +548,7 @@ export async function getCartList() {
 
 
 // 상품 등록하기
-export async function registProductAPIView(formdata) {
+export async function registProductAPIView(formdata, seller) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/`, {
 		method: 'POST',
 		headers: {
@@ -558,7 +558,7 @@ export async function registProductAPIView(formdata) {
 	});
 	if (response.status === 201) {
 		alert('상품등록 완료!')
-		window.location.replace(`${FRONT_BASE_URL}/sellerpage.html`)
+		window.location.replace(`${FRONT_BASE_URL}/sellerpage.html?seller=${seller}`)
 	} else {
 		alert('카테고리가 입력되지 않아 상품 등록에 실패했습니다.');
 	}
@@ -578,11 +578,8 @@ export async function getProductListAPIView() {
 
 // 특정 판매자의 상품 정보 전체 불러오기
 // # 특정 판매자의 상품 전체 조회
-export async function getSellerProductListAPIView(user_id) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/?user_id=${user_id}`, {
-		headers: {
-			"Authorization": `Bearer ${access_token}`,
-		},
+export async function getSellerProductListAPIView(seller_id) {
+	const response = await fetch(`${BACK_BASE_URL}/api/products/?user_id=${seller_id}`, {
 		method: "GET",
 	});
 	return response.json();
@@ -824,6 +821,8 @@ export async function makeBills(delivery_id = null, delivery_data = null) {
 	let data;
 	if (delivery_data) {
 		data = JSON.stringify({
+			new_delivery: delivery_data.new_delivery,
+			save_delivery: delivery_data.save_delivery,
 			recipient: delivery_data.recipient,
 			postal_code: delivery_data.postcode,
 			address: delivery_data.address,
@@ -859,20 +858,22 @@ export async function makeOrders(queryString, bill_id) {
 		},
 		method: 'POST'
 	})
+	const response_json = await response.json()
+
 	if (response.status == 201) {
 		deleteCartItemAll(queryString, bill_id);
-	}
-	else if (response.status == 404) {
-		alert("잘못된 상품 정보입니다.")
+	} else if (response_json.err == "no_cart") {
+		alert("장바구니 정보를 다시 확인해주세요")
 		window.history.back();
-	}
-	else if (response.status == 400) {
-		alert("잘못된 URL입니다. 장바구니부터 다시 시도해주세요.")
+	} else if (response_json.err == "incorrect_product") {
+		alert("상품 정보가 부정확합니다")
 		window.history.back();
-	}
-	else if (response.status == 403) {
-		alert("포인트가 부족합니다!")
-		window.location.href = "/pointcharge.html"
+	} else if (response_json.err == "insufficient_balance") {
+		alert("결제를 위한 포인트가 부족합니다")
+		window.history.back();
+	} else if (response_json.err == "out_of_stock") {
+		alert("구매하려는 수량이 상품의 재고보다 많습니다")
+		window.history.back();
 	}
 }
 
@@ -1002,7 +1003,7 @@ export async function getChatLogAPI(id) {
 	return response.json()
 }
 
-// 채팅방 삭제하기
+// 채팅방 정보 불러오기
 export async function getChatroominfo(room_id) {
 	const response = await fetch(`${BACK_BASE_URL}/chat/room/${room_id}/`, {
 		headers: {
@@ -1049,7 +1050,6 @@ export async function getBillList() {
 
 	if (response.status == 200) {
 		const response_json = await response.json();
-		// console.log(response_json);
 		return response_json;
 	} else {
 		console.log(response.status);
@@ -1328,7 +1328,11 @@ export async function viewProductslist(product) {
 
 			const newCardText = document.createElement("p");
 			newCardText.setAttribute("class", "card-text");
-			newCardText.innerText = "상품가격 : " + e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
+			// newCardText.innerText = "상품가격 : " + e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' });
+			newCardText.innerText = "상품가격 : " + 
+  			(e.price
+    		? e.price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' })
+    		: "데이터 없음");
 			newCarddesc.appendChild(newCardText)
 
 			const newCardFooter = document.createElement("p");
@@ -1338,6 +1342,17 @@ export async function viewProductslist(product) {
 			newCard.appendChild(newCarddesc)
 			newCol.appendChild(newCard);
 			list.appendChild(newCol);
+
+			// 품절(2)일 경우 표시변경
+			if (e.item_state == 2){ 
+				// 갯수 품절표시
+				newCardFooter.innerText = '품절'
+				// 이미지 soldout 표시
+				const soldoutImage = document.createElement("img");
+				soldoutImage.setAttribute("src", "/static/images/soldout.png");
+				soldoutImage.style = "position:absolute; top:0; left:0; width:100%; opacity:0.8;";
+				newImageCard.appendChild(soldoutImage)
+			}
 		})
 	} else {
 		list.innerText = "상품 정보가 없습니다."

@@ -136,4 +136,36 @@ button {
     .image-box {
         display: none;
     }
+
+    #chatindex {
+        font-family: '국립박물관문화재단클래식B';
+        font-size: 4vw;
+        font-weight: bold;
+        margin-top: 15px;
+        color: white;
+        margin-right: 20vw;
+    }
+
+    .help-text {
+        position: absolute;
+        object-fit: cover;
+        width: 20px;
+        right: 150px;
+        z-index: 1;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    #chatindex {
+        font-family: '국립박물관문화재단클래식B';
+        font-size: 5vw;
+        font-weight: bold;
+        margin-top: 15px;
+        color: white;
+        margin-right: 8vw;
+    }
+
+    .help-text {
+        display: none;
+    }
 }

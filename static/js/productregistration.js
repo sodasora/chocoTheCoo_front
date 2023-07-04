@@ -56,7 +56,7 @@ export async function registProduct() {
     }
 
     try {
-        registProductAPIView(formdata);
+        registProductAPIView(formdata, seller_id);
     } catch (error) {
         console.error(error);
     }

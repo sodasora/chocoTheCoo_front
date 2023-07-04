@@ -6,8 +6,6 @@
 .section2 {
     background-color: #C4A492;
     height: 100%;
-    /* display: flex; */
-    /* justify-content: center; */
     width: 100%;
     padding-bottom: 100px;
 }
@@ -58,14 +56,6 @@
 .container {
     width: 100vw;
 }
-
-/* .card-text {
-    margin-left: 10px;
-}
-
-.card-star {
-    margin-left: 10px;
-} */
 
 .sellerlogo {
     background-color: #C4A492;
@@ -118,7 +108,34 @@ button {
     background-position: center;
     background-repeat: no-repeat
 }
-
+.seller-inform {
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+.profile-image {
+    width: 8em;
+    height: 8em; 
+    border-radius: 70%;
+    overflow: hidden;
+    margin-right: 1em;
+}
+#user-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.bigbox {
+    color:white;
+    margin-top: 4em;
+    display: flex;
+    justify-content: right;
+}
+.box {
+    margin-top: auto;
+    margin-bottom: auto;
+}
 @media screen and (max-width: 768px) {
     .image-box {
         display: none;

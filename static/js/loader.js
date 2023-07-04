@@ -92,6 +92,7 @@ async function injectHeader() {
         const onlyseller = document.getElementById("seller")
 
         logout.style.display = "none"
+        mobileLogout.style.display = "none"
         point.remove()
         cart.remove()
 
