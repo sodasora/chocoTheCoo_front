@@ -1111,7 +1111,7 @@ async function productDetail(product_id) {
 	window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
 }
 
-//페이지네이션 : 리스트 가져오기
+//페이지네이션 : 리스트 가져오기 페이지 네이션 할때 
 export async function getProductslist(product) {
 	// console.log(product)
 	let pageSize = 9;
@@ -1134,7 +1134,11 @@ export async function getProductslist(product) {
 	const originalUrl = "http://backend:8000/api";
 	const modifiedUrl = originalUrl.replace("http://backend:8000/api", "https://backend.chocothecoo.com/api");
 
-	//로컬일 때는 product.next, product.previous
+	// 로컬일 때는 
+	// const next = modifiedUrl + product.next.split("api")[1] 주석하기
+	// const previous = modifiedUrl + product.previous.split("api")[1] 주석하기
+	// pageMove(next) -> pageMove(product.next), pageMove(previous) -> pageMove(product.previous) 변경하면 된다~
+
 
 	if (paginate) {
 		if (product_count <= 9) {
@@ -1271,10 +1275,10 @@ export async function getProductslist(product) {
 	}
 }
 
-// 페이지네이션: 상품정보가져오기
+// 페이지네이션: 상품정보가져오기 페이지 네이션 안들어갈때
 export async function viewProductslist(product) {
 	const list = document.getElementById("product-content");
-
+	console.log(product)
 	if (product.results != "") {
 		//초기화
 		while (list.hasChildNodes()) {
@@ -1370,7 +1374,7 @@ export async function viewProductslist(product) {
 // 페이지 이동 시 함수 response에서 받아온 next url로 현재 페이지 찾기.
 // 이전이나 다음이 각각 첫페이지나 마지막 페이지면 예외 처리.
 async function pageMove(move) {
-	console.log(move);
+	// console.log(move);
 	let pageSize = 9;
 
 	// const url = `${BACK_BASE_URL}/api/products/?page=${move}`
@@ -1408,13 +1412,17 @@ async function pageMove(move) {
 	const originalUrl = "http://backend:8000/api";
 	const modifiedUrl = originalUrl.replace("http://backend:8000/api", "https://backend.chocothecoo.com/api");
 
-	//로컬일 때는 product.next, product.previous
+	// 로컬일 때는 
+	// const next = modifiedUrl + product.next.split("api")[1] 주석하기
+	// const previous = modifiedUrl + product.previous.split("api")[1] 주석하기
+	// pageMove(next) -> pageMove(product.next), pageMove(previous) -> pageMove(product.previous) 변경하면 된다~
 
 	// 페이지 박스 번호 갱신하기
 	let paginate = document.getElementById('product-buttons')
 	if (product.previous == null) {
+		console.log(product)
 		const next = modifiedUrl + product.next.split("api")[1]
-		console.log(next)
+		// console.log(next)
 
 		const li1 = document.createElement('li');
 		li1.className = 'gw-pagebtn';
@@ -1454,7 +1462,7 @@ async function pageMove(move) {
 		// Create elements
 
 		const previous = modifiedUrl + product.previous.split("api")[1]
-		console.log(previous)
+		// console.log(previous)
 
 		const li1 = document.createElement('li');
 		li1.className = 'gw-pagebtn';
@@ -1494,9 +1502,9 @@ async function pageMove(move) {
 		// Create elements
 
 		const previous = modifiedUrl + product.previous.split("api")[1]
-		console.log(previous)
+		// console.log(previous)
 		const next = modifiedUrl + product.next.split("api")[1]
-		console.log(next)
+		// console.log(next)
 
 		const li1 = document.createElement('li');
 		li1.className = 'gw-pagebtn';
@@ -1546,15 +1554,6 @@ async function pageMove(move) {
 // 카테고리 조회 
 export async function getCategoryView() {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/categories/`, {
-		method: "GET",
-	});
-	return response.json();
-}
-
-
-// 동일 카테고리 상품 조회
-export async function sameCategoryProductView(category_id) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/?category=${category_id}`, {
 		method: "GET",
 	});
 	return response.json();
@@ -1688,8 +1687,14 @@ export async function naverLoginAPI() {
 	window.location.href = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naver_id}&redirect_uri=${redirect_uri}&state=${state}`;
 }
 
-export async function searchWhatAPI(url) {
-	const response = await fetch(`${BACK_BASE_URL}/api/products/${url}`, {
+export async function searchWhatAPI(url = null) {
+	let apiUrl = ""
+	if (url !== null) {
+		apiUrl = `${BACK_BASE_URL}/api/products/?${url}`
+	} else {
+		apiUrl = `${BACK_BASE_URL}/api/products/`
+	}
+	const response = await fetch(apiUrl, {
 		method: "GET",
 	});
 	return response.json();
