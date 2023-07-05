@@ -529,7 +529,7 @@ export async function submitChangeEamilInformation() {
 
 async function changeView(ElementID) {
     // 화면 초기화
-    const nav_items = document.querySelectorAll(".chart-button")
+    const nav_items = document.querySelectorAll(".container-nav-item")
     nav_items.forEach((item) => {
         item.style.backgroundColor = "#F8ECE0"
         item.style.color = "black"
@@ -603,7 +603,7 @@ export function readURL(input) {
     else if (input.files && input.files[0]) {
 
 
-        var reader = new FileReader();
+        const reader = new FileReader();
         reader.onload = function (e) {
             document.getElementById('profileView').src = e.target.result;
         };
@@ -622,7 +622,7 @@ export function readSellerURL(input) {
         input.value = ''
     }
     else if (input.files && input.files[0]) {
-        var reader = new FileReader();
+        const reader = new FileReader();
         reader.onload = function (e) {
             document.getElementById('sellerProfileView').src = e.target.result;
         };
@@ -634,7 +634,7 @@ export function readSellerURL(input) {
 
 export async function foldPostcode() {
     // 주소지 검색 API창
-    var element_wrap = document.getElementById('wrap');
+    const element_wrap = document.getElementById('wrap');
     // 우편번호 찾기 찾기 화면을 넣을 element
     element_wrap.style.display = 'none';
     // iframe을 넣은 element를 안보이게 한다.
@@ -642,17 +642,17 @@ export async function foldPostcode() {
 
 export async function addressSearchAPI() {
     // 주소지 검색 API
-    var element_wrap = document.getElementById('wrap');
+    const element_wrap = document.getElementById('wrap');
     // 현재 scroll 위치를 저장해놓는다.
-    var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+    const currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
     new daum.Postcode({
         oncomplete: function (data) {
             // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
             // 각 주소의 노출 규칙에 따라 주소를 조합한다.
             // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-            var addr = ''; // 주소 변수
-            var extraAddr = ''; // 참고항목 변수
+            let addr = ''; // 주소 변수
+            let extraAddr = ''; // 참고항목 변수
 
             //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
             if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
@@ -763,9 +763,12 @@ async function DeliveryInformation(response_json) {
     const deliveries_data = response_json.deliveries_data
     // 드랍 다운 메뉴 아이템 추가
     deliveries_data.forEach((element) => {
-        dropdown_content.innerHTML += `
-        <p class="dropdown-item" id="delivery_${element.id}" data-hidden-value =${element}>${element.address}</p>
-        `
+        const newElement = document.createElement('p');
+        newElement.classList.add('dropdown-item');
+        newElement.id = `delivery_${element.id}`;
+        newElement.setAttribute('data-hidden-value', element);
+        newElement.innerText = element.address;
+        dropdown_content.appendChild(newElement);
     });
 
     // // 드랍 다운 메뉴 아이템에 이벤트 리스너 할당
@@ -1070,9 +1073,9 @@ export async function setEventListener() {
     document.getElementById("submitChangeEamilInformation").addEventListener("click", submitChangeEamilInformation)
 }
 
-var autoHypenPhone = function (str) {
+const autoHypenPhone = function (str) {
     str = str.replace(/[^0-9]/g, '');
-    var tmp = '';
+    let tmp = '';
     if (str.length < 4) {
         return str;
     } else if (str.length < 7) {
@@ -1100,7 +1103,7 @@ var autoHypenPhone = function (str) {
 }
 
 
-var phoneNum = document.getElementById('phoneNum');
+const phoneNum = document.getElementById('phoneNum');
 
 phoneNum.onkeyup = function () {
     this.value = autoHypenPhone(this.value);

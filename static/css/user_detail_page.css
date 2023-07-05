@@ -6,13 +6,32 @@ button {
     cursor: pointer;
 }
 
+header>main {
+    font-size: 16px !important;
+}
+
 header {
-    font-size: 1.4em !important;
+    font-size: 16px !important;
+    height: 192px !important;
 }
 
 footer {
-    font-size: 1.4em !important;
+    font-size: 12px !important;
 }
+
+.nav-header {
+    width: 40em !important;
+    font-size: 16px !important;
+}
+
+.nav-header>a {
+    font-size: 16px !important;
+}
+
+.header {
+    font-size: 16px !important;
+}
+
 
 .tooltip>.tooltip-inner {
     font-family: 'S-CoreDream-3Light';
@@ -201,7 +220,7 @@ input {
 
 
 #container {
-    margin-top: 25em !important;
+    margin-top: 192px !important;
     height: calc(130vh - 150px);
     width: 100%;
     display: flex;
@@ -1169,6 +1188,13 @@ input {
 .dropdown-menu-header>li {
     width: 155px !important;
     font-size: 1em;
+}
+
+
+@media screen and (max-width:800px) {
+    header {
+        height: 6em !important;
+    }
 }
 
 #headerDropdown {

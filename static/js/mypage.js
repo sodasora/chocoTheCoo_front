@@ -1,7 +1,7 @@
 import {
     BACK_BASE_URL, FRONT_BASE_URL, getPointView, getPointStaticView,
     postPointAttendanceView, getUserProfileAPIView,
-    getSubscribeView, patchSubscribeView, payload, sellerFollowAPI
+    getSubscribeView, patchSubscribeView, payload, sellerFollowAPI, productDetail
 } from "./api.js";
 
 // 달력
@@ -456,9 +456,6 @@ async function profile() {
 }
 
 // 위시리스트 상품 상세페이지로 이동
-export async function productDetail(product_id) {
-    window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
-}
 
 async function pagination_wish(wish) {
     const wish_list = document.getElementById("my-wish-list")
@@ -711,44 +708,57 @@ export async function sellerFollow(element) {
 
 export async function getMyFollowList(seller_information) {
     const bookmarkList = document.getElementById("bookmarkList");
-    let innerHTMLContent = '';
-    for (let i = 0; i < seller_information.length; i++) {
-        // 리스트의 최대 길이만큼 반복
-        const element = seller_information[i];
-        // 현재 인덱스의 데이터 저장
 
-        if (i % 2 == 0) {
-            // 짝수번째 실행이라면 실행
-            innerHTMLContent += `<div class="seller-card-list">`;
-        }
-        const company_img = element.company_img == null ? '/static/images/store.gif' : `${element.company_img}`
-        // 홀수 짝수 상관없이 데이터 추가
-        innerHTMLContent += `
-        <div class="seller-card-box">
-          <div class="seller-img-box" style="background-image: url(${company_img});">
-          </div>
-          <div class="seller-information-box">
-            <p>${element.company_name}</p>
-            <p>${element.contact_number}</p>
-            <div class="seller-follow" id="sellerFollowButton_${element.user.id}">
-              Un Follow
-            </div>
-            <span id="followingCount_${element.user.id}" >following: ${element.followings_count}</span>
-          </div>
-        </div>`;
-
-        if (i % 2 != 0) {
-            // 홀수번째라면 div 태그 닫아줌
-            innerHTMLContent += `</div>`;
-        }
+for (let i = 0; i < seller_information.length; i++) {
+    const element = seller_information[i];
+    const company_img = element.company_img == null ? '/static/images/store.gif' : `${element.company_img}`
+    let sellerCardList;
+    if (i % 2 == 0) {
+        sellerCardList = document.createElement('div');
+        sellerCardList.classList.add('seller-card-list');
+        bookmarkList.appendChild(sellerCardList);
     }
 
-    if (seller_information.length % 2 != 0) {
-        // 홀수번째에서 끝나서 div태그를 닫지 못할경우 닫아줌
-        innerHTMLContent += `</div>`;
-    }
+    const sellerCardBox = document.createElement('div');
+    sellerCardBox.classList.add('seller-card-box');
 
-    bookmarkList.innerHTML = innerHTMLContent;
+    const sellerImgBox = document.createElement('div');
+    sellerImgBox.classList.add('seller-img-box');
+    sellerImgBox.style.backgroundImage = `url(${company_img})`;
+
+    const sellerInformationBox = document.createElement('div');
+    sellerInformationBox.classList.add('seller-information-box');
+
+    const companyName = document.createElement('p');
+    companyName.textContent = element.company_name;
+
+    const contactNumber = document.createElement('p');
+    contactNumber.textContent = element.contact_number;
+
+    const sellerFollowButton = document.createElement('div');
+    sellerFollowButton.classList.add('seller-follow');
+    sellerFollowButton.id = `sellerFollowButton_${element.user.id}`;
+    sellerFollowButton.textContent = 'Un Follow';
+
+    const followingCount = document.createElement('span');
+    followingCount.id = `followingCount_${element.user.id}`;
+    followingCount.textContent = `following: ${element.followings_count}`;
+
+    sellerInformationBox.appendChild(companyName);
+    sellerInformationBox.appendChild(contactNumber);
+    sellerInformationBox.appendChild(sellerFollowButton);
+    sellerInformationBox.appendChild(followingCount);
+
+    sellerCardBox.appendChild(sellerImgBox);
+    sellerCardBox.appendChild(sellerInformationBox);
+
+    sellerCardList.appendChild(sellerCardBox);
+
+    if (i % 2 != 0 || i === seller_information.length - 1) {
+        // 홀수번째이거나 마지막 요소일 경우 div태그를 닫음
+        bookmarkList.appendChild(sellerCardList);
+    }
+}
 
     seller_information.forEach((element) => {
         document.getElementById(`sellerFollowButton_${element.user.id}`).addEventListener("click", function () {

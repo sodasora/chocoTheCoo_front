@@ -1107,7 +1107,7 @@ export async function OrderItemToCart(orderItemId) {
 
 
 // 상품 상세내역으로 가기
-async function productDetail(product_id) {
+export async function productDetail(product_id) {
 	window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
 }
 

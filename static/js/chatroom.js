@@ -87,7 +87,7 @@ function socketSwap(roomId) {
     }
 
     let backurl = BACK_BASE_URL.substring(7,)
-
+    console.log(backurl)
     if (roomId != null) {
 
         // 로컬

@@ -43,7 +43,7 @@ async function injectHeader() {
         logout.addEventListener("click", function () {
             handleLogout()
         })
-        
+
         const mobileLogout = document.getElementById("mobileLogout")
         mobileLogout.addEventListener("click", function () {
             handleLogout()
@@ -76,6 +76,7 @@ async function injectHeader() {
         point.style.display = "none"
         charge.style.display = "none"
     }
+    setNavBarCurrent();
 }
 injectHeader();
 
@@ -176,3 +177,45 @@ async function getPoint() {
 }
 getPoint()
 
+function setNavBarCurrent() {
+    const currentPath = window.location.pathname;
+    const pageName = currentPath.split("/")[1].split(".")[0];
+
+    const storePage = document.getElementById("storePageHeader");
+    const addProduct = document.getElementById("addProductHeader");
+    const statistics = document.getElementById("statisticsHeader");
+    const productList = document.getElementById("productListHeader");
+    const orderList = document.getElementById("orderListHeader");
+
+    if (pageName == "sellerpage") {
+        storePage.setAttribute("class", "is-current")
+        addProduct.setAttribute("class", "")
+        statistics.setAttribute("class", "")
+        productList.setAttribute("class", "")
+        orderList.setAttribute("class", "")
+    } else if (pageName == "productregistration") {
+        storePage.setAttribute("class", "")
+        addProduct.setAttribute("class", "is-current")
+        statistics.setAttribute("class", "")
+        productList.setAttribute("class", "")
+        orderList.setAttribute("class", "")
+    } else if (pageName == "seller") {
+        storePage.setAttribute("class", "")
+        addProduct.setAttribute("class", "")
+        statistics.setAttribute("class", "is-current")
+        productList.setAttribute("class", "")
+        orderList.setAttribute("class", "")
+    } else if (pageName == "seller_productlist") {
+        storePage.setAttribute("class", "")
+        addProduct.setAttribute("class", "")
+        statistics.setAttribute("class", "")
+        productList.setAttribute("class", "is-current")
+        orderList.setAttribute("class", "")
+    } else if (pageName == "seller_orderlist") {
+        storePage.setAttribute("class", "")
+        addProduct.setAttribute("class", "")
+        statistics.setAttribute("class", "")
+        productList.setAttribute("class", "")
+        orderList.setAttribute("class", "is-current")
+    }
+}
