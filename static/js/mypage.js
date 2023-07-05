@@ -1,7 +1,7 @@
 import {
     BACK_BASE_URL, FRONT_BASE_URL, getPointView, getPointStaticView,
     postPointAttendanceView, getUserProfileAPIView,
-    getSubscribeView, patchSubscribeView, payload, sellerFollowAPI
+    getSubscribeView, patchSubscribeView, payload, sellerFollowAPI, productDetail
 } from "./api.js";
 
 // 달력
@@ -456,9 +456,6 @@ async function profile() {
 }
 
 // 위시리스트 상품 상세페이지로 이동
-export async function productDetail(product_id) {
-    window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
-}
 
 async function pagination_wish(wish) {
     const wish_list = document.getElementById("my-wish-list")

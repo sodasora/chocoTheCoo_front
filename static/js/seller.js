@@ -1,5 +1,4 @@
-import { FRONT_BASE_URL, getAllProductListAPIView, getSellerOrderListView, getSellerPermissionAPIView } from './api.js';
-import { productDetail } from './sellerpage.js';
+import { FRONT_BASE_URL, productDetail, getAllProductListAPIView, getSellerOrderListView, getSellerPermissionAPIView } from './api.js';
 
 const payload = localStorage.getItem("payload");
 const payload_parse = JSON.parse(payload);

@@ -87,14 +87,13 @@ function socketSwap(roomId) {
     }
 
     let backurl = BACK_BASE_URL.substring(7,)
-
+    console.log(backurl)
     if (roomId != null) {
 
+        // WebSocket url
         chatSocket = new WebSocket(
             'ws://' + backurl + '/ws/chat/' + roomId + '/?id=' + payload.user_id
         );
-
-        // console.log(chatSocket)
 
         function update_user_list() {
             const html = Array.from(username_set).map(sender => `<li>${sender}</li>`).join('');
