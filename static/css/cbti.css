@@ -1,0 +1,183 @@
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+.section2 {
+    text-align: center;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #C4A492;
+    padding-bottom: 3em;
+    padding-top: 3em;
+}
+
+.section2-header {
+    background-color: #C4A492;
+    height: 10vw;
+    width: 100%;
+}
+
+#header-image {
+    width: 100%;
+    height: 100%;
+
+}
+
+
+#prev-button {
+    height: 30px;
+    width: 30px;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-image: url("/static/images/left-arrow.png");
+}
+
+#next-button {
+    height: 30px;
+    width: 30px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+
+#carouselExampleControlsNoTouching {
+    font-family: 'TheJamsil5Bold';
+    color: #522F18;
+    border-radius: 1vw;
+    display: flex;
+    justify-content: center;
+    height: 40em;
+    width: 40em;
+    font-size: 1rem;
+    max-width: 30em;
+}
+
+#label-title {
+    font-size: 1.2em;
+    padding-top: 10em;
+    margin-bottom: 1em;
+}
+
+#CBTI-result-btn {
+    background-color: antiquewhite;
+    color: #522F18;
+    border-color: #522F18;
+    margin-top: 3vw;
+}
+.modal-body{
+    background-color: white;
+}
+
+#cbti-main {
+    height: 80vw;
+    width: 70vw;
+}
+
+/* 모달창 */
+#staticBackdrop{
+    color:#522F18;
+    height:100%;
+    width:100%;
+}
+
+#modal-button {
+    background-color: rgb(255, 183, 209);
+    color: #522F18;
+}
+
+.cbti-result-description {
+    word-break: break-all;
+  /*같은 단어나열도 줄넘어가기*/
+    white-space: pre-line;
+  /*엔터 인식 + 줄 넘어가기*/
+}
+
+.cbti-result-description {
+    word-break: break-all;
+  /*같은 단어나열도 줄넘어가기*/
+    white-space: pre-line;
+  /*엔터 인식 + 줄 넘어가기*/
+}
+
+.carousel-item {
+    width: 100%;
+    height: 100%;
+    background-image: url("/static/images/CBTIback.png");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    max-width: 30em;
+}
+
+.modal-content {
+    width: 23em;
+    height: 25em;
+
+}
+
+#cBTi {
+    width: 100%;
+    height: 100%;
+}
+
+#startButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: absolute;
+    top: 61%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: antiquewhite;
+    border-radius: 2rem;
+    height: 3rem;
+    width: 10rem;
+    cursor: pointer;
+}
+
+#left-arrow {
+    width: 3em;
+    height: 3em;
+}
+
+#right-arrow {
+    width: 3em;
+    height: 3em;
+}
+
+.carousel-control-prev {
+    margin: auto !important;
+}
+
+.carousel-control-next {
+    margin: auto !important;
+}
+
+.title-container {
+    height: auto;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    background-color: #743837;
+}
+
+.image-box {
+    width: 180%;
+    height: 14rem;
+    background-image: url("/static/images/cbtiheader.png");
+    background-size: cover;
+    background-color: #743837;
+    background-position: center;
+    background-repeat: no-repeat
+}
+
+@media screen and (max-width: 768px) {
+    .image-box {
+        display: none;
+    }
+}

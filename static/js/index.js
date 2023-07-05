@@ -1,30 +1,244 @@
-import { BACK_BASE_URL, FRONT_BASE_URL } from './api.js'
+import { BACK_BASE_URL, FRONT_BASE_URL, getProductslist, viewProductslist, getCategoryView, getProductListAPIView, searchWhatAPI } from './api.js'
 
 
-// 로그인 되어있다면(localstorage에 토큰이 있다면) 로그인 되어있으므로 pass
-// 토큰이 없고, url에 파라미터가 있다면, 해당 값을 판별해서 해당하는 함수를 호출
-if (localStorage.getItem("payload")) {
-} else if (location.href.split("=")[1]) {
-    const code = new URLSearchParams(window.location.search).get("code");
-    const state = new URLSearchParams(window.location.search).get("state");
-    const hashParams = new URLSearchParams(window.location.hash.substr(1));
-    const google_token = hashParams.get("access_token");
-    if (code) {
-        if (state) {
-            getNaverToken(code, state);
-        } else {
-            getKakaoToken(code);
+export async function goSearch(url) {
+    window.location.href = `${FRONT_BASE_URL}/index.html?${url}`;
+}
+
+export async function categoryview() {
+    const categories = await getCategoryView();
+    const categorySelect = document.getElementById("categorymenu");
+    const categoryBox = document.createElement("div");
+    categoryBox.setAttribute("class", "category-box")
+
+    categories.forEach(category => {
+        const categoryItem = document.createElement("a");
+        categoryItem.setAttribute("id", `${category.id}`);
+        categoryItem.setAttribute("href", `index.html?category=${category.id}`);
+        categoryItem.innerText = `🍫${category.name}\n`
+        categoryBox.appendChild(categoryItem);
+        categorySelect.appendChild(categoryBox);
+    });
+}
+
+
+export async function categoryview_mobile() {
+    const categories = await getCategoryView();
+    const categorySelect = document.getElementById("categorymenu-mobile");
+    const categoryBox = document.createElement("div");
+    categoryBox.setAttribute("class", "category-box-mobile")
+
+    categories.forEach(category => {
+        const categoryItem = document.createElement("a");
+        categoryItem.setAttribute("id", `${category.id}`);
+        categoryItem.setAttribute("href", `index.html?category=${category.id}`);
+        categoryItem.innerText = `🍫${category.name}\n`
+        categoryBox.appendChild(categoryItem);
+        categorySelect.appendChild(categoryBox);
+    });
+}
+
+export async function keywordSeachView_mobile() {
+    const answer = document.getElementById("search-keyword-mobile");
+    const keyword = answer.value;
+    goSearch(keyword)
+}
+
+// 카테고리, 키워드검색, 정렬 goSearch로 보내기 
+export async function searchAnythingAPI() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryId = urlParams.get("category");
+    const ordering = urlParams.get("ordering");
+
+    const answer = document.getElementById("search-keyword");
+    const keyword = answer.value;
+
+    let url = "";
+
+    // 카테고리 검색 카테고리 ID가 url에 있을때
+    if (categoryId) {
+        url += `category=${categoryId}`;
+    }
+
+    // 검색창 입력어로 검색 : 키워드가 url에 있을때
+    if (keyword) {
+        url += (url.length > 0 ? '&' : '') + `search=${keyword}`;
+    }
+
+    if (ordering) {
+        url += (url.length > 0 ? '&' : '') + `ordering=${ordering}`;
+    }
+
+    goSearch(url);
+}
+// 카테고리, 키워드검색, 정렬 모바일버전 
+export async function searchAnythingAPI_mobile() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryId = urlParams.get("category");
+    const ordering = urlParams.get("ordering");
+
+    const answer = document.getElementById("search-keyword-mobile");
+    const keyword = answer.value;
+
+    let url = "";
+
+    // 카테고리 검색 카테고리 ID가 url에 있을때
+    if (categoryId) {
+        url += `category=${categoryId}`;
+    }
+
+    // 검색창 입력어로 검색 : 키워드가 url에 있을때
+    if (keyword) {
+        url += (url.length > 0 ? '&' : '') + `search=${keyword}`;
+    }
+
+    if (ordering) {
+        url += (url.length > 0 ? '&' : '') + `ordering=${ordering}`;
+    }
+
+    goSearch(url);
+}
+// 카테고리, 키워드검색, 정렬 상품들 보여주기(알잘딱깔센으로..!) 
+export async function showSearchAnythingProduct() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const keyword = urlParams.get('search');
+    const categoryId = urlParams.get("category");
+    const ordering = urlParams.get("ordering");
+    let url = "";
+    // 카테고리 검색 카테고리 ID가 url에 있을때
+    if (categoryId) {
+        url += `category=${categoryId}`;
+    }
+
+    // 검색창 입력어로 검색 : 키워드가 url에 있을때
+    if (keyword) {
+        url += (url.length > 0 ? '&' : '') + `search=${keyword}`;
+    }
+
+    if (ordering) {
+        url += (url.length > 0 ? '&' : '') + `ordering=${ordering}`;
+    }
+    return url;
+
+}
+
+
+
+export async function setEventListener() {
+    // 검색어 엔터 누르면 이동
+    document.getElementById("search-keyword").addEventListener("keydown", (event) => {
+        if (event.key == "Enter") {
+            searchAnythingAPI()
         }
-    } else if (google_token) {
-        getGoogleToken(google_token);
+    })
+    document.getElementById("search-btn").addEventListener("click", searchAnythingAPI);
+    // 구매자 체크리스트    
+    // 체크리스트 출석체크
+    document.getElementById("go-mypage").addEventListener("click", function () {
+        window.location.href = "mypage.html";
+    });
+    // 체크리스트 포인트 충전
+    document.getElementById("go-mypoint").addEventListener("click", function () {
+        window.location.href = "pointcharge.html";
+    });
+    // 체크리스트 구독
+    document.getElementById("go-subscribe").addEventListener("click", function () {
+        window.location.href = "subscriptioninfo.html";
+    });
+    // 체크리스트 채팅
+    document.getElementById("go-chat").addEventListener("click", function () {
+        window.location.href = "chatindex.html";
+    });
+    // 체크리스트 결제
+    document.getElementById("go-cart").addEventListener("click", function () {
+        window.location.href = "cart.html";
+    });
+    // 체크리스트 구매내역 확인
+    document.getElementById("go-bill").addEventListener("click", function () {
+        window.location.href = "bill.html";
+    });
+    // 체크리스트 
+    document.getElementById("go-bill").addEventListener("click", function () {
+        window.location.href = "bill.html";
+    });
+    // 판매자 체크리스트
+    // 체크리스트 판매자 권한 신청
+    document.getElementById("go-seller").addEventListener("click", function () {
+        window.location.href = "seller.html";
+    });
+    // 체크리스트 판매자 상품 등록
+    document.getElementById("go-addproduct").addEventListener("click", function () {
+        window.location.href = "productregistration.html";
+    });
+    // 체크리스트 product-list체크
+    document.getElementById("go-productlist").addEventListener("click", function () {
+        window.location.href = "seller_productlist.html";
+    });
+    // 체크리스트 order-list체크
+    document.getElementById("go-orderlist").addEventListener("click", function () {
+        window.location.href = "seller_orderlist.html";
+    });
+    // 체크리스트 배송상태 체크
+    document.getElementById("go-statistics").addEventListener("click", function () {
+        window.location.href = "seller_orderlist.html";
+    });
+    // 체크리스트 판매자 statistics 체크
+    document.getElementById("go-statistics").addEventListener("click", function () {
+        window.location.href = "seller.html";
+    });
+    // 체크리스트 order-list체크
+    document.getElementById("go-storepage").addEventListener("click", function () {
+        window.location.href = "sellerpage.html";
+    });
+    // CBTI
+    document.getElementById("go-CBTI").addEventListener("click", function () {
+        window.location.href = "cbti.html";
+    });
+    // 회원가입
+    document.getElementById("go-signup").addEventListener("click", function () {
+        window.location.href = "signup.html";
+    });
+    // 로그인
+    document.getElementById("go-login").addEventListener("click", function () {
+        window.location.href = "login.html";
+    });
+    // go-edituser
+    document.getElementById("go-edituser").addEventListener("click", function () {
+        window.location.href = "user_detail_page.html"
+    });
+}
+
+export async function setEventListener_mobile() {
+    document.getElementById("search-btn-mobile").addEventListener("click", keywordSeachView_mobile);
+}
+
+window.onload = async function () {
+    categoryview()
+    setEventListener()
+    categoryview_mobile()
+    setEventListener_mobile()
+    // const product = await getProductListAPIView();
+    const choco = document.getElementById("chocobanner")
+    const url = await showSearchAnythingProduct();
+
+    choco.addEventListener("click", function () {
+        window.location.href = "subscriptioninfo.html";
+
+    })
+
+    const product = await searchWhatAPI(url);
+
+    if ((product.next == null) & (product.previous == null)) {
+        viewProductslist(product);
+    } else {
+        getProductslist(product);
     }
 }
 
-// 받아온 토큰을 로컬 스토리지에 저장
-// 에러 발생 시, 에러 문구를 띄워주고 이전 페이지(로그인페이지)로
+
 async function setLocalStorage(response) {
+    const response_json = await response.json();
     if (response.status === 200) {
-        const response_json = await response.json();
         localStorage.setItem("access", response_json.access);
         localStorage.setItem("refresh", response_json.refresh);
         const base64Url = response_json.access.split(".")[1];
@@ -41,11 +255,10 @@ async function setLocalStorage(response) {
         window.location.reload();
     } else {
         alert(response_json["error"]);
-        window.history.back();
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
     }
 }
 
-// 각각 해당하는 url로 데이터를 실어서 요청을 보내고 액세스 토큰을 받아오는 함수
 async function getKakaoToken(kakao_code) {
     // Resource Server로부터 응답받은 accesstoken을 백엔드 서버로 발송
     const response = await fetch(`${BACK_BASE_URL}/api/users/kakao/login/`, {
@@ -78,4 +291,21 @@ async function getNaverToken(naver_code, state) {
         body: JSON.stringify({ naver_code: naver_code, state: state })
     });
     setLocalStorage(response);
+}
+
+if (localStorage.getItem("payload")) {
+} else if (location.href.split("=")[1]) {
+    const code = new URLSearchParams(window.location.search).get("code");
+    const state = new URLSearchParams(window.location.search).get("state");
+    const hashParams = new URLSearchParams(window.location.hash.substr(1));
+    const google_token = hashParams.get("access_token");
+    if (code) {
+        if (state) {
+            getNaverToken(code, state);
+        } else {
+            getKakaoToken(code);
+        }
+    } else if (google_token) {
+        getGoogleToken(google_token);
+    }
 }

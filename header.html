@@ -15,7 +15,7 @@
     <div class="header">
         <div class="left-header">
             <p id="tokenLifeTime"></p>
-            <ul id="point" style='cursor:pointer' onclick="location.href='pointcharge.html';"> 내 포인트 : 10,000 P</ul>
+            <ul id="point" style='cursor:pointer' onclick="location.href='pointcharge.html';"></ul>
         </div>
         <div class="right-header" id="header">
             <!-- 로그인 전 -->
@@ -23,25 +23,50 @@
             <ul id="login" style="cursor: pointer;" onclick="location.href='login.html';"> 로그인 &nbsp; &nbsp; </ul>
             <!-- 로그인 후 -->
             <img id="cart" style='cursor:pointer' src="static/images/shopping-cart.png" alt="cart"
-            onclick="location.href='cart.html'">
+                onclick="location.href='cart.html'">
             <ul id="intro" style='cursor:pointer' onclick="location.href='/user_detail_page.html';"> </ul>
-            <ul id="charge" style='cursor:pointer' onclick="location.href='pointcharge.html';"> 포인트충전</ul>
-            <ul id="mypage" style='cursor:pointer' onclick="location.href='mypage.html';"> 마이페이지 </ul>
-            <ul id="sellerpage" style='cursor:pointer' onclick="location.href='seller.html';"> 판매자페이지 </ul>
             <ul id="logout" style='cursor:pointer'> 로그아웃 &nbsp; &nbsp; </a>
         </div>
     </div>
     <div class="main">
+        <div id="logoChoco" style="display: none;">🍫&nbsp;</div>
         <text id="nav-title">ChocoTheCoo</text>
+        <div class="dropdown" id="headerDropdownBox">
+            <img type="button" src="static/images/dropdown_choco.png" alt="" id="headerDropdown"
+                class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <ul class="dropdown-menu dropdown-menu-header" aria-labelledby="headerDropdown">
+                <!-- 비 로그인 시 보여주는 항목 -->
+                <li><button onclick="location.href='login.html';" id="mobileLogin" class="dropdown-item"
+                        type="button">🔑 로그인</button></li>
+                <li><button onclick="location.href='signup.html';" id="mobileSignUp" class="dropdown-item"
+                        type="button">🍫 회원가입</button></li>
+                <li><button onclick="location.href='cart.html';" id="mobileCart" class="dropdown-item" type="button">
+                        🛒 장바구니</button></li>
+                <li><button onclick="location.href='pointcharge.html';" id="mobilePoint" class="dropdown-item"
+                        type="button">💯 포인트</button></li>
+                <li><button onclick="location.href='mypage.html';" id="mobileMyPage" class="dropdown-item"
+                        type="button">🪪 마이페이지</button></li>
+                <li><button onclick="location.href='seller.html';" id="mobileSellerPage" class="dropdown-item"
+                        type="button">💰 판매자페이지</button></li>
+                <li><button onclick="location.href='chatindex.html';" id="mobileChat" class="dropdown-item"
+                        type="button">💬 채팅</button></li>
+                <li><button onclick="location.href='cbti.html';" id="mobileCBTI" class="dropdown-item" type="button">😋
+                        CBTI</button></li>
+                <li><button onclick="location.href='user_detail_page.html';" id="mobileUserEdit" class="dropdown-item"
+                        type="button"> 🖊️ 회원 정보 수정</button></li>
+                <!-- 로그인 시 보여주는 항목 -->
+                <li><button class="dropdown-item" type="button" id="mobileLogout">👋 로그아웃</button></li>
+            </ul>
+        </div>
     </div>
-    <div class="top-category">
-        <nav>
-            <a href="#">Primary</a>
-            <a href="#">Secondary</a>
-            <a href="#" class="is-current">Tertiary</a>
-            <a href="#">Quaternary</a>
-            <a href="#">Quinary</a>
-            <div class="nav-underline"></div>
+    <div class="top-category top-category-header">
+        <nav class="nav-header">
+            <a id="chargeHeader" style='cursor:pointer' onclick="location.href='pointcharge.html';">MyPoint</a>
+            <a id="mypageHeader" style='cursor:pointer' onclick="location.href='mypage.html';">MyPage</a>
+            <a id="sellerHeader" style='cursor:pointer' onclick="location.href='seller.html';">Seller</a>
+            <a id="chattingHeader" style='cursor:pointer' onclick="location.href='chatindex.html';">Chatting</a>
+            <a id="CBTIHeader" style='cursor:pointer' onclick="location.href='cbti.html';">CBTI</a>
+            <div class="nav-underline nav-underline-header"></div>
         </nav>
     </div>
     <!-- script -->

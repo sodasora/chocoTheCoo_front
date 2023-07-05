@@ -4,9 +4,9 @@ import { BACK_BASE_URL, FRONT_BASE_URL, getCartList, deleteCartItem, changeCartI
 
 async function renderCartList() {
     const cartItems = await getCartList();
+    console.log(cartItems)
     const cartBox = document.querySelector('#cartList');
     cartItems.forEach(e => {
-
         const cartItemDiv = document.createElement('div');
         cartItemDiv.classList.add('row', 'cart-item');
 
@@ -31,7 +31,8 @@ async function renderCartList() {
         const img = document.createElement('img');
         img.classList.add('pd-info-thumb');
         if (e.product.image) {
-            img.src = `${BACK_BASE_URL}` + `${e.product.image}`
+            // img.src = `${BACK_BASE_URL}` + `${e.product.image}`
+            img.src = `${e.product.image}`
         }
         else {
             img.src = `/static/images/초콜릿.jpg`
@@ -46,14 +47,14 @@ async function renderCartList() {
         pdInfoText.textContent = `${e.product.name}`;
 
         const priceAmountDiv = document.createElement('div');
-        priceAmountDiv.style.display = 'flex';
-        priceAmountDiv.style.justifyContent = 'center';
+        priceAmountDiv.classList.add('pd-price-amount');
 
         const priceDiv = document.createElement('div');
         priceDiv.classList.add('pd-price');
         priceDiv.textContent = `${e.product.price.toLocaleString()}원`;
 
         const multiplyDiv = document.createElement('div');
+        multiplyDiv.classList.add("pd-multiply");
         multiplyDiv.textContent = ' × ';
 
         const amountDiv = document.createElement('select');
@@ -108,7 +109,8 @@ async function renderCartList() {
         col3Div.setAttribute('data-deliveryFee', '3000');
 
         const col4Div = document.createElement('div');
-        const feeData = ((!payload.subscribe_data) * 3000).toLocaleString()
+        // const feeData = ((!payload.subscribe_data) * 3000).toLocaleString()
+        const feeData = 0
         col4Div.classList.add('col-2', 'pd-deliveryfee');
 
         col4Div.textContent = `${feeData} 원`
@@ -155,7 +157,7 @@ async function renderCartList() {
                 changeCartItemAmount(e.id, a.target.value)
             }
         })
-        delBtn.addEventListener('click', (b) => {
+        col5Div.addEventListener('click', (b) => {
             deleteCartItem(e.id);
         })
     })
@@ -172,7 +174,7 @@ async function renderTotals() {
     sumPrice.forEach(e => {
         // console.log(e);
         totalPrice += parseInt(e.dataset.price);
-        totalDeliveryFee += parseInt(e.dataset.deliveryfee);
+        // totalDeliveryFee += parseInt(e.dataset.deliveryfee);
     })
 
     // console.log(totalPrice);
@@ -216,6 +218,7 @@ async function renderTotals() {
 
         if (cart_id_list.length > 0) {
             const params = new URLSearchParams();
+            console.log(params)
             params.set('cart_id', cart_id_list.join(","));
             console.log(cart_id_list);
             const queryString = params.toString();
@@ -236,19 +239,24 @@ async function renderTotals() {
 
 
 window.onload = async function () {
-    renderCartList();
-    const checkAll = document.getElementById('checkAll');
-    checkAll.addEventListener('click', (e) => {
-        const cartCheck = document.querySelectorAll('.check-each');
-        if (checkAll.checked == true) {
-            cartCheck.forEach(check => {
-                check.checked = true;
-            });
-        }
-        else {
-            cartCheck.forEach(check => {
-                check.checked = false;
-            });
-        }
-    })
+    if (payload == null) {
+        alert("로그인이 필요 합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else {
+        renderCartList();
+        const checkAll = document.getElementById('checkAll');
+        checkAll.addEventListener('click', (e) => {
+            const cartCheck = document.querySelectorAll('.check-each');
+            if (checkAll.checked == true) {
+                cartCheck.forEach(check => {
+                    check.checked = true;
+                });
+            }
+            else {
+                cartCheck.forEach(check => {
+                    check.checked = false;
+                });
+            }
+        })
+    }
 }

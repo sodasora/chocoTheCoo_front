@@ -16,6 +16,27 @@
     font-family: 'S-CoreDream-3Light';
 }
 
+#Postcode {
+    margin: 1em auto;
+    padding-left: 1em;
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 0.5vh 1em;
+    /* box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5); */
+    border: none;
+}
+
+#helpTextDeli {
+    width: 20px;
+    height: 20px;
+    margin-left: 0.4em;
+}
+
+#wrap {
+    width: 100% !important;
+    /* margin: auto!important; */
+}
+
 .centered {
     display: flex;
     align-items: center;
@@ -155,6 +176,9 @@
     background-color: #ddd;
 }
 
+/* #orderCheckDropDown:hover .dropdown-item{
+    display: block;
+} */
 
 .dropdown:hover .dropdown-button {
     background-color: #ddd;
@@ -178,6 +202,17 @@
     padding: 0.5em 1em;
     font-size: large;
     font-weight: bold;
+}
+
+#saveDeliveryBox {
+    display: none;
+    background-color: transparent;
+    justify-content: end;
+    align-items: center;
+}
+
+#saveDelivery {
+    margin-right: 1em;
 }
 
 #recipient {
@@ -216,21 +251,6 @@
     align-items: center;
 }
 
-
-@media screen and (max-width:1750px) {
-    .address-item {
-        min-width: 58vh;
-    }
-
-    .cart-check {
-        min-width: 58vh;
-    }
-
-    .pay-check {
-        min-width: 58vh;
-    }
-}
-
 .modal-btn1 {
     border: none;
     border-radius: 1em;
@@ -247,4 +267,32 @@
     color: rgb(255, 255, 255);
     font-size: large;
     font-weight: bold;
+}
+
+@media screen and (max-width:1750px) {
+    .address-item {
+        min-width: 58vh;
+    }
+
+    .cart-check {
+        min-width: 58vh;
+    }
+
+    .pay-check {
+        min-width: 58vh;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .address-item {
+        min-width: 45vh;
+    }
+
+    .cart-check {
+        min-width: 45vh;
+    }
+
+    .pay-check {
+        min-width: 45vh;
+    }
 }

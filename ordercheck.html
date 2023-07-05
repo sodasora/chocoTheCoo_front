@@ -42,21 +42,32 @@
         <div class="address-select">
             <div class="dropdown" id="addressLoad">
                 <div>
-                    <div>
-                        <button class="dropdown-button address-display centered">다른 주소 선택</button>
-                    </div>
-                    <div class="dropdown-content" id="dropdownContent">
+                    <button type="button" data-bs-toggle="dropdown"
+                        class="dropdown-toggle dropdown-button address-display centered">다른 주소 선택</button>
+
+                    <div class="dropdown-menu dropdown-content" id="dropdownContent">
+                        <p id="registDelivery" class="dropdown-item centered">주소 등록하기</p>
                         <!-- 주소지 정보 드롭다운 -->
                     </div>
                 </div>
             </div>
             <div class="address-display">
+                <!-- <div id="addressBox">
+                </div> -->
+                <input id="delivery_id" hidden>
+                <input style="display: none;" class="address-input-item address-item centered" type="button"
+                    id="Postcode" value="우편번호 찾기">
+                <div id="wrap"
+                    style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+                    <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
+                        style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" alt="접기 버튼">
+                </div>
                 <label for="address">
                     주소
                 </label>
                 <input disabled id="address" class="address-item centered"></input>
                 <label>
-                    상세주소
+                    상세 주소
                 </label for="detail_address">
                 <input disabled id="detailAddress" class="address-item centered"></input>
                 <label for="postal_code">
@@ -64,9 +75,15 @@
                 </label>
                 <input disabled id="postalCode" class="address-item centered"></input>
                 <label>
-                    수령인
+                    받는 사람
                 </label for="recipient">
-                <input disabled id="recipient" class="address-item centered"></input>
+                <input id="recipient" class="address-item centered"></input>
+                <div id="saveDeliveryBox" class="address-item">
+                    <input id="saveDelivery" type="checkbox"></input>
+                    <label for="">배송 정보 저장하기</label>
+                    <img id="helpTextDeli" src="static/images/helpbtn.png" alt="도움말" data-bs-toggle="tooltip"
+                        data-bs-title="배송 정보는 최대 5개까지만 등록이 가능합니다.">
+                </div>
                 <input id="orderDeliveryId" hidden>
             </div>
         </div>
@@ -137,6 +154,8 @@
     </div>
 </body>
 <footer></footer>
+<!-- 주소지 API -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- script -->
 <script src="/static/js/api.js" type="module"></script>
 <script src="/static/js/loader.js" type="module"></script>

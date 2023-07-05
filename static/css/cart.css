@@ -12,6 +12,10 @@
     font-style: normal;
 }
 
+html {
+    background-color: #C4A492;
+}
+
 .section {
     background-color: #C4A492;
     height: auto;
@@ -27,14 +31,15 @@
 .row-type {
     display: flex;
     /* justify-content: space-between; */
-    margin: 1em 20rem;
     font-family: 'S-CoreDream-3Light';
     font-size: 1.2em;
     color: aliceblue;
     text-align: center;
+    margin: 1em 15em;
 }
 
 .cart-item {
+    margin: 1em 15em;
     /* background-color: aliceblue; */
     position: relative;
     display: flex;
@@ -43,7 +48,6 @@
     font-size: 1.2em;
     color: aliceblue;
     text-align: center;
-    margin: 1em 20rem;
 }
 
 .line {
@@ -96,7 +100,7 @@
     align-items: center;
 }
 
-.pd-amount-submit{
+.pd-amount-submit {
     border-radius: 0.5em;
     width: 3em;
     color: aliceblue;
@@ -113,23 +117,38 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 }
 
 .pd-del-box {
+    width: 1em;
+    height: 1em;
     display: flex;
     justify-content: center;
     align-items: center;
     object-fit: cover;
     position: absolute;
     top: 40%;
-    right: 50%;
+    left: 0%;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.pd-price-amount {
+    display: flex;
+    justify-content: center;
 }
 
 .pd-del-btn {
     width: 1em;
     height: 1em;
-    cursor: pointer;
-    object-fit:scale-down;
+}
+
+.pd-info-text {
+    width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .order-btn {
@@ -148,42 +167,147 @@
 
 @media (max-width: 1480px) {
     .row-type {
-        margin: 1em 10em;
+        margin: 1em 5em;
     }
 
     .cart-item {
-        margin: 1em 10em;
+        margin: 1em 5em;
     }
 
     .cart-total {
-        margin: 1em 10em;
+        margin: 1em 5em;
+    }
+}
+
+@media (max-width: 1050px) {
+    .row-type {
+        margin: 1em;
+    }
+
+    .cart-item {
+        margin: 1em;
+    }
+
+    .cart-total {
+        margin: 1em;
     }
 }
 
 @media (max-width: 875px) {
+    .section {
+        font-size: 0.8em;
+    }
+
     .row-type {
-        margin: 1em;
+        margin: 1em 0;
     }
 
     .cart-item {
-        margin: 1em;
+        margin: 1em 0;
     }
 
     .cart-total {
-        margin: 1em;
+        margin: 1em 0;
     }
 }
 
-@media (max-width: 500px) {
-    .row-type {
-        margin: 1em 0;
+@media (max-width: 680px) {
+    .pd-del-box {
+        top: 0;
+        left: 100%;
     }
 
     .cart-item {
-        margin: 1em 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
-    .cart-total {
-        margin: 1em 0;
+    .pd-deliveryfee {
+        width: 100% !important;
+    }
+
+    .sum-price {
+        width: 100% !important;
+    }
+
+    .pd-info {
+        width: 350px !important;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pd-info-text {
+        width: 350px !important;
+        font-size: x-large;
+    }
+
+    .row-info {
+        display: none;
+    }
+
+    .row {
+        --bs-gutter-x: 0;
+    }
+
+    .check-each-div {
+        position: absolute;
+        top: 0;
+        left: -50%;
+        width: 100% !important;
+    }
+
+    .info-box {
+        margin-left: auto;
+    }
+    .pd-info-thumb {
+        width: 150px;
+        height: 150px;
+    }
+
+    .order-btn {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        font-size: 2em;
+    }
+
+    .check-each {
+        width: 30px;
+        height: 30px;
+        border-radius: 1em !important;
+
+    }
+
+    .pd-price {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pd-multiply {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pd-amount-submit {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+    }
+
+
+    .sum-price {
+        font-size: 1.2em;
+    }
+
+    .pd-deliveryfee {
+        font-size: 1.2em;
     }
 }

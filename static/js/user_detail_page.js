@@ -22,9 +22,27 @@ import {
     // 판매자 정보 삭제
     deleteSellerInformationAPI,
     // 휴면 계정으로 전환
-    deleteUserInformationAPI
+    deleteUserInformationAPI,
+    // 통관 번호 수정
+    setCustomsCodeAPI,
+    // 휴대폰 번호 등록과 수정  및 인증번호 발급
+    getAuthNumberAPI,
+    // 휴대폰 인증 번호 제출
+    submitVerificationNumbersAPI,
+    // 변경 이메일 인증 코드 발급
+    getEmailVerificationCodeAPI,
+    // 이메일 정보 수정
+    submitChangeEamilInformationAPI,
+    // 관리자 권한으로 판매자 정보 불러오기
+    getSellerInformationListAPI,
+    // 관리자 권한으로 판매 활동 거절
+    refusalOfSalesActivityAPI,
+    // 관리자 권한으로 판매 활동 승인
+    salesActivityApprovalAPI,
 } from './api.js'
 import { handleLogout } from './loader.js'
+
+let modal_image_index = 0
 
 async function getPayloadParse() {
     const payload = localStorage.getItem("payload");
@@ -33,27 +51,22 @@ async function getPayloadParse() {
 }
 
 export async function updateInformation() {
-    // 이메일, 비밀번호 변경
-    const payload_parse = await getPayloadParse()
-    const user_id = payload_parse.user_id
-    const email = document.getElementById("email").value
+    //  비밀번호 변경
     const password = document.getElementById("password").value
     const newPassword = document.getElementById("newPassword").value
     const newPassword2 = document.getElementById("newPassword2").value
 
     const setUserInformationMessageBox = document.getElementById("setUserInformationMessageBox")
     setUserInformationMessageBox.style.display = "flex"
-    if (password == '' || email == '' || newPassword == '' || newPassword2 == '') {
+    if (password == '' || newPassword == '' || newPassword2 == '') {
         // 입력값이 비어 있는 경우
         setUserInformationMessageBox.innerText = "빈칸 없이 입력해 주세요."
     } else if (newPassword != newPassword2) {
         // 변경하고자 하는 두 비밀번호의 입력값이 다를 경우
-        setUserInformationMessageBox.innerText = "빈칸 없이 입력해 주세요."
+        setUserInformationMessageBox.innerText = "입력하신 두 비밀번호가 같지 않습니다."
     } else {
         // 전달할 데이터 준비
         const information = {
-            user_id: user_id,
-            email: email,
             password: password,
             new_password: newPassword
         };
@@ -64,19 +77,9 @@ export async function updateInformation() {
         if (response.status == 200) {
             handleLogout()
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
-        } else if (response.status == 404) {
-            // 사용자 정보를 찾을 수 없음
-            window.location.replace(`${FRONT_BASE_URL}/login.html`)
-        } else if (response.status == 401) {
-            // 권한이 없슴 (로그인이 필요 하거나 올바르지 않은 접근 방법)
-            window.location.replace(`${FRONT_BASE_URL}/login.html`)
-        } else if (response.status == 400) {
-            // 입력 양식이 잘 못됨
-            setUserInformationMessageBox.innerText = "이메일 또는 비밀번호 양식이 올바르지 않습니다."
-        } else if (response.status == 422) {
-            setUserInformationMessageBox.innerText = "비밀번호를 변경하기 위한 정보가 부족합니다."
-        } else if (response.status == 409) {
-            setUserInformationMessageBox.innerText = "회원 정보에 저장된 비밀번호와 같지 않습니다."
+        } else {
+            const response_json = await response.json()
+            setUserInformationMessageBox.innerText = response_json.non_field_errors
         }
     }
 }
@@ -84,30 +87,30 @@ export async function updateInformation() {
 
 export async function updateProfileInformation() {
     // 사용자 프로필 정보 수정
-    const payload_parse = await getPayloadParse()
-    const user_id = payload_parse.user_id
     const nickName = document.getElementById("nickName").value
     const bio = document.getElementById("bio").value
     const profile_image = document.getElementById("profileImageFile").files[0]
     const information = {
-        user_id: user_id,
         nickName: nickName,
         bio: bio,
         profile_image: profile_image
     };
     const response = await updateProfileInformationAPI(information)
+    const response_json = await response.json()
     const profileMessageBox = document.getElementById("profileMessageBox")
     profileMessageBox.style.display = "flex"
     if (response.status == 200) {
+        alert("프로필 정보를 수정 했습니다.")
         location.reload();
-    } else if (response.status == 404) {
+    } else if (response.status == 404 || response.status == 401) {
         // 사용자 정보를 찾을 수 없음
-        window.location.replace(`${FRONT_BASE_URL}/login.html`)
-    } else if (response.status == 401) {
-        // 권한이 없슴 (로그인이 필요 하거나 올바르지 않은 접근 방법)
+        alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 400) {
         // 입력 양식이 잘 못됨
+        if (response_json.profile_image != null) {
+            profileMessageBox.innerText = "유효한 프로필 이미지가 아닙니다."
+        }
         profileMessageBox.innerText = "닉네임이 올바르지 않습니다. 공백없이 2~20자 내외로 작성해 주세요."
     }
 }
@@ -121,6 +124,8 @@ export async function addressSubmit() {
     const postcode = document.getElementById("postcode").value
     const address = document.getElementById("address").value
     const detailAddress = document.getElementById("detailAddress").value
+    const addressMessageBox = document.getElementById("addressMessageBox")
+
     const information = {
         user_id: payload_parse.user_id,
         recipient: recipient,
@@ -129,26 +134,35 @@ export async function addressSubmit() {
         detailAddress: detailAddress
     };
 
-    const response = await addressSubmitAPI(information)
-    if (response.status == 200) {
-        // 배송 정보 등록 완료
-        location.reload();
-    } else {
-        const addressMessageBox = document.getElementById("addressMessageBox")
+    if (recipient == "" || postcode == "" || address == "") {
         addressMessageBox.style.display = "flex"
-        if (response.status == 404) {
-            // 사용자 정보를 찾을 수 없음 (로그인 필요)
-            window.location.replace(`${FRONT_BASE_URL}/login.html`)
-        } else if (response.status == 401) {
-            // 로그인을 하지 않았거나, 올바르지 않은 접근 방법
-            window.location.replace(`${FRONT_BASE_URL}/login.html`)
-        } else if (response.status == 400) {
-            console.log("fdsfsd")
-            addressMessageBox.innerText = "배송 정보는 다섯개 까지 등록할 수 있습니다."
-        } else {
-            addressMessageBox.innerText = "배송 정보가 올바르지 않습니다."
-        }
+        addressMessageBox.innerText = "입력값이 올바르지 않습니다."
+    } else {
 
+        const response = await addressSubmitAPI(information)
+        if (response.status == 200) {
+            // 배송 정보 등록 완료
+            alert("새로운 배송 정보가 등록 되었습니다.")
+            location.reload();
+        } else {
+            const response_json = await response.json()
+            addressMessageBox.style.display = "flex"
+            if (response.status == 404) {
+                // 사용자 정보를 찾을 수 없음 (로그인 필요) , 올바르지 않은 접근 방법
+                alert("로그인이 필요 합니다.")
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else if (response.status == 401) {
+                alert("로그인이 필요 합니다.")
+                // 로그인을 하지 않았거나, 토큰 정보 오류
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else if (response.status == 400) {
+                //  유효성 검사 실패
+                addressMessageBox.innerText = response_json.err.non_field_errors
+            } else {
+                // 예외 처리
+                console.log(response_json)
+            }
+        }
     }
 }
 export async function addressUpdate() {
@@ -166,26 +180,34 @@ export async function addressUpdate() {
         delivery_id: delivery_id
     };
 
-    const response = await addressUpdateAPI(information)
-    console.log(response)
-    const response_json = await response.json()
-    console.log(response_json)
-    if (response.status == 200) {
-        // 배송 정보 수정 완료
-        location.reload();
-    } else {
-        const addressMessageBox = document.getElementById("addressMessageBox")
+    if (recipient == "" || postcode == "" || address == "") {
         addressMessageBox.style.display = "flex"
-        if (response.status == 404) {
-            addressMessageBox.innerText = "배송 정보를 찾을 수 없습니다."
-        } else if (response.status == 401) {
-            // 로그인을 하지 않았거나 올바르지 않은 접근 방법
-            window.location.replace(`${FRONT_BASE_URL}/login.html`)
-        } else if (response.status == 400) {
-            addressMessageBox.innerText = "입력값이 올바르지 않습니다."
+        addressMessageBox.innerText = "입력값이 올바르지 않습니다."
+    } else {
+        const response = await addressUpdateAPI(information)
+        const response_json = await response.json()
+        if (response.status == 200) {
+            // 배송 정보 수정 완료
+            alert("배송 정보를 수정 했습니다.")
+            location.reload();
         } else {
-            // 반례
-            console.log(response)
+            const addressMessageBox = document.getElementById("addressMessageBox")
+            addressMessageBox.style.display = "flex"
+            if (response.status == 404) {
+                // 사용자 정보를 찾을 수 없음 (로그인 필요)
+                alert("로그인이 필요 합니다.")
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else if (response.status == 401) {
+                // 로그인을 하지 않았거나, 올바르지 않은 접근 방법
+                alert("로그인이 필요 합니다.")
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else if (response.status == 400) {
+                //  유효성 검사 실패
+                addressMessageBox.innerText = response_json.non_field_errors
+            } else {
+                // 예외 처리
+                console.log(response_json)
+            }
         }
     }
 }
@@ -197,6 +219,7 @@ export async function addressDelete() {
     // API 응답 처리
     if (response.status == 204) {
         // 배송 정보 삭제 완료
+        alert("배송 정보를 삭제 했습니다.")
         location.reload();
     } else {
         const addressMessageBox = document.getElementById("addressMessageBox")
@@ -205,6 +228,7 @@ export async function addressDelete() {
             addressMessageBox.innerText = "배송 정보를 찾을 수 없습니다."
         } else if (response.status == 401) {
             // 로그인을 하지 않았거나 올바르지 않은 접근 방법
+            alert("로그인이 필요 합니다.")
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else {
             console.log(response)
@@ -214,7 +238,10 @@ export async function addressDelete() {
 
 async function getSellerInputData() {
     // 입력값 불러오기
+    const profile_image = document.getElementById("profileImageFile").files[0]
+    const img = document.getElementById("sellerImageFile").files[0]
     const information = {
+        company_img: img,
         business_owner_name: document.getElementById("business_owner_name").value,
         company_name: document.getElementById("company_name").value,
         contact_number: document.getElementById("contact_number").value,
@@ -239,13 +266,18 @@ export async function createSellerInformation() {
 
     // API 응답 처리
     if (response.status == 200) {
-        sellerMessageBox.innerText = "판매자 권한을 신청했습니다. 관리자 검증 후 판매 활동을 할 수 있습니다."
-        document.getElementById("createSellerInformationButton").style.display = "block"
+        alert("테스트 기간 동안 판매 활동이 자동 승인 됩니다.\n 다시 로그인 해주세요.")
+        handleLogout()
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        // sellerMessageBox.innerText = "판매자 권한을 신청했습니다. 관리자 검증 후 판매 활동을 할 수 있습니다."
+        // document.getElementById("createSellerInformationButton").style.display = "block"
     } else if (response.status == 404) {
         // 로그인 필요
+        alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 401) {
         // 로그인 필요
+        alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 422) {
         sellerMessageBox.innerText = "입력값에 오류가 있습니다. 너무 긴 입력값은 없는지 확인해 주세요."
@@ -256,26 +288,26 @@ export async function createSellerInformation() {
 
 export async function updateSellerInformation() {
     // 판매자 정보 수정
-
     // 입력값 불러오기
     const information = await getSellerInputData()
-
-    // 판매자 정보 수정 API
+    // // // 판매자 정보 수정 API
     const response = await updateSellerInformationAPI(information)
 
     // 알림 메시지 출력
     const sellerMessageBox = document.getElementById("sellerMessageBox")
     sellerMessageBox.style.display = "flex"
 
-
     // API 응답 처리
     if (response.status == 200) {
+        alert("판매자 정보를 수정 했습니다.")
         location.reload();
     } else if (response.status == 404) {
         // 로그인 필요
+        alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 401) {
         // 로그인 필요
+        alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 422) {
         sellerMessageBox.innerText = "입력값에 오류가 있습니다. 너무 긴 입력값은 없는지 확인해 주세요."
@@ -295,12 +327,15 @@ export async function deleteSellerInformation() {
     // API 응답 처리
     if (response.status == 204) {
         // 삭제 완료
+        alert("판매자 정보를 삭제 했습니다.")
         location.reload();
     } else if (response.status == 404) {
         // 로그인 필요
+        alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 401) {
         // 로그인 필요
+        alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 400) {
         sellerMessageBox.innerText = "삭제할 판매자 정보가 없습니다."
@@ -329,12 +364,162 @@ export async function deleteUserInformation() {
 }
 
 
+export async function setCustomsCode() {
+    // 통관 번호 수정
+    const payload_parse = await getPayloadParse()
+    const customs_code = document.getElementById("customsCodeSubmitInput").value
+    const customsCodeMessageBox = document.getElementById("customsCodeMessageBox")
+    const information = {
+        customs_code: customs_code
+    }
+    const response = await setCustomsCodeAPI(information)
+    if (customs_code == "") {
+        customsCodeMessageBox.style.display = "flex"
+        customsCodeMessageBox.innerText = "통관 번호가 올바르지 않습니다."
+    } else {
+        if (response.status == 200) {
+            // 수정 완료
+            alert("통관 번호를 등록/수정 했습니다.")
+            location.reload();
+        } else if (response.status == 404) {
+            // 로그인 필요
+            alert("로그인이 필요 합니다.")
+            window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        } else if (response.status == 401) {
+            //토큰 정보 오류
+            alert("로그인이 필요 합니다.")
+            window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        } else if (response.status == 400) {
+            customsCodeMessageBox.style.display = "flex"
+            customsCodeMessageBox.innerText = "통관 번호가 올바르지 않습니다."
+        }
+    }
+}
+
+export async function getAuthNumber() {
+    // 핸드폰 번호 등록 및 수정, 인증번호 발급 받기
+    const phoneNum = document.getElementById("phoneNum")
+    const phone_number = phoneNum.value.replace(/-/g, "")
+    const phoneMessageBox = document.getElementById("phoneMessageBox")
+    if (phone_number == "") {
+        phoneMessageBox.style.display = "flex"
+        phoneMessageBox.innerText = "빈칸 없이 입력해 주세요."
+    } else {
+        const information = {
+            phone_number: phone_number
+        }
+        const response = await getAuthNumberAPI(information)
+        if (response.status == 200) {
+            phoneMessageBox.style.display = "none"
+            document.getElementById("phone_auth_box").style.display = "block"
+            document.getElementById("submit_auth_number_button_box").style.display = "block"
+
+        } else {
+            phoneMessageBox.style.display = "flex"
+            if (response.status == 404 || response.status == 401) {
+                // 로그인 필요
+                alert("로그인이 필요 합니다.")
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else {
+                const response_json = await response.json()
+                phoneMessageBox.innerText = response_json.err.non_field_errors
+            }
+        }
+    }
+}
+
+export async function submitVerificationNumbers() {
+    // 휴대폰 인증
+    const verification_numbers = document.getElementById("verification_numbers").value
+    const phoneMessageBox = document.getElementById("phoneMessageBox")
+    if (verification_numbers == "") {
+        phoneMessageBox.style.display = "flex"
+        phoneMessageBox.innerText = "빈칸 없이 입력해 주세요"
+    } else {
+        const information = {
+            verification_numbers: verification_numbers
+        }
+        const response = await submitVerificationNumbersAPI(information)
+        if (response.status == 200) {
+            // 인증 완료
+            alert("인증이 완료 되었습니다.")
+            location.reload();
+        } else {
+
+            phoneMessageBox.style.display = "flex"
+            if (response.status == 404 || response.status == 401) {
+                // 로그인 필요
+                alert("로그인이 필요 합니다.")
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else {
+                const response_json = await response.json()
+                phoneMessageBox.innerText = response_json.err
+            }
+        }
+    }
+}
 
 
+export async function getEmailVerificationCode() {
+    // 변경할 이메일로 인증 코드 발급 받기
+    const email = document.getElementById("email").value
+    const phoneMessageBox = document.getElementById("emailMessageBox")
+    phoneMessageBox.style.display = "flex"
+    phoneMessageBox.innerText = "인증 코드를 발급 중 입니다. 잠시만 기다려 주세요."
+
+    if (email == "") {
+        phoneMessageBox.innerText = "빈칸 없이 입력해 주세요."
+    } else {
+        const response = await getEmailVerificationCodeAPI(email)
+        if (response.status == 200) {
+            document.getElementById("verificationCodeBox").style.display = "block"
+            document.getElementById("submitChangeEamilInformationBox").style.display = "block"
+            phoneMessageBox.innerText = "인증 코드를 발급 했습니다."
+
+        } else {
+
+            if (response.status == 404 || response.status == 401) {
+                // 로그인 필요
+                alert("로그인이 필요 합니다.")
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else {
+                const response_json = await response.json()
+                phoneMessageBox.innerText = response_json.err
+            }
+        }
+    }
+}
 
 
+export async function submitChangeEamilInformation() {
+    const verificationCode = document.getElementById("verificationCode").value
+    const emailMessageBox = document.getElementById("emailMessageBox")
+    const information = {
+        verification_code: verificationCode
+    }
+    if (verificationCode == "" || email == "") {
+        emailMessageBox.innerText = "빈칸 없이 입력해 주세요."
+    } else {
+        const response = await submitChangeEamilInformationAPI(information)
+        if (response.status == 200) {
+            // 인증 완료
+            alert("이메일 정보가 변경 되었습니다.")
+            handleLogout();
+            window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        } else {
 
-
+            emailMessageBox.style.display = "flex"
+            if (response.status == 404 || response.status == 401) {
+                // 로그인 필요
+                alert("로그인이 필요 합니다.")
+                window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else {
+                const response_json = await response.json()
+                emailMessageBox.innerText = response_json.non_field_errors
+            }
+        }
+    }
+}
 
 
 
@@ -380,10 +565,20 @@ export async function navItemUserPhoneNumberView() {
     changeView("navItemUserPhoneNumber")
     document.getElementById("setUserPhoneNumberInformation").style.display = "block"
 }
+
+export async function navItemUserCustomsCodeInformation() {
+    // 통관 번호 수정
+    changeView("navItemUserCustomsCodeInformation")
+    document.getElementById("userCustomsCodeInformation").style.display = "block"
+}
 export async function navItemSellerInformationView() {
     // 유저 판매자 정보 페이지 출력
     changeView("navItemSellerInformation")
     document.getElementById("setSellerInformation").style.display = "flex"
+    // id가 'container'인 요소 선택
+    const container = document.getElementById("container");
+    // 높이 값 설정 
+    container.style.height = "calc(130vh - 50px)";
 }
 
 export async function navItemDeleteUserInformationView() {
@@ -392,24 +587,54 @@ export async function navItemDeleteUserInformationView() {
     document.getElementById("deleteUserInformation").style.display = "block"
 }
 
+export async function navItemUserEmail() {
+    changeView("navItemUserEmail")
+    document.getElementById("userEmailInformation").style.display = "block"
+}
+
 export function readURL(input) {
     // 사용자가 등록한 프로필 이미지 미리보기 기능 제공
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
+    const fileType = input.files[0].type;
+    const ImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    if (!ImageTypes.includes(fileType)) {
+        alert("지원되지 않는 파일 형식입니다. 이미지 파일을 선택해 주세요.");
+        input.value = ''
+    }
+    else if (input.files && input.files[0]) {
+
+
+        const reader = new FileReader();
         reader.onload = function (e) {
             document.getElementById('profileView').src = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
     } else {
-        document.getElementById('profileView').src = "/static/images/pepe.jpg";
+        document.getElementById('profileView').src = "/static/images/default.jpg";
     }
 }
 
-
+export function readSellerURL(input) {
+    // 사용자가 등록한 프로필 이미지 미리보기 기능 제공
+    const fileType = input.files[0].type;
+    const ImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    if (!ImageTypes.includes(fileType)) {
+        alert("지원되지 않는 파일 형식입니다. 이미지 파일을 선택해 주세요.");
+        input.value = ''
+    }
+    else if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('sellerProfileView').src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        document.getElementById('sellerProfileView').src = "/static/images/store.gif";
+    }
+}
 
 export async function foldPostcode() {
     // 주소지 검색 API창
-    var element_wrap = document.getElementById('wrap');
+    const element_wrap = document.getElementById('wrap');
     // 우편번호 찾기 찾기 화면을 넣을 element
     element_wrap.style.display = 'none';
     // iframe을 넣은 element를 안보이게 한다.
@@ -417,17 +642,17 @@ export async function foldPostcode() {
 
 export async function addressSearchAPI() {
     // 주소지 검색 API
-    var element_wrap = document.getElementById('wrap');
+    const element_wrap = document.getElementById('wrap');
     // 현재 scroll 위치를 저장해놓는다.
-    var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+    const currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
     new daum.Postcode({
         oncomplete: function (data) {
             // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
             // 각 주소의 노출 규칙에 따라 주소를 조합한다.
             // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-            var addr = ''; // 주소 변수
-            var extraAddr = ''; // 참고항목 변수
+            let addr = ''; // 주소 변수
+            let extraAddr = ''; // 참고항목 변수
 
             //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
             if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
@@ -465,7 +690,11 @@ export async function addressSearchAPI() {
             // iframe을 넣은 element를 안보이게 한다.
             // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
             element_wrap.style.display = 'none';
+            document.getElementById('postcode').readOnly = true;
+            document.getElementById('address').readOnly = true;
 
+
+            window.scrollTo(0, 0);
             // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
             document.body.scrollTop = currentScroll;
         },
@@ -497,6 +726,8 @@ async function getDeliveryData(delivery_data) {
 
     document.getElementById("addressSubmitButton").style.display = "none"
     document.getElementById("addressLoad").style.display = "none"
+    document.getElementById("postcode").readOnly = false
+    document.getElementById("address").readOnly = false
     document.getElementById("dropdownContent").style.display = "none"
 
     // 메시지창 초기화
@@ -512,7 +743,8 @@ export async function changeAddressView() {
     document.getElementById("address").value = ''
     document.getElementById("detailAddress").value = ''
     document.getElementById("delivery_id").value = ''
-
+    document.getElementById("postcode").readOnly = false
+    document.getElementById("address").readOnly = false
     //  버튼 View 변경
     document.getElementById("addressLoad").style.display = "block"
     document.getElementById("addressSubmitButton").style.display = "block"
@@ -528,46 +760,53 @@ export async function changeAddressView() {
 async function DeliveryInformation(response_json) {
     // 드랍 다운 메뉴 설정
     const dropdown_content = document.querySelector(".dropdown-content");
-    const delivery_data = response_json.delivery
-
+    const deliveries_data = response_json.deliveries_data
     // 드랍 다운 메뉴 아이템 추가
-    Object.values(delivery_data).forEach((element) => {
-        dropdown_content.innerHTML += `
-        <p class="dropdown-item" id="delivery_${element.id}" data-hidden-value =${element}>${element.address}</p>
-        `
+    deliveries_data.forEach((element) => {
+        const newElement = document.createElement('p');
+        newElement.classList.add('dropdown-item');
+        newElement.id = `delivery_${element.id}`;
+        newElement.setAttribute('data-hidden-value', element);
+        newElement.innerText = element.address;
+        dropdown_content.appendChild(newElement);
     });
 
-    // 드랍 다운 메뉴 아이템에 이벤트 리스너 할당
-    Object.values(delivery_data).forEach((element) => {
+    // // 드랍 다운 메뉴 아이템에 이벤트 리스너 할당
+    deliveries_data.forEach((element) => {
         const delivery_information = document.getElementById(`delivery_${element.id}`);
         delivery_information.addEventListener("click", function () {
             getDeliveryData(element);
         });
 
     })
+
+    document.getElementById("customsCodeSubmitInput").value = response_json.customs_code
 }
 
 
 async function getUserDetailInformation(response_json) {
     // 프로필 정보 기입
     if (response_json.profile_image == null) {
-        document.getElementById('profileView').src = "/static/images/pepe.jpg";
+        document.getElementById('profileView').src = "/static/images/default.jpg";
     } else {
-        document.getElementById('profileView').setAttribute("src", `${BACK_BASE_URL}${response_json.profile_image}`)
+        document.getElementById('profileView').setAttribute("src", response_json.profile_image)
     }
 
     // 프로필 input value 조정
     document.getElementById("nickName").value = response_json.nickname
     document.getElementById("bio").value = response_json.introduction
-
-    //  회원 정보 input value 조정
-    document.getElementById("email").value = response_json.email
 }
 
 async function getSellerInformation(response_json) {
-    const seller_information = response_json.seller
+    const seller_information = response_json.user_seller
+    document.getElementById("sellerProfileView").style.backgroundImage = "url('/static/images/store.gif')";
     if (seller_information != null) {
-        // 데이터 불러오기
+
+        if (seller_information.company_img != null) {
+            document.getElementById("sellerProfileView").style.backgroundImage = `url(${seller_information.company_img})`;
+            // .setAttribute("src", response_json.profile_image)
+        }
+
         document.getElementById("navSellerInformation").innerText = "사업자 정보 수정"
         document.getElementById("business_owner_name").value = seller_information.business_owner_name
         document.getElementById("contact_number").value = seller_information.contact_number
@@ -585,11 +824,154 @@ async function getSellerInformation(response_json) {
 }
 
 
+export async function refusalOfSalesActivity(seller_id) {
+    const message = document.getElementById(`adminMessage_${seller_id}`).value
+    const information = {
+        seller_id: seller_id,
+        msg: message,
+    }
+    const response = await refusalOfSalesActivityAPI(information)
+    if (response.status == 204) {
+        alert("거절 하셨습니다.")
+        location.reload();
+    } else if (response.status == 404) {
+        alert("판매자 정보를 찾을 수 없습니다.")
+    } else if (response.status == 401) {
+        alert("로그인이 필요 합니다.")
+    } else if (response.status == 410) {
+        alert("판매자 정보가 없습니다.")
+        location.reload();
+    } else if (response.status == 400) {
+        alert("권한이 없습니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    }
+
+}
+
+export async function salesActivityApproval(seller_id) {
+    const response = await salesActivityApprovalAPI(seller_id)
+    if (response.status == 200) {
+        alert("승인 되었습니다.")
+        location.reload();
+    } else if (response.status == 404) {
+        alert("판매자 정보를 찾을 수 없습니다.")
+    } else if (response.status == 401) {
+        alert("로그인이 필요 합니다.")
+    } else if (response.status == 400) {
+        alert("권한이 없습니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    }
+}
+
+
+async function admin_view() {
+    document.getElementById("adminContainer").style.display = "flex"
+    document.getElementById("container").style.display = "none"
+    document.getElementById("modal").style.display = "none"
+    document.getElementById("header").style.display = "block"
+    document.getElementById("footer").style.display = "block"
+    const response = await getSellerInformationListAPI()
+    if (response.status == 200) {
+        const response_json = await response.json()
+        const adminContainer = document.getElementById("adminContainer")
+        await response_json.forEach((element) => {
+            const company_img = element.company_img == null ? "/static/images/store.gif" : element.company_img
+            adminContainer.innerHTML += `
+            <div class="seller-box">
+                <div class="seller-image-box" style="background-image: url(${company_img});">
+                </div>
+                <div class="seller-information-box">
+                    <div class="seller-left-box">
+                        <div class="seller-content-box">
+                            <div class="seller-label">상호 명</div>
+                            <div class="seller-content">${element.company_name}
+                            </div>
+                        </div>
+                        <div class="seller-content-box">
+                            <div class="seller-label">대표자 성함</div>
+                            <div class="seller-content">${element.business_owner_name}
+                            </div>
+                        </div>
+                        <div class="seller-content-box">
+                            <div class="seller-label">업체 연락처</div>
+                            <div class="seller-content">${element.contact_number}
+                            </div>
+                        </div>
+                        <div class="seller-content-box">
+                            <div class="seller-label">사업자 등록 번호</div>
+                            <div class="seller-content">${element.business_number}
+                            </div>
+                        </div>
+                        <div class="seller-content-box">
+                            <div class="seller-label">은행 명</div>
+                            <div class="seller-content">${element.bank_name}
+                            </div>
+                        </div>
+                        <div class="seller-content-box">
+                            <div class="seller-label">계좌 번호</div>
+                            <div class="seller-content">${element.account_number}
+                            </div>
+                        </div>
+                        <div class="seller-content-box">
+                            <div class="seller-label">예금주</div>
+                            <div class="seller-content">${element.account_holder}
+                            </div>
+                        </div>
+                        <div class="seller-content-box">
+                            <div class="seller-label">신청일</div>
+                            <div class="seller-content">${element.created_at}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="seller-right-box">
+                        <div class="seller-right-items">
+                            <div class="reject-button seller-control-button" id="approve_${element.user}">승인</div>
+                        </div>
+                        <div class="seller-right-items">
+
+                            <div class="approve-button seller-control-button" id="reject_${element.user}">거절</div>
+                        </div>
+                        <div class="seller-right-items admin-text">
+                            <label class="admin-label">거절 사유</label>
+                            <input class="admin-input" id="adminMessage_${element.user}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+    `
+            document.getElementById(`reject_${element.user}`).addEventListener("click", function () {
+                refusalOfSalesActivity(element.user)
+            });
+            document.getElementById(`approve_${element.user}`).addEventListener("click", function () {
+                salesActivityApproval(element.user)
+            });
+
+
+        });
+
+    } else {
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    }
+}
+
 
 async function getUserInformation() {
     // 사용자의 모든 정보 불러오기
     const response = await getUserInformationAPI()
     const response_json = await response.json()
+
+    // if (response_json.is_admin == true) {
+    //     admin_view()
+    // } else {
+    if (response_json.phone_number == null) {
+
+
+        document.getElementById("cellPhoneNumberRegistered").style.display = "none"
+    } else {
+        document.getElementById("guideContainer").style.display = "none"
+    }
+
+
 
     // 사용자의 상세 정보 input value 조정
     getUserDetailInformation(response_json)
@@ -604,8 +986,11 @@ async function getUserInformation() {
         // 소셜 로그인 계정일 경우
         document.getElementById("navItemUserInformation").style.display = "none"
     }
+    if (response_json.phone_number != null) {
+        document.getElementById("phoneNum").value = response_json.phone_number
+    }
 }
-
+// }
 
 
 export async function setEventListener() {
@@ -618,6 +1003,14 @@ export async function setEventListener() {
     document.getElementById("navItemUserPhoneNumber").addEventListener("click", navItemUserPhoneNumberView)
     document.getElementById("navItemSellerInformation").addEventListener("click", navItemSellerInformationView)
     document.getElementById("navItemDeleteUserInformation").addEventListener("click", navItemDeleteUserInformationView)
+    document.getElementById("navItemUserEmail").addEventListener("click", navItemUserEmail)
+    document.getElementById("navItemUserCustomsCodeInformation").addEventListener("click", navItemUserCustomsCodeInformation)
+
+    // modal 액션 
+    document.getElementById("modal-close-button").addEventListener("click", closeModal)
+    document.getElementById("modal-left-button").addEventListener("click", modalLeftButton)
+    document.getElementById("modal-right-button").addEventListener("click", modalRightButton)
+    document.getElementById('modal-skip-today').addEventListener('click', hideModalForToday);
 
     // 드랍 다운 메뉴
     const dropdownButton = document.querySelector(".dropdown-button");
@@ -641,10 +1034,13 @@ export async function setEventListener() {
     // 프로필 이미지 미리보기
     document.getElementById("profileImageFile").addEventListener("change", function (event) { readURL(event.target); });
 
+    document.getElementById("sellerImageFile").addEventListener("change", function (event) { readSellerURL(event.target); });
+
+
     // 프로필 정보 수정
     document.getElementById("profileSubmitButton").addEventListener("click", updateProfileInformation)
 
-    // 이메일, 비밀번호 변경
+    // 비밀번호 변경
     document.getElementById("userInformationSubmitButton").addEventListener("click", updateInformation)
 
     // 불러온 배송지 정보 숨기고, 새로운 배송지 작성하기
@@ -663,15 +1059,140 @@ export async function setEventListener() {
     // 휴면 계정 전환, 이벤트 리스너 할당
     document.getElementById("deleteUserInformationButton").addEventListener("click", deleteUserInformation)
 
+    // 통관번호
+    document.getElementById("customsCodeSubmitButton").addEventListener("click", setCustomsCode)
+
+    // 휴대폰 인증 번호 발급 받기
+    document.getElementById("getAuthNumber").addEventListener("click", getAuthNumber)
+    // 휴대폰 인증 번호 제출
+    document.getElementById("submitPhoneNumber").addEventListener("click", submitVerificationNumbers)
+
+    // 변경 이메일 인증 번호 발급 받기
+    document.getElementById("getEmailVerificationCode").addEventListener("click", getEmailVerificationCode)
+    // 변경 이메일 인증 번호 인증 하기
+    document.getElementById("submitChangeEamilInformation").addEventListener("click", submitChangeEamilInformation)
+}
+
+const autoHypenPhone = function (str) {
+    str = str.replace(/[^0-9]/g, '');
+    let tmp = '';
+    if (str.length < 4) {
+        return str;
+    } else if (str.length < 7) {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3);
+        return tmp;
+    } else if (str.length < 11) {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 3);
+        tmp += '-';
+        tmp += str.substr(6);
+        return tmp;
+    } else {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 4);
+        tmp += '-';
+        tmp += str.substr(7);
+        return tmp;
+    }
+
+    return str;
+}
+
+
+const phoneNum = document.getElementById('phoneNum');
+
+phoneNum.onkeyup = function () {
+    this.value = autoHypenPhone(this.value);
+}
+
+
+
+
+export async function closeModal() {
+    document.getElementById("modal").style.display = "none"
+    document.getElementById("header").style.display = "block"
+    document.getElementById("footer").style.display = "block"
+}
+
+export async function changeModal(eventValue) {
+    const message = [
+        "프로필 정보를 수정 합니다.",
+        "프로필 이미지를 등록 합니다.",
+        "닉네임 정보를 수정 합니다.",
+        "소개글을 입력하고 제출해 주세요.",
+        "비밀 번호 정보를 수정 합니다.",
+        "기존 비밀번호를 입력해 주세요.",
+        "새로운 비밀번호 정보를 입력하고 제출해 주세요.",
+        "배송 정보를 기록하기 위해서 연락처 정보가 필요 합니다.",
+        "휴대폰 번호를 등록하고 인증 번호를 발급 받아 주세요",
+        "발급 받은 인증 번호를 기록하고 인증을 완료해 주세요.",
+        "배송 정보를 기록해 주세요.",
+        "우편 번호 찾기를 통해 간편히 주소 정보를 찾아 보세요.",
+        "주소지 정보를 확인하고 제출해 주세요.",
+        "등록하신 주소지 정보를 선택하고 수정 또는 삭제할 수 있습니다.",
+        "주소지 정보를 수정하고나 삭제를 통해 관리할 수 있습니다.",
+        "주소지 작성을 통해 수정을 중단하고 새로운 주소지 정보를 등록할 수 있습니다.",
+        "이메일 정보를 수정할 수 있습니다.",
+        "새로운 이메일 정보를 등록해 주세요.",
+        "발급받은 인증 코드를 등록하고 인증을 완료해 주세요.",
+        "사업자 정보를 등록/수정/삭제 할 수 있습니다.",
+        "로고 이미지를 등록해 주세요.",
+        "정보를 기입후 등록/수정/삭제 할 수 있습니다.",
+        "계정을 비 활성화 할 수 있습니다.",
+        "버튼을 눌러 계정을 비 활성화 합니다.",
+        "통관 번호를 등록/수정 할 수 있습니다.",
+        "통관 번호를 등록하고 제출 해 주세요.",
+    ]
+    document.getElementById("modal-image-box").style.backgroundImage = `url('/static/images/user_detail/user_detail_${eventValue}.png')`;
+    document.getElementById("modal-message-box").innerText = message[eventValue]
+    document.getElementById("modal-page").innerText = `${eventValue}/25`
+}
+
+export async function modalLeftButton() {
+    modal_image_index -= modal_image_index == 0 ? 0 : 1
+    changeModal(modal_image_index)
+}
+export async function modalRightButton() {
+    modal_image_index += modal_image_index == 25 ? 0 : 1
+    changeModal(modal_image_index)
+}
+
+function getTodayString() {
+    // 오늘 날짜 가져오기
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+function checkSkipToday() {
+    const skipToday = localStorage.getItem('user-detail-modal-skip-today');
+    const today = getTodayString();
+    if (skipToday === today) {
+        closeModal();
+    }
+}
+
+function hideModalForToday() {
+    closeModal();
+
+    const today = getTodayString();
+    localStorage.setItem('user-detail-modal-skip-today', today);
 }
 
 
 window.onload = async () => {
     setEventListener()
+    checkSkipToday()
     const payload_parse = await getPayloadParse()
     if (payload_parse == null) {
         window.location.replace(`${FRONT_BASE_URL}/index.html`)
     } else {
         getUserInformation()
     }
-}   
+}

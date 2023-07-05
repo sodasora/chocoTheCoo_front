@@ -1,4 +1,23 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, getPointStaticView,getUserProfileAPIView } from './api.js'
+import { BACK_BASE_URL, FRONT_BASE_URL, getPointStaticView, getUserProfileAPIView } from './api.js'
+
+
+// 현재 내 포인트 확인 함수
+async function getPoint() {
+
+    // 오늘 날짜 형식맞추기 0000-00-00
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = String(today.getMonth() + 1).padStart(2, '0'); //두자리되도록 앞에0채우기
+    let date = String(today.getDate()).padStart(2, '0'); //두자리되도록 앞에0채우기
+    today = `${year}-${month}-${date}`;
+
+    const mypoint = await getPointStaticView(today)
+    const mypoint_json = await mypoint.json()
+
+    const point = document.getElementById("point")
+    point.innerText = `내 포인트 : ${mypoint_json.total_point.toLocaleString({ style: 'currency' })} P`
+}
+
 
 /* 헤더 가져오기 */
 async function injectHeader() {
@@ -12,11 +31,11 @@ async function injectHeader() {
 
     let headerHtml = await fetch("./header.html")
     let data = await headerHtml.text()
-    document.querySelector("header").innerHTML = data; 
-    
+    document.querySelector("header").innerHTML = data;
+
     // 메인 타이틀 클릭 시 홈으로
     const title = document.getElementById("nav-title")
-    title.addEventListener("click", function(){
+    title.addEventListener("click", function () {
         window.location.replace(`${FRONT_BASE_URL}`)
     })
 
@@ -34,39 +53,61 @@ async function injectHeader() {
         signup.style.display = "none";
         login.style.display = "none";
 
+        const mobileSignup = document.getElementById("mobileSignUp")
+        const mobileLogin = document.getElementById("mobileLogin")
+        mobileSignup.style.display = "none";
+        mobileLogin.style.display = "none";
+
+        // 로그아웃
         const logout = document.getElementById("logout")
         logout.addEventListener("click", function () {
             handleLogout()
         })
 
+        const mobileLogout = document.getElementById("mobileLogout")
+        mobileLogout.addEventListener("click", function () {
+            handleLogout()
+        })
+
+        getPoint()
+
         // console.log(payload_parse)
-        // console.log(payload_parse.user_id)
-        const user_id = payload_parse.user_id
-        const seller = await getUserProfileAPIView(user_id)
-        // console.log(seller.is_seller)
-        // 판매자가 아니라면 판매자페이지 숨기기
-        if (!seller.is_seller){
-            const sellerpage = document.getElementById("sellerpage")
-            sellerpage.style.display = "none"
+        // 판매자가 아니라면 판매자등록페이지로 이동
+        if (!payload_parse.is_seller) {
+            const onlyseller = document.getElementById("seller")
+            onlyseller.addEventListener("click", function () {
+                window.location.href = "user_detail_page.html"
+            })
         }
 
-
     } else {
-    // 비로그인 상태에서 장바구니,마이페이지,판매자페이지,로그아웃 숨기기
-    // 비로그인 상태에서 내 포인트,포인트충전 숨기기
-    const cart = document.getElementById("cart")
-    const mypage = document.getElementById("mypage")
-    const sellerpage = document.getElementById("sellerpage")
-    const point = document.getElementById("point")
-    const charge = document.getElementById("charge")
-    
-    cart.style.display = "none"
-    mypage.style.display = "none"
-    logout.style.display = "none"
-    sellerpage.style.display = "none"
-    point.style.display = "none"
-    charge.style.display = "none"
-}
+        // 비로그인 상태에서 장바구니,마이페이지,판매자페이지,로그아웃 숨기기
+        // 비로그인 상태에서 내 포인트,포인트충전 숨기기
+        const cart = document.getElementById("cart");
+        const mypage = document.getElementById("mypage");
+        const point = document.getElementById("point");
+        const charge = document.getElementById("charge");
+        const chats = document.getElementById("chatting");
+        const CBTI = document.getElementById("CBTI");
+        const onlyseller = document.getElementById("seller");
+
+        logout.style.display = "none"
+        mobileLogout.style.display = "none"
+        point.remove()
+        cart.remove()
+
+        function login() {
+            window.location.href = "login.html"
+        }
+
+        mypage.addEventListener("click", login)
+        charge.addEventListener("click", login)
+        chats.addEventListener("click", login)
+        CBTI.addEventListener("click", login)
+        onlyseller.addEventListener("click", login)
+
+    }
+    setNavBarCurrent();
 }
 injectHeader();
 
@@ -148,22 +189,74 @@ function init() {
 }
 init();
 
+function setNavBarCurrent() {
+    const currentPath = window.location.pathname;
+    const pageName = currentPath.split("/")[1].split(".")[0];
 
-// 현재 내 포인트 확인 함수
-async function getPoint() {
-    
-    // 오늘 날짜 형식맞추기 0000-00-00
-    let today = new Date();
-    let year = today.getFullYear();
-    let month = String(today.getMonth() + 1).padStart(2, '0'); //두자리되도록 앞에0채우기
-    let date = String(today.getDate()).padStart(2, '0'); //두자리되도록 앞에0채우기
-    today = `${year}-${month}-${date}`;
-    
-    const mypoint = await getPointStaticView(today)
-    const mypoint_json = await mypoint.json()
-    
-    const point = document.getElementById("point")
-    point.innerText = `내 포인트 : ${mypoint_json.total_point.toLocaleString({ style: 'currency'})} P`
+    const charge = document.getElementById("chargeHeader");
+    const mypage = document.getElementById("mypageHeader");
+    const seller = document.getElementById("sellerHeader");
+    const chatting = document.getElementById("chattingHeader");
+    const CBTI = document.getElementById("CBTIHeader");
+
+    const pointPages = [
+        "pointcharge"
+    ]
+    const myPages = [
+        "bill",
+        "bill_detail",
+        "mypage",
+        "myreview",
+        "user_detail_page",
+    ]
+
+    const ChattingPages = [
+        "chatindex",
+        "chatroom"
+    ]
+    const CBTIPage = [
+        "cbti"
+    ]
+    const otherPages = [
+        "cart",
+        "index",
+        "ordercheck",
+        "product_detail",
+        "productregistration",
+        "writereview",
+        "subscriptioninfo",
+    ]
+
+    if (pointPages.includes(pageName)) {
+        charge.setAttribute("class", "is-current")
+        mypage.setAttribute("class", "")
+        seller.setAttribute("class", "")
+        chatting.setAttribute("class", "")
+        CBTI.setAttribute("class", "")
+    } else if (ChattingPages.includes(pageName)) {
+        charge.setAttribute("class", "")
+        mypage.setAttribute("class", "")
+        seller.setAttribute("class", "")
+        chatting.setAttribute("class", "is-current")
+        CBTI.setAttribute("class", "")
+    } else if (myPages.includes(pageName)) {
+        charge.setAttribute("class", "")
+        mypage.setAttribute("class", "is-current")
+        seller.setAttribute("class", "")
+        chatting.setAttribute("class", "")
+        CBTI.setAttribute("class", "")
+    } else if (CBTIPage.includes(pageName)) {
+        charge.setAttribute("class", "")
+        mypage.setAttribute("class", "")
+        seller.setAttribute("class", "")
+        chatting.setAttribute("class", "")
+        CBTI.setAttribute("class", "is-current")
+    } else if (otherPages.includes(pageName)) {
+        charge.setAttribute("class", "")
+        mypage.setAttribute("class", "")
+        seller.setAttribute("class", "")
+        chatting.setAttribute("class", "")
+        CBTI.setAttribute("class", "")
+    }
 }
-getPoint()
 

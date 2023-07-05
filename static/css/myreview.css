@@ -12,16 +12,56 @@
     font-style: normal;
 }
 
+body {
+    background-color: #C4A492;
+}
 
-button {
-    height: 3vw;
+.button-sets>button,
+#button-content>button,
+.subscription-section>button,
+#sub-button {
+    height: 4vh;
     font-size: 1vw;
-    margin-top: 1.2vw;
     background-color: rgba(109, 86, 68, 0.822);
     color: white;
     border-radius: 10px;
+    border: none;
+    font-family: 'S-CoreDream-3Light';
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);   
 }
 
+.sub-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-width: 10em !important;
+    width: 25vw;
+    margin: 1em 0;
+}
+
+.button_page.active,
+.button_page:hover {
+    color: #0b5ed7;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.button_page {
+    height: 4vh;
+    font-size: 1vw;
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+    border: none;
+    font-family: 'S-CoreDream-3Light';
+}
+
+#group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
 .section {
     background-color: #C4A492;
@@ -30,12 +70,7 @@ button {
 
 .mypage-intro {
     display: flex;
-    margin-top: 20px;
-}
-
-
-.mypage-intro {
-    display: flex;
+    align-items: center;
     margin-top: 20px;
 }
 
@@ -45,6 +80,7 @@ button {
     font-weight: bold;
     padding-left: 40px;
     color: white;
+    margin-bottom: 0;
 }
 
 .line {
@@ -61,13 +97,15 @@ button {
     height: auto;
     text-align: center;
     margin-top: 30px;
-    margin-left: 60px;
     border: 2px solid white;
     border-radius: 20px;
+    color: white;
 }
 
 .profile {
     width: 23vw;
+    height: 23vw;
+    object-fit: cover;
 }
 
 .subscription-card {
@@ -75,13 +113,13 @@ button {
     height: 18vw;
     padding: 20px;
     text-align: center;
-    margin-top: 10px;
-    margin-left: 60px;
     margin-bottom: 20px;
     border: 2px solid white;
     border-radius: 20px;
     font-family: 'S-CoreDream-3Light';
     font-size: 1.5vw;
+    color: white;
+    font-weight: bold;
 }
 
 /*프로필 기본 사진*/
@@ -103,12 +141,9 @@ button {
     margin-bottom: 1.5vw;
 }
 
-.sub-button {
-    margin-left: 24vw;
-}
-
 .card {
     width: 60vw;
+    min-height: 20vh;
     margin-left: 50px;
     margin-top: 20px;
     font-family: 'S-CoreDream-3Light';
@@ -116,6 +151,8 @@ button {
 
 .card-body {
     display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 0.8vw;
 }
 
@@ -125,14 +162,17 @@ button {
 }
 
 .card-text {
+    word-break: break-all;
+    padding: 1em;
     margin-left: 20px;
+    width: 100%;
 }
 
 .review-title {
     font-size: 1.5vw;
     font-weight: bold;
+    margin-bottom: 10px;
 }
-
 
 .title {
     font-weight: bold;
@@ -145,9 +185,88 @@ button {
     justify-content: center;
 }
 
+#button-review {
+    cursor: pointer;
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    margin-top: 0px;
+    margin-left: auto;
+    height: 30px;
+    width: 30px;
+}
+
 .button_page.active,
 .button_page:hover {
     color: #0b5ed7;
     font-weight: 600;
     text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+    .line {
+        width: 90%;
+    }
+
+    #my-review-list {
+        margin-right: 10px;
+    }
+
+    .profile-section {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .sub-button {
+        width: 80%;
+        margin-top: 10px;
+        margin-left: 35px;
+        font-size: 1.2em!important;
+    }
+
+    .subscription-section {
+        width: 80%;
+    }
+
+    .profile {
+        width: 23vw;
+    }
+
+    .profile-card {
+        font-family: 'S-CoreDream-3Light';
+        font-size: 1.5vw;
+        width: 80%;
+        height: auto;
+        text-align: center;
+        margin-top: 30px;
+        border: 2px solid white;
+        border-radius: 20px;
+        color: white;
+        font-size: 1.2em!important;
+    }
+
+    .subscription-card {
+        height: auto;
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+        border: 2px solid white;
+        border-radius: 20px;
+        font-family: 'S-CoreDream-3Light';
+        font-size: 1.5vw;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+
+    #review {
+        width: 80%;
+    }
+
+    #button-review {
+        width: 23vw;
+    }
 }

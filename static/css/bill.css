@@ -12,89 +12,71 @@
     font-style: normal;
 }
 
-button {
-    height: 50px;
-    font-size: 20px;
-    margin-top: 10px;
+body {
+    background-color: #C4A492;
+}
+
+.button-sets>button,
+#button-content>button,
+.subscription-section>button,
+#sub-button {
+    height: 4vh;
+    font-size: 1vw;
     background-color: rgba(109, 86, 68, 0.822);
     color: white;
     border-radius: 10px;
+    border: none;
+    font-family: 'S-CoreDream-3Light';
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
+}
+
+#sub-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-width: 10em !important;
+    width: 25vw;
+    margin: 1em 0;
+    font-size: 1.2em;
+}
+
+.button_page.active,
+.button_page:hover {
+    color: #0b5ed7;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.button_page {
+    height: 4vh;
+    font-size: 1vw;
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+    border: none;
+    font-family: 'S-CoreDream-3Light';
+}
+
+#myBill {
+    font-family: '국립박물관문화재단클래식B';
+    font-size: 4vw;
+    font-weight: bold;
+    padding-left: 40px;
+    color: white;
+    margin-bottom: 0;
 }
 
 .section {
+    margin-top: 10em;
     background-color: #C4A492;
     height: auto;
 }
 
 .mypage-intro {
     display: flex;
+    align-items: center;
     margin-top: 20px;
 }
-
-#myreward {
-    font-family: '국립박물관문화재단클래식B';
-    font-size: 50px;
-    font-weight: bold;
-    padding-left: 40px;
-    color: white;
-}
-
-.card-points {
-    width: 500px;
-    background-color: white;
-    height: fit-content;
-    max-height: 460px;
-    margin-left: 50px;
-    margin-top: 20px;
-    padding: 10px;
-    text-align: center;
-    font-family: 'S-CoreDream-3Light';
-    font-size: 1.5em;
-    font-weight: bold;
-    padding-bottom: 10px;
-    color: rgba(100, 81, 66, 0.822);
-}
-
-.points-list {
-    font-family: 'S-CoreDream-3Light';
-    text-align: left;
-    font-size: 0.8em;
-    font-weight: lighter;
-    padding-bottom: 3px;
-    margin-left: 20px;
-    color: rgba(100, 81, 66, 0.822);
-}
-
-#month-total {
-    font-family: 'S-CoreDream-3Light';
-    font-size: 30px;
-    font-weight: bold;
-    margin-left: 40px;
-    color: white;
-}
-
-#total-reward {
-    font-family: 'S-CoreDream-3Light';
-    font-size: 30px;
-    font-weight: bold;
-    margin-left: 50px;
-    color: white;
-}
-
-#totalpoint {
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-td {
-    width: 90px;
-    height: 60px;
-}
-
-.Calendar {
-    text-align: center;
-}
-
 
 .line {
     border: 2px solid rgba(255, 255, 255, 0.729);
@@ -102,75 +84,37 @@ td {
     margin-left: 30px;
 }
 
-.calendar-section {
-    background-color: white;
-    margin-left: 30px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    width: 600px;
-    height: auto;
-    border-radius: 5px;
-    box-shadow: 0px 35px 20px -30px rgba(0, 0, 0, 0.3);
-    padding: 20px;
-}
-
-.Calendar>thead>tr:first-child>td {
-    font-family: 'S-CoreDream-3Light';
-    font-size: 1.7em;
-    font-weight: bold;
-    padding-bottom: 10px;
-    color: rgba(100, 81, 66, 0.822);
-}
-
-.Calendar>thead>tr:last-child>td {
-    font-family: 'S-CoreDream-3Lightd';
-    font-size: 1.5em;
-    background-color: rgba(253, 121, 103, 0.322);
-    color: rgba(61, 52, 45, 0.822);
-}
-
-.Day {
-    cursor: pointer;
-}
-
-.Day.choiceDay {
-    background-color: #3E85EF;
-    font-family: 'MapoFlowerIsland';
-    color: #fff;
-    cursor: pointer;
-}
-
-.point-calender {
-    justify-content: center;
-}
-
-/* section calendar 끝 */
-
 .profile-card {
     font-family: 'S-CoreDream-3Light';
-    font-size: 1.3em;
+    font-size: 1.5vw;
     width: 25vw;
     height: auto;
     text-align: center;
     margin-top: 30px;
-    margin-left: 60px;
     border: 2px solid white;
     border-radius: 20px;
+    color: white;
+}
+
+.profile {
+    width: 23vw;
+    height: 23vw;
+    object-fit: cover;
 }
 
 .subscription-card {
     width: 25vw;
-    height: 300px;
+    height: 18vw;
     padding: 20px;
     text-align: center;
-    margin-top: 30px;
-    margin-left: 60px;
+    margin-top: 10px;
     margin-bottom: 20px;
     border: 2px solid white;
     border-radius: 20px;
-    text-align: center;
     font-family: 'S-CoreDream-3Light';
-    font-size: 1.4em;
+    font-size: 1.5vw;
+    color: white;
+    font-weight: bold;
 }
 
 /*프로필 기본 사진*/
@@ -182,28 +126,6 @@ td {
 
 #user-edit {
     cursor: pointer;
-}
-
-#wishitem {
-    padding: 20px;
-    text-align: center;
-    width: 300px;
-    height: 300px;
-    margin-left: 50px;
-    margin-bottom: 50px;
-    border: 2px solid white;
-    border-radius: 20px;
-    font-family: 'S-CoreDream-3Light';
-    font-size: 1.3em;
-}
-
-.wishimage {
-    width: fit-content;
-}
-
-.wishname {
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 .subscrip-view {
@@ -227,7 +149,7 @@ td {
 }
 
 .pd-info {
-    min-width: 50em;
+    min-width: 30vw;
     display: flex;
     font-family: 'S-CoreDream-3Light';
     font-size: 1.2em;
@@ -252,14 +174,171 @@ td {
     display: flex;
 }
 
-.pd-cart-icon{
+.pd-cart-icon {
     margin-left: auto;
     width: 2em;
     height: 2em;
     cursor: pointer;
 }
 
-.pd-cart-icon:hover{
+.pd-cart-icon:hover {
     width: 2.1em;
     height: 2.1em;
+}
+
+#billLists {
+    display: flex;
+    flex-direction: column;
+    min-width: 30vw;
+    padding: 1em 3em;
+}
+
+.section-2 {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.profile-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#bill-buttons {
+    position: relative;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.box {
+    margin-top: 20px;
+}
+
+#toast {
+    display: none;
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    transition: opacity 0.5s;
+    z-index: 1000;
+}
+
+
+@media screen and (max-width: 800px) {
+
+    .pd-info-thumb {
+        object-fit: cover;
+        width: 20vw;
+        height: auto;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+    }
+
+
+    .pd-info {
+        width: 100%;
+        display: flex;
+        font-family: 'S-CoreDream-3Light';
+        font-size: 2vw;
+        color: aliceblue;
+        margin-bottom: 1em;
+    }
+
+    #billLists {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+    }
+
+    #sectionBox {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-right: 0 !important;
+
+    }
+
+    .section-1 {
+        width: 100%;
+    }
+
+    .section-2 {
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        align-items: center;
+        width: 100%;
+    }
+
+    #billLists {
+        width: 100%;
+    }
+
+    .profile-section {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .sub-button {
+        width: 80% !important;
+    }
+
+    .subscription-section {
+        width: 80%;
+    }
+
+    .profile {
+        width: 23vw;
+    }
+
+    .profile-card {
+        font-family: 'S-CoreDream-3Light';
+        font-size: 1.5vw;
+        width: 80%;
+        height: auto;
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border: 2px solid white;
+        border-radius: 20px;
+        color: white;
+        font-size: 1.2em !important;
+    }
+
+    .subscription-card {
+        height: auto;
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+        border: 2px solid white;
+        border-radius: 20px;
+        font-family: 'S-CoreDream-3Light';
+        font-size: 1.5vw;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2em !important;
+    }
+
+    .line {
+        width: 90%;
+    }
+
+}
+
+@media screen and (max-width: 550px) {
+    .section {
+        margin-top: 0 !important
+    }
 }

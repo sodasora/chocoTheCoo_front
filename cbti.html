@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/cbti.css">
+    <title>ChocoTheCoo</title>
+</head>
+
+<!-- header -->
+<header></header>
+
+<!-- body -->
+
+<body>
+    <div class="title-container">
+        <div class="image-box"></div>
+    </div>
+
+    <div class="section2">
+
+        <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-interval="false">
+            <div class="carousel-inner">
+                <!-- 1번 문항  -->
+                <div class="carousel-item active" id="slide1">
+                    <img id="cBTi" src="/static/images/CBTI.png" data-bs-target="#carouselExampleControlsNoTouching"
+                        data-bs-slide="next">
+                    <div id="startButton" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+                        시작하기
+                    </div>
+                </div>
+
+                <!-- 1번문항 -->
+                <div class="carousel-item">
+                    <label class="form-check-label" for="flexCheckDefault" id="label-title">
+                        1. 나에게 친해지고 싶은 사람이 생긴다면
+                    </label>
+                    <div class="form-check" id="1">
+                        <label class="form-check-label">
+                            <input class="form-check-input last" type="radio" value="1" id="EI_one_1" name="EI_one">
+
+                            a. 초콜렛으로 환심을 산다.
+                        </label>
+                    </div>
+                    <div class="form-check" id="2">
+                        <label class="form-check-label">
+                            <input class="form-check-input last" type="radio" value="0" id="EI_one_2" name="EI_one">
+
+                            b. 가만히 있는다.
+                        </label>
+                    </div>
+                </div>
+                <!-- 2번 문항 -->
+                <div class="carousel-item">
+                    <label class="form-check-label" for="flexCheckDefault" id="label-title">
+                        2. 나는 내가 좋아하는 초콜렛을<br> 모르는 사람에게 소개할 수 있다.
+                    </label>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="EI_two_1" name="EI_two">
+                            a. 껌이다.
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="EI_two_2" name="EI_two">
+                            b. 비밀이다.
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 3번 문항 -->
+                <div class="carousel-item">
+                    <label class="form-check-label" for="flexCheckDefault" id="label-title">
+                        3. 초콜릿 테마파크를 방문한다면,<br> 어떤 것들을 가장 기대하시나요?
+                    </label>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="EI_three_1" name="EI_three">
+
+                            a. 사람들로 북적북적한 다양한 체험 부스
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="EI_three_2" name="EI_three">
+
+                            b. 세상에서 가장 조용한 초코 카페
+                        </label>
+                    </div>
+                </div>
+                <!-- 4번 문항 -->
+                <div class="carousel-item">
+                    <label class="form-check-label" for="flexCheckDefault" id="label-title">
+                        4. 새로운 맛의 초콜렛을 발견했다.
+                    </label>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="NS_one_1" name="NS_one">
+                            a. 무슨 맛인지 상상한다.
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="NS_one_2" name="NS_one">
+
+                            b. 오.. 신상품이네?
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 5번 문항 -->
+                <div class="carousel-item">
+                    <label class="form-check-label" for="flexCheckDefault" id="label-title">
+                        5. 당신은 초콜릿을 맛보고 <br>
+                        '와, 이거 진짜 맛있는데!'라는 평가를 내릴 때,<br>
+                        어떤 특징에 반응하나요?
+                    </label>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="NS_two_1" name="NS_two">
+
+                            a. 얼마지? 어디서 샀지? 다른맛은 없나?
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="NS_two_2" name="NS_two">
+
+                            b. 와 맛있다. 카카오맛이 난다
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 6번 문항 -->
+                <div class="carousel-item">
+                    <label class="form-check-label" for="flexCheckDefault" id="label-title">
+                        6. 초콜릿 가게에서 가장 먼저<br> 눈길 가는 코너는 어디인가요?
+                    </label>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="NS_three_1" name="NS_three">
+
+                            a. 할인 코너
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="NS_three_2" name="NS_three">
+
+                            b. 신상품 코너
+
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 7번 문항 -->
+                <div class="carousel-item">
+                    <label class="form-check-label" for="flexCheckDefault" id="label-title">
+                        7. 친구가 고민을 털어놓는다
+                    </label>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="FT_one_1" name="FT_one">
+
+                            a. 같이 공감해준다.
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="FT_one_2" name="FT_one">
+
+                            b. 해결책을 제시한다.
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 8번문항 -->
+
+                <div class="carousel-item">
+                    <label class="form-check-label" for="flexCheckDefault" id="label-title">
+                        8. 친구로부터 초콜렛을 선물받는다면
+                    </label>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="FT_two_1" name="FT_two">
+
+                            a. 감동받는다.
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="FT_two_2" name="FT_two">
+
+                            b. (예의상) 고마움을 표한다.
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 9번 문항 -->
+                <div class="carousel-item">
+                    <label class="form-check-label" for="flexCheckDefault" id="label-title">
+                        9. 연인과 길을 걷고 있던 당신, 갑자기 연인이<br> "오늘 운동을 너무 열심히 했는데. <br>초콜렛 먹을지
+                        참고 그냥 쉴지 고민돼.."<br> 라고 한다. 이때 당신 반응은?
+                    </label>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="FT_three_1" name="FT_three">
+
+                            a. 카카오 99%는 운동하고 먹어도 괜찮아!
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="FT_three_2" name="FT_three">
+
+                            b. 오늘 많이 힘들겠구나. 카페가서 좀 앉아있을까?
+                        </label>
+                    </div>
+                </div>
+                <!-- 10번 문항 -->
+                <div class="carousel-item">
+                    <label class="form-check-label" for="flexCheckDefault" id="label-title">
+                        10. 초콜렛 마케팅 공모전을 발견한 당신,<br> 그런데 공모전 마감이 너무 짧다! 이때 당신은
+                    </label>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="PJ_one_1" name="PJ_one">
+
+                            a. 일단 시작하면 내일의 내가 하겠지!
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="PJ_one_2" name="PJ_one">
+
+                            b. 예정에 없던 일이니 다음 공모전을 기약한다.
+
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 11번 문항 -->
+                <div class="carousel-item">
+                    <label class="form-check-label" for="flexCheckDefault" id="label-title">
+                        11. 갑자기 초콜렛이 먹고 싶은 당신, <br>통장을 확인해보니 2000원밖에 없다. <br>이때 당신은
+                    </label>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="PJ_two_1" name="PJ_two">
+
+                            a. 일단 배고프니까 그냥 사먹는다.
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input last" type="radio" value="" id="PJ_two_2" name="PJ_two">
+
+                            b. 참는다.
+                        </label>
+                    </div>
+
+                </div>
+
+                <!-- 12번 문항 -->
+                <div class="carousel-item">
+                    <label class="form-check-label" for="flexCheckDefault" id="label-title">
+                        12. 초콜렛을 잔뜩 샀다.
+                    </label>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="radio" value="" id="PJ_three_1" name="PJ_three">
+
+                            a. 행복하다.
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="radio" value="" id="PJ_three_2" name="PJ_three">
+
+                            b. 행복하다.
+                        </label>
+                    </div>
+                    <!-- <button type="button" class="btn btn-outline-success" id="CBTI-result"> 결과보기 </button> -->
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" id="CBTI-result-btn" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">
+                        결과보기
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">CBTI 결과</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" id="cbti-result">
+                                    <div class="title" id="cbti-result-title"></div>
+                                    <div class="description" id="cbti-result-description"></div>
+                                    <!-- CBTI 결과 들어가는 부분!  -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" id="modal-button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" id="prev-button"
+                data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+                <img src = "/static/images/left-arrow.png" id="left-arrow">
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" id="next-button"
+                data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+                <img src = "/static/images/right-arrow.png" id="right-arrow">
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+    </div>
+
+    </div>
+</body>
+<!-- footer -->
+<footer></footer>
+<!-- script -->
+<script src="/static/js/api.js" type="module"></script>
+<script src="/static/js/loader.js" type="module"></script>
+<script src="/static/js/cbti.js" type="module"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+    integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+    crossorigin="anonymous"></script>
+
+</html>

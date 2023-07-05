@@ -1,7 +1,7 @@
 import {
     BACK_BASE_URL, FRONT_BASE_URL, getPointView, getPointStaticView,
     postPointAttendanceView, getUserProfileAPIView,
-    getSubscribeView, patchSubscribeView,
+    getSubscribeView, patchSubscribeView, payload, sellerFollowAPI, productDetail
 } from "./api.js";
 
 // 달력
@@ -143,6 +143,14 @@ async function Choicelist() {
                 newP.setAttribute("style", "color:red;")
                 newP.innerText = `${point_date}` + " 결제: " + point[id].point + "p"
             }
+            if (point[id].point_category == "정산") {
+                newP.setAttribute("style", "color:blue;")
+                newP.innerText = `${point_date}` + " 정산: " + point[id].point + "p"
+            }
+            if (point[id].point_category == "환불") {
+                newP.setAttribute("style", "color:blue;")
+                newP.innerText = `${point_date}` + " 환불: " + point[id].point + "p"
+            }
             return newP
         }
 
@@ -233,15 +241,8 @@ async function Choicelist() {
     const minus_statistic = document.createElement("div")
     minus_statistic.setAttribute("class", "point-statistic")
     minus_statistic.setAttribute("id", "totalminus")
-    minus_statistic.innerText = "총 이용포인트: " + response_point_statistic_json["day_minus"] + "p"
+    minus_statistic.innerText = "총 이용포인트: " + response_point_statistic_json["day_minus"].toLocaleString() + "p"
     newstatistic.appendChild(minus_statistic)
-
-    const statistic = document.createElement("div")
-    statistic.setAttribute("class", "point-statistic")
-    statistic.setAttribute("id", "totalpoint")
-    statistic.innerText = "총포인트: " + response_point_statistic_json["day_total_point"] + "p"
-    newstatistic.appendChild(statistic)
-
 }
 
 
@@ -285,27 +286,35 @@ async function getToday() {
             }
             if (point[id].point_category == "텍스트리뷰") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 텍스트(별점)리뷰: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 텍스트(별점)리뷰: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "포토리뷰") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 포토리뷰: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 포토리뷰: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "구매") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 구매: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 구매: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "충전") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 충전: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 충전: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "구독권이용료") {
                 newP.setAttribute("style", "color:red;")
-                newP.innerText = `${point_date}` + " 구독권이용료: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 구독권이용료: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "결제") {
                 newP.setAttribute("style", "color:red;")
-                newP.innerText = `${point_date}` + " 결제: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 결제: " + point[id].point.toLocaleString() + "p"
+            }
+            if (point[id].point_category == "정산") {
+                newP.setAttribute("style", "color:blue;")
+                newP.innerText = `${point_date}` + " 정산: " + point[id].point.toLocaleString() + "p"
+            }
+            if (point[id].point_category == "환불") {
+                newP.setAttribute("style", "color:blue;")
+                newP.innerText = `${point_date}` + " 환불: " + point[id].point + "p"
             }
             return newP
         }
@@ -391,30 +400,26 @@ async function getToday() {
     const plus_statistic = document.createElement("div")
     plus_statistic.setAttribute("class", "point-statistic")
     plus_statistic.setAttribute("id", "totalplus")
-    plus_statistic.innerText = "오늘 획득포인트: " + response_point_statistic_json["day_plus"] + "p"
+    plus_statistic.innerText = "오늘 획득포인트: " + response_point_statistic_json["day_plus"].toLocaleString() + "p"
     newstatistic.appendChild(plus_statistic)
 
     const minus_statistic = document.createElement("div")
     minus_statistic.setAttribute("class", "point-statistic")
     minus_statistic.setAttribute("id", "totalminus")
-    minus_statistic.innerText = "오늘 이용포인트: " + response_point_statistic_json["day_minus"] + "p"
+    minus_statistic.innerText = "오늘 이용포인트: " + response_point_statistic_json["day_minus"].toLocaleString() + "p"
     newstatistic.appendChild(minus_statistic)
 
-    const statistic = document.createElement("div")
-    statistic.setAttribute("class", "point-statistic")
-    statistic.setAttribute("id", "totalpoint")
-    statistic.innerText = "오늘 총포인트: " + response_point_statistic_json["day_total_point"] + "p"
-    newstatistic.appendChild(statistic)
+    const newmonth_plus = document.getElementById("month-plus")
+    newmonth_plus.setAttribute("class", "point-statistic")
+    newmonth_plus.innerText = "이번달 획득포인트: " + response_point_statistic_json["month_plus"].toLocaleString() + "p"
 
-    const newmonth_total = document.getElementById("month-total")
-    newmonth_total.setAttribute("class", "point-statistic")
-    newmonth_total.setAttribute("style", "font-size:2vw;")
-    newmonth_total.innerText = "이번달 총 리워드: " + response_point_statistic_json["month_total_point"] + "p"
+    const newmonth_minus = document.getElementById("month-minus")
+    newmonth_minus.setAttribute("class", "point-statistic")
+    newmonth_minus.innerText = "이번달 이용포인트: " + response_point_statistic_json["month_minus"].toLocaleString() + "p"
 
     const new_total = document.getElementById("total-reward")
     new_total.setAttribute("class", "point-statistic")
-    new_total.setAttribute("style", "font-size:2vw;")
-    new_total.innerText = "총 리워드: " + response_point_statistic_json["total_point"] + "p"
+    new_total.innerText = "현재 포인트 총액: " + response_point_statistic_json["total_point"].toLocaleString() + "p"
 
 }
 
@@ -432,10 +437,11 @@ async function attendancePoint() {
 
 // 프로필
 async function profile() {
-    const profile_data = await getUserProfileAPIView()
+    const user_id = payload.user_id
+    const profile_data = await getUserProfileAPIView(user_id)
 
     if (profile_data['profile_image'] != null) {
-        document.getElementById("user-image").setAttribute("src", `${BACK_BASE_URL}` + profile_data['profile_image'])
+        document.getElementById("user-image").setAttribute("src", profile_data['profile_image'])
     }
 
     document.getElementById("user-name").innerText = profile_data["nickname"]
@@ -446,13 +452,10 @@ async function profile() {
         document.getElementById("user-intro").innerText = profile_data["introduction"].slice(0, 13) + "..."
     }
     document.getElementById("user-wish").innerText = profile_data["product_wish_list_count"]
-    document.getElementById("user-point").innerText = profile_data["total_point"] + "p"
+    document.getElementById("user-point").innerText = profile_data["total_point"].toLocaleString() + "p"
 }
 
 // 위시리스트 상품 상세페이지로 이동
-export async function productDetail(product_id) {
-    window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
-}
 
 async function pagination_wish(wish) {
     const wish_list = document.getElementById("my-wish-list")
@@ -478,7 +481,7 @@ async function pagination_wish(wish) {
         if (wish[id].image == null) {
             newItemImage.setAttribute("src", "static/images/기본이미지.gif")
         } else {
-            newItemImage.setAttribute("src", `${BACK_BASE_URL}${wish[id].image}`)
+            newItemImage.setAttribute("src", wish[id].image)
         }
         const newItemName = document.createElement("div")
         newItemName.setAttribute("class", "wishname")
@@ -572,14 +575,7 @@ async function pagination_wish(wish) {
 
 
 // 구독
-async function nosub() {
-    const response = await patchSubscribeView();
-    if (response.status == 200) {
-        window.location.reload();
-    }
-}
-
-async function againsub() {
+async function changesub() {
     const response = await patchSubscribeView();
     if (response.status == 200) {
         window.location.reload();
@@ -619,7 +615,7 @@ async function subscription_info() {
             newcard.appendChild(newsubscriptdate)
 
             subscription_button.innerText = "구독 해지"
-            subscription_button.addEventListener("click", nosub)
+            subscription_button.addEventListener("click", changesub)
         } else {
             const nowyear = today.getFullYear()
             const nowmonth = leftPad(today.getMonth() + 1)
@@ -657,7 +653,7 @@ async function subscription_info() {
                 newcard.appendChild(newsubscriptdate)
 
                 subscription_button.innerText = "구독하기"
-                subscription_button.addEventListener("click", againsub)
+                subscription_button.addEventListener("click", changesub)
             }
         }
     } else {
@@ -667,15 +663,135 @@ async function subscription_info() {
     }
 }
 
+
+async function setDisplayView() {
+    const nav_items = document.querySelectorAll(".option-container")
+    nav_items.forEach((item) => {
+        item.style.display = "none"
+    })
+}
+
+export async function mywishView() {
+    setDisplayView()
+    document.getElementById("my-wish-box").style.display = "block"
+    document.getElementById("bookmarkList").style.display = "none"
+}
+
+export async function showBookmarkList() {
+    document.getElementById("bookmarkList").style.display = "block"
+    document.getElementById("my-wish-box").style.display = "none"
+}
+
+export async function setEventListener() {
+
+
+    document.getElementById("wishfont").addEventListener("click", mywishView)
+    document.getElementById("bookmarkmarket").addEventListener("click", showBookmarkList)
+}
+
+export async function sellerFollow(element) {
+    const response = await sellerFollowAPI(element.user.id);
+    if (response.status == 404) {
+        alert("판매자 정보가 삭제되었거나, 로그인이 필요합니다.")
+    } else if (response.status == 401) {
+        alert("로그인이 필요합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else {
+        const response_json = await response.json()
+        document.getElementById(`followingCount_${element.user.id}`).innerText = `follower : ${response_json.followings}`
+        const follow_button = document.getElementById(`sellerFollowButton_${element.user.id}`)
+        response.status == 200 ? follow_button.innerText = "Follow" : follow_button.innerText = "Un Follow"
+    }
+
+}
+
+
+export async function getMyFollowList(seller_information) {
+    const bookmarkList = document.getElementById("bookmarkList");
+
+for (let i = 0; i < seller_information.length; i++) {
+    const element = seller_information[i];
+    const company_img = element.company_img == null ? '/static/images/store.gif' : `${element.company_img}`
+    let sellerCardList;
+    if (i % 2 == 0) {
+        sellerCardList = document.createElement('div');
+        sellerCardList.classList.add('seller-card-list');
+        bookmarkList.appendChild(sellerCardList);
+    }
+
+    const sellerCardBox = document.createElement('div');
+    sellerCardBox.classList.add('seller-card-box');
+
+    const sellerImgBox = document.createElement('div');
+    sellerImgBox.classList.add('seller-img-box');
+    sellerImgBox.style.backgroundImage = `url(${company_img})`;
+
+    const sellerInformationBox = document.createElement('div');
+    sellerInformationBox.classList.add('seller-information-box');
+
+    const companyName = document.createElement('p');
+    companyName.textContent = element.company_name;
+
+    const contactNumber = document.createElement('p');
+    contactNumber.textContent = element.contact_number;
+
+    const sellerFollowButton = document.createElement('div');
+    sellerFollowButton.classList.add('seller-follow');
+    sellerFollowButton.id = `sellerFollowButton_${element.user.id}`;
+    sellerFollowButton.textContent = 'Un Follow';
+
+    const followingCount = document.createElement('span');
+    followingCount.id = `followingCount_${element.user.id}`;
+    followingCount.textContent = `following: ${element.followings_count}`;
+
+    sellerInformationBox.appendChild(companyName);
+    sellerInformationBox.appendChild(contactNumber);
+    sellerInformationBox.appendChild(sellerFollowButton);
+    sellerInformationBox.appendChild(followingCount);
+
+    sellerCardBox.appendChild(sellerImgBox);
+    sellerCardBox.appendChild(sellerInformationBox);
+
+    sellerCardList.appendChild(sellerCardBox);
+
+    if (i % 2 != 0 || i === seller_information.length - 1) {
+        // 홀수번째이거나 마지막 요소일 경우 div태그를 닫음
+        bookmarkList.appendChild(sellerCardList);
+    }
+}
+
+    seller_information.forEach((element) => {
+        document.getElementById(`sellerFollowButton_${element.user.id}`).addEventListener("click", function () {
+            sellerFollow(element)
+        });
+    });
+
+}
+
+
 window.onload = async function () {
-    buildCalendar();
-    document.getElementById("prevCalendar").addEventListener("click", prevCalendar)
-    document.getElementById("nextCalendar").addEventListener("click", nextCalendar)
-    getToday();
-    document.getElementById("Attendance").addEventListener("click", attendancePoint);
-    profile();
-    const profile_data = await getUserProfileAPIView()
-    const wish = profile_data["product_wish_list"]
-    pagination_wish(wish);
-    subscription_info()
+    if (payload == null) {
+        alert("로그인이 필요 합니다.")
+        window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else {
+        buildCalendar();
+        document.getElementById("prevCalendar").addEventListener("click", prevCalendar)
+        document.getElementById("nextCalendar").addEventListener("click", nextCalendar)
+        getToday();
+        document.getElementById("Attendance").addEventListener("click", attendancePoint);
+        profile();
+        const user_id = payload.user_id
+        const profile_data = await getUserProfileAPIView(user_id)
+        const wish = profile_data["product_wish_list"]
+        //console.log(wish)
+        if (wish == "") {
+            const wish_box = document.querySelector(".my-wish-none")
+            wish_box.innerText = "찜한 상품이 없습니다."
+        } else {
+            pagination_wish(wish);
+        }
+        subscription_info();
+        setEventListener();
+        await getMyFollowList(profile_data.seller_information)
+    }
 }  

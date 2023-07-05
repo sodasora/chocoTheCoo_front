@@ -1,0 +1,171 @@
+@font-face {
+    font-family: '국립박물관문화재단클래식B';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/국립박물관문화재단클래식B.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-color: #C4A492;
+}
+
+.container {
+    background-color: #C4A492;
+    min-height: 400px;
+}
+
+#chatindex {
+    font-family: '국립박물관문화재단클래식B';
+    font-size: 3vw;
+    font-weight: bold;
+    margin-top: 15px;
+    color: white;
+}
+
+.help-text {
+    position: absolute;
+    object-fit: cover;
+    width: 20px;
+    height: 20px;
+    right: 20px;
+    z-index: 1;
+}
+
+.tooltip>.tooltip-inner {
+    max-width: 350px;
+}
+
+.modal-dialog {
+    font-family: 'S-CoreDream-3Light';
+    z-index: 120;
+    margin-top: 20vh;
+    display: flex;
+    justify-content: center;
+    min-height: 300px;
+}
+
+#room-name {
+    margin-bottom: 20px;
+}
+
+button {
+    height: 4vh;
+    font-size: 1vw;
+    margin-top: 1.2vw;
+    background-color: rgba(109, 86, 68, 0.822);
+    color: white;
+    border-radius: 10px;
+}
+
+.newchat {
+    margin-bottom: 20px;
+}
+
+#chat-buttons {
+    position: relative;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.button_page.active,
+.button_page:hover {
+    color: #0b5ed7;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.newchat {
+    display: flex;
+    font-family: 'S-CoreDream-3Light';
+    color: white;
+}
+
+.chatname {
+    font-size: 2vw;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.chatdesc {
+    margin-left: 30px;
+    font-size: 1vw;
+    margin-top: 0.5vw;
+    font-weight: lighter;
+}
+
+.gobutton {
+    margin-top: 0.3vw;
+    height: 3vh;
+    margin-left: 10px;
+}
+
+.deletebuton {
+    margin-top: 0.3vw;
+    height: 3vh;
+    margin-left: 10px;
+}
+
+
+.title-container {
+    height: auto;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    background-color: #743837;
+}
+
+.image-box {
+    width: 180%;
+    height: 14rem;
+    background-image: url("/static/images/chatting.png");
+    background-size: cover;
+    background-color: #743837;
+    background-position: center;
+    background-repeat: no-repeat
+}
+
+@media screen and (max-width: 768px) {
+    .image-box {
+        display: none;
+    }
+
+    #chatindex {
+        font-family: '국립박물관문화재단클래식B';
+        font-size: 4vw;
+        font-weight: bold;
+        margin-top: 15px;
+        color: white;
+        margin-right: 20vw;
+    }
+
+    .help-text {
+        position: absolute;
+        object-fit: cover;
+        width: 20px;
+        right: 150px;
+        z-index: 1;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    #chatindex {
+        font-family: '국립박물관문화재단클래식B';
+        font-size: 5vw;
+        font-weight: bold;
+        margin-top: 15px;
+        color: white;
+        margin-right: 8vw;
+    }
+
+    .help-text {
+        display: none;
+    }
+}

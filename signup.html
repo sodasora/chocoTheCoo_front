@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/signup.css">
     <title>회원 가입</title>
@@ -11,6 +11,26 @@
 <header></header>
 
 <body>
+    <div id="modal">
+        <div id="modal-header">
+            <span id="modal-message-box">
+                회원 정보를 입력해 주세요.
+            </span>
+            <div id="modal-close-button"></div>
+        </div>
+        <div id="modal-content-box">
+            <div id="modal-left-button"></div>
+            <div id="modal-image-box"></div>
+            <div id="modal-right-button"></div>
+        </div>
+        <div id="modal-page-box">
+            <span id="modal-page">0/8</span>
+        </div>
+        <div id="modal-control-box">
+            <span id="modal-skip-today">오늘 하루 보지 않기</span>
+        </div>
+    </div>
+
     <!-- <div id="titleContainer"></div> -->
     <a href="index.html">
         <div id="titleBox">
@@ -57,14 +77,14 @@
                                             <label>아이디</label>
                                         </div>
                                         <input id="signupNickname" class="input-data"
-                                            placeholder="공백 없이 2~9자까지 입력해 주세요.">
+                                            placeholder="공백 없이 2~20자까지 입력해 주세요.">
                                     </div>
                                     <div class="input-box signup-item-one">
                                         <div class="input-label">
                                             <label>비밀번호</label>
                                         </div>
                                         <input id="signupPassword" class="input-data" type="password"
-                                            placeholder="영 대소문자, 숫자,특수문자로 이루어져야 합니다.">
+                                            placeholder="영문자, 숫자,특수문자로 5글자 이상의 길이로 이루어져야 합니다.">
                                         <span class="input-guide"></span>
                                     </div>
                                     <div class="input-box signup-item-one">
@@ -72,7 +92,7 @@
                                             <label>비밀번호 확인</label>
                                         </div>
                                         <input id="signupPassword2" class="input-data" type="password"
-                                            placeholder="영 대소문자, 숫자,특수문자로 이루어져야 합니다.">
+                                            placeholder="영문자, 숫자,특수문자로 5글자 이상의 길이로 이루어져야 합니다.">
                                     </div>
                                     <div class="input-box signup-item-two getVerificationCodeBox"
                                         style="display: none;">
@@ -92,33 +112,53 @@
                                     <div class="input-box signup-item-one">
                                         <div class="input-label">
                                             <input id="checkbox" type="checkbox">
-                                            <label>개인 정보 수집 이용 동의</label>
+                                            <label id="hoverEvent">개인 정보 수집 이용 동의</label>
+                                            <div id="hoverEventMessage" style="display: none;">
+                                                <p>🔑email 정보 수집</p>
+                                                <p>&nbsp - 계정 인증 및 안내사항 메시지 발송</p>
+                                                <p>🔑휴대폰 정보 수집(추가 수집 사항)</p>
+                                                <p>&nbsp - 배송 정보 수집</p>
+                                                <p>🔑주소지 정보 수집(추가 수집 사항)</p>
+                                                <p>&nbsp - 배송 정보 수집</p>
+                                                <p>🔑통관 번호 정보 수집(추가 수집 사항)</p>
+                                                <p>&nbsp - 결제 정보 수집</p>
+
+                                            </div>
                                         </div>
                                     </div>
                                     <div id="signupMessageBox" style="display: none;">
                                         <span id="signupMessage"></span>
                                     </div>
                                     <div class="input-box signup-item-one" id="signupSubmitButtonBox">
-                                        <a href="/signup.html">
-                                            <button type="button" id="signupInformationSubmit">다음 단계로</button>
-                                        </a>
+                                        <button type="button" id="signupInformationSubmit">다음 단계로</button>
                                     </div>
                                     <div class="input-box signup-item-two" id="signupSubmitButtonBox"
                                         style="display: none;">
-                                        <a href="#">
-                                            <button type="button" id="signupVerificationCodeSubmit">제출</button>
-                                        </a>
+                                        <button type="button" id="signupVerificationCodeSubmit">제출</button>
 
                                     </div>
                                     <div id="loginGuide" class="signup-item-one">
-                                        <a href="./login.html">
-                                            <p>
-                                                이미 초코더쿠 멤버이신가요?
-                                            </p>
-                                            <p>
-                                                로그인 하러 가기
-                                            </p>
-                                        </a>
+                                        <div class="social-login-box">
+                                            <a href="#">
+                                                <div id="kakaoBtn"></div>
+                                            </a>
+                                            <a href="#" style="margin-left: 7%; margin-right: 7%;">
+                                                <div id="naverBtn"></div>
+                                            </a>
+                                            <a href="#">
+                                                <div id="googleBtn"></div>
+                                            </a>
+                                        </div>
+                                        <div id="loginBox">
+                                            <a href="./login.html">
+                                                <p>
+                                                    이미 초코더쿠 멤버이신가요?
+                                                </p>
+                                                <p>
+                                                    로그인 하러 가기
+                                                </p>
+                                            </a>
+                                        </div>
                                     </div>
                                 </form>
                                 <div>

@@ -1,25 +1,75 @@
+@media (max-width: 1024px) {
+    tbody {
+        font-size: 1em !important;
+    }
+}
+
+@media (max-width: 768px) {
+    tbody {
+        font-size: 0.7em !important;
+    }
+
+    .productList {
+        width: 90%;
+    }
+}
+
+@media (max-width: 425px) {
+    th {
+        font-size: 0.2em !important;
+    }
+
+    tbody {
+        font-size: 0.2em !important;
+    }
+
+    .productList {
+        width: 100% !important;
+    }
+}
+
+@font-face {
+    font-family: 'SUIT-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 /* nav bar */
 .seller_nav {
     display: flex;
+    justify-content: center;
     height: 70px;
     background: #B9937E;
     align-items: center;
+    font-family: 'SUIT-Regular';
+
 }
 
 .seller_nav h1 {
     font-size: 40px;
     color: #fff;
 }
-
 .container {
-    display: flex;
-    flex-direction: column;
-    padding: 20px 100px;
-    margin: auto;
-    max-width: 1350px;
-    background-color: #C4A492;
+    font-family: 'SUIT-Regular';
 }
 
+.productContainer,.orderContainer {
+    font-family: 'SUIT-Regular';
+
+    display: flex;
+    flex-direction: column;
+    background-color: #C4A492;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.productList, .orderList {
+    margin-top: 2%;
+    width: 80%;
+}
+
+/* 상품이미지 */
 .product-img {
     display: inline-block;
     background-position: center;
@@ -27,6 +77,38 @@
     background-repeat: no-repeat;
     width: 40px;
     height: 40px;
+}
+
+/* 상품이미지 크게보기 */
+.product-img-zoom {
+    display: none;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 150px;
+    height: 150px;
+}
+
+/* 품절,삭제 상태 이미지 */
+.soldout, .delete{
+    /* position: absolute; */
+    height:40px;
+    width:40px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+}
+
+/* 품절,삭제 상태 확대이미지 */
+.soldoutZoom, .deleteZoom{
+    position: absolute;
+    height:150px;
+    width:150px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.8;
 }
 
 tr,
@@ -71,4 +153,40 @@ td>text {
 
 ion-icon {
     padding-top: 0.5rem;
+}
+
+.title-container {
+    height: auto;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    background-color: #743837;
+}
+
+.image-box {
+    width: 180%;
+    height: 14rem;
+    background-image: url("/static/images/storeforseller.png");
+    background-size: cover;
+    background-color: #743837;
+    background-position: center;
+    background-repeat: no-repeat
+}
+
+@media screen and (max-width: 768px) {
+    .image-box {
+        display: none;
+    }
+}
+
+/* 재고수량변경버튼 */
+.amountBtn{
+    display: inline-block;
+    height: auto;
+    width: fit-content;
+    border-radius: 15%;
+}
+
+.amountBtn:hover{
+    color: #0b5ed7;
 }

@@ -12,165 +12,243 @@
     font-style: normal;
 }
 
-button {
-    height: 50px;
-    font-size: 20px;
-    margin-top: 10px;
+body {
+    background-color: #C4A492;
+}
+
+.button-sets>button,
+#button-content>button,
+.subscription-section>button,
+#sub-button {
+    height: 4vh;
+    font-size: 1vw;
     background-color: rgba(109, 86, 68, 0.822);
     color: white;
     border-radius: 10px;
+    border: none;
+    font-family: 'S-CoreDream-3Light';
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
+}
+
+#sub-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-width: 10em !important;
+    width: 25vw;
+    margin: 1em 0;
+}
+
+.button_page.active,
+.button_page:hover {
+    color: #0b5ed7;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.button_page {
+    height: 4vh;
+    font-size: 1vw;
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+    border: none;
+    font-family: 'S-CoreDream-3Light';
+}
+
+#myBillDetail {
+    font-family: '국립박물관문화재단클래식B';
+    font-size: 4vw;
+    font-weight: bold;
+    padding-left: 40px;
+    color: white;
+    margin-bottom: 0;
+}
+
+.subscription-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .section {
     background-color: #C4A492;
     height: auto;
+    width: 100%;
 }
 
 .mypage-intro {
     display: flex;
+    align-items: center;
     margin-top: 20px;
 }
-
-#myreward {
-    font-family: '국립박물관문화재단클래식B';
-    font-size: 50px;
-    font-weight: bold;
-    padding-left: 40px;
-    color: white;
-}
-
-.card-points {
-    width: 500px;
-    background-color: white;
-    height: fit-content;
-    max-height: 460px;
-    margin-left: 50px;
-    margin-top: 20px;
-    padding: 10px;
-    text-align: center;
-    font-family: 'S-CoreDream-3Light';
-    font-size: 1.5em;
-    font-weight: bold;
-    padding-bottom: 10px;
-    color: rgba(100, 81, 66, 0.822);
-}
-
-.points-list {
-    font-family: 'S-CoreDream-3Light';
-    text-align: left;
-    font-size: 0.8em;
-    font-weight: lighter;
-    padding-bottom: 3px;
-    margin-left: 20px;
-    color: rgba(100, 81, 66, 0.822);
-}
-
-#month-total {
-    font-family: 'S-CoreDream-3Light';
-    font-size: 30px;
-    font-weight: bold;
-    margin-left: 40px;
-    color: white;
-}
-
-#total-reward {
-    font-family: 'S-CoreDream-3Light';
-    font-size: 30px;
-    font-weight: bold;
-    margin-left: 50px;
-    color: white;
-}
-
-#totalpoint {
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-td {
-    width: 90px;
-    height: 60px;
-}
-
-.Calendar {
-    text-align: center;
-}
-
 
 .line {
     border: 2px solid rgba(255, 255, 255, 0.729);
-    width: 97%;
-    margin-left: 30px;
+    min-width: 40vw;
+    width: 95%;
+    /* margin-left: 30px; */
 }
 
-.calendar-section {
-    background-color: white;
-    margin-left: 30px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    width: 600px;
-    height: auto;
-    border-radius: 5px;
-    box-shadow: 0px 35px 20px -30px rgba(0, 0, 0, 0.3);
+
+#deliveryInfo {
+    font-family: 'S-CoreDream-3Light';
+    background-color: aliceblue;
+    /* color: aliceblue; */
+    padding: 1em 2em;
+    min-width: 40vw;
+    width: 95%;
+    font-size: 1.2em;
+    border-radius: 1em;
+    margin: 1em 0;
+}
+
+#orderLists {
+    display: flex;
+    flex-direction: column;
+    min-width: 40vw;
+    width: 95%;
+    font-size: 1.3em;
+
+}
+
+.order-list {
+    display: flex;
+    align-items: center;
+    color: aliceblue;
+    margin: 1em 0;
+}
+
+.order-img {
+    width: 130px;
+    height: 130px;
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    align-items: center;
+}
+
+.pd-info-thumb {
+    object-fit: cover;
+    width: 130px;
+    height: 130px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+}
+
+.order-context {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 1em;
+    margin-bottom: 0.2em;
+}
+
+.order-context>div {
+    word-break: keep-all;
+    font-size: 0.8em;
+    margin: 0.2em 0;
+}
+
+.deli-col {
+    display: flex;
+    /* justify-content: space-between; */
+    min-height: 10vh;
+    align-items: center;
+}
+
+.deli-col-key {
+    margin: 1em;
+    min-width: 5em;
+}
+
+.recipient {
+    word-break: break-all;
+}
+
+.address {
+    display: flex;
+    flex-direction: column;
+    word-break: break-all;
+}
+
+#billBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2.5em;
+}
+
+.pd-cart-icon {
+    margin-left: auto;
+    margin-bottom: 1em;
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+}
+
+
+.pd-cart-icon:hover {
+    width: 2.1em;
+    height: 2.1em;
+}
+
+
+#button-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* margin-bottom: 5em; */
+    margin-left: auto;
+}
+
+/*프로필 기본 사진*/
+
+#user-edit {
+    cursor: pointer;
+}
+
+.subscrip-view {
+    font-size: 1em;
+    margin-bottom: 10px;
     padding: 20px;
 }
 
-.Calendar>thead>tr:first-child>td {
-    font-family: 'S-CoreDream-3Light';
-    font-size: 1.7em;
-    font-weight: bold;
-    padding-bottom: 10px;
-    color: rgba(100, 81, 66, 0.822);
-}
-
-.Calendar>thead>tr:last-child>td {
-    font-family: 'S-CoreDream-3Lightd';
-    font-size: 1.5em;
-    background-color: rgba(253, 121, 103, 0.322);
-    color: rgba(61, 52, 45, 0.822);
-}
-
-.Day {
-    cursor: pointer;
-}
-
-.Day.choiceDay {
-    background-color: #3E85EF;
-    font-family: 'MapoFlowerIsland';
-    color: #fff;
-    cursor: pointer;
-}
-
-.point-calender {
-    justify-content: center;
-}
-
-/* section calendar 끝 */
 
 .profile-card {
     font-family: 'S-CoreDream-3Light';
-    font-size: 1.3em;
+    font-size: 1.5vw;
     width: 25vw;
     height: auto;
     text-align: center;
     margin-top: 30px;
-    margin-left: 60px;
     border: 2px solid white;
     border-radius: 20px;
+    color: white;
+}
+
+.profile {
+    width: 23vw;
+    height: 23vw;
+    object-fit: cover;
 }
 
 .subscription-card {
     width: 25vw;
-    height: 300px;
+    height: 18vw;
     padding: 20px;
     text-align: center;
-    margin-top: 30px;
-    margin-left: 60px;
+    margin-top: 10px;
     margin-bottom: 20px;
     border: 2px solid white;
     border-radius: 20px;
-    text-align: center;
     font-family: 'S-CoreDream-3Light';
-    font-size: 1.4em;
+    font-size: 1.5vw;
+    color: white;
+    font-weight: bold;
 }
 
 /*프로필 기본 사진*/
@@ -180,36 +258,8 @@ td {
     margin-bottom: 30px;
 }
 
-#user-edit {
-    cursor: pointer;
-}
-
-#wishitem {
-    padding: 20px;
-    text-align: center;
-    width: 300px;
-    height: 300px;
-    margin-left: 50px;
-    margin-bottom: 50px;
-    border: 2px solid white;
-    border-radius: 20px;
-    font-family: 'S-CoreDream-3Light';
-    font-size: 1.3em;
-}
-
-.wishimage {
-    width: fit-content;
-}
-
-.wishname {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.subscrip-view {
-    font-size: 1em;
-    margin-bottom: 10px;
-    padding: 20px;
+.box {
+    margin-top: 20px;
 }
 
 .sub-button-section {
@@ -218,9 +268,135 @@ td {
     margin-right: 5vw;
 }
 
-.pd-info {
+.centered {
     display: flex;
-    font-family: 'S-CoreDream-3Light';
-    font-size: 1.3em;
-    color: aliceblue;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.sub-button {
+    margin-left: 24vw;
+}
+
+#toast {
+    display: none;
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    transition: opacity 0.5s;
+    z-index: 1000;
+}
+
+@media screen and (max-width: 1280px) {
+    .section>.row {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .col-md-8,
+    .col-md-4 {
+        width: 100%;
+    }
+
+    .profile-card {
+        width: 100%;
+        margin: 0;
+    }
+
+    .profile-section {
+        display: flex;
+        width: 50%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .sub-button {
+        width: 50%;
+        margin: 30px;
+    }
+
+    .subscription-section {
+        width: 50%;
+        margin-bottom: 1.5em !important;
+    }
+
+    .subscription-card {
+        width: 100%;
+        margin: 0;
+    }
+
+    #confirmbutton {
+        width: 100px;
+        font-size: 0.7em;
+    }
+}
+
+@media screen and (max-width: 960px) {
+    .order-context {
+        margin: 0.2em 0;
+        margin-left: 1em !important;
+    }
+
+    .button-sets>button {
+        font-size: 1em;
+    }
+
+    .profile-section,
+    .subscription-card,
+    .sub-button {
+        min-width: 350px;
+        height: fit-content;
+        margin: 5px;
+    }
+
+    .subscription-section {
+        margin: 5px;
+        min-width: 350px;
+    }
+
+    .col-md-8,
+    .col-md-4 {
+        width: 100%;
+    }
+
+    #deliveryInfo {
+        font-family: 'S-CoreDream-3Light';
+        background-color: aliceblue;
+        /* color: aliceblue; */
+        padding: 1em 2em;
+        min-width: 40vw;
+        width: 95%;
+        font-size: 1.1em;
+        border-radius: 1em;
+        margin: 1em 0;
+    }
+
+    .profile-card {
+        font-size: 1.5em !important;
+    }
+
+    .subscription-card {
+        font-size: 1.5em;
+    }
+
+    #sub-button {
+        font-size: 1.4em;
+    }
+
+    #confirmbutton {
+        width: 100px;
+        font-size: 0.7em !important;
+    }
+
+    .ord-pd-name {
+        font-size: 1em !important;
+        word-break: break-all !important;
+    }
 }

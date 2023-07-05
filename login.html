@@ -10,7 +10,28 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container" id="container">
+        <div id="modal">
+            <div id="modal-header">
+                <span id="modal-message-box">
+                    이메일 정보와 비밀번호를 입력해서 로그인 해주세요.
+                </span>
+                <div id="modal-close-button"></div>
+            </div>
+            <div id="modal-content-box">
+                <div id="modal-left-button"></div>
+                <div id="modal-image-box"></div>
+                <div id="modal-right-button"></div>
+            </div>
+            <div id="modal-page-box">
+                <span id="modal-page">0/8</span>
+            </div>
+            <div id="modal-control-box">
+                <span id="modal-skip-today">오늘 하루 보지 않기</span>
+            </div>
+
+        </div>
+
         <div id="leftBox">
             <div id="titleBox" style="display: none;">
                 <a href="index.html" id="mobileTitle">Choco The Coo</a>
@@ -48,6 +69,9 @@
                         </div>
                         <input class="input-data" id="password2" type="password"
                             placeholder="Please enter your password">
+                    </div>
+                    <div class="input-box hidden-box-2" style="display: none;" id="passwordGuide">
+                        <span> 영 대소문자, 소문자, 숫자, 특수문자를 포함시켜 주세요. </span>
                     </div>
                     <div class="input-box button-box change-item">
                         <button type="button" class="custom-button" id="loginButton">Login</button>
@@ -103,5 +127,6 @@
 <footer></footer>
 <script type="module" src="/static/js/api.js"></script>
 <script type="module" src="/static/js/login.js"></script>
+<!-- <script src="/static/js/loader.js" type="module"></script> -->
 
 </html>
