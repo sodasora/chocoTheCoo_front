@@ -1,7 +1,5 @@
 export const FRONT_BASE_URL = "http://127.0.0.1:5500"
-// export const BACK_BASE_URL = "http://127.0.0.1:8000"
-export const BACK_BASE_URL = "http://127.0.0.1"
-// export const BACK_BASE_URL = "https://backend.chocothecoo.com"
+export const BACK_BASE_URL = "http://127.0.0.1:8000"
 
 export const REDIRECT_URI = `${FRONT_BASE_URL}/index.html`
 export const access_token = localStorage.getItem("access")
@@ -1107,7 +1105,7 @@ export async function OrderItemToCart(orderItemId) {
 
 
 // 상품 상세내역으로 가기
-async function productDetail(product_id) {
+export async function productDetail(product_id) {
 	window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
 }
 
