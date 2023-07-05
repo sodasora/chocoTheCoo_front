@@ -90,10 +90,17 @@ function socketSwap(roomId) {
     console.log(backurl)
     if (roomId != null) {
 
-        // WebSocket url
+        // 로컬
         chatSocket = new WebSocket(
             'ws://' + backurl + '/ws/chat/' + roomId + '/?id=' + payload.user_id
         );
+
+        //배포
+        // chatSocket = new WebSocket(
+        //     'wss://' + backurl + '/ws/chat/' + roomId + '/?id=' + payload.user_id
+        // );
+
+        // console.log(chatSocket)
 
         function update_user_list() {
             const html = Array.from(username_set).map(sender => `<li>${sender}</li>`).join('');
