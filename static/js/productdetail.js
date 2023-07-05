@@ -66,7 +66,7 @@ let myChart;
 
 export async function getChart(information, evaluation) {
 
-    var context = document
+    const context = document
         .getElementById('myChart')
         .getContext('2d');
 
@@ -311,43 +311,105 @@ export async function getReviewData(element) {
     const review_image = element.image == null ? '/static/images/review_default.png' : element.image
     const profile_image = element.user.profile_image == null ? '/static/images/default.jpg' : element.user.profile_image
     const like_image = element.is_like == false ? '/static/images/좋아요x.png' : '/static/images/좋아요.png'
+    const reviewItems = document.createElement('div');
+    reviewItems.classList.add('review-items');
+    reviewItems.id = `reviewItem_${element.id}`;
 
-    review_list.innerHTML += `
-    <div class="review-items" id=reviewItem_${element.id}>
-        <div class="review-left-box">
-            <img src="${review_image}" class="review-image-tag" id="review_modal_image${element.id}">
-        </div>
-        <div class="review-right-box">
-            <div class="review-owner-box">
-            <div class="review-owner-image" style="background-image: url(${profile_image});">
-            </div>
-                <span class="review-owenr-nick-name">
-                    ${element.user.nickname}
-                </span>
-                <div class="review-like-box">
-                    <span class="review-like-count" id=reviewLikeCount_${element.id} >${element.review_liking_people_count}</span>
-                    <div class="review-like-button" style="background-image: url(${like_image});" id=reviewLikeButton_${element.id}>
-                    </div>
-                </div>
-            </div>
-            <div class="review-content-box">
-                <div class="review-content-left-box">
-                    <input class="review-title" type="text" value="${element.title}" readonly id="reviewTitle_${element.id}">
-                    <input  type="hidden" value="${element.id}" readonly id="reviewHidden_${element.id}">
-                </div>
-                <div class="review-content-right-box">
-                    <div class="review-star-box">
-                        ${star}
-                    </div>
-                </div>
-            </div>
-            <div class="review-information-box">
-                <span class="review-create-at">${element.updated_at}</span>
-                <button type="button" class="review-detail-button" id=reviewDetail_${element.id}> 상세보기 </button>
-            </div>
-        </div>
-    </div>
-    `
+    const reviewLeftBox = document.createElement('div');
+    reviewLeftBox.classList.add('review-left-box');
+
+    const reviewImageTag = document.createElement('img');
+    reviewImageTag.src = review_image;
+    reviewImageTag.classList.add('review-image-tag');
+    reviewImageTag.id = `review_modal_image${element.id}`;
+
+    const reviewRightBox = document.createElement('div');
+    reviewRightBox.classList.add('review-right-box');
+
+    const reviewOwnerBox = document.createElement('div');
+    reviewOwnerBox.classList.add('review-owner-box');
+
+    const reviewOwnerImage = document.createElement('div');
+    reviewOwnerImage.classList.add('review-owner-image');
+    reviewOwnerImage.style.backgroundImage = `url(${profile_image})`;
+
+    const reviewOwnerNickName = document.createElement('span');
+    reviewOwnerNickName.classList.add('review-owner-nick-name');
+    reviewOwnerNickName.innerText = element.user.nickname;
+
+    const reviewLikeBox = document.createElement('div');
+    reviewLikeBox.classList.add('review-like-box');
+
+    const reviewLikeCount = document.createElement('span');
+    reviewLikeCount.classList.add('review-like-count');
+    reviewLikeCount.id = `reviewLikeCount_${element.id}`;
+    reviewLikeCount.innerText = element.review_liking_people_count;
+
+    const reviewLikeButton = document.createElement('div');
+    reviewLikeButton.classList.add('review-like-button');
+    reviewLikeButton.style.backgroundImage = `url(${like_image})`;
+    reviewLikeButton.id = `reviewLikeButton_${element.id}`;
+
+    const reviewContentBox = document.createElement('div');
+    reviewContentBox.classList.add('review-content-box');
+
+    const reviewContentLeftBox = document.createElement('div');
+    reviewContentLeftBox.classList.add('review-content-left-box');
+
+    const reviewTitle = document.createElement('input');
+    reviewTitle.classList.add('review-title');
+    reviewTitle.type = 'text';
+    reviewTitle.value = element.title;
+    reviewTitle.id = `reviewTitle_${element.id}`;
+    reviewTitle.readOnly = true;
+
+    const reviewHidden = document.createElement('input');
+    reviewHidden.type = 'hidden';
+    reviewHidden.value = element.id;
+    reviewHidden.id = `reviewHidden_${element.id}`;
+    reviewHidden.readOnly = true;
+
+    const reviewContentRightBox = document.createElement('div');
+    reviewContentRightBox.classList.add('review-content-right-box');
+
+    const reviewStarBox = document.createElement('div');
+    reviewStarBox.classList.add('review-star-box');
+    reviewStarBox.innerHTML = `${star}`;
+
+    const reviewInformationBox = document.createElement('div');
+    reviewInformationBox.classList.add('review-information-box');
+
+    const reviewCreateAt = document.createElement('span');
+    reviewCreateAt.classList.add('review-create-at');
+    reviewCreateAt.innerText = element.updated_at;
+
+    const reviewDetailButton = document.createElement('button');
+    reviewDetailButton.type = 'button';
+    reviewDetailButton.classList.add('review-detail-button');
+    reviewDetailButton.id = `reviewDetail_${element.id}`;
+    reviewDetailButton.innerText = '상세보기';
+
+    reviewLikeBox.appendChild(reviewLikeCount);
+    reviewLikeBox.appendChild(reviewLikeButton);
+    reviewContentLeftBox.appendChild(reviewTitle);
+    reviewContentLeftBox.appendChild(reviewHidden);
+    reviewContentRightBox.appendChild(reviewStarBox);
+    reviewInformationBox.appendChild(reviewCreateAt);
+    reviewInformationBox.appendChild(reviewDetailButton);
+    reviewOwnerImage.appendChild(reviewOwnerNickName);
+    reviewOwnerBox.appendChild(reviewOwnerImage);
+    reviewOwnerBox.appendChild(reviewOwnerNickName);
+    reviewOwnerBox.appendChild(reviewLikeBox);
+    reviewContentBox.appendChild(reviewContentLeftBox);
+    reviewContentBox.appendChild(reviewContentRightBox);
+    reviewRightBox.appendChild(reviewOwnerBox);
+    reviewRightBox.appendChild(reviewContentBox);
+    reviewRightBox.appendChild(reviewInformationBox);
+    reviewLeftBox.appendChild(reviewImageTag);
+    reviewItems.appendChild(reviewLeftBox);
+    reviewItems.appendChild(reviewRightBox);
+
+    review_list.appendChild(reviewItems);
 }
 
 
@@ -361,54 +423,119 @@ export async function closeReview(element) {
     const profile_image = element.user.profile_image == null ? '/static/images/default.jpg' : element.user.profile_image
     const like_image = element.is_like == false ? '/static/images/좋아요x.png' : '/static/images/좋아요.png'
 
-    const reviewData = `
-    <div class="review-items" id=reviewItem_${element.id}>
-        <div class="review-left-box">
-            <img src="${review_image}" class="review-image-tag">
-        </div>
-        <div class="review-right-box">
-            <div class="review-owner-box">
-            <div class="review-owner-image" style="background-image: url(${profile_image});">
-            </div>
-                <span class="review-owenr-nick-name">
-                    ${element.user.nickname}
-                </span>
-                <div class="review-like-box">
-                    <span class="review-like-count" id=reviewLikeCount_${element.id} >${element.review_liking_people_count}</span>
-                    <div class="review-like-button" style="background-image: url(${like_image});" id=reviewLikeButton_${element.id}>
-                    </div>
-                </div>
-            </div>
-            <div class="review-content-box">
-                <div class="review-content-left-box">
-                    <input class="review-title" type="text" value="${element.title}" readonly id="reviewTitle_${element.id}">
-                    <input  type="hidden" value="${element.id}" readonly id="reviewHidden_${element.id}">
-                </div>
-                <div class="review-content-right-box">
-                    <div class="review-star-box">
-                        ${star}
-                    </div>
-                </div>
-            </div>
-            <div class="review-information-box">
-                <span class="review-create-at">${element.updated_at}</span>
-                <button type="button" class="review-detail-button" id=reviewDetail_${element.id}> 상세보기 </button>
-            </div>
-        </div>
-    </div>
-    `
+    const reviewItems = document.createElement('div');
+    reviewItems.classList.add('review-items');
+    reviewItems.id = `reviewItem_${element.id}`;
+
+    const reviewLeftBox = document.createElement('div');
+    reviewLeftBox.classList.add('review-left-box');
+
+    const reviewImageTag = document.createElement('img');
+    reviewImageTag.src = `${review_image}`;
+    reviewImageTag.classList.add('review-image-tag');
+
+    reviewLeftBox.appendChild(reviewImageTag);
+    reviewItems.appendChild(reviewLeftBox);
+
+    const reviewRightBox = document.createElement('div');
+    reviewRightBox.classList.add('review-right-box');
+
+    const reviewOwnerBox = document.createElement('div');
+    reviewOwnerBox.classList.add('review-owner-box');
+
+    const reviewOwnerImage = document.createElement('div');
+    reviewOwnerImage.style.backgroundImage = `url(${profile_image})`;
+    reviewOwnerImage.classList.add('review-owner-image');
+
+    const reviewOwnerNickName = document.createElement('span');
+    reviewOwnerNickName.classList.add('review-owner-nick-name');
+    reviewOwnerNickName.textContent = element.user.nickname;
+
+    const reviewLikeBox = document.createElement('div');
+    reviewLikeBox.classList.add('review-like-box');
+
+    const reviewLikeCount = document.createElement('span');
+    reviewLikeCount.id = `reviewLikeCount_${element.id}`;
+    reviewLikeCount.classList.add('review-like-count');
+    reviewLikeCount.textContent = element.review_liking_people_count;
+
+    const reviewLikeButton = document.createElement('div');
+    reviewLikeButton.id = `reviewLikeButton_${element.id}`;
+    reviewLikeButton.classList.add('review-like-button');
+    reviewLikeButton.style.backgroundImage = `url(${like_image})`;
+
+    reviewLikeBox.appendChild(reviewLikeCount);
+    reviewLikeBox.appendChild(reviewLikeButton);
+
+    reviewOwnerBox.appendChild(reviewOwnerImage);
+    reviewOwnerBox.appendChild(reviewOwnerNickName);
+    reviewOwnerBox.appendChild(reviewLikeBox);
+
+    const reviewContentBox = document.createElement('div');
+    reviewContentBox.classList.add('review-content-box');
+
+    const reviewContentLeftBox = document.createElement('div');
+    reviewContentLeftBox.classList.add('review-content-left-box');
+
+    const reviewTitle = document.createElement('input');
+    reviewTitle.classList.add('review-title');
+    reviewTitle.type = 'text';
+    reviewTitle.value = `${element.title}`;
+    reviewTitle.id = `reviewTitle_${element.id}`;
+    reviewTitle.readOnly = true;
+    reviewContentLeftBox.appendChild(reviewTitle);
+
+    const reviewHidden = document.createElement('input');
+    reviewHidden.type = 'hidden';
+    reviewHidden.value = `${element.id}`;
+    reviewHidden.id = `reviewHidden_${element.id}`;
+    reviewHidden.readOnly = true;
+    reviewContentLeftBox.appendChild(reviewHidden);
+
+    const reviewContentRightBox = document.createElement('div');
+    reviewContentRightBox.classList.add('review-content-right-box');
+
+    const reviewStarBox = document.createElement('div');
+    reviewStarBox.classList.add('review-star-box');
+    reviewStarBox.innerHTML = `${star}`;
+
+    reviewContentRightBox.appendChild(reviewStarBox);
+
+    reviewContentBox.appendChild(reviewContentLeftBox);
+    reviewContentBox.appendChild(reviewContentRightBox);
+
+    const reviewInformationBox = document.createElement('div');
+    reviewInformationBox.classList.add('review-information-box');
+
+    const reviewCreateAt = document.createElement('span');
+    reviewCreateAt.classList.add('review-create-at');
+    reviewCreateAt.textContent = element.updated_at;
+
+    const reviewDetailButton = document.createElement('button');
+    reviewDetailButton.type = 'button';
+    reviewDetailButton.id = `reviewDetail_${element.id}`;
+    reviewDetailButton.classList.add('review-detail-button');
+    reviewDetailButton.textContent = '상세보기';
+
+    reviewInformationBox.appendChild(reviewCreateAt);
+    reviewInformationBox.appendChild(reviewDetailButton);
+
+    reviewRightBox.appendChild(reviewOwnerBox);
+    reviewRightBox.appendChild(reviewContentBox);
+    reviewRightBox.appendChild(reviewInformationBox);
+
+    reviewItems.appendChild(reviewLeftBox);
+    reviewItems.appendChild(reviewRightBox);
 
     const reviewItem = document.getElementById(`reviewItem_${element.id}`)
-    reviewItem.innerHTML = reviewData
+    reviewItem.replaceWith(reviewItems)
     reviewItem.style.height = "10rem";
 
-    const reviewDetailButton = document.getElementById(`reviewDetail_${element.id}`);
     reviewDetailButton.addEventListener("click", function () {
         getReviewDetailData(element)
     });
 
-    const reviewDetailLike = document.getElementById(`reviewLikeButton_${element.id}`);
-    reviewDetailLike.addEventListener("click", function () {
+    reviewLikeButton.addEventListener("click", function () {
         reviewLike(element);
     });
 }
@@ -423,71 +550,124 @@ export async function getReviewDetailData(element) {
     const profile_image = element.user.profile_image == null ? '/static/images/default.jpg' : element.user.profile_image
     const like_image = element.is_like == false ? '/static/images/좋아요x.png' : '/static/images/좋아요.png'
 
-    const reviewDetailInnerHTML = `
-    <div class="reviewDetailContainer">
-    <div class="reviewDetailTopContainer">
-        <div class="reviewDetailImageBox" style="background-image: url(${review_image});" id="review_detail_image_${element.id}">
-        </div>
-        <div class="reviewDetailTitleContainer">
-            <div class="reviewDetailOwnerInformationBox">
-                <div class="reviewDetailProfileGroup">
-                    <div class="reviewDetailProfileImage" style="background-image: url(${profile_image});"></div>
-                    <div class="reviewDetailNickname">${element.user.nickname}</div>
-                </div>
-                <div class="reviewDetailLikeGroup">
-                    <span class="reviewDetailLikeCount" id="reviewDetailLikeCount_${element.id}">${element.review_liking_people_count}</span>
-                    <div class="reviewDetailLikeButton" style="background-image: url(${like_image});" id="reviewDetailLike_${element.id}"></div>
-                </div>
-            </div>
-            <div class="reviewDetailTitleBox">
-                <div class="reviewDetailTitle"><span>${element.title}</span></div>
-            </div>
-            <div class="reviewDetailStarBox">
-                ${star}
-                <span class="reviewDetailCreated_at">${element.updated_at}</span>
-            </div>
-        </div>
-    </div>
-    <div class="reviewDetailBottomContainer">
-        <div class="reviewDetailContext"><span>${element.content}</span></div>
-    </div>
-    <div class="reviewDetailControlContainer">
-        <div class="review-evaluation-box">
-            <div class="review-evaluation">
-            배송 : ${element.delivery_evaluation}
-            </div>
-            <div class="review-evaluation review-evaluation-center">
-            서비스 : ${element.service_evaluation}
-            </div>
-            <div class="review-evaluation">
-            재구매 의향 : ${element.feedback_evaluation}
-            </div>
-        </div>
-        <div class="review-control-box">
-            <button class="review-control-button" id="editReviewInformation_${element.id}">수정</button>
-            <button class="review-control-button" id="closeReviewDetailInformation_${element.id}">접기</button>
-        </div>
-    </div>
-</div>
-`;
+    const reviewDetailContainer = document.createElement('div')
+    reviewDetailContainer.classList.add('reviewDetailContainer')
+    const reviewDetailTopContainer = document.createElement('div')
+    reviewDetailTopContainer.classList.add('reviewDetailTopContainer')
+    const reviewDetailImageBox = document.createElement('div')
+    reviewDetailImageBox.classList.add('reviewDetailImageBox')
+    reviewDetailImageBox.style.backgroundImage = `url(${review_image})`
+    reviewDetailImageBox.setAttribute('id', `review_detail_image_${element.id}`)
+    const reviewDetailTitleContainer = document.createElement('div')
+    reviewDetailTitleContainer.classList.add('reviewDetailTitleContainer')
+    const reviewDetailOwnerInformationBox = document.createElement('div')
+    reviewDetailOwnerInformationBox.classList.add('reviewDetailOwnerInformationBox')
+    const reviewDetailProfileGroup = document.createElement('div')
+    reviewDetailProfileGroup.classList.add('reviewDetailProfileGroup')
+    const reviewDetailProfileImage = document.createElement('div')
+    reviewDetailProfileImage.classList.add('reviewDetailProfileImage')
+    reviewDetailProfileImage.style.backgroundImage = `url(${profile_image})`
+    const reviewDetailNickname = document.createElement('div')
+    reviewDetailNickname.classList.add('reviewDetailNickname')
+    reviewDetailNickname.textContent = element.user.nickname
+    const reviewDetailLikeGroup = document.createElement('div')
+    reviewDetailLikeGroup.classList.add('reviewDetailLikeGroup')
+    const reviewDetailLikeCount = document.createElement('span')
+    reviewDetailLikeCount.classList.add('reviewDetailLikeCount')
+    reviewDetailLikeCount.setAttribute('id', `reviewDetailLikeCount_${element.id}`)
+    reviewDetailLikeCount.textContent = element.review_liking_people_count
+    const reviewDetailLikeButton = document.createElement('div')
+    reviewDetailLikeButton.classList.add('reviewDetailLikeButton')
+    reviewDetailLikeButton.style.backgroundImage = `url(${like_image})`
+    reviewDetailLikeButton.setAttribute('id', `reviewDetailLike_${element.id}`)
+    const reviewDetailTitleBox = document.createElement('div')
+    reviewDetailTitleBox.classList.add('reviewDetailTitleBox')
+    const reviewDetailTitle = document.createElement('div')
+    reviewDetailTitle.classList.add('reviewDetailTitle')
+    const reviewDetailTitleSpan = document.createElement('span')
+    reviewDetailTitleSpan.textContent = element.title
+    const reviewDetailStarBox = document.createElement('div')
+    reviewDetailStarBox.classList.add('reviewDetailStarBox')
+    const reviewDetailStar = document.createElement('div')
+    reviewDetailStar.innerHTML = star
+    const reviewDetailCreated_at = document.createElement('span')
+    reviewDetailCreated_at.classList.add('reviewDetailCreated_at')
+    reviewDetailCreated_at.textContent = element.updated_at
+    const reviewDetailBottomContainer = document.createElement('div')
+    reviewDetailBottomContainer.classList.add('reviewDetailBottomContainer')
+    const reviewDetailContext = document.createElement('div')
+    reviewDetailContext.classList.add('reviewDetailContext')
+    const reviewDetailContextSpan = document.createElement('span')
+    reviewDetailContextSpan.textContent = element.content
+    const reviewDetailControlContainer = document.createElement('div')
+    reviewDetailControlContainer.classList.add('reviewDetailControlContainer')
+    const reviewEvaluationBox = document.createElement('div')
+    reviewEvaluationBox.classList.add('review-evaluation-box')
+    const reviewEvaluation1 = document.createElement('div')
+    reviewEvaluation1.classList.add('review-evaluation')
+    reviewEvaluation1.textContent = `배송 : ${element.delivery_evaluation}`
+    const reviewEvaluation2 = document.createElement('div')
+    reviewEvaluation2.classList.add('review-evaluation', 'review-evaluation-center')
+    reviewEvaluation2.textContent = `서비스 : ${element.service_evaluation}`
+    const reviewEvaluation3 = document.createElement('div')
+    reviewEvaluation3.classList.add('review-evaluation')
+    reviewEvaluation3.textContent = `재구매 의향 : ${element.feedback_evaluation}`
+    const reviewControlBox = document.createElement('div')
+    reviewControlBox.classList.add('review-control-box')
+    const editReviewInformation = document.createElement('button')
+    editReviewInformation.classList.add('review-control-button')
+    editReviewInformation.setAttribute('id', `editReviewInformation_${element.id}`)
+    editReviewInformation.textContent = '수정'
+    const closeReviewDetailInformation = document.createElement('button')
+    closeReviewDetailInformation.classList.add('review-control-button')
+    closeReviewDetailInformation.setAttribute('id', `closeReviewDetailInformation_${element.id}`)
+    closeReviewDetailInformation.textContent = '접기'
 
+    reviewDetailContainer.appendChild(reviewDetailTopContainer)
+    reviewDetailContainer.appendChild(reviewDetailBottomContainer)
+    reviewDetailContainer.appendChild(reviewDetailControlContainer)
+    reviewDetailTopContainer.appendChild(reviewDetailImageBox)
+    reviewDetailTopContainer.appendChild(reviewDetailTitleContainer)
+    reviewDetailTitleContainer.appendChild(reviewDetailOwnerInformationBox)
+    reviewDetailTitleContainer.appendChild(reviewDetailTitleBox)
+    reviewDetailTitleContainer.appendChild(reviewDetailStarBox)
+    reviewDetailOwnerInformationBox.appendChild(reviewDetailProfileGroup)
+    reviewDetailOwnerInformationBox.appendChild(reviewDetailLikeGroup)
+    reviewDetailProfileGroup.appendChild(reviewDetailProfileImage)
+    reviewDetailProfileGroup.appendChild(reviewDetailNickname)
+    reviewDetailLikeGroup.appendChild(reviewDetailLikeCount)
+    reviewDetailLikeGroup.appendChild(reviewDetailLikeButton)
+    reviewDetailTitleBox.appendChild(reviewDetailTitle)
+    reviewDetailTitle.appendChild(reviewDetailTitleSpan)
+    reviewDetailStarBox.appendChild(reviewDetailStar)
+    reviewDetailStarBox.appendChild(reviewDetailCreated_at)
+    reviewDetailBottomContainer.appendChild(reviewDetailContext)
+    reviewDetailContext.appendChild(reviewDetailContextSpan)
+    reviewDetailControlContainer.appendChild(reviewEvaluationBox)
+    reviewDetailControlContainer.appendChild(reviewControlBox)
+    reviewEvaluationBox.appendChild(reviewEvaluation1)
+    reviewEvaluationBox.appendChild(reviewEvaluation2)
+    reviewEvaluationBox.appendChild(reviewEvaluation3)
+    reviewControlBox.appendChild(editReviewInformation)
+    reviewControlBox.appendChild(closeReviewDetailInformation)
 
     const reviewItem = document.getElementById(`reviewItem_${element.id}`)
-    reviewItem.innerHTML = reviewDetailInnerHTML
+    reviewItem.innerHTML = ''
+    reviewItem.appendChild(reviewDetailContainer)
     reviewItem.style.height = "30rem";
 
-    const closeReviewDetailInformation = document.getElementById(`closeReviewDetailInformation_${element.id}`);
+    // const closeReviewDetailInformation = document.getElementById(`closeReviewDetailInformation_${element.id}`);
     closeReviewDetailInformation.addEventListener("click", function () {
         closeReview(element)
     });
 
-    const reviewDetailLike = document.getElementById(`reviewDetailLike_${element.id}`);
-    reviewDetailLike.addEventListener("click", function () {
+    // const reviewDetailLike = document.getElementById(`reviewDetailLike_${element.id}`);
+    reviewDetailLikeButton.addEventListener("click", function () {
         reviewLike(element);
     });
 
-    const review_detail_image = document.getElementById(`review_detail_image_${element.id}`)
-    review_detail_image.addEventListener("click", function () {
+    // const review_detail_image = document.getElementById(`review_detail_image_${element.id}`)
+    reviewDetailImageBox.addEventListener("click", function () {
         showReviewDetailImage(review_image);
     });
 
@@ -566,11 +746,11 @@ async function addToLike() {
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 201) {
         likeBtn.setAttribute("src", "/static/images/좋아요.png")
-        likes.innerHTML = response_json.wish_list
+        likes.innerText = response_json.wish_list
     }
     else if (response.status == 200) {
         likeBtn.setAttribute("src", "/static/images/좋아요x.png")
-        likes.innerHTML = response_json.wish_list
+        likes.innerText = response_json.wish_list
     }
     else {
         console.log(response.status)
@@ -605,9 +785,27 @@ export async function setEventListener() {
     document.getElementById("edit-btn").addEventListener("click", goEditProduct)
     document.getElementById("addToLike").addEventListener("click", addToLike)
     document.getElementById("addToCart").addEventListener("click", addToCart)
-    document.getElementById("reviewView").addEventListener("click", reviewView)
-    document.getElementById("detailView").addEventListener("click", productInformationView)
-    document.getElementById("sellerpage").addEventListener("click", sellerpageView)
+    const reviewViewBtn = document.getElementById("reviewView");
+    reviewViewBtn.addEventListener("click", function (e) {
+        reviewViewBtn.classList.add("is-current");
+        detailViewBtn.classList.remove("is-current");
+        sellerpageBtn.classList.remove("is-current");
+        reviewView();
+    })
+    const detailViewBtn = document.getElementById("detailView");
+    detailViewBtn.addEventListener("click", function (e) {
+        detailViewBtn.classList.add("is-current")
+        reviewViewBtn.classList.remove("is-current");
+        sellerpageBtn.classList.remove("is-current");
+        productInformationView();
+    })
+    const sellerpageBtn = document.getElementById("sellerpage");
+    sellerpageBtn.addEventListener("click", function (e) {
+        sellerpageBtn.classList.add("is-current")
+        reviewViewBtn.classList.remove("is-current");
+        detailViewBtn.classList.remove("is-current");
+        sellerpageView();
+    })
     document.getElementById("modal-close-button").addEventListener("click", closeModal)
 }
 

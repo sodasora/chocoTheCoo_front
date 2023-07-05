@@ -232,6 +232,8 @@ body {
 
 .profile {
     width: 23vw;
+    height: 23vw;
+    object-fit: cover;
 }
 
 .subscription-card {

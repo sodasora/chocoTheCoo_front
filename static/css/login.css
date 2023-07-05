@@ -438,13 +438,12 @@ button {
 #kakaoBtn {
     width: 12rem;
     height: 12rem;
-    /* object-fit: cover; */
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url("/static/images/social_kakao.svg");
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 50%
+    border-radius: 50%;
 }
 
 #naverBtn {

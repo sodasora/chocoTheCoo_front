@@ -115,7 +115,7 @@ export function readURL(input) {
     }
     else if (input.files && input.files[0]) {
         document.getElementById("preViewItem").style.display = "flex"
-        var reader = new FileReader();
+        const reader = new FileReader();
         reader.onload = function (e) {
             document.getElementById('preView').src = e.target.result;
         };

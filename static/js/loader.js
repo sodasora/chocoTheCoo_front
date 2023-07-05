@@ -52,7 +52,7 @@ async function injectHeader() {
         const login = document.getElementById("login")
         signup.style.display = "none";
         login.style.display = "none";
-        
+
         const mobileSignup = document.getElementById("mobileSignUp")
         const mobileLogin = document.getElementById("mobileLogin")
         mobileSignup.style.display = "none";
@@ -63,7 +63,7 @@ async function injectHeader() {
         logout.addEventListener("click", function () {
             handleLogout()
         })
-        
+
         const mobileLogout = document.getElementById("mobileLogout")
         mobileLogout.addEventListener("click", function () {
             handleLogout()
@@ -83,13 +83,13 @@ async function injectHeader() {
     } else {
         // 비로그인 상태에서 장바구니,마이페이지,판매자페이지,로그아웃 숨기기
         // 비로그인 상태에서 내 포인트,포인트충전 숨기기
-        const cart = document.getElementById("cart")
-        const mypage = document.getElementById("mypage")
-        const point = document.getElementById("point")
-        const charge = document.getElementById("charge")
-        const chats = document.getElementById("chatting")
-        const CBTI = document.getElementById("CBTI")
-        const onlyseller = document.getElementById("seller")
+        const cart = document.getElementById("cart");
+        const mypage = document.getElementById("mypage");
+        const point = document.getElementById("point");
+        const charge = document.getElementById("charge");
+        const chats = document.getElementById("chatting");
+        const CBTI = document.getElementById("CBTI");
+        const onlyseller = document.getElementById("seller");
 
         logout.style.display = "none"
         mobileLogout.style.display = "none"
@@ -107,6 +107,7 @@ async function injectHeader() {
         onlyseller.addEventListener("click", login)
 
     }
+    setNavBarCurrent();
 }
 injectHeader();
 
@@ -188,6 +189,74 @@ function init() {
 }
 init();
 
+function setNavBarCurrent() {
+    const currentPath = window.location.pathname;
+    const pageName = currentPath.split("/")[1].split(".")[0];
 
+    const charge = document.getElementById("chargeHeader");
+    const mypage = document.getElementById("mypageHeader");
+    const seller = document.getElementById("sellerHeader");
+    const chatting = document.getElementById("chattingHeader");
+    const CBTI = document.getElementById("CBTIHeader");
 
+    const pointPages = [
+        "pointcharge"
+    ]
+    const myPages = [
+        "bill",
+        "bill_detail",
+        "mypage",
+        "myreview",
+        "user_detail_page",
+    ]
+
+    const ChattingPages = [
+        "chatindex",
+        "chatroom"
+    ]
+    const CBTIPage = [
+        "cbti"
+    ]
+    const otherPages = [
+        "cart",
+        "index",
+        "ordercheck",
+        "product_detail",
+        "productregistration",
+        "writereview",
+        "subscriptioninfo",
+    ]
+
+    if (pointPages.includes(pageName)) {
+        charge.setAttribute("class", "is-current")
+        mypage.setAttribute("class", "")
+        seller.setAttribute("class", "")
+        chatting.setAttribute("class", "")
+        CBTI.setAttribute("class", "")
+    } else if (ChattingPages.includes(pageName)) {
+        charge.setAttribute("class", "")
+        mypage.setAttribute("class", "")
+        seller.setAttribute("class", "")
+        chatting.setAttribute("class", "is-current")
+        CBTI.setAttribute("class", "")
+    } else if (myPages.includes(pageName)) {
+        charge.setAttribute("class", "")
+        mypage.setAttribute("class", "is-current")
+        seller.setAttribute("class", "")
+        chatting.setAttribute("class", "")
+        CBTI.setAttribute("class", "")
+    } else if (CBTIPage.includes(pageName)) {
+        charge.setAttribute("class", "")
+        mypage.setAttribute("class", "")
+        seller.setAttribute("class", "")
+        chatting.setAttribute("class", "")
+        CBTI.setAttribute("class", "is-current")
+    } else if (otherPages.includes(pageName)) {
+        charge.setAttribute("class", "")
+        mypage.setAttribute("class", "")
+        seller.setAttribute("class", "")
+        chatting.setAttribute("class", "")
+        CBTI.setAttribute("class", "")
+    }
+}
 
