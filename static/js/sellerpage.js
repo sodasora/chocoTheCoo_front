@@ -1,18 +1,17 @@
-import { 
-  getProductslist, 
-  viewProductslist, 
-  getSellerProductListAPIView, 
-  sellerFollowAPI, 
-  BACK_BASE_URL, 
-  FRONT_BASE_URL, 
-  getSellerPermissionAPIView, 
+import {
+  getProductslist,
+  viewProductslist,
+  getSellerProductListAPIView,
+  sellerFollowAPI,
+  BACK_BASE_URL,
+  FRONT_BASE_URL,
+  getSellerPermissionAPIView,
   payload,
-  getUserInformationAPI
 } from './api.js';
 
 const urlParams = new URLSearchParams(window.location.search);
 let sellerId = urlParams.get('seller');
-if (!sellerId){ // 판매자가 자신의 스토어를 조회할 때 
+if (!sellerId) { // 판매자가 자신의 스토어를 조회할 때 
   sellerId = payload.user_id // 로그인한 유저id
 }
 
@@ -37,31 +36,28 @@ export async function sellerProfileView() {
   document.getElementById("user-follow").innerText = following;
   follow_button.addEventListener("click", function () {
     sellerFollow(sellerId)
-});
+  });
 }
 
 export async function sellerFollow(user_id) {
   const response = await sellerFollowAPI(user_id);
   const response_json = await response.json()
   if (response.status == 404) {
-      alert("판매자 정보가 삭제되었거나, 로그인이 필요합니다.")
+    alert("판매자 정보가 삭제되었거나, 로그인이 필요합니다.")
   } else if (response.status == 401) {
-      alert("로그인이 필요합니다.")
-      window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    alert("로그인이 필요합니다.")
+    window.location.replace(`${FRONT_BASE_URL}/login.html`)
   } else if (response.status == 400) {
-      alert(response_json.err)
+    alert(response_json.err)
   } else {
 
-      document.getElementById("user-follow").innerText = response_json.followings
-      const follow_button = document.getElementById("seller-follow-button")
-      response.status == 200 ? follow_button.innerText = "Follow" : follow_button.innerText = "Unfollow"
+    document.getElementById("user-follow").innerText = response_json.followings
+    const follow_button = document.getElementById("seller-follow-button")
+    response.status == 200 ? follow_button.innerText = "Follow" : follow_button.innerText = "Unfollow"
   }
 
 }
 
-export async function productDetail(product_id) {
-  window.location.href = `${FRONT_BASE_URL}/productdetail.html?product_id=${product_id}`
-}
 
 //등록한 상품들 전체 보기
 export async function sellerPageAPI() {
@@ -70,7 +66,7 @@ export async function sellerPageAPI() {
     const getParams = window.location.search;
     const userParams = getParams.split("=")[1];
     let seller_id = userParams
-    if (!seller_id){ // 판매자가 자신의 스토어를 조회할 때
+    if (!seller_id) { // 판매자가 자신의 스토어를 조회할 때
       seller_id = payload.user_id // 로그인한 유저id
     }
     const product = await getSellerProductListAPIView(seller_id);
