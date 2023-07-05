@@ -90,9 +90,15 @@ function socketSwap(roomId) {
 
     if (roomId != null) {
 
+        // 로컬
         chatSocket = new WebSocket(
             'ws://' + backurl + '/ws/chat/' + roomId + '/?id=' + payload.user_id
         );
+
+        //배포
+        // chatSocket = new WebSocket(
+        //     'wss://' + backurl + '/ws/chat/' + roomId + '/?id=' + payload.user_id
+        // );
 
         // console.log(chatSocket)
 
