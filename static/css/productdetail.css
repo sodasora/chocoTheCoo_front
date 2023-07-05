@@ -586,7 +586,7 @@ nav a:nth-child(3):hover~.nav-underline {
 .productContentBox {
     margin-top: 5%;
     width: 100%;
-    height: auto;
+    height: 30rem;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     border-radius: 1rem;
     padding: 2% 2% 2% 2%;
@@ -595,6 +595,8 @@ nav a:nth-child(3):hover~.nav-underline {
 .product-content {
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     background-color: antiquewhite;
     border-radius: 1rem;
