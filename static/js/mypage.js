@@ -485,7 +485,7 @@ async function pagination_wish(wish) {
         }
         const newItemName = document.createElement("div")
         newItemName.setAttribute("class", "wishname")
-        newItemName.innerText = "제품명: " + wish[id].name
+        newItemName.innerText = "제품명: " + (wish[id].name).slice(0, 10) + "..."
         const newItemContent = document.createElement("div")
         newItemContent.setAttribute("class", "wishtype")
         newItemContent.innerText = "제품설명: " + (wish[id].content).slice(0, 15) + "..."
@@ -709,56 +709,56 @@ export async function sellerFollow(element) {
 export async function getMyFollowList(seller_information) {
     const bookmarkList = document.getElementById("bookmarkList");
 
-for (let i = 0; i < seller_information.length; i++) {
-    const element = seller_information[i];
-    const company_img = element.company_img == null ? '/static/images/store.gif' : `${element.company_img}`
-    let sellerCardList;
-    if (i % 2 == 0) {
-        sellerCardList = document.createElement('div');
-        sellerCardList.classList.add('seller-card-list');
-        bookmarkList.appendChild(sellerCardList);
+    for (let i = 0; i < seller_information.length; i++) {
+        const element = seller_information[i];
+        const company_img = element.company_img == null ? '/static/images/store.gif' : `${element.company_img}`
+        let sellerCardList;
+        if (i % 2 == 0) {
+            sellerCardList = document.createElement('div');
+            sellerCardList.classList.add('seller-card-list');
+            bookmarkList.appendChild(sellerCardList);
+        }
+
+        const sellerCardBox = document.createElement('div');
+        sellerCardBox.classList.add('seller-card-box');
+
+        const sellerImgBox = document.createElement('div');
+        sellerImgBox.classList.add('seller-img-box');
+        sellerImgBox.style.backgroundImage = `url(${company_img})`;
+
+        const sellerInformationBox = document.createElement('div');
+        sellerInformationBox.classList.add('seller-information-box');
+
+        const companyName = document.createElement('p');
+        companyName.textContent = element.company_name;
+
+        const contactNumber = document.createElement('p');
+        contactNumber.textContent = element.contact_number;
+
+        const sellerFollowButton = document.createElement('div');
+        sellerFollowButton.classList.add('seller-follow');
+        sellerFollowButton.id = `sellerFollowButton_${element.user.id}`;
+        sellerFollowButton.textContent = 'Un Follow';
+
+        const followingCount = document.createElement('span');
+        followingCount.id = `followingCount_${element.user.id}`;
+        followingCount.textContent = `following: ${element.followings_count}`;
+
+        sellerInformationBox.appendChild(companyName);
+        sellerInformationBox.appendChild(contactNumber);
+        sellerInformationBox.appendChild(sellerFollowButton);
+        sellerInformationBox.appendChild(followingCount);
+
+        sellerCardBox.appendChild(sellerImgBox);
+        sellerCardBox.appendChild(sellerInformationBox);
+
+        sellerCardList.appendChild(sellerCardBox);
+
+        if (i % 2 != 0 || i === seller_information.length - 1) {
+            // 홀수번째이거나 마지막 요소일 경우 div태그를 닫음
+            bookmarkList.appendChild(sellerCardList);
+        }
     }
-
-    const sellerCardBox = document.createElement('div');
-    sellerCardBox.classList.add('seller-card-box');
-
-    const sellerImgBox = document.createElement('div');
-    sellerImgBox.classList.add('seller-img-box');
-    sellerImgBox.style.backgroundImage = `url(${company_img})`;
-
-    const sellerInformationBox = document.createElement('div');
-    sellerInformationBox.classList.add('seller-information-box');
-
-    const companyName = document.createElement('p');
-    companyName.textContent = element.company_name;
-
-    const contactNumber = document.createElement('p');
-    contactNumber.textContent = element.contact_number;
-
-    const sellerFollowButton = document.createElement('div');
-    sellerFollowButton.classList.add('seller-follow');
-    sellerFollowButton.id = `sellerFollowButton_${element.user.id}`;
-    sellerFollowButton.textContent = 'Un Follow';
-
-    const followingCount = document.createElement('span');
-    followingCount.id = `followingCount_${element.user.id}`;
-    followingCount.textContent = `following: ${element.followings_count}`;
-
-    sellerInformationBox.appendChild(companyName);
-    sellerInformationBox.appendChild(contactNumber);
-    sellerInformationBox.appendChild(sellerFollowButton);
-    sellerInformationBox.appendChild(followingCount);
-
-    sellerCardBox.appendChild(sellerImgBox);
-    sellerCardBox.appendChild(sellerInformationBox);
-
-    sellerCardList.appendChild(sellerCardBox);
-
-    if (i % 2 != 0 || i === seller_information.length - 1) {
-        // 홀수번째이거나 마지막 요소일 경우 div태그를 닫음
-        bookmarkList.appendChild(sellerCardList);
-    }
-}
 
     seller_information.forEach((element) => {
         document.getElementById(`sellerFollowButton_${element.user.id}`).addEventListener("click", function () {
