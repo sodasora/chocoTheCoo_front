@@ -27,6 +27,7 @@ const message_list = document.getElementById("chat_messages")
 
 async function get_chat_log() {
     const chatlog = await getChatLogAPI(roomId);
+    // console.log(chatlog)
 
     chatlog.forEach(e => {
         const element = document.createElement("div");
