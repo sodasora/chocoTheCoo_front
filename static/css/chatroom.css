@@ -33,10 +33,6 @@ body {
     margin-top: 30px;
 }
 
-#ImageFile {
-    margin-bottom: 10px;
-}
-
 .chat-message>div {
     background-color: #3b3b3b;
     color: #e1e1e1;
@@ -77,6 +73,8 @@ body {
 
 .profile_image {
     width: 6rem;
+    height: 6rem;
+    background-size: cover;
     margin-top: 10px;
     border-radius: 10px;
 }
