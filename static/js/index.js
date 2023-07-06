@@ -5,6 +5,7 @@ export async function goSearch(url) {
     window.location.href = `${FRONT_BASE_URL}/index.html?${url}`;
 }
 
+
 export async function categoryview() {
     const categories = await getCategoryView();
     const categorySelect = document.getElementById("categorymenu");
@@ -53,24 +54,30 @@ export async function searchAnythingAPI() {
     const answer = document.getElementById("search-keyword");
     const keyword = answer.value;
 
+    const orderingBox = document.getElementById("orderingBox");
+    const order = orderingBox.value;
+    localStorage.setItem("selectedOrdering", order);
+
     let url = "";
 
-    // 카테고리 검색 카테고리 ID가 url에 있을때
+    // 카테고리 검색 카테고리 ID가 URL에 있을때
     if (categoryId) {
         url += `category=${categoryId}`;
     }
 
-    // 검색창 입력어로 검색 : 키워드가 url에 있을때
+    // 검색창 입력어로 검색 : 키워드가 URL에 있을때
     if (keyword) {
         url += (url.length > 0 ? '&' : '') + `search=${keyword}`;
     }
 
-    if (ordering) {
-        url += (url.length > 0 ? '&' : '') + `ordering=${ordering}`;
+    // 정렬이 입력되어있을 때
+    if (order) {
+        url += (url.length > 0 ? '&' : '') + `ordering=${order}`;
     }
 
     goSearch(url);
 }
+
 // 카테고리, 키워드검색, 정렬 모바일버전 
 export async function searchAnythingAPI_mobile() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -80,6 +87,9 @@ export async function searchAnythingAPI_mobile() {
     const answer = document.getElementById("search-keyword-mobile");
     const keyword = answer.value;
 
+    const orderingBox = document.getElementById("orderingBox");
+    const order = orderingBox.value;
+    
     let url = "";
 
     // 카테고리 검색 카테고리 ID가 url에 있을때
@@ -91,9 +101,9 @@ export async function searchAnythingAPI_mobile() {
     if (keyword) {
         url += (url.length > 0 ? '&' : '') + `search=${keyword}`;
     }
-
+    // 정렬할때
     if (ordering) {
-        url += (url.length > 0 ? '&' : '') + `ordering=${ordering}`;
+        url += (url.length > 0 ? '&' : '') + `ordering=${order}`;
     }
 
     goSearch(url);
@@ -103,7 +113,7 @@ export async function showSearchAnythingProduct() {
     const urlParams = new URLSearchParams(window.location.search);
     const keyword = urlParams.get('search');
     const categoryId = urlParams.get("category");
-    const ordering = urlParams.get("ordering");
+    const order = urlParams.get("ordering");
     let url = "";
     // 카테고리 검색 카테고리 ID가 url에 있을때
     if (categoryId) {
@@ -115,8 +125,8 @@ export async function showSearchAnythingProduct() {
         url += (url.length > 0 ? '&' : '') + `search=${keyword}`;
     }
 
-    if (ordering) {
-        url += (url.length > 0 ? '&' : '') + `ordering=${ordering}`;
+    if (order) {
+        url += (url.length > 0 ? '&' : '') + `ordering=${order}`;
     }
     return url;
 
@@ -125,6 +135,7 @@ export async function showSearchAnythingProduct() {
 
 
 export async function setEventListener() {
+    document.getElementById("orderingBox").addEventListener("change", searchAnythingAPI);
     // 검색어 엔터 누르면 이동
     document.getElementById("search-keyword").addEventListener("keydown", (event) => {
         if (event.key == "Enter") {

@@ -57,11 +57,13 @@
                         <button type="button" class="btn btn-light" id="search-btn">🔍</button>
                     </div>
                     <select id="orderingBox" class="ordering-box">
-                        <option id="orderingRecent" class="ordering-items">최신순</option>
-                        <option id="orderingSale" class="ordering-items">판매량순</option>
-                        <option id="orderingLike" class="ordering-items">좋아요순</option>
-                        <option id="orderingCheap" class="ordering-items">낮은 가격순</option>
-                        <option id="orderingExpensive" class="ordering-items">높은 가격순</option>
+                        <option value="" id="orderingRecent" class="ordering-items">보기 정렬</option>
+                        <option value="" id="orderingRecent" class="ordering-items">최신순</option>
+                        <option value="sales" id="orderingSale" class="ordering-items">판매량순</option>
+                        <option value="stars" id="orderingStar" class="ordering-items">별점순</option>
+                        <option value="popularity" id="orderingLike" class="ordering-items">인기순</option>
+                        <option value="cheap" id="orderingCheap" class="ordering-items">낮은 가격순</option>
+                        <option value="expensive" id="orderingExpensive" class="ordering-items">높은 가격순</option>
                     </select>
                     <div class="menu" id="categorymenu">
                         <p>category</p>
