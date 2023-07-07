@@ -497,7 +497,8 @@ export async function deleteCartItemAll(queryString, bill_id) {
 		}
 	})
 	if (response.status == 204) {
-		window.location.href = "/bill_detail.html" + "?ordered=true" + `&bill_id=${bill_id}`;
+		alert("주문이 완료되었습니다. 구매포인트 적립은 구매확정 후 이루어집니다.");
+		window.location.href = `/bill_detail.html?bill_id=${bill_id}`;
 	}
 	else {
 		console.log(response.status);

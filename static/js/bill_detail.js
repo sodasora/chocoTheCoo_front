@@ -13,9 +13,6 @@ window.onload = async function () {
 async function renderBillDetails() {
     const url = new URL(window.location.href);
     console.log(url.searchParams.get('ordered'));
-    if (url.searchParams.get('ordered')) {
-        alert("주문이 완료되었습니다. 구매포인트 적립은 구매확정 후 이루어집니다.");
-    }
     const bill_id = url.searchParams.get('bill_id');
     // console.log(bill_id);
     const bill = await getBillDetail(bill_id);

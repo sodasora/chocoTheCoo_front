@@ -89,7 +89,7 @@ export async function searchAnythingAPI_mobile() {
 
     const orderingBox = document.getElementById("orderingBox");
     const order = orderingBox.value;
-
+    
     let url = "";
 
     // 카테고리 검색 카테고리 ID가 url에 있을때
