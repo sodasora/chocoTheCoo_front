@@ -170,6 +170,11 @@ async function paginationView_order(order) {
             modalFooter.appendChild(btnShipping);
         }
 
+        // 발송준비중(3) 발송완료 버튼 보이기
+        if (order[id].order_status.id == 2) {
+            modalFooter.appendChild(btnShipping);
+        }
+
         // 환불요청중(8) 환불승인 버튼 보이기
         if (order[id].order_status.id == 8) {
             modalFooter.appendChild(refundBtn);
