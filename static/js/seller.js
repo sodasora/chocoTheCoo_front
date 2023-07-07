@@ -167,9 +167,8 @@ function listView_product(product, type) {
         }
         const content = document.createElement("div");
         content.setAttribute("class", 'under-column');
-        content.onclick = function () {
-            productDetail(product[id].id);
-        };
+        content.addEventListener("click", () => productDetail(product[id].id));
+        console.log(product[id].id)
 
         // type에 따른 분기 type: [sells, likes, stars]
         if (type === 'sells') {
@@ -260,20 +259,14 @@ function listView_order(order, type) {
 
 
 // 상품리스트 불러오기
-seller_products.sort(function (a, b) {
-    return b.sales - a.sales; // "sales" 기준으로 내림차순 정렬
-});
-listView_product(seller_products, 'sells')
+const sells = seller_products.slice().sort((a, b) => (a.sales < b.sales ? 1 : -1)); // "sales" 기준으로 내림차순 정렬
+listView_product(sells, 'sells')
 
-seller_products.sort(function (a, b) {
-    return b.likes - a.likes; // "likes" 기준으로 내림차순 정렬
-});
-listView_product(seller_products, 'likes')
+const likes = seller_products.slice().sort((a, b) => (a.likes < b.likes ? 1 : -1)); // "likes" 기준으로 내림차순 정렬
+listView_product(likes, 'likes')
 
-seller_products.sort(function (a, b) {
-    return b.stars - a.stars; // "stars" 기준으로 내림차순 정렬
-});
-listView_product(seller_products, 'stars')
+const stars = seller_products.slice().sort((a, b) => (a.stars < b.stars ? 1 : -1)); // "stars" 기준으로 내림차순 정렬
+listView_product(stars, 'stars')
 
 // 주문리스트 불러오기
 listView_order(seller_orders_unsent, 'orders')

@@ -117,39 +117,39 @@ async function Choicelist() {
             newP.setAttribute("class", "pointinfo")
             if (point[id].point_category == "출석") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 출석: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 출석: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "텍스트리뷰") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 텍스트(별점)리뷰: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 텍스트(별점)리뷰: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "포토리뷰") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 포토리뷰: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 포토리뷰: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "구매") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 구매: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 구매: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "충전") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 충전: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 충전: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "구독권이용료") {
                 newP.setAttribute("style", "color:red;")
-                newP.innerText = `${point_date}` + " 구독권이용료: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 구독권이용료: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "결제") {
                 newP.setAttribute("style", "color:red;")
-                newP.innerText = `${point_date}` + " 결제: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 결제: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "정산") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 정산: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 정산: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "환불") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 환불: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 환불: " + point[id].point.toLocaleString() + "p"
             }
             return newP
         }
@@ -235,7 +235,7 @@ async function Choicelist() {
     const plus_statistic = document.createElement("div")
     plus_statistic.setAttribute("class", "point-statistic")
     plus_statistic.setAttribute("id", "totalplus")
-    plus_statistic.innerText = "총 획득포인트: " + response_point_statistic_json["day_plus"] + "p"
+    plus_statistic.innerText = "총 획득포인트: " + response_point_statistic_json["day_plus"].toLocaleString() + "p"
     newstatistic.appendChild(plus_statistic)
 
     const minus_statistic = document.createElement("div")
@@ -282,7 +282,7 @@ async function getToday() {
             newP.setAttribute("class", "pointinfo")
             if (point[id].point_category == "출석") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 출석: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 출석: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "텍스트리뷰") {
                 newP.setAttribute("style", "color:blue;")
@@ -314,7 +314,7 @@ async function getToday() {
             }
             if (point[id].point_category == "환불") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 환불: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 환불: " + point[id].point.toLocaleString() + "p"
             }
             return newP
         }

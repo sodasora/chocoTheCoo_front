@@ -218,7 +218,7 @@ export async function viewProductDetail() {
         newImage.setAttribute("src", "/static/images/기본이미지.gif");
         productImage.appendChild(newImage)
     }
-    // 품절일 경우 품절관련 표시
+    // 품절(2)일 경우 품절관련 표시
     if (response.item_state == 2) {
         // 이미지 soldout 표시
         const soldoutImage = document.createElement("img");
@@ -230,6 +230,25 @@ export async function viewProductDetail() {
         // 장바구니 버튼 숨기기
         document.getElementById('cart-box').style = 'display: none;';
         document.getElementById('product-soldout-content').style = 'display: block;';
+    }
+
+    // 삭제(6)상품일 경우 삭제관련 표시
+    if (response.item_state == 6) {
+        // 이미지 soldout 표시
+        const soldoutImage = document.createElement("img");
+        soldoutImage.setAttribute("src", "/static/images/품절.png");
+        soldoutImage.setAttribute("class", "delete");
+        productImage.appendChild(soldoutImage)
+        // 재고량 삭제표시
+        productAmount.innerText = "삭제상품"
+        // 장바구니 버튼 숨기기
+        document.getElementById('cart-box').style = 'display: none;';
+        document.getElementById('product-delete-content').style = 'display: block;';
+        // 수정하기 삭제하기 버튼 숨기기
+        document.getElementById('edit-btn').style = 'display: none;';
+        document.getElementById('delete-btn').style = 'display: none;';
+        // 복구하기 버튼 보이기
+        document.getElementById('restore-btn').style = 'display: inline-block;';
     }
 
     // 리뷰 정보 불러오기
@@ -720,13 +739,6 @@ export async function showReview(reviews) {
 
 }
 
-
-// export async function getSellerInformation() {
-//     const response = await getSellerInformationAPI()
-//     if (response.status == 200) {
-
-//     }
-// }
 
 async function addToCart() {
     if (payload == null) {

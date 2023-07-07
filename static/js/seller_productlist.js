@@ -336,6 +336,11 @@ async function paginationView_product(product) {
         renderButton(page);
     };
     render(page);
+
+    // 상품이 없을 경우 표시
+    if (numOfContent == 0) {
+        buttons.innerText = "등록된 상품이 없습니다."
+    }
 }
 
 
@@ -361,5 +366,36 @@ const seller_products = await getAllProductListAPIView(user_id)
 
 // 상품 목록 페이지네이션 실행
 if (seller_products.length > 0) {
+    const productfilter = document.getElementById("filter")
+    seller_products.sort((a, b) => (a.created_at < b.created_at ? 1 : -1)); // "상품등록일" 최신순 정렬
+    
+    productfilter.addEventListener("change", (e) => {
+        if (e.target.value == 'recent') { // 최신 등록순
+            const seller_products_filter = seller_products.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
+            paginationView_product(seller_products_filter)
+        } else if (e.target.value == 'old') { // 오래된순
+            const seller_products_filter = seller_products.sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
+            paginationView_product(seller_products_filter)
+        } else if (e.target.value == 'sales') { // 판매순
+            const seller_products_filter = seller_products.sort((a, b) => (a.sales < b.sales ? 1 : -1));
+            paginationView_product(seller_products_filter)
+        } else if (e.target.value == 'amount') { // 재고수량 오름차순 + '판매중(1)' 상태
+            seller_products.sort((a, b) => (a.amount > b.amount ? 1 : -1));
+            const seller_products_filter = seller_products.filter(function (product) {
+                return [1].includes(product.item_state)
+            });
+            paginationView_product(seller_products_filter)
+        } else if (e.target.value == 'delete') { // 삭제(6)상품만 보기
+            const seller_products_filter = seller_products.filter(function (product) {
+                return [6].includes(product.item_state)
+            });
+            paginationView_product(seller_products_filter)
+        } else if (e.target.value == 'soldout') { // 품절(2)상품만 보기
+            const seller_products_filter = seller_products.filter(function (product) {
+                return [2].includes(product.item_state)
+            });
+            paginationView_product(seller_products_filter)
+        }
+    });
     paginationView_product(seller_products)
 }
