@@ -373,6 +373,15 @@ td {
   height: 10vw;
 }
 
+/* 품절,삭제 상태 이미지 */
+.soldout,
+.delete {
+  position: absolute;
+  width: 17vw;
+  height: 10vw;
+  opacity: 0.8;
+}
+
 .wishname {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -795,6 +804,15 @@ td {
   .wishimage {
     width: 17vw;
     height: 10vw;
+  }
+
+  /* 품절,삭제 상태 이미지 */
+  .soldout,
+  .delete {
+    position: absolute;
+    width: 17vw;
+    height: 10vw;
+    opacity: 0.8;
   }
 
   .wishname {

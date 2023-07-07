@@ -36,7 +36,19 @@
     <div class="productContainer">
 
         <div class="productList">
-            <h2>상품현황</h2>
+            <div>
+                <div style=" position: absolute;">
+                    <select name="대분류필터링" id="filter">
+                        <option value="recent">최신순</option>
+                        <option value="old">오래된순</option>
+                        <option value="sales" >판매순</option>
+                        <option value="amount" >재고수량순</option>
+                        <option value="delete">삭제상품</option>
+                        <option value="soldout">품절상품</option>
+                    </select>
+                </div> 
+                <h2>상품현황</h2>
+            </div>
             <div class="card mb-4">
                 <div class="card-body">
                     <table class="table table-hover table-striped">

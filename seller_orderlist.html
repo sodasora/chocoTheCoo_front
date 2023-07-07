@@ -36,7 +36,18 @@
     <div class="orderContainer">
 
         <div class="orderList">
-            <h2>주문현황</h2>
+            <div>
+                <div style=" position: absolute;">
+                    <select name="대분류필터링" id="filter">
+                        <option value="all">전체보기</option>
+                        <option value="incomplete" >미처리주문</option>
+                        <option value="complete" >완료주문</option>
+                        <option value="refund">환불보기</option>
+                    </select>
+                </div> 
+                <h2>주문현황</h2>
+            </div>
+
             <div class="card mb-4">
                 <div class="card-body">
                     <table class="table table-hover table-striped">

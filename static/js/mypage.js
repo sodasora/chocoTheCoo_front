@@ -117,39 +117,39 @@ async function Choicelist() {
             newP.setAttribute("class", "pointinfo")
             if (point[id].point_category == "출석") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 출석: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 출석: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "텍스트리뷰") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 텍스트(별점)리뷰: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 텍스트(별점)리뷰: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "포토리뷰") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 포토리뷰: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 포토리뷰: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "구매") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 구매: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 구매: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "충전") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 충전: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 충전: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "구독권이용료") {
                 newP.setAttribute("style", "color:red;")
-                newP.innerText = `${point_date}` + " 구독권이용료: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 구독권이용료: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "결제") {
                 newP.setAttribute("style", "color:red;")
-                newP.innerText = `${point_date}` + " 결제: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 결제: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "정산") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 정산: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 정산: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "환불") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 환불: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 환불: " + point[id].point.toLocaleString() + "p"
             }
             return newP
         }
@@ -235,7 +235,7 @@ async function Choicelist() {
     const plus_statistic = document.createElement("div")
     plus_statistic.setAttribute("class", "point-statistic")
     plus_statistic.setAttribute("id", "totalplus")
-    plus_statistic.innerText = "총 획득포인트: " + response_point_statistic_json["day_plus"] + "p"
+    plus_statistic.innerText = "총 획득포인트: " + response_point_statistic_json["day_plus"].toLocaleString() + "p"
     newstatistic.appendChild(plus_statistic)
 
     const minus_statistic = document.createElement("div")
@@ -282,7 +282,7 @@ async function getToday() {
             newP.setAttribute("class", "pointinfo")
             if (point[id].point_category == "출석") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 출석: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 출석: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "텍스트리뷰") {
                 newP.setAttribute("style", "color:blue;")
@@ -314,7 +314,7 @@ async function getToday() {
             }
             if (point[id].point_category == "환불") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 환불: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 환불: " + point[id].point.toLocaleString() + "p"
             }
             return newP
         }
@@ -493,6 +493,39 @@ async function pagination_wish(wish) {
         newCard.appendChild(newItemImage)
         newCard.appendChild(newItemName)
         newCard.appendChild(newItemContent)
+
+        // 품절(2)표시
+        if (wish[id].item_state == 2) {
+            // 이미지 품절표시
+            const soldoutImage = document.createElement("img");
+            soldoutImage.setAttribute("src", "/static/images/soldout.png");
+            soldoutImage.setAttribute("class", "soldout");
+            newCard.prepend(soldoutImage)
+            // 투명화
+            newCard.style.opacity = 0.7
+        }
+        
+        // 삭제(6)표시
+        if (wish[id].item_state == 6) {
+            // 상품이미지 삭제표시
+            const deleteImg = document.createElement("img");
+            deleteImg.setAttribute('src', '/static/images/품절.png');
+            deleteImg.setAttribute('class', 'delete');
+            imgDiv.appendChild(deleteImg);
+            // 상품명 삭제표시
+            const pdInfoTextDiv = document.createElement('div');
+            pdInfoTextDiv.classList.add('pd-info-text');
+            pdInfoTextDiv.textContent = "삭제된 상품입니다"
+            infoDiv.prepend(pdInfoTextDiv);
+            // 투명화
+            newCard.style.opacity = 0.5
+            // 체크박스 해제 및 입력기능 비활성화
+            checkboxInput.checked = false;
+            checkboxInput.setAttribute("disabled", "")
+            amountDiv.setAttribute("disabled", "")
+        }
+
+
         newCard.onclick = function () {
             productDetail(wish[id].id);
         };
@@ -851,7 +884,6 @@ window.onload = async function () {
         const user_id = payload.user_id
         const profile_data = await getUserProfileAPIView(user_id)
         const wish = profile_data["product_wish_list"]
-        //console.log(wish)
         if (wish == "") {
             const wish_box = document.querySelector(".my-wish-none")
             wish_box.innerText = "찜한 상품이 없습니다."

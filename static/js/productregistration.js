@@ -125,11 +125,13 @@ export async function editProductSubmit() {
 
 
     try {
-
         const response = await editProductDetailAPIView(productId, formdata);
-        console.log(response);
-
-
+        if (response.status == 200) {
+            alert('상품 수정 완료!')
+            window.location.href = `${FRONT_BASE_URL}/sellerpage.html`;
+        } else {
+            alert('상품 수정 실패')
+        }
     } catch (error) {
         console.error(error);
     }
