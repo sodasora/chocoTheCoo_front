@@ -1,6 +1,6 @@
 import {
     getProductDetailAPIView,
-    deletetProductDetailAPIView,
+    deleteProductDetailAPIView,
     addToCartAPI,
     addToLikeAPI,
     BACK_BASE_URL,
@@ -256,7 +256,13 @@ export async function deleteProduct() {
     try {
         const deleteConfirm = confirm("정말 삭제하시겠습니까?")
         if (deleteConfirm) {
-            deletetProductDetailAPIView(productId);
+            deleteProductDetailAPIView(productId);
+        }
+        if (response.status == 204) {
+            alert("상품 삭제 완료!")
+            window.location.href = "sellerpage.html";
+        } else {
+            alert("상품 삭제 실패!")
         }
 
     } catch (error) {

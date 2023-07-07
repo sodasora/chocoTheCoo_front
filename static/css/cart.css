@@ -78,6 +78,15 @@ html {
     border-radius: 4px;
 }
 
+/* 품절상태 이미지 */
+.soldout,.delete {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    opacity: 0.8;
+}
+
+
 .pd-amount {
     width: 3em;
     height: 1.3em;
@@ -263,9 +272,18 @@ html {
     .info-box {
         margin-left: auto;
     }
+
     .pd-info-thumb {
         width: 150px;
         height: 150px;
+    }
+
+    /* 품절상태 이미지 */
+    .soldout,.delete {
+        position: absolute;
+        height: 150px;
+        width: 150px;
+        opacity: 0.8;
     }
 
     .order-btn {

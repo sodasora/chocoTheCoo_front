@@ -632,32 +632,20 @@ export async function editProductDetailAPIView(product_id, formdata) {
 		method: "PUT",
 		body: formdata
 	});
-	if (response.status == 200) {
-		alert('상품 수정 완료!')
-		window.location.href = `${FRONT_BASE_URL}/sellerpage.html`;
-	} else {
-		alert('상품 수정 실패')
-	}
-	return response.json();
+	return response;
 }
 
 
-//  싱픔뱔 상세 정보 가져오기
+//  상풀별 상세 정보 가져오기
 // # 상품 삭제하기
-export async function deletetProductDetailAPIView(product_id) {
+export async function deleteProductDetailAPIView(product_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "DELETE",
 	});
-	if (response.status == 204) {
-		alert("상품 삭제 완료!")
-		window.location.href = "sellerpage.html";
-	} else {
-		alert("상품 삭제 실패!")
-	}
-	return response.json();
+	return response;
 }
 
 // 전체 주문 목록 불러오기

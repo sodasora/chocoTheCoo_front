@@ -27,11 +27,11 @@ async function renderCartList() {
         const imgDiv = document.createElement('div');
         imgDiv.style.padding = '0';
         imgDiv.style.margin = '0';
+        imgDiv.style.display = 'flex';
 
         const img = document.createElement('img');
         img.classList.add('pd-info-thumb');
         if (e.product.image) {
-            // img.src = `${BACK_BASE_URL}` + `${e.product.image}`
             img.src = `${e.product.image}`
         }
         else {
@@ -132,6 +132,43 @@ async function renderCartList() {
 
 
         cartBox.appendChild(cartItemDiv);
+
+
+        // 품절(2)표시
+        if (e.product.item_state == 2) {
+            // 이미지 품절표시
+            const soldoutImage = document.createElement("img");
+            soldoutImage.setAttribute("src", "/static/images/soldout.png");
+            soldoutImage.setAttribute("class", "soldout");
+            imgDiv.appendChild(soldoutImage)
+            // 투명화
+            cartItemDiv.style.opacity = 0.5
+            // 체크박스 해제 및 입력기능 비활성화
+            checkboxInput.checked = false;
+            checkboxInput.setAttribute("disabled", "")
+            amountDiv.setAttribute("disabled", "")
+        }
+        
+        // 삭제(6)표시
+        if (e.product.item_state == 6) {
+            // 상품이미지 삭제표시
+            const deleteImg = document.createElement("img");
+            deleteImg.setAttribute('src', '/static/images/품절.png');
+            deleteImg.setAttribute('class', 'delete');
+            imgDiv.appendChild(deleteImg);
+            // 상품명 삭제표시
+            const pdInfoTextDiv = document.createElement('div');
+            pdInfoTextDiv.classList.add('pd-info-text');
+            pdInfoTextDiv.textContent = "삭제된 상품입니다"
+            infoDiv.prepend(pdInfoTextDiv);
+            // 투명화
+            cartItemDiv.style.opacity = 0.5
+            // 체크박스 해제 및 입력기능 비활성화
+            checkboxInput.checked = false;
+            checkboxInput.setAttribute("disabled", "")
+            amountDiv.setAttribute("disabled", "")
+        }
+
 
         const hrLine = document.createElement('hr');
         hrLine.classList.add('line');
