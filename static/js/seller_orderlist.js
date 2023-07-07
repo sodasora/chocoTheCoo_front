@@ -171,7 +171,7 @@ async function paginationView_order(order) {
         }
 
         // 발송준비중(3) 발송완료 버튼 보이기
-        if (order[id].order_status.id == 2) {
+        if (order[id].order_status.id == 3) {
             modalFooter.appendChild(btnShipping);
         }
 
