@@ -985,6 +985,7 @@ async function getUserInformation() {
     if (response_json.login_type != "normal") {
         // 소셜 로그인 계정일 경우
         document.getElementById("navItemUserInformation").style.display = "none"
+        document.getElementById("navItemUserEmail").style.display = "none"
     }
     if (response_json.phone_number != null) {
         document.getElementById("phoneNum").value = response_json.phone_number

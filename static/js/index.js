@@ -89,7 +89,7 @@ export async function searchAnythingAPI_mobile() {
 
     const orderingBox = document.getElementById("orderingBox");
     const order = orderingBox.value;
-    
+
     let url = "";
 
     // 카테고리 검색 카테고리 ID가 url에 있을때
@@ -224,12 +224,13 @@ export async function setEventListener_mobile() {
 }
 
 window.onload = async function () {
-    categoryview()
-    setEventListener()
-    categoryview_mobile()
-    setEventListener_mobile()
+    categoryview();
+    setEventListener();
+    categoryview_mobile();
+    setEventListener_mobile();
+    applySelectedOptions();
     // const product = await getProductListAPIView();
-    const choco = document.getElementById("chocobanner")
+    const choco = document.getElementById("chocobanner");
     const url = await showSearchAnythingProduct();
 
     choco.addEventListener("click", function () {
@@ -246,6 +247,24 @@ window.onload = async function () {
     }
 }
 
+function applySelectedOptions() {
+    const orderingChoice = document.getElementById("orderingChoice")
+    const urlParams = new URLSearchParams(window.location.search);
+    const ordering = urlParams.get("ordering");
+    if (ordering == null) {
+        orderingChoice.innerText = "최신순"
+    } else {
+        const selectOptions = {
+            "sales": "orderingSale",
+            "stars": "orderingStar",
+            "popularity": "orderingLike",
+            "cheap": "orderingCheap",
+            "expensive": "orderingExpensive"
+        }
+        const currentSelect = document.getElementById(`${selectOptions[ordering]}`)
+        orderingChoice.innerText = currentSelect.text;
+    }
+}
 
 async function setLocalStorage(response) {
     const response_json = await response.json();
