@@ -291,6 +291,7 @@ function applySelectedOptions() {
         orderingChoice.innerText = "최신순"
     } else {
         const selectOptions = {
+            "recent": "orderingRecent",
             "sales": "orderingSale",
             "stars": "orderingStar",
             "popularity": "orderingLike",
