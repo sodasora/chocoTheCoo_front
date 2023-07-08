@@ -636,7 +636,7 @@ export async function editProductDetailAPIView(product_id, formdata) {
 }
 
 
-//  상풀별 상세 정보 가져오기
+//  상품별 상세 정보 가져오기
 // # 상품 삭제하기
 export async function deleteProductDetailAPIView(product_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {

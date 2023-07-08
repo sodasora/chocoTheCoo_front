@@ -117,7 +117,6 @@ export async function myTest() {
     interval: false
   });
   // 페이지 이동
-  console.log(carousel);
   carousel.next();
 }
 
@@ -163,8 +162,6 @@ export async function printCBTIResult(mbti) {
   const title = cbtiName[mbti];
   const result = cbti[mbti];
   const response = await searchProductAPI(title);
-  console.log(response)
-  console.log(title)
 
   const productId = response.results[0].id;
   const imageUrl = response.results[0].image;
