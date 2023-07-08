@@ -117,39 +117,39 @@ async function Choicelist() {
             newP.setAttribute("class", "pointinfo")
             if (point[id].point_category == "출석") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 출석: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 출석: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "텍스트리뷰") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 텍스트(별점)리뷰: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 텍스트(별점)리뷰: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "포토리뷰") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 포토리뷰: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 포토리뷰: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "구매") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 구매: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 구매: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "충전") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 충전: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 충전: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "구독권이용료") {
                 newP.setAttribute("style", "color:red;")
-                newP.innerText = `${point_date}` + " 구독권이용료: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 구독권이용료: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "결제") {
                 newP.setAttribute("style", "color:red;")
-                newP.innerText = `${point_date}` + " 결제: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 결제: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "정산") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 정산: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 정산: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "환불") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 환불: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 환불: " + point[id].point.toLocaleString() + "p"
             }
             return newP
         }
@@ -235,7 +235,7 @@ async function Choicelist() {
     const plus_statistic = document.createElement("div")
     plus_statistic.setAttribute("class", "point-statistic")
     plus_statistic.setAttribute("id", "totalplus")
-    plus_statistic.innerText = "총 획득포인트: " + response_point_statistic_json["day_plus"] + "p"
+    plus_statistic.innerText = "총 획득포인트: " + response_point_statistic_json["day_plus"].toLocaleString() + "p"
     newstatistic.appendChild(plus_statistic)
 
     const minus_statistic = document.createElement("div")
@@ -282,7 +282,7 @@ async function getToday() {
             newP.setAttribute("class", "pointinfo")
             if (point[id].point_category == "출석") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 출석: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 출석: " + point[id].point.toLocaleString() + "p"
             }
             if (point[id].point_category == "텍스트리뷰") {
                 newP.setAttribute("style", "color:blue;")
@@ -314,7 +314,7 @@ async function getToday() {
             }
             if (point[id].point_category == "환불") {
                 newP.setAttribute("style", "color:blue;")
-                newP.innerText = `${point_date}` + " 환불: " + point[id].point + "p"
+                newP.innerText = `${point_date}` + " 환불: " + point[id].point.toLocaleString() + "p"
             }
             return newP
         }
@@ -493,6 +493,39 @@ async function pagination_wish(wish) {
         newCard.appendChild(newItemImage)
         newCard.appendChild(newItemName)
         newCard.appendChild(newItemContent)
+
+        // 품절(2)표시
+        if (wish[id].item_state == 2) {
+            // 이미지 품절표시
+            const soldoutImage = document.createElement("img");
+            soldoutImage.setAttribute("src", "/static/images/soldout.png");
+            soldoutImage.setAttribute("class", "soldout");
+            newCard.prepend(soldoutImage)
+            // 투명화
+            newCard.style.opacity = 0.7
+        }
+        
+        // 삭제(6)표시
+        if (wish[id].item_state == 6) {
+            // 상품이미지 삭제표시
+            const deleteImg = document.createElement("img");
+            deleteImg.setAttribute('src', '/static/images/품절.png');
+            deleteImg.setAttribute('class', 'delete');
+            imgDiv.appendChild(deleteImg);
+            // 상품명 삭제표시
+            const pdInfoTextDiv = document.createElement('div');
+            pdInfoTextDiv.classList.add('pd-info-text');
+            pdInfoTextDiv.textContent = "삭제된 상품입니다"
+            infoDiv.prepend(pdInfoTextDiv);
+            // 투명화
+            newCard.style.opacity = 0.5
+            // 체크박스 해제 및 입력기능 비활성화
+            checkboxInput.checked = false;
+            checkboxInput.setAttribute("disabled", "")
+            amountDiv.setAttribute("disabled", "")
+        }
+
+
         newCard.onclick = function () {
             productDetail(wish[id].id);
         };
@@ -663,28 +696,17 @@ async function subscription_info() {
     }
 }
 
-
-async function setDisplayView() {
-    const nav_items = document.querySelectorAll(".option-container")
-    nav_items.forEach((item) => {
-        item.style.display = "none"
-    })
-}
-
 export async function mywishView() {
-    setDisplayView()
     document.getElementById("my-wish-box").style.display = "block"
-    document.getElementById("bookmarkList").style.display = "none"
+    document.getElementById("my-bookmark-box").style.display = "none"
 }
 
 export async function showBookmarkList() {
-    document.getElementById("bookmarkList").style.display = "block"
+    document.getElementById("my-bookmark-box").style.display = "block"
     document.getElementById("my-wish-box").style.display = "none"
 }
 
 export async function setEventListener() {
-
-
     document.getElementById("wishfont").addEventListener("click", mywishView)
     document.getElementById("bookmarkmarket").addEventListener("click", showBookmarkList)
 }
@@ -705,19 +727,27 @@ export async function sellerFollow(element) {
 
 }
 
+export async function goSellerPage(user_id) {
+    const url = `${FRONT_BASE_URL}/sellerpage.html?seller=${user_id}`
+    window.location.href = url;
+}
+
 
 export async function getMyFollowList(seller_information) {
+    // console.log(seller_information)
     const bookmarkList = document.getElementById("bookmarkList");
+    const buttons = document.getElementById("bookmark-buttons");
 
-    for (let i = 0; i < seller_information.length; i++) {
-        const element = seller_information[i];
+    // 페이지네이션 페이지 설정
+    const numOfContent = seller_information.length;
+    const maxContent = 3; //한 페이지에 보이는 수
+    const maxButton = 5; //보이는 최대 버튼 수
+    const maxPage = Math.ceil(numOfContent / maxContent);
+    let page = 1;
+
+    const Content = (id) => {
+        const element = seller_information[id];
         const company_img = element.company_img == null ? '/static/images/store.gif' : `${element.company_img}`
-        let sellerCardList;
-        if (i % 2 == 0) {
-            sellerCardList = document.createElement('div');
-            sellerCardList.classList.add('seller-card-list');
-            bookmarkList.appendChild(sellerCardList);
-        }
 
         const sellerCardBox = document.createElement('div');
         sellerCardBox.classList.add('seller-card-box');
@@ -737,8 +767,18 @@ export async function getMyFollowList(seller_information) {
 
         const sellerFollowButton = document.createElement('div');
         sellerFollowButton.classList.add('seller-follow');
-        sellerFollowButton.id = `sellerFollowButton_${element.user.id}`;
         sellerFollowButton.textContent = 'Un Follow';
+        sellerFollowButton.setAttribute("id", `sellerFollowButton_${element.user.id}`)
+        sellerFollowButton.onclick = function () {
+            sellerFollow(element)
+        }
+
+        const sellergoButton = document.createElement('div');
+        sellergoButton.classList.add('seller-go');
+        sellergoButton.textContent = 'Go';
+        sellergoButton.onclick = function () {
+            goSellerPage(element.user.id)
+        }
 
         const followingCount = document.createElement('span');
         followingCount.id = `followingCount_${element.user.id}`;
@@ -747,25 +787,86 @@ export async function getMyFollowList(seller_information) {
         sellerInformationBox.appendChild(companyName);
         sellerInformationBox.appendChild(contactNumber);
         sellerInformationBox.appendChild(sellerFollowButton);
+        sellerInformationBox.appendChild(sellergoButton);
         sellerInformationBox.appendChild(followingCount);
 
         sellerCardBox.appendChild(sellerImgBox);
         sellerCardBox.appendChild(sellerInformationBox);
 
-        sellerCardList.appendChild(sellerCardBox);
-
-        if (i % 2 != 0 || i === seller_information.length - 1) {
-            // 홀수번째이거나 마지막 요소일 경우 div태그를 닫음
-            bookmarkList.appendChild(sellerCardList);
-        }
+        return sellerCardBox;
     }
 
-    seller_information.forEach((element) => {
-        document.getElementById(`sellerFollowButton_${element.user.id}`).addEventListener("click", function () {
-            sellerFollow(element)
+    const makeButton = (id) => {
+        const button = document.createElement("button");
+        button.classList.add("button_page");
+        button.dataset.num = id;
+        button.innerText = id;
+        button.addEventListener("click", (e) => {
+            Array.prototype.forEach.call(buttons.children, (button) => {
+                if (button.dataset.num) button.classList.remove("active");
+            });
+            e.target.classList.add("active");
+            renderContent(parseInt(e.target.dataset.num));
         });
-    });
+        return button;
+    }
 
+    const renderContent = (page) => {
+        // 목록 리스트 초기화
+        while (bookmarkList.hasChildNodes()) {
+            bookmarkList.removeChild(bookmarkList.lastChild);
+        }
+        // 글의 최대 개수를 넘지 않는 선에서, 화면에 maxContent개의 글 생성
+        for (let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++) {
+            bookmarkList.appendChild(Content(id - 1));
+        }
+    };
+
+    const goPrevPage = () => {
+        page -= maxButton;
+        render(page);
+    };
+
+    const goNextPage = () => {
+        page += maxButton;
+        render(page);
+    };
+
+    const prev = document.createElement("button");
+    prev.classList.add("button_page", "prev");
+    prev.innerHTML = `<ion-icon name="chevron-back-outline"></ion-icon>`;
+    prev.addEventListener("click", goPrevPage);
+
+    const next = document.createElement("button");
+    next.classList.add("button_page", "next");
+    next.innerHTML = `<ion-icon name="chevron-forward-outline"></ion-icon>`;
+    next.addEventListener("click", goNextPage);
+
+    const renderButton = (page) => {
+        // 버튼 리스트 초기화
+        while (buttons.hasChildNodes()) {
+            buttons.removeChild(buttons.lastChild);
+        }
+        // 화면에 최대 maxButton개의 페이지 버튼 생성
+        for (let id = page; id < page + maxButton && id <= maxPage; id++) {
+            buttons.appendChild(makeButton(id));
+        }
+        // 첫 버튼 활성화(class="active")
+        buttons.children[0].classList.add("active");
+
+        buttons.prepend(prev);
+        buttons.appendChild(next);
+
+        // 이전, 다음 페이지 버튼이 필요한지 체크
+        if (page - maxButton < 1) buttons.removeChild(prev);
+        if (page + maxButton > maxPage) buttons.removeChild(next);
+    };
+
+    const render = (page) => {
+        renderContent(page);
+        renderButton(page);
+    };
+    render(page);
 }
 
 
@@ -783,7 +884,6 @@ window.onload = async function () {
         const user_id = payload.user_id
         const profile_data = await getUserProfileAPIView(user_id)
         const wish = profile_data["product_wish_list"]
-        //console.log(wish)
         if (wish == "") {
             const wish_box = document.querySelector(".my-wish-none")
             wish_box.innerText = "찜한 상품이 없습니다."
@@ -792,6 +892,11 @@ window.onload = async function () {
         }
         subscription_info();
         setEventListener();
-        await getMyFollowList(profile_data.seller_information)
+        if (profile_data.seller_information == "") {
+            const bookmark_box = document.querySelector(".my-bookmark-none")
+            bookmark_box.innerText = "팔로우하는 스토어가 없습니다."
+        } else {
+            await getMyFollowList(profile_data.seller_information)
+        }
     }
 }  

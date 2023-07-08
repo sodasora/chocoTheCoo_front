@@ -1,4 +1,4 @@
-import { FRONT_BASE_URL, getAllProductListAPIView, editProductDetailAPIView,productDetail } from './api.js';
+import { FRONT_BASE_URL, getAllProductListAPIView, editProductDetailAPIView, productDetail, deleteProductDetailAPIView } from './api.js';
 
 
 // 상품목록 페이지네이션
@@ -62,8 +62,12 @@ async function paginationView_product(product) {
         priceTd.appendChild(priceText);
 
         const amountTd = document.createElement('td');
+        const amountSpan = document.createElement('span');
         let amountText = document.createTextNode((product[id].amount).toLocaleString());
-        
+
+
+
+
         // 품절(2)일 경우 표시 변경
         if (product[id].item_state == 2) {
             // 제목 취소선 표시
@@ -81,8 +85,8 @@ async function paginationView_product(product) {
             soldoutImgZoom.setAttribute('src', '/static/images/soldout.png');
             soldoutImgZoom.setAttribute('class', 'soldoutZoom');
             productImgDivZoom.appendChild(soldoutImgZoom);
-        // 삭제된 상품(6)일 경우 표시 변경
-        }else if(product[id].item_state == 6){
+            // 삭제된 상품(6)일 경우 표시 변경
+        } else if (product[id].item_state == 6) {
             // 제목 취소선 표시
             nameTd.style = "text-decoration: red line-through;"
             // 수량 삭제표시
@@ -101,18 +105,20 @@ async function paginationView_product(product) {
             deleteImgZoom.setAttribute('class', 'deleteZoom');
             productImgDivZoom.appendChild(deleteImgZoom);
         }
-        amountTd.appendChild(amountText);
-        
+        amountSpan.appendChild(amountText);
+        amountTd.appendChild(amountSpan);
+
         // 재고수량 마우스호버 효과주기
-        amountTd.addEventListener("mouseover", function () {
-            amountTd.style = 'font-weight: bold;';
-            amountTd.style.cursor = 'pointer';
+        amountSpan.addEventListener("mouseover", function () {
+            amountSpan.style = 'font-weight: bold;';
+            amountSpan.style.cursor = 'pointer';
         })
-        amountTd.addEventListener("mouseleave", function () {
-            amountTd.style = 'font-weight: none;';
-            amountTd.style.cursor = 'none';
+        amountSpan.addEventListener("mouseleave", function () {
+            amountSpan.style = 'font-weight: none;';
+            amountSpan.style.cursor = 'none';
         })
-        
+
+        // 재고수량 수정버튼 생성
         const amountDiv = document.createElement('div');
         amountDiv.style = "text-align: center; justify-content: center;";
         const amountInput = document.createElement('input');
@@ -125,19 +131,56 @@ async function paginationView_product(product) {
         inboundBtn.setAttribute('class', 'amountBtn');
         inboundBtn.setAttribute('type', 'button');
         inboundBtn.innerText = "변경";
-        const outboundBtn = document.createElement('button');
-        outboundBtn.setAttribute('class', 'amountBtn');
-        outboundBtn.setAttribute('type', 'button');
-        outboundBtn.innerText = "취소";
         amountDiv.appendChild(amountInput);
         amountDiv.appendChild(inboundBtn);
-        amountDiv.appendChild(outboundBtn);
-        
-        
-        
-        amountTd.addEventListener("click", function () { // 해당 상품 재고변경 활성화
-            amountTd.replaceChild(amountDiv,amountText);
-        });
+
+        // 상품복구버튼 생성
+        const restoreDiv = document.createElement('div');
+        const restoreBtn = document.createElement('button');
+        restoreBtn.setAttribute('class', 'amountBtn');
+        restoreBtn.setAttribute('type', 'button');
+        restoreBtn.innerText = "상품복구";
+
+        // 상품삭제버튼 생성
+        const deleteDiv = document.createElement('div');
+        const deleteBtn = document.createElement('button');
+        deleteBtn.setAttribute('class', 'amountBtn');
+        deleteBtn.setAttribute('type', 'button');
+        deleteBtn.innerText = "상품삭제";
+        deleteDiv.appendChild(deleteBtn);
+
+        // 취소버튼 생성
+        const cancelBtn = document.createElement('button');
+        cancelBtn.setAttribute('class', 'amountBtn');
+        cancelBtn.setAttribute('type', 'button');
+        cancelBtn.innerText = "취소";
+
+
+
+        if (product[id].item_state == 6) { // 삭제(6)상태
+            amountSpan.addEventListener("click", function () { // 해당 상품 상품복구버튼 활성화
+                restoreDiv.appendChild(restoreBtn);
+                restoreDiv.appendChild(cancelBtn);
+                amountTd.appendChild(restoreDiv)
+                restoreDiv.style.display = "block";
+            });
+        } else if (product[id].item_state == 2) { // 품절(2)상태
+            amountSpan.addEventListener("click", function () { // 해당 상품 재고변경,상품삭제버튼 활성화
+                restoreDiv.appendChild(deleteBtn);
+                amountTd.appendChild(restoreDiv)
+                restoreDiv.style.display = "block";
+                amountDiv.appendChild(cancelBtn);
+                amountTd.appendChild(amountDiv)
+                amountDiv.style.display = "block";
+            });
+        } else {
+            amountSpan.addEventListener("click", function () { // 해당 상품 재고변경 활성화
+                amountDiv.appendChild(cancelBtn);
+                amountTd.appendChild(amountDiv)
+                amountDiv.style.display = "block";
+            });
+        }
+
         inboundBtn.addEventListener("click", async function () { // 변경버튼 - 해당 상품 재고변경 비활성화
             const productId = product[id].id
             const formdata = new FormData()
@@ -146,14 +189,37 @@ async function paginationView_product(product) {
             formdata.append('price', product[id].price)
             formdata.append('amount', amountInput.value)
             const response = await editProductDetailAPIView(productId, formdata)
-            if (response.status == 200){
+            if (response.status == 200) {
                 alert(`재고수량이 ${amountInput.value}개로 변경되었습니다.`)
-            window.location.reload();
+                window.location.reload();
             }
         });
-        outboundBtn.addEventListener("click", function () { // 취소버튼 - 해당 상품 재고변경 비활성화
-            alert(`재고수량 변경이 취소되었습니다.`)
-            window.location.reload();
+        deleteBtn.addEventListener("click", async function () { // 삭제버튼 - 해당 상품 삭제상태로 변경
+            const productId = product[id].id
+            const response = await deleteProductDetailAPIView(productId)
+            if (response.status == 204) {
+                alert(`${product[id].name} 상품이 삭제되었습니다.`)
+                window.location.reload();
+            }
+        });
+        restoreBtn.addEventListener("click", async function () { // 복구버튼 - 해당 상품 판매상태로 복구
+            const productId = product[id].id
+            const formdata = new FormData()
+            formdata.append('name', product[id].name)
+            formdata.append('content', product[id].content)
+            formdata.append('price', product[id].price)
+            formdata.append('amount', 0) // 재고량 0으로 복구
+            formdata.append('item_state', 2) // 품절(2)상태로 복구
+            const response = await editProductDetailAPIView(productId, formdata)
+            if (response.status == 200) {
+                alert(`${product[id].name} 상품이 복구되었습니다. 재고량을 수정해주세요.`)
+                window.location.reload();
+            }
+        });
+        cancelBtn.addEventListener("click", function () { // 취소버튼 - 해당 상품 재고변경 비활성화
+            restoreDiv.style.display = "none";
+            deleteDiv.style.display = "none";
+            amountDiv.style.display = "none";
         });
 
 
@@ -270,6 +336,11 @@ async function paginationView_product(product) {
         renderButton(page);
     };
     render(page);
+
+    // 상품이 없을 경우 표시
+    if (numOfContent == 0) {
+        buttons.innerText = "등록된 상품이 없습니다."
+    }
 }
 
 
@@ -295,5 +366,36 @@ const seller_products = await getAllProductListAPIView(user_id)
 
 // 상품 목록 페이지네이션 실행
 if (seller_products.length > 0) {
+    const productfilter = document.getElementById("filter")
+    seller_products.sort((a, b) => (a.created_at < b.created_at ? 1 : -1)); // "상품등록일" 최신순 정렬
+    
+    productfilter.addEventListener("change", (e) => {
+        if (e.target.value == 'recent') { // 최신 등록순
+            const seller_products_filter = seller_products.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
+            paginationView_product(seller_products_filter)
+        } else if (e.target.value == 'old') { // 오래된순
+            const seller_products_filter = seller_products.sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
+            paginationView_product(seller_products_filter)
+        } else if (e.target.value == 'sales') { // 판매순
+            const seller_products_filter = seller_products.sort((a, b) => (a.sales < b.sales ? 1 : -1));
+            paginationView_product(seller_products_filter)
+        } else if (e.target.value == 'amount') { // 재고수량 오름차순 + '판매중(1)' 상태
+            seller_products.sort((a, b) => (a.amount > b.amount ? 1 : -1));
+            const seller_products_filter = seller_products.filter(function (product) {
+                return [1].includes(product.item_state)
+            });
+            paginationView_product(seller_products_filter)
+        } else if (e.target.value == 'delete') { // 삭제(6)상품만 보기
+            const seller_products_filter = seller_products.filter(function (product) {
+                return [6].includes(product.item_state)
+            });
+            paginationView_product(seller_products_filter)
+        } else if (e.target.value == 'soldout') { // 품절(2)상품만 보기
+            const seller_products_filter = seller_products.filter(function (product) {
+                return [2].includes(product.item_state)
+            });
+            paginationView_product(seller_products_filter)
+        }
+    });
     paginationView_product(seller_products)
 }

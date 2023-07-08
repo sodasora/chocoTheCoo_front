@@ -1,4 +1,4 @@
-import { FRONT_BASE_URL, changebillstatus, getAllProductListAPIView, getSellerOrderListView } from './api.js';
+import { FRONT_BASE_URL, productDetail, changebillstatus, getSellerOrderListView } from './api.js';
 
 // 주문목록 페이지네이션
 async function paginationView_order(order) {
@@ -16,15 +16,13 @@ async function paginationView_order(order) {
             order[id].image = "/static/images/품절.png" // 상품이미지 없으면 기본이미지 대체
         }
         const content = document.createElement("tr");
-        content.setAttribute("data-bs-toggle", "modal");
-        content.setAttribute("data-bs-target", `#staticBackdrop${id}`);
 
         // Modal 시작
         const modal = document.createElement("div");
         modal.setAttribute("class", "modal fade");
         modal.setAttribute("id", `staticBackdrop${id}`);
-        modal.setAttribute("data-bs-backdrop", "static");
-        modal.setAttribute("data-bs-keyboard", "false");
+        modal.setAttribute("data-bs-backdrop", "static"); // 배경클릭해도 닫히지 않기
+        modal.setAttribute("data-bs-keyboard", "true"); // esc로 닫기 가능
         modal.setAttribute("tabindex", "-1");
         modal.setAttribute("aria-labelledby", `staticBackdropLabel${id}`);
         modal.setAttribute("aria-hidden", "true");
@@ -114,16 +112,28 @@ async function paginationView_order(order) {
         const strong = document.createElement('strong');
         strong.textContent = order[id].order_status.name;
         strong.style.fontSize = '1.5em';
-        if (order[id].order_status.id == 2 ){
-            strong.style= "color: red; font-weight: bold;"; // 주문확인중(2) - 빨강
-        }else if (order[id].order_status.id == 3){
-            strong.style= "color: orange; font-weight: bold;"; // 배송준비중(3) - 주황
-        }else if (order[id].order_status.id == 5){
-            strong.style= "color: green; font-weight: bold;"; // 배송완료(5) - 초록
+        if (order[id].order_status.id == 2) {
+            strong.style = "color: red; font-weight: bold;"; // 주문확인중(2) - 빨강
+        } else if ([3, 8].includes(order[id].order_status.id)) {
+            strong.style = "color: orange; font-weight: bold;"; // 배송준비중(3) 환불요청중(8) - 주황
+        } else if (order[id].order_status.id == 5) {
+            strong.style = "color: green; font-weight: bold;"; // 배송완료(5) - 초록
         }
 
         div3.textContent = '상태: ';
         div3.appendChild(strong);
+
+        modalFooter.appendChild(div3);
+
+        const btnOrderCancle = document.createElement('button');
+        btnOrderCancle.classList.add('btn', 'btn-primary');
+        btnOrderCancle.style.backgroundColor = "orange";
+        btnOrderCancle.textContent = '주문취소';
+        // 상태: 주문확인중(2) → 주문취소(7)
+        btnOrderCancle.addEventListener('click', () => {
+            changebillstatus(order[id].id, 7)
+            window.location.reload()
+        });
 
         const btnOrder = document.createElement('button');
         btnOrder.classList.add('btn', 'btn-primary');
@@ -143,24 +153,40 @@ async function paginationView_order(order) {
             window.location.reload()
         });
 
-        // 발송준비중(3) 이후 주문확인 버튼 숨기기 | 프론트: 버튼제거, 백엔드: 권한막기
+        const refundBtn = document.createElement('button');
+        refundBtn.classList.add('btn', 'btn-primary');
+        refundBtn.textContent = '환불승인';
+        // 상태: 환불요청중(8) → 환불완료(9)
+        refundBtn.addEventListener('click', () => {
+            changebillstatus(order[id].id, 9)
+            window.location.reload()
+        });
+
+
+        // 주문확인중(2) 주문취소,주문확인,발송완료 버튼 보이기
+        if (order[id].order_status.id == 2) {
+            modalFooter.appendChild(btnOrderCancle);
+            modalFooter.appendChild(btnOrder);
+            modalFooter.appendChild(btnShipping);
+        }
+
+        // 발송준비중(3) 발송완료 버튼 보이기
         if (order[id].order_status.id == 3) {
-            btnOrder.style.display = 'none';
+            modalFooter.appendChild(btnShipping);
         }
-        // 배송완료(5) 구매확정(6) 이후 수정 불가 | 프론트: 버튼제거, 백엔드: 권한막기
-        if (order[id].order_status.id == 5 || order[id].order_status.id == 6) {
-            btnOrder.style.display = 'none';
-            btnShipping.style.display = 'none';
+
+        // 환불요청중(8) 환불승인 버튼 보이기
+        if (order[id].order_status.id == 8) {
+            modalFooter.appendChild(refundBtn);
         }
+
+
 
         const btnCancel = document.createElement('button');
         btnCancel.classList.add('btn', 'btn-secondary');
         btnCancel.setAttribute('data-bs-dismiss', 'modal');
         btnCancel.textContent = 'Close';
 
-        modalFooter.appendChild(div3);
-        modalFooter.appendChild(btnOrder);
-        modalFooter.appendChild(btnShipping);
         modalFooter.appendChild(btnCancel);
 
         modalContent.appendChild(modalHeader);
@@ -192,6 +218,10 @@ async function paginationView_order(order) {
         const productImgDivZoom = document.createElement("div");
         productImgDivZoom.classList.add("product-img-zoom");
         productImgDivZoom.style.backgroundImage = `url(${order[id].image})`;
+        productImgDivZoom.style.cursor = 'pointer';
+        productImgDivZoom.onclick = function () { // 해당 상품 상세보기로 이동
+            productDetail(order[id].product_id);
+        };
         productImgTd.appendChild(productImgDivZoom)
 
         // 이미지 확대보기 Tooltip 효과주기
@@ -204,30 +234,53 @@ async function paginationView_order(order) {
             productImgDiv.style.display = "inline-block";
         })
 
+
+
         const orderStatusTd = document.createElement('td');
+        // 모달창 활성화
+        orderStatusTd.setAttribute("data-bs-toggle", "modal");
+        orderStatusTd.setAttribute("data-bs-target", `#staticBackdrop${id}`);
         const orderStatusText = document.createTextNode(order[id].order_status.name);
-        if (order[id].order_status.id == 2 ){
-            orderStatusTd.style= "color: red; font-weight: bold;"; // 주문확인중(2) - 빨강
-        }else if (order[id].order_status.id == 3){
-            orderStatusTd.style= "color: orange; font-weight: bold;"; // 배송준비중(3) - 주황
-        }else if (order[id].order_status.id == 5){
-            orderStatusTd.style= "color: green; font-weight: bold;"; // 배송완료(5) - 초록
+
+        if (order[id].order_status.id == 2) {
+            orderStatusTd.style = "color: red; font-weight: bold;"; // 주문확인중(2) - 빨강
+        } else if ([3, 8].includes(order[id].order_status.id)) {
+            orderStatusTd.style = "color: orange; font-weight: bold;"; // 배송준비중(3) 환불요청중(8) - 주황
+        } else if (order[id].order_status.id == 5) {
+            orderStatusTd.style = "color: green; font-weight: bold;"; // 배송완료(5) - 초록
         }
+        orderStatusTd.style.cursor = 'pointer';
         orderStatusTd.appendChild(orderStatusText);
 
         const amountTd = document.createElement('td');
+        // 모달창 활성화
+        amountTd.setAttribute("data-bs-toggle", "modal");
+        amountTd.setAttribute("data-bs-target", `#staticBackdrop${id}`);
+        amountTd.style.cursor = 'pointer';
         const amountText = document.createTextNode(order[id].amount.toLocaleString());
         amountTd.appendChild(amountText);
 
         const priceTd = document.createElement('td');
+        // 모달창 활성화
+        priceTd.setAttribute("data-bs-toggle", "modal");
+        priceTd.setAttribute("data-bs-target", `#staticBackdrop${id}`);
+        priceTd.style.cursor = 'pointer';
         const priceText = document.createTextNode(order[id].price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' }));
         priceTd.appendChild(priceText);
 
         const totalPriceTd = document.createElement('td');
+        // 모달창 활성화
+        totalPriceTd.setAttribute("data-bs-toggle", "modal");
+        totalPriceTd.setAttribute("data-bs-target", `#staticBackdrop${id}`);
+        totalPriceTd.style.cursor = 'pointer';
         const totalPriceText = document.createTextNode((order[id].amount * order[id].price).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' }));
         totalPriceTd.appendChild(totalPriceText);
 
         const billTd = document.createElement('td');
+        // 모달창 활성화
+        billTd.setAttribute("data-bs-toggle", "modal");
+        billTd.setAttribute("data-bs-target", `#staticBackdrop${id}`);
+        billTd.style.cursor = 'pointer';
         const billText = document.createTextNode(`${order[id].bill.address} ${order[id].bill.detail_address} (${order[id].bill.postal_code}) ${order[id].bill.recipient}`);
         billTd.appendChild(billText);
 
@@ -303,8 +356,9 @@ async function paginationView_order(order) {
                 buttons.appendChild(makeButton(id));
             }
             // 첫 버튼 활성화(class="active")
-            buttons.children[0].classList.add("active");
-
+            if (buttons.children[0]) {
+                buttons.children[0].classList.add("active");
+            }
             buttons.prepend(prev);
             buttons.appendChild(next);
 
@@ -319,6 +373,11 @@ async function paginationView_order(order) {
         renderButton(page);
     };
     render(page);
+
+    // 주문이 없을 경우 표시
+    if (numOfContent==0) {
+        buttons.innerText = "관련 주문이 없습니다."
+    }
 }
 
 
@@ -333,7 +392,6 @@ if (payload_parse == null) {
     alert("판매 활동 권한이 필요합니다.")
     window.location.replace(`${FRONT_BASE_URL}/user_detail_page.html`)
 }
-const user_id = payload_parse.user_id //로그인한 유저id
 
 // 로그인한 판매자의 전체 주문 목록 불러오기
 const seller_orders = await getSellerOrderListView()
@@ -342,9 +400,30 @@ const seller_orders = await getSellerOrderListView()
 
 // 주문 목록 페이지네이션 실행
 if (seller_orders.length > 0) {
+    seller_orders.sort((a, b) => (a.bill.created_at < b.bill.created_at ? 1 : -1)); // "주문등록일" 최신순 정렬
 
-    seller_orders.sort(function(a, b) {
-        return a.order_status.id - b.order_status.id; // "주문상태" 기준으로 오름차순 정렬
+    const orderfilter = document.getElementById("filter")
+    orderfilter.addEventListener("change", (e) => {
+        if (e.target.value == 'all') {
+            const seller_orders_filter = seller_orders
+            paginationView_order(seller_orders_filter)
+        } else if (e.target.value == 'incomplete') { // 주문확인중(2) 배송준비중(3) 환불요청중(8)
+            const seller_orders_filter = seller_orders.filter(function (order) {
+                return [2, 3, 8].includes(order.order_status.id)
+            });
+            paginationView_order(seller_orders_filter)
+        } else if (e.target.value == 'complete') { // 배송완료(5) 구매확정(6) 주문취소(7) 환불완료(9)
+            const seller_orders_filter = seller_orders.filter(function (order) {
+                return ![2, 3, 8].includes(order.order_status.id)
+            });
+            paginationView_order(seller_orders_filter)
+        } else if (e.target.value == 'refund') { // 환불요청중(8) 환불완료(9)
+            const seller_orders_filter = seller_orders.filter(function (order) {
+                return [8, 9].includes(order.order_status.id)
+            });
+            paginationView_order(seller_orders_filter)
+        }
+
     });
     paginationView_order(seller_orders)
 }

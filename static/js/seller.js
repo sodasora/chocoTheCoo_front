@@ -121,11 +121,19 @@ async function sellerProfile() {
     let endDate = new Date(today);
     let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
     const term = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
+    console.log(seller_data)
 
     document.getElementById('seller_wish').innerText = seller_data["followings_count"]
     document.getElementById("total_profit").innerText = seller_data["total_profit"].toLocaleString({ style: 'currency', currency: 'KRW' })
     document.getElementById("month_profits").innerText = seller_data["month_profits"].toLocaleString({ style: 'currency', currency: 'KRW' })
-    document.getElementById("month_growth_rate").innerText = seller_data["month_growth_rate"]
+    if (seller_data["month_growth_rate"] > 0) {
+        document.getElementById("month_growth_rate").innerText = `🔼${seller_data["month_growth_rate"]}%`
+    } else if (seller_data["month_growth_rate"] < 0) {
+        document.getElementById("month_growth_rate").innerText = `🔽${seller_data["month_growth_rate"]}%`
+    } else {
+        document.getElementById("month_growth_rate").innerText = ''
+    }
+
     document.getElementById("month_sent").innerText = seller_data["month_sent"]
     document.getElementById("month_sent_charge").innerText = (seller_data["month_sent"] * 3000).toLocaleString({ style: 'currency', currency: 'KRW' }) //배송비 3000원
     document.getElementById("firstday").innerText = firstday
@@ -159,9 +167,8 @@ function listView_product(product, type) {
         }
         const content = document.createElement("div");
         content.setAttribute("class", 'under-column');
-        content.onclick = function () {
-            productDetail(product[id].id);
-        };
+        content.addEventListener("click", () => productDetail(product[id].id));
+        console.log(product[id].id)
 
         // type에 따른 분기 type: [sells, likes, stars]
         if (type === 'sells') {
@@ -226,14 +233,14 @@ function listView_order(order, type) {
     const contents = document.getElementById(`${type}_under-column-dox`);
     contents.innerHTML = '';
     // console.log("주문확인", order);
-    
+
     const makeContent = (id) => {
         if (!order[id].image) {
             order[id].image = "/static/images/기본상품.png" // 상품이미지 없으면 기본이미지 대체
         }
         const content = document.createElement("div");
         content.setAttribute("class", 'under-column');
-        content.addEventListener('click', () =>{window.location.replace(`${FRONT_BASE_URL}/seller_orderlist.html`)})
+        content.addEventListener('click', () => { window.location.replace(`${FRONT_BASE_URL}/seller_orderlist.html`) })
         content.innerHTML = `
         <text>${id + 1}.<img style="width: 50px;" src="${order[id].image}" alt="상품이미지">
         ${order[id].name}</text>
@@ -252,20 +259,14 @@ function listView_order(order, type) {
 
 
 // 상품리스트 불러오기
-seller_products.sort(function(a, b) {
-    return b.sales - a.sales; // "sales" 기준으로 내림차순 정렬
-});
-listView_product(seller_products, 'sells')
+const sells = seller_products.slice().sort((a, b) => (a.sales < b.sales ? 1 : -1)); // "sales" 기준으로 내림차순 정렬
+listView_product(sells, 'sells')
 
-seller_products.sort(function(a, b) {
-    return b.likes - a.likes; // "likes" 기준으로 내림차순 정렬
-});
-listView_product(seller_products, 'likes')
+const likes = seller_products.slice().sort((a, b) => (a.likes < b.likes ? 1 : -1)); // "likes" 기준으로 내림차순 정렬
+listView_product(likes, 'likes')
 
-seller_products.sort(function(a, b) {
-    return b.stars - a.stars; // "stars" 기준으로 내림차순 정렬
-});
-listView_product(seller_products, 'stars')
+const stars = seller_products.slice().sort((a, b) => (a.stars < b.stars ? 1 : -1)); // "stars" 기준으로 내림차순 정렬
+listView_product(stars, 'stars')
 
 // 주문리스트 불러오기
 listView_order(seller_orders_unsent, 'orders')
