@@ -150,7 +150,7 @@ async function makechat() {
     const newpassword = document.getElementById("room-password")
     const roomname = newinfo.value
     const roomdesc = newdesc.value
-    let roompassword = newpassword.value
+    let roompassword = newpassword.value.replace(/\s/g, '')
     if (roompassword == "") {
         roompassword = null
     }
@@ -174,7 +174,7 @@ function gochat(id) {
 
 async function checkpassword(id) {
     const passwordinput = document.getElementById("room-password-check")
-    const password = passwordinput.value
+    const password = passwordinput.value.replace(/\s/g, '')
     const response = await checkPasswordAPI(id, password)
     if (response == 200) {
         gochat(id)
