@@ -61,10 +61,32 @@
                     <li>채팅방 설명</li>
                     <input type="text" id="room-desc" class="form-control" placeholder="채팅방 설명 최대 50자"
                         aria-label="Chatting">
+                    <li>비밀번호</li>
+                    <input type="text" id="room-password" class="form-control" placeholder="작성 안할 시 공개채팅방"
+                        aria-label="Chatroom's password">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="chatbutton">생성하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--modal2-->
+    <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">비밀번호를 입력하세요.</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="room-password-check" class="form-control" aria-label="room-password-check">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="chatbutton2">Submit</button>
                 </div>
             </div>
         </div>
