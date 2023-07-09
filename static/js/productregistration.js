@@ -51,10 +51,6 @@ export async function registProduct() {
         formdata.append('image', image)
     }
 
-    for (const pair of formdata.entries()) {
-        console.log(pair[0] + ':', pair[1]);
-    }
-
     try {
         registProductAPIView(formdata, seller_id);
     } catch (error) {
@@ -107,8 +103,6 @@ export async function editProductSubmit() {
 
     const formdata = new FormData();
 
-    console.log(name, content, price, amount)
-    console.log(image)
 
     formdata.append('name', name)
     formdata.append('content', content)
@@ -117,10 +111,6 @@ export async function editProductSubmit() {
 
     if (image) {
         formdata.append('image', image)
-    }
-
-    for (const pair of formdata.entries()) {
-        console.log(pair[0] + ':', pair[1]);
     }
 
 

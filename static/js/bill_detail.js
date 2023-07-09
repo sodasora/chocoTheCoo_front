@@ -16,7 +16,6 @@ async function renderBillDetails() {
         alert("주문이 완료되었습니다. 구매포인트 적립은 구매확정 후 이루어집니다.");
     }
     const bill_id = url.searchParams.get('bill_id');
-    // console.log(bill_id);
     const bill = await getBillDetail(bill_id);
     const deli = document.getElementById("deliveryInfo")
 
@@ -71,7 +70,6 @@ async function renderBillOrders(bill) {
             img.src = '/static/images/초콜릿.jpg'
         }
         imgDiv.appendChild(img);
-        console.log(e)
         img.addEventListener('click',() => productDetail(e.product_id));
         img.style.cursor = 'pointer';
 
@@ -193,7 +191,6 @@ async function gosubinfo() {
 
 async function subscription_info() {
     const subscription_data = await getSubscribeView()
-    //console.log(subscription_data)
 
     const newcard = document.getElementById("subscription-card")
 
