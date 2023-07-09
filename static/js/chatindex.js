@@ -199,7 +199,6 @@ window.onload = async function () {
     });
 
     const chat = await getChatindexAPI();
-    // console.log(chat)
     pagination_chatlist(chat);
 
     const button = document.getElementById("chatbutton")

@@ -5,7 +5,6 @@ import { FRONT_BASE_URL, getAllProductListAPIView, editProductDetailAPIView, pro
 async function paginationView_product(product) {
     const contents = document.getElementById("product-list");
     const buttons = document.getElementById("product-buttons");
-    // console.log("상품확인", product);
 
     // 페이지네이션 페이지 설정
     const numOfContent = product.length;

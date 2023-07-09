@@ -10,7 +10,6 @@ import {
     sellerFollowAPI,
 } from './api.js';
 
-
 export async function goEditReview(product_id, review_id) {
     window.location.href = `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}&review_id=${review_id}`;
 }

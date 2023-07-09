@@ -15,7 +15,6 @@ async function renderBillList() {
     const bills = await getBillList();
     const billBox = document.getElementById('billLists');
     const buttons = document.getElementById("bill-buttons");
-    console.log(bills)
     if (bills != "") {
 
         // 페이지네이션 페이지 설정
@@ -197,7 +196,6 @@ async function gosubinfo() {
 
 async function subscription_info() {
     const subscription_data = await getSubscribeView()
-    //console.log(subscription_data)
 
     const newcard = document.getElementById("subscription-card")
 

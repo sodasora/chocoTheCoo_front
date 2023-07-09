@@ -4,7 +4,6 @@ import { BACK_BASE_URL, FRONT_BASE_URL, getCartList, deleteCartItem, changeCartI
 
 async function renderCartList() {
     const cartItems = await getCartList();
-    console.log(cartItems)
     const cartBox = document.querySelector('#cartList');
     cartItems.forEach(e => {
         const cartItemDiv = document.createElement('div');
@@ -87,7 +86,6 @@ async function renderCartList() {
 
         amountDiv.value = e.amount;
 
-        // console.log(amountDiv);
 
         const hr = document.createElement('hr');
 
@@ -203,19 +201,15 @@ async function renderCartList() {
 
 async function renderTotals() {
     const sumPrice = document.querySelectorAll('.sum-price')
-    // console.log(sumPrice);
 
     let totalPrice = 0;
     let totalDeliveryFee = 0;
 
     sumPrice.forEach(e => {
-        // console.log(e);
         totalPrice += parseInt(e.dataset.price);
         // totalDeliveryFee += parseInt(e.dataset.deliveryfee);
     })
 
-    // console.log(totalPrice);
-    // console.log(totalDeliveryFee);
 
     const totals = document.getElementById('totals');
 
@@ -255,9 +249,7 @@ async function renderTotals() {
 
         if (cart_id_list.length > 0) {
             const params = new URLSearchParams();
-            console.log(params)
             params.set('cart_id', cart_id_list.join(","));
-            console.log(cart_id_list);
             const queryString = params.toString();
             window.location.href = `${FRONT_BASE_URL}/ordercheck.html?` + `${queryString}`;
         }

@@ -4,6 +4,13 @@
     font-weight: normal;
     font-style: normal;
 }
+#add-product-button{
+    height: 4vh;
+    font-size: 1vw;
+    background-color: rgba(109, 86, 68, 0.822);
+    color: white;
+    border-radius: 10px;
+}
 
 /* nav bar */
 .seller_nav {
@@ -13,6 +20,13 @@
     height: 70px;
     background: #B9937E;
     align-items: center;
+}
+
+.add-product{
+    padding-top: 1em;
+    background-color: #C4A492;
+    justify-content: center;
+    display: flex;
 }
 
 .seller_nav h1 {

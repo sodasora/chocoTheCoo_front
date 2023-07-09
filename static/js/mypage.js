@@ -89,11 +89,9 @@ async function Choicelist() {
 
     const response_point = await getPointView(day)
     const point = await response_point.json()
-    //console.log(response_point_json)
 
     const response_point_statistic = await getPointStaticView(day)
     const response_point_statistic_json = await response_point_statistic.json()
-    //console.log(response_point_statistic_json)
 
     const newlist = document.getElementById('points-list')
     const newcheck = document.getElementById('checkpoint')
@@ -258,7 +256,6 @@ async function getToday() {
 
     const response_point_statistic = await getPointStaticView(nowday)
     const response_point_statistic_json = await response_point_statistic.json()
-    //console.log(response_point_statistic_json)
 
     const newlist = document.getElementById('points-list')
     const newcheck = document.getElementById('checkpoint')
@@ -426,7 +423,6 @@ async function getToday() {
 // 출석인증
 async function attendancePoint() {
     const response = await postPointAttendanceView()
-    //console.log(response)
     if (response.status == 201) {
         alert("인증완료")
         window.location.reload()
@@ -621,7 +617,6 @@ async function gosubinfo() {
 
 async function subscription_info() {
     const subscription_data = await getSubscribeView()
-    //console.log(subscription_data)
 
     const newcard = document.getElementById("subscription-card")
 
@@ -734,7 +729,6 @@ export async function goSellerPage(user_id) {
 
 
 export async function getMyFollowList(seller_information) {
-    // console.log(seller_information)
     const bookmarkList = document.getElementById("bookmarkList");
     const buttons = document.getElementById("bookmark-buttons");
 
