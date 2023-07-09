@@ -48,10 +48,13 @@ body {
     margin-top: 20vh;
     display: flex;
     justify-content: center;
-    min-height: 300px;
 }
 
 #room-name {
+    margin-bottom: 20px;
+}
+
+#room-desc {
     margin-bottom: 20px;
 }
 

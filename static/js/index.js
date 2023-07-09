@@ -1,12 +1,12 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, getProductslist, viewProductslist, getCategoryView, getProductListAPIView, searchWhatAPI } from './api.js'
+import { BACK_BASE_URL, FRONT_BASE_URL, getProductslist, viewProductslist, getCategoryView, searchWhatAPI } from './api.js'
 
 export async function goSearch(url) {
     // 현재 url에 새로 요청받은 url 추가하기 위한 변수 선언 
     const currentUrl = new URL(window.location.href);
     const newUrlParams = new URLSearchParams(url);
-    
+
     let shouldReload = false;
-    
+
     // 현재 url에서 category, search, ordering이 없으면 
     // key와 value로 저장
     for (const [key, value] of newUrlParams.entries()) {
@@ -38,7 +38,7 @@ export async function categoryview() {
         categoryItem.innerText = `🍫${category.name}\n`
         categoryBox.appendChild(categoryItem);
         categorySelect.appendChild(categoryBox);
-        const categoryId = 'category='+ `${category.id}`;
+        const categoryId = 'category=' + `${category.id}`;
         categoryItem.addEventListener("click", () => {
             searchAnythingAPI(categoryId)
         });
@@ -61,7 +61,7 @@ export async function categoryview_mobile() {
         categorySelect.appendChild(categoryBox);
 
         categoryItem.addEventListener("click", () => {
-            goSearch('category='+category.id);
+            goSearch('category=' + category.id);
         });
     });
 }
@@ -86,12 +86,12 @@ export async function searchAnythingAPI(categoryId) {
 
     // 카테고리 클릭시, categoryId가 매개변수로 불러와짐 
     // 클릭 안했을 땐, 전체 상품 보여줘야 하니까 아무것도 안들어감
-    if(categoryId){
+    if (categoryId) {
         url += categoryId;
     } else {
         url += "";
     }
-    
+
 
     // 검색창 입력어로 검색 : 키워드가 URL에 있을때
     if (keyword) {
@@ -104,7 +104,7 @@ export async function searchAnythingAPI(categoryId) {
     }
 
     goSearch(url);
-    
+
 }
 
 // 카테고리, 키워드검색, 정렬 모바일버전 
@@ -123,12 +123,12 @@ export async function searchAnythingAPI_mobile() {
 
     // 카테고리 클릭시, categoryId가 매개변수로 불러와짐 
     // 클릭 안했을 땐, 전체 상품 보여줘야 하니까 아무것도 안들어감
-    if(categoryId){
+    if (categoryId) {
         url += categoryId;
     } else {
         url += "";
     }
-    
+
 
     // 검색창 입력어로 검색 : 키워드가 URL에 있을때
     if (keyword) {

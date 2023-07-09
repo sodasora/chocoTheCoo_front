@@ -104,7 +104,6 @@ export async function setUserInformation() {
                 '인증 코드가 일치하지 않습니다.',
                 '비밀번호는 영문자,숫자,특수문자로 길이 5이상의 조건이 충족되어야 합니다.',
             ]
-            console.log(response_json)
             message.innerText = message_list[Number(response_json.non_field_errors)]
         }
     }

@@ -1,5 +1,5 @@
 
-import { writeReviewAPI, showReviewDetailViewAPI, editReviewViewAPI, BACK_BASE_URL, FRONT_BASE_URL, payload } from './api.js';
+import { writeReviewAPI, showReviewDetailViewAPI, editReviewViewAPI, FRONT_BASE_URL, payload } from './api.js';
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('product_id');
 

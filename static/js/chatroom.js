@@ -1,5 +1,5 @@
 import {
-    access_token, getChatLogAPI, getChatroominfo, payload, BACK_BASE_URL, FRONT_BASE_URL
+    getChatLogAPI, getChatroominfo, payload, BACK_BASE_URL, FRONT_BASE_URL
 } from "./api.js";
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -180,6 +180,7 @@ function socketSwap(roomId) {
                 element.appendChild(wrapper);
                 element.appendChild(message_time);
                 message_list.appendChild(element);
+                message_list.scrollTop = message_list.scrollHeight;
             }
         }
 

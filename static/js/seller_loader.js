@@ -1,4 +1,4 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, getPointStaticView, getUserProfileAPIView } from './api.js'
+import { FRONT_BASE_URL, getPointStaticView, getUserProfileAPIView } from './api.js'
 
 /* 헤더 가져오기 */
 async function injectHeader() {
