@@ -257,6 +257,7 @@ export async function addressDelete() {
             alert("로그인이 필요 합니다.")
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else {
+            // 예외 처리
             console.log(response)
         }
     }
