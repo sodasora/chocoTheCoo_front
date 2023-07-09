@@ -1,5 +1,5 @@
 import {
-    BACK_BASE_URL, FRONT_BASE_URL, patchSubscribeView, getSubscribeView, getPointStaticView, postSubscribeView, postPointServiceView, payload
+    FRONT_BASE_URL, patchSubscribeView, getSubscribeView, getPointStaticView, postSubscribeView, payload
 } from "./api.js";
 
 function leftPad(value) {

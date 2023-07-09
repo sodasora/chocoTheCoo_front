@@ -3,7 +3,6 @@ import {
     deleteProductDetailAPIView,
     addToCartAPI,
     addToLikeAPI,
-    BACK_BASE_URL,
     FRONT_BASE_URL,
     payload,
     reviewLikeAPI,

@@ -1,6 +1,4 @@
 import {
-    // 백엔드 URL import
-    BACK_BASE_URL,
     // 프론트 URL import
     FRONT_BASE_URL,
     // 사용자 정보 불러오기 API

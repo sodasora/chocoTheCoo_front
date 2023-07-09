@@ -1,5 +1,5 @@
 import {
-    BACK_BASE_URL, FRONT_BASE_URL, getUserProfileAPIView,
+    FRONT_BASE_URL, getUserProfileAPIView,
     getSubscribeView, patchSubscribeView, getMyReviewView, payload
 } from "./api.js";
 

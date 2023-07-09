@@ -1,4 +1,4 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, getCartList, deleteCartItem, changeCartItemAmount, payload } from './api.js'
+import { FRONT_BASE_URL, getCartList, deleteCartItem, changeCartItemAmount, payload } from './api.js'
 
 
 
@@ -146,7 +146,7 @@ async function renderCartList() {
             checkboxInput.setAttribute("disabled", "")
             amountDiv.setAttribute("disabled", "")
         }
-        
+
         // 삭제(6)표시
         if (e.product.item_state == 6) {
             // 상품이미지 삭제표시
