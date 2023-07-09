@@ -4,7 +4,6 @@ import { BACK_BASE_URL, FRONT_BASE_URL, getCartList, deleteCartItem, changeCartI
 
 async function renderCartList() {
     const cartItems = await getCartList();
-    console.log(cartItems)
     const cartBox = document.querySelector('#cartList');
     cartItems.forEach(e => {
         const cartItemDiv = document.createElement('div');
@@ -27,11 +26,11 @@ async function renderCartList() {
         const imgDiv = document.createElement('div');
         imgDiv.style.padding = '0';
         imgDiv.style.margin = '0';
+        imgDiv.style.display = 'flex';
 
         const img = document.createElement('img');
         img.classList.add('pd-info-thumb');
         if (e.product.image) {
-            // img.src = `${BACK_BASE_URL}` + `${e.product.image}`
             img.src = `${e.product.image}`
         }
         else {
@@ -87,7 +86,6 @@ async function renderCartList() {
 
         amountDiv.value = e.amount;
 
-        // console.log(amountDiv);
 
         const hr = document.createElement('hr');
 
@@ -133,6 +131,43 @@ async function renderCartList() {
 
         cartBox.appendChild(cartItemDiv);
 
+
+        // 품절(2)표시
+        if (e.product.item_state == 2) {
+            // 이미지 품절표시
+            const soldoutImage = document.createElement("img");
+            soldoutImage.setAttribute("src", "/static/images/soldout.png");
+            soldoutImage.setAttribute("class", "soldout");
+            imgDiv.appendChild(soldoutImage)
+            // 투명화
+            cartItemDiv.style.opacity = 0.5
+            // 체크박스 해제 및 입력기능 비활성화
+            checkboxInput.checked = false;
+            checkboxInput.setAttribute("disabled", "")
+            amountDiv.setAttribute("disabled", "")
+        }
+        
+        // 삭제(6)표시
+        if (e.product.item_state == 6) {
+            // 상품이미지 삭제표시
+            const deleteImg = document.createElement("img");
+            deleteImg.setAttribute('src', '/static/images/품절.png');
+            deleteImg.setAttribute('class', 'delete');
+            imgDiv.appendChild(deleteImg);
+            // 상품명 삭제표시
+            const pdInfoTextDiv = document.createElement('div');
+            pdInfoTextDiv.classList.add('pd-info-text');
+            pdInfoTextDiv.textContent = "삭제된 상품입니다"
+            infoDiv.prepend(pdInfoTextDiv);
+            // 투명화
+            cartItemDiv.style.opacity = 0.5
+            // 체크박스 해제 및 입력기능 비활성화
+            checkboxInput.checked = false;
+            checkboxInput.setAttribute("disabled", "")
+            amountDiv.setAttribute("disabled", "")
+        }
+
+
         const hrLine = document.createElement('hr');
         hrLine.classList.add('line');
 
@@ -166,19 +201,15 @@ async function renderCartList() {
 
 async function renderTotals() {
     const sumPrice = document.querySelectorAll('.sum-price')
-    // console.log(sumPrice);
 
     let totalPrice = 0;
     let totalDeliveryFee = 0;
 
     sumPrice.forEach(e => {
-        // console.log(e);
         totalPrice += parseInt(e.dataset.price);
         // totalDeliveryFee += parseInt(e.dataset.deliveryfee);
     })
 
-    // console.log(totalPrice);
-    // console.log(totalDeliveryFee);
 
     const totals = document.getElementById('totals');
 
@@ -218,9 +249,7 @@ async function renderTotals() {
 
         if (cart_id_list.length > 0) {
             const params = new URLSearchParams();
-            console.log(params)
             params.set('cart_id', cart_id_list.join(","));
-            console.log(cart_id_list);
             const queryString = params.toString();
             window.location.href = `${FRONT_BASE_URL}/ordercheck.html?` + `${queryString}`;
         }

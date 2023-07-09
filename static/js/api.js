@@ -632,32 +632,20 @@ export async function editProductDetailAPIView(product_id, formdata) {
 		method: "PUT",
 		body: formdata
 	});
-	if (response.status == 200) {
-		alert('상품 수정 완료!')
-		window.location.href = `${FRONT_BASE_URL}/sellerpage.html`;
-	} else {
-		alert('상품 수정 실패')
-	}
-	return response.json();
+	return response;
 }
 
 
-//  싱픔뱔 상세 정보 가져오기
+//  상품별 상세 정보 가져오기
 // # 상품 삭제하기
-export async function deletetProductDetailAPIView(product_id) {
+export async function deleteProductDetailAPIView(product_id) {
 	const response = await fetch(`${BACK_BASE_URL}/api/products/${product_id}/`, {
 		headers: {
 			"Authorization": `Bearer ${access_token}`,
 		},
 		method: "DELETE",
 	});
-	if (response.status == 204) {
-		alert("상품 삭제 완료!")
-		window.location.href = "sellerpage.html";
-	} else {
-		alert("상품 삭제 실패!")
-	}
-	return response.json();
+	return response;
 }
 
 // 전체 주문 목록 불러오기
@@ -1121,7 +1109,6 @@ export async function productDetail(product_id) {
 
 //페이지네이션 : 리스트 가져오기 페이지 네이션 할때 
 export async function getProductslist(product) {
-	// console.log(product)
 	let pageSize = 9;
 
 	const product_count = product.count
@@ -1247,7 +1234,6 @@ export async function getProductslist(product) {
 				button1.id = 'previous-buttons';
 				button1.innerText = '이전';
 				button1.addEventListener('click', () => pageMove(previous));
-				console.log(product.previous.slice(4))
 				const li2 = document.createElement('li');
 				li2.className = 'gw-pagebtn';
 				const a2 = document.createElement('a');
@@ -1286,7 +1272,6 @@ export async function getProductslist(product) {
 // 페이지네이션: 상품정보가져오기 페이지 네이션 안들어갈때
 export async function viewProductslist(product) {
 	const list = document.getElementById("product-content");
-	console.log(product)
 	if (product.results != "") {
 		//초기화
 		while (list.hasChildNodes()) {
@@ -1382,11 +1367,9 @@ export async function viewProductslist(product) {
 // 페이지 이동 시 함수 response에서 받아온 next url로 현재 페이지 찾기.
 // 이전이나 다음이 각각 첫페이지나 마지막 페이지면 예외 처리.
 async function pageMove(move) {
-	// console.log(move);
 	let pageSize = 9;
 
 	// const url = `${BACK_BASE_URL}/api/products/?page=${move}`
-	// console.log(url)
 	const response = await fetch(move, {
 		method: 'GET',
 	})
@@ -1411,7 +1394,6 @@ async function pageMove(move) {
 
 		// 두 칸 뒤의 숫자 계산
 		page_num = currentPage - 1;
-		// console.log(page_num)
 		pre_page = page_num - 1
 		next_page = page_num + 1
 	}
@@ -1428,9 +1410,7 @@ async function pageMove(move) {
 	// 페이지 박스 번호 갱신하기
 	let paginate = document.getElementById('product-buttons')
 	if (product.previous == null) {
-		console.log(product)
 		const next = modifiedUrl + product.next.split("api")[1]
-		// console.log(next)
 
 		const li1 = document.createElement('li');
 		li1.className = 'gw-pagebtn';
@@ -1470,7 +1450,6 @@ async function pageMove(move) {
 		// Create elements
 
 		const previous = modifiedUrl + product.previous.split("api")[1]
-		// console.log(previous)
 
 		const li1 = document.createElement('li');
 		li1.className = 'gw-pagebtn';
@@ -1510,9 +1489,7 @@ async function pageMove(move) {
 		// Create elements
 
 		const previous = modifiedUrl + product.previous.split("api")[1]
-		// console.log(previous)
 		const next = modifiedUrl + product.next.split("api")[1]
-		// console.log(next)
 
 		const li1 = document.createElement('li');
 		li1.className = 'gw-pagebtn';
@@ -1725,8 +1702,6 @@ export async function getSellerInformationListAPI() {
 
 export async function refusalOfSalesActivityAPI(information) {
 	// 관리자 권한으로 판매 활동 거절
-	console.log(information)
-	console.log(information.seller_id)
 	const response = await fetch(`${BACK_BASE_URL}/api/users/seller/permissions/${information.seller_id}/`, {
 		method: 'DELETE',
 		headers: {

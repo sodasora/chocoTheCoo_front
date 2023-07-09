@@ -19,7 +19,6 @@ let nowPage = 1
 let username_set = new Set();
 
 const roominfo = await getChatroominfo(roomId)
-// console.log(roominfo)
 const roomname = document.getElementById("chatname")
 roomname.innerText = "채팅방: " + roominfo.room["name"]
 
@@ -27,7 +26,6 @@ const message_list = document.getElementById("chat_messages")
 
 async function get_chat_log() {
     const chatlog = await getChatLogAPI(roomId);
-    // console.log(chatlog)
 
     chatlog.forEach(e => {
         const element = document.createElement("div");
@@ -45,7 +43,7 @@ async function get_chat_log() {
 
         if (message) {
             const wrapper = document.createElement("div");
-            wrapper.textContent = message;
+            wrapper.textContent = message.trimStart();
 
             const content = document.createElement("li");
             content.setAttribute("class", "image")
@@ -53,7 +51,6 @@ async function get_chat_log() {
             const profile_image = document.createElement("img")
             profile_image.setAttribute("class", "profile_image")
             if (profile != null) {
-                // console.log(profile);
                 profile_image.setAttribute("src", profile)
             } else {
                 profile_image.setAttribute("src", "static/images/기본상품.png")
@@ -88,7 +85,6 @@ function socketSwap(roomId) {
     }
 
     let backurl = BACK_BASE_URL.substring(7,)
-    console.log(backurl)
     if (roomId != null) {
 
         // 로컬
@@ -101,7 +97,6 @@ function socketSwap(roomId) {
         //     'wss://' + backurl + '/ws/chat/' + roomId + '/?id=' + payload.user_id
         // );
 
-        // console.log(chatSocket)
 
         function update_user_list() {
             const html = Array.from(username_set).map(sender => `<li>${sender}</li>`).join('');
@@ -120,7 +115,6 @@ function socketSwap(roomId) {
 
         chatSocket.onmessage = function (e) {
             let data = JSON.parse(e.data);
-            // console.log(data)
 
             let sender = data['sender_name']
             let message = data['message']
@@ -129,9 +123,11 @@ function socketSwap(roomId) {
 
             if (data['response_type'] == 'enter') {
                 const alarm = document.createElement("li")
-                alarm.setAttribute("class", "enter-alarm")
-                alarm.innerHTML = `${sender}님이 들어오셨습니다.`;
-                message_list.append(alarm);
+                if (sender != payload.nickname) {
+                    alarm.setAttribute("class", "enter-alarm")
+                    alarm.innerText = `${sender}님이 들어오셨습니다.`;
+                    message_list.appendChild(alarm);
+                }
 
                 username_set.add(sender);
                 update_user_list();
@@ -139,9 +135,11 @@ function socketSwap(roomId) {
 
             if (data['response_type'] == 'out') {
                 const alarm = document.createElement("li")
-                alarm.setAttribute("class", "out-alarm")
-                alarm.innerHTML = `${sender}님이 나가셨습니다.`;
-                message_list.append(alarm);
+                if (sender != payload.nickname) {
+                    alarm.setAttribute("class", "out-alarm")
+                    alarm.innerText = `${sender}님이 나가셨습니다.`;
+                    message_list.appendChild(alarm);
+                }
 
                 username_set.delete(sender);
                 update_user_list();
@@ -158,6 +156,9 @@ function socketSwap(roomId) {
                 const wrapper = document.createElement("div");
                 wrapper.textContent = message;
 
+                const content = document.createElement("li");
+                content.setAttribute("class", "image")
+
                 const message_time = document.createElement("li")
                 message_time.setAttribute("class", "message_time")
                 if (sender == payload.nickname) {
@@ -166,13 +167,9 @@ function socketSwap(roomId) {
                     message_time.innerText = time + ' ' + sender
                 }
 
-                const content = document.createElement("li");
-                content.setAttribute("class", "image")
-
                 const profile_image = document.createElement("img")
                 profile_image.setAttribute("class", "profile_image")
                 if (profile != null) {
-                    // console.log(profile);
                     profile_image.setAttribute("src", profile)
                 } else {
                     profile_image.setAttribute("src", "static/images/기본상품.png")
@@ -183,7 +180,6 @@ function socketSwap(roomId) {
                 element.appendChild(wrapper);
                 element.appendChild(message_time);
                 message_list.appendChild(element);
-                message_list.scrollTop = message_list.scrollHeight;
             }
         }
 
@@ -214,7 +210,7 @@ function socketSwap(roomId) {
             chatSocket.send(JSON.stringify({
                 'user_id': payload['user_id'],
                 'room_id': `${roomId}`,
-                'message': message
+                'message': message.trimStart()
             }));
             // 메세진 전송후 입력창에 빈값 넣어주기
             messageInputDom.value = '';

@@ -43,7 +43,6 @@ async function ChargeTransaction(price, type) {
     const response_checkout = await postPointCheckoutView(price, type)
     if (response_checkout.works) {
         merchant_id = response_checkout.merchant_id
-        // console.log("a" + merchant_id)
         return merchant_id
     } else {
         alert("문제가 발생했습니다!! 다시 시도해주세요.")
@@ -52,7 +51,6 @@ async function ChargeTransaction(price, type) {
 
 async function ImpTrancsacton(merchant_id, imp_id, amount) {
     const response_validation = await postPointValidationView(merchant_id, imp_id, amount)
-    //console.log(response_validation)
     if (response_validation.works) {
 
     } else {
@@ -71,7 +69,6 @@ async function requestPay(price) {
     IMP.init("imp62841557");
 
     const merchant_id = await ChargeTransaction(price, 'card')
-    // console.log("s" + merchant_id)
 
     IMP.request_pay({
         pg: 'kcp.INIpayTest',
@@ -83,7 +80,6 @@ async function requestPay(price) {
         buyer_name: name
     }, async function (rsp) { // callback
         if (rsp.success) {
-            //console.log(rsp);
             ImpTrancsacton(rsp.merchant_uid, rsp.imp_uid, rsp.paid_amount)
             alert(`${rsp.paid_amount}원 충전완료`)
             window.location.replace(`${FRONT_BASE_URL}/mypage.html`)

@@ -48,11 +48,8 @@ async function injectHeader() {
         mobileLogout.addEventListener("click", function () {
             handleLogout()
         })
-        // console.log(payload_parse)
-        // console.log(payload_parse.user_id)
         const user_id = payload_parse.user_id
         const seller = await getUserProfileAPIView(user_id)
-        // console.log(seller.is_seller)
         // 판매자가 아니라면 판매자페이지 숨기기
         if (!seller.is_seller) {
             const sellerpage = document.getElementById("sellerpage")

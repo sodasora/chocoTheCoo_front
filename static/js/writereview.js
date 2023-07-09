@@ -31,10 +31,6 @@ export async function writeReview() {
             formdata.append('image', image)
         }
 
-        for (const pair of formdata.entries()) {
-            console.log(pair[0] + ':', pair[1]);
-        }
-
         try {
             const response = await writeReviewAPI(productId, formdata);
 

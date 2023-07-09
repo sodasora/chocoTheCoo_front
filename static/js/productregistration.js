@@ -51,10 +51,6 @@ export async function registProduct() {
         formdata.append('image', image)
     }
 
-    for (const pair of formdata.entries()) {
-        console.log(pair[0] + ':', pair[1]);
-    }
-
     try {
         registProductAPIView(formdata, seller_id);
     } catch (error) {
@@ -107,8 +103,6 @@ export async function editProductSubmit() {
 
     const formdata = new FormData();
 
-    console.log(name, content, price, amount)
-    console.log(image)
 
     formdata.append('name', name)
     formdata.append('content', content)
@@ -119,17 +113,15 @@ export async function editProductSubmit() {
         formdata.append('image', image)
     }
 
-    for (const pair of formdata.entries()) {
-        console.log(pair[0] + ':', pair[1]);
-    }
-
 
     try {
-
         const response = await editProductDetailAPIView(productId, formdata);
-        console.log(response);
-
-
+        if (response.status == 200) {
+            alert('상품 수정 완료!')
+            window.location.href = `${FRONT_BASE_URL}/sellerpage.html`;
+        } else {
+            alert('상품 수정 실패')
+        }
     } catch (error) {
         console.error(error);
     }

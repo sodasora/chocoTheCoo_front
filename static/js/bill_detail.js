@@ -1,4 +1,4 @@
-import { FRONT_BASE_URL, payload, OrderItemToCart, changebillstatus, patchSubscribeView, getBillDetail, getSubscribeView, getUserProfileAPIView, getMyReviewView } from './api.js'
+import { productDetail, FRONT_BASE_URL, payload, OrderItemToCart, changebillstatus, patchSubscribeView, getBillDetail, getSubscribeView, getUserProfileAPIView, getMyReviewView } from './api.js'
 
 window.onload = async function () {
     if (payload == null) {
@@ -12,12 +12,10 @@ window.onload = async function () {
 
 async function renderBillDetails() {
     const url = new URL(window.location.href);
-    console.log(url.searchParams.get('ordered'));
     if (url.searchParams.get('ordered')) {
         alert("주문이 완료되었습니다. 구매포인트 적립은 구매확정 후 이루어집니다.");
     }
     const bill_id = url.searchParams.get('bill_id');
-    // console.log(bill_id);
     const bill = await getBillDetail(bill_id);
     const deli = document.getElementById("deliveryInfo")
 
@@ -72,6 +70,8 @@ async function renderBillOrders(bill) {
             img.src = '/static/images/초콜릿.jpg'
         }
         imgDiv.appendChild(img);
+        img.addEventListener('click',() => productDetail(e.product_id));
+        img.style.cursor = 'pointer';
 
         const firstText = document.createElement('div');
         firstText.innerText = `${e.name}`
@@ -105,6 +105,29 @@ async function renderBillOrders(bill) {
         const content = document.createElement("div")
         content.setAttribute("id", "button-content")
         content.appendChild(fifthText)
+
+        
+        if (["주문확인중","배송준비중","배송완료",].includes(e.order_status)) {
+            const orderId = e.id;
+            const gorefund = document.createElement('button');
+            gorefund.innerText = '환불신청하기';
+            gorefund.setAttribute('id', 'refundbutton');
+            content.appendChild(gorefund)
+            gorefund.onclick = async function () {
+                await changebillstatus(orderId, 8)
+                window.location.reload();
+            }
+        }else if (e.order_status == "환불요청중"){
+            const orderId = e.id;
+            const refundCancle = document.createElement('button');
+            refundCancle.innerText = '환불취소하기';
+            refundCancle.setAttribute('id', 'refundCancle');
+            content.appendChild(refundCancle)
+            refundCancle.onclick = async function () {
+                await changebillstatus(orderId, 2)
+                window.location.reload();
+            }
+        }
 
         const productId = e.product_id
         if (e.order_status == "배송완료") {
@@ -168,7 +191,6 @@ async function gosubinfo() {
 
 async function subscription_info() {
     const subscription_data = await getSubscribeView()
-    //console.log(subscription_data)
 
     const newcard = document.getElementById("subscription-card")
 

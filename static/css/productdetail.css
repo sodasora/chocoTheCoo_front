@@ -116,7 +116,7 @@ body {
 }
 
 /* 품절상태 이미지 */
-.soldout {
+.soldout,.delete {
     position: absolute;
     width: 40%;
     min-width: 390px;
@@ -137,8 +137,8 @@ body {
     width: 100%;
 }
 
-/* 수정 삭제 버튼 */
-#edit-btn {
+/* 수정 삭제 복구 버튼 */
+#edit-btn,#restore-btn {
     --bs-btn-padding-y: 0.7rem;
     --bs-btn-padding-x: 1.7rem;
     --bs-btn-font-size: 1.5rem;
@@ -606,11 +606,12 @@ nav a:nth-child(3):hover~.nav-underline {
 
 #sellerInformationContainer {
     padding: 3% 3% 3% 3%;
-    height: 30rem;
+    height: 33rem;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     background-color: antiquewhite;
     border-radius: 1em;
     padding: 1em;
+
 }
 
 .seller-top-box {

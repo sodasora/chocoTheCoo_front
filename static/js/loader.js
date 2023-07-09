@@ -71,7 +71,6 @@ async function injectHeader() {
 
         getPoint()
 
-        // console.log(payload_parse)
         // 판매자가 아니라면 판매자등록페이지로 이동
         if (!payload_parse.is_seller) {
             const onlyseller = document.getElementById("seller")

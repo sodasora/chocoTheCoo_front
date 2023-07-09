@@ -18,7 +18,6 @@ if (!sellerId) { // 판매자가 자신의 스토어를 조회할 때
 // 판매자 정보 보기
 export async function sellerProfileView() {
   const seller = await getSellerPermissionAPIView(sellerId);
-  // console.log(seller)
   const follow_button = document.getElementById("seller-follow-button");
   // 팔로우 유무에 따라 표시
   seller.is_like == false ? follow_button.innerText = "Follow" : follow_button.innerText = "Unfollow"
@@ -68,9 +67,16 @@ export async function sellerPageAPI() {
     const getParams = window.location.search;
     const userParams = getParams.split("=")[1];
     let seller_id = userParams
-    if (!seller_id) { // 판매자가 자신의 스토어를 조회할 때
+    if (!seller_id || seller_id == payload.user_id) { // 판매자가 자신의 스토어를 조회할 때
       seller_id = payload.user_id // 로그인한 유저id
+      // 상품등록 버튼
+      document.getElementById("add-product-button").addEventListener("click", function() {
+          window.location.href = "productregistration.html";
+      });
+     } else {
+      document.getElementById("add-product-button").style.display = "none";
     }
+  
     const product = await getSellerProductListAPIView(seller_id);
     if (product.count != 0) {
       if ((product.next == null) & (product.previous == null)) {
@@ -89,6 +95,7 @@ export async function sellerPageAPI() {
     console.error(error)
   }
 }
+
 
 window.onload = async function () {
   sellerProfileView()
