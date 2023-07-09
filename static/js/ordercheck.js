@@ -64,10 +64,9 @@ async function getUserDeliveryInformationAPI(user_id) {
         // 로그인을 하지 않았거나, 토큰 정보 오류
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 400) {
-        //  유효성 검사 실패
-        addressMessageBox.innerText = response_json.err.non_field_errors
-    } else if (response.status == 200) {
         // 예외 처리
+        console.log(response)
+    } else if (response.status == 200) {
         return response;
     }
 }

@@ -77,9 +77,23 @@ export async function updateInformation() {
         if (response.status == 200) {
             handleLogout()
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        } else if (response.status == 404) {
+            // 계정 정보 찾을 수 없음
+            alert("로그인이 필요 합니다.")
+            window.location.replace(`${FRONT_BASE_URL}/login.html`)
+        } else if (response.status == 401) {
+            // 토큰 정보 오류
+            alert("로그인이 필요 합니다.")
+            handleLogout()
+            window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else {
             const response_json = await response.json()
-            setUserInformationMessageBox.innerText = response_json.non_field_errors
+            const message_list = [
+                '소셜 계정 사용자는 비밀번호 정보를 변경할 수 없습니다.',
+                '입력하신 비밀번호가 사용자의 비밀번호와 일치하지 않습니다.',
+                '비밀번호는 영문자,숫자,특수문자로 길이 5이상의 조건이 충족되어야 합니다.',
+            ]
+            setUserInformationMessageBox.innerText = message_list[Number(response_json.non_field_errors)]
         }
     }
 }
@@ -111,7 +125,7 @@ export async function updateProfileInformation() {
         if (response_json.profile_image != null) {
             profileMessageBox.innerText = "유효한 프로필 이미지가 아닙니다."
         }
-        profileMessageBox.innerText = "닉네임이 올바르지 않습니다. 공백없이 2~20자 내외로 작성해 주세요."
+        profileMessageBox.innerText = "닉네임이 올바르지 않습니다. 공백없이, 알파벳으로 2~20자 내외로 작성해 주세요."
     }
 }
 
@@ -157,7 +171,13 @@ export async function addressSubmit() {
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
             } else if (response.status == 400) {
                 //  유효성 검사 실패
-                addressMessageBox.innerText = response_json.err.non_field_errors
+                const message_list = [
+                    '핸드폰 인증이 필요합니다.',
+                    '배송 정보를 다섯개 이상 등록 하셨습니다.',
+                    '우편 번호가 올바르지 않습니다.',
+                    '주소지 정보가 올바르지 않습니다.'
+                ]
+                addressMessageBox.innerText = message_list[Number(response_json.err.non_field_errors)]
             } else {
                 // 예외 처리
                 console.log(response_json)
@@ -203,7 +223,13 @@ export async function addressUpdate() {
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
             } else if (response.status == 400) {
                 //  유효성 검사 실패
-                addressMessageBox.innerText = response_json.non_field_errors
+                const message_list = [
+                    '핸드폰 인증이 필요합니다.',
+                    '배송 정보를 다섯개 이상 등록 하셨습니다.',
+                    '우편 번호가 올바르지 않습니다.',
+                    '주소지 정보가 올바르지 않습니다.'
+                ]
+                addressMessageBox.innerText = message_list[Number(response_json.non_field_errors)]
             } else {
                 // 예외 처리
                 console.log(response_json)
@@ -231,6 +257,7 @@ export async function addressDelete() {
             alert("로그인이 필요 합니다.")
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else {
+            // 예외 처리
             console.log(response)
         }
     }
@@ -255,6 +282,8 @@ async function getSellerInputData() {
 
 export async function createSellerInformation() {
     // 판매자 정보 생성 및 권한 신청
+
+    // 프론트 데이터 가져오기
     const information = await getSellerInputData()
 
     // 판매자 정보 생성 (권한 신청) API
@@ -279,9 +308,9 @@ export async function createSellerInformation() {
         // 로그인 필요
         alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
-    } else if (response.status == 422) {
-        sellerMessageBox.innerText = "입력값에 오류가 있습니다. 너무 긴 입력값은 없는지 확인해 주세요."
     } else if (response.status == 400) {
+        sellerMessageBox.innerText = "입력값에 오류가 있습니다. 너무 긴 입력값은 없는지 확인해 주세요."
+    } else if (response.status == 423) {
         sellerMessageBox.innerText = "이미 판매자 정보가 있습니다."
     }
 }
@@ -309,9 +338,9 @@ export async function updateSellerInformation() {
         // 로그인 필요
         alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
-    } else if (response.status == 422) {
-        sellerMessageBox.innerText = "입력값에 오류가 있습니다. 너무 긴 입력값은 없는지 확인해 주세요."
     } else if (response.status == 400) {
+        sellerMessageBox.innerText = "입력값에 오류가 있습니다. 너무 긴 입력값은 없는지 확인해 주세요."
+    } else if (response.status == 423) {
         sellerMessageBox.innerText = "수정할 판매자 정보가 없습니다."
     }
 }
@@ -337,7 +366,7 @@ export async function deleteSellerInformation() {
         // 로그인 필요
         alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
-    } else if (response.status == 400) {
+    } else if (response.status == 423) {
         sellerMessageBox.innerText = "삭제할 판매자 정보가 없습니다."
     }
 }
@@ -421,8 +450,7 @@ export async function getAuthNumber() {
                 alert("로그인이 필요 합니다.")
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
             } else {
-                const response_json = await response.json()
-                phoneMessageBox.innerText = response_json.err.non_field_errors
+                phoneMessageBox.innerText = '휴대폰 정보가 올바르지 않습니다.'
             }
         }
     }
@@ -453,7 +481,13 @@ export async function submitVerificationNumbers() {
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
             } else {
                 const response_json = await response.json()
-                phoneMessageBox.innerText = response_json.err
+                const message_list = [
+                    '핸드폰 정보를 등록 해주세요',
+                    '인증 번호를 발급 받아 주세요.',
+                    '인증 번호 유효 기간이 만료 되었습니다.',
+                    '인증 번호가 일치하지 않습니다.',
+                ]
+                phoneMessageBox.innerText = message_list[Number(response_json.err)]
             }
         }
     }
@@ -482,9 +516,15 @@ export async function getEmailVerificationCode() {
                 // 로그인 필요
                 alert("로그인이 필요 합니다.")
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
+            } else if (response.status == 403) {
+                phoneMessageBox.innerText = `${email}로 가입된 계정이 존재합니다.`
             } else {
                 const response_json = await response.json()
-                phoneMessageBox.innerText = response_json.err
+                const message_list = [
+                    '소셜 계정으로 가입된 이메일입니다.',
+                    '이메일 정보가 올바르지 않습니다.',
+                ]
+                phoneMessageBox.innerText = message_list[Number(response_json.err)]
             }
         }
     }
@@ -492,6 +532,7 @@ export async function getEmailVerificationCode() {
 
 
 export async function submitChangeEamilInformation() {
+    // 이메일 변경 요청 처리
     const verificationCode = document.getElementById("verificationCode").value
     const emailMessageBox = document.getElementById("emailMessageBox")
     const information = {
@@ -515,7 +556,14 @@ export async function submitChangeEamilInformation() {
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
             } else {
                 const response_json = await response.json()
-                emailMessageBox.innerText = response_json.non_field_errors
+                const message_list = [
+                    '소셜 계정으로 가입된 이메일입니다.',
+                    '인증 코드를 발급 받아 주세요.',
+                    '현재 발급 받은 인증 코드 유형이 올바르지 않습니다.',
+                    '인증 코드 유효 기간이 만료되었습니다.',
+                    '인증 코드가 일치하지 않습니다.',
+                ]
+                emailMessageBox.innerText = message_list[Number(response_json.non_field_errors)]
             }
         }
     }

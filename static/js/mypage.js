@@ -710,6 +710,10 @@ export async function sellerFollow(element) {
     const response = await sellerFollowAPI(element.user.id);
     if (response.status == 404) {
         alert("판매자 정보가 삭제되었거나, 로그인이 필요합니다.")
+    } else if (response.status == 423) {
+        alert("판매자 사용자만 팔로우 할 수 있습니다.")
+    } else if (response.status == 400) {
+        alert("스스로를 팔로우 할 수 없습니다.")
     } else if (response.status == 401) {
         alert("로그인이 필요합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)

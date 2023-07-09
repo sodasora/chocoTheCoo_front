@@ -841,6 +841,14 @@ export async function makeBills(delivery_id = null, delivery_data = null) {
 		return response_json
 	} else if (response.status == 404) {
 		alert("배송지 정보가 부정확합니다!")
+	} else if (response.status == 400) {
+		const message_list = [
+			'핸드폰 인증이 필요합니다.',
+			'배송 정보를 다섯개 이상 등록 하셨습니다.',
+			'우편 번호가 올바르지 않습니다.',
+			'주소지 정보가 올바르지 않습니다.'
+		]
+		alert(message_list[Number(response_json.non_field_errors)])
 	}
 }
 
