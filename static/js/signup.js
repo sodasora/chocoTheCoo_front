@@ -68,7 +68,12 @@ export async function handleSignup() {
                     signupMessage.innerText = '이미 등록된 이메일 계정이거나, 이메일 정보가 올바르지 않습니다.'
                 }
             } else {
-                signupMessage.innerText = response_json.err.non_field_errors
+                const message_list = [
+                    "이메일 정보가 올바르지 않습니다.",
+                    "닉네임 정보가 올바르지 않습니다.",
+                    "비밀번호 정보가 올바르지 않습니다."
+                ]
+                signupMessage.innerText = message_list[Number(response_json.err.non_field_errors)]
             }
         }
     }
@@ -98,7 +103,12 @@ export async function getVerificationCode() {
             signupMessage.innerText = "가입된 이메일 정보를 찾을 수 없습니다."
         } else {
             const response_json = await response.json()
-            signupMessage.innerText = response_json.err
+            const message_list = [
+                '소셜 계정으로 가입된 이메일입니다.',
+                '이메일 정보가 올바르지 않습니다.',
+            ]
+
+            signupMessage.innerText = message_list[Number(response_json.err)]
         }
     }
 }
@@ -118,8 +128,14 @@ export async function VerificationCodeSubmit() {
         if (response.status == 404) {
             signupMessage.innerText = "가입된 이메일 정보를 찾을 수 없습니다."
         } else if (response_json.err != null) {
-
-            signupMessage.innerText = response_json.err
+            const message_list = [
+                '소셜 계정으로 가입된 이메일입니다.',
+                '인증 코드를 발급 받아 주세요.',
+                '현재 발급 받은 인증 코드 유형이 올바르지 않습니다.',
+                '인증 코드 유효 기간이 만료되었습니다.',
+                '인증 코드가 일치하지 않습니다.',
+            ]
+            signupMessage.innerText = message_list[Number(response_json.err)]
         } else {
             signupMessage.innerText = "인증코드 정보가 올바르지 않습니다."
         }
