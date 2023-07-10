@@ -3,13 +3,11 @@ import {
     deleteProductDetailAPIView,
     addToCartAPI,
     addToLikeAPI,
-    BACK_BASE_URL,
     FRONT_BASE_URL,
     payload,
     reviewLikeAPI,
     sellerFollowAPI,
 } from './api.js';
-
 
 export async function goEditReview(product_id, review_id) {
     window.location.href = `${FRONT_BASE_URL}/writereview.html?product_id=${product_id}&review_id=${review_id}`;
@@ -32,8 +30,10 @@ export async function sellerFollow(user_id) {
     } else if (response.status == 401) {
         alert("로그인이 필요합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
+    } else if (response.status == 422) {
+        alert("판매자 사용자만 팔로우 할 수 있습니다.")
     } else if (response.status == 400) {
-        alert(response_json.err)
+        alert("스스로를 팔로우 할 수 없습니다.")
     } else {
 
         document.getElementById("followerCount").innerText = `follower : ${response_json.followings}`

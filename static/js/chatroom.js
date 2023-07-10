@@ -1,5 +1,5 @@
 import {
-    access_token, getChatLogAPI, getChatroominfo, payload, BACK_BASE_URL, FRONT_BASE_URL
+    getChatLogAPI, getChatroominfo, payload, BACK_BASE_URL, FRONT_BASE_URL
 } from "./api.js";
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -19,7 +19,6 @@ let nowPage = 1
 let username_set = new Set();
 
 const roominfo = await getChatroominfo(roomId)
-// console.log(roominfo)
 const roomname = document.getElementById("chatname")
 roomname.innerText = "채팅방: " + roominfo.room["name"]
 
@@ -27,7 +26,6 @@ const message_list = document.getElementById("chat_messages")
 
 async function get_chat_log() {
     const chatlog = await getChatLogAPI(roomId);
-    // console.log(chatlog)
 
     chatlog.forEach(e => {
         const element = document.createElement("div");
@@ -53,7 +51,6 @@ async function get_chat_log() {
             const profile_image = document.createElement("img")
             profile_image.setAttribute("class", "profile_image")
             if (profile != null) {
-                // console.log(profile);
                 profile_image.setAttribute("src", profile)
             } else {
                 profile_image.setAttribute("src", "static/images/기본상품.png")
@@ -88,7 +85,6 @@ function socketSwap(roomId) {
     }
 
     let backurl = BACK_BASE_URL.substring(7,)
-    // console.log(backurl)
     if (roomId != null) {
 
         // 로컬
@@ -101,7 +97,6 @@ function socketSwap(roomId) {
         //     'wss://' + backurl + '/ws/chat/' + roomId + '/?id=' + payload.user_id
         // );
 
-        // console.log(chatSocket)
 
         function update_user_list() {
             const html = Array.from(username_set).map(sender => `<li>${sender}</li>`).join('');
@@ -120,7 +115,6 @@ function socketSwap(roomId) {
 
         chatSocket.onmessage = function (e) {
             let data = JSON.parse(e.data);
-            // console.log(data)
 
             let sender = data['sender_name']
             let message = data['message']
@@ -176,7 +170,6 @@ function socketSwap(roomId) {
                 const profile_image = document.createElement("img")
                 profile_image.setAttribute("class", "profile_image")
                 if (profile != null) {
-                    // console.log(profile);
                     profile_image.setAttribute("src", profile)
                 } else {
                     profile_image.setAttribute("src", "static/images/기본상품.png")
@@ -187,6 +180,7 @@ function socketSwap(roomId) {
                 element.appendChild(wrapper);
                 element.appendChild(message_time);
                 message_list.appendChild(element);
+                message_list.scrollTop = message_list.scrollHeight;
             }
         }
 

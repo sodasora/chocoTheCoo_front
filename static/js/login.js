@@ -1,22 +1,6 @@
-import { BACK_BASE_URL, REDIRECT_URI, FRONT_BASE_URL, handleLoginAPI, getVerificationCodeAPI, setUserInformationAPI, kakaoLoginAPI, googleLoginAPI, naverLoginAPI } from './api.js'
+import { FRONT_BASE_URL, handleLoginAPI, getVerificationCodeAPI, setUserInformationAPI, kakaoLoginAPI, googleLoginAPI, naverLoginAPI } from './api.js'
 
 let modal_image_index = 0
-
-async function injectFooter() {
-    // 푸터 html 불러오기
-    fetch("./footer.html")
-        .then((response) => {
-            return response.text();
-        })
-        .then((data) => {
-            document.querySelector("footer").innerHTML = data;
-        })
-
-    let headerHtml = await fetch("./footer.html")
-    let data = await headerHtml.text()
-    document.querySelector("footer").innerHTML = data;
-}
-
 
 export async function handleLogin() {
     // 로그인 , 토큰 저장
@@ -50,6 +34,7 @@ export async function handleLogin() {
                 // 찾을 수 없는 계정
                 message.textContent = "가입된 이메일이 없습니다."
             } else {
+
                 message.textContent = response_json.non_field_errors[0]
             }
         }
@@ -77,6 +62,13 @@ export async function getVerificationCode() {
             container.style.height = "calc(150vh - 50px)";
         } else if (response.status == 404) {
             message.innerText = "이메일 정보를 찾을 수 없습니다."
+        } else {
+            const response_json = await response.json()
+            const message_list = [
+                '소셜 계정으로 가입된 이메일입니다.',
+                '이메일 정보가 올바르지 않습니다.',
+            ]
+            message.innerText = message_list[Number(response_json.err)]
         }
     }
 }
@@ -104,8 +96,15 @@ export async function setUserInformation() {
             message.innerText = '가입된 이메일 정보를 찾을 수 없습니다.'
         }
         else {
-
-            message.innerText = response_json.non_field_errors
+            const message_list = [
+                '소셜 계정으로 가입된 이메일입니다.',
+                '인증 코드를 발급 받아 주세요.',
+                '현재 발급 받은 인증 코드 유형이 올바르지 않습니다.',
+                '인증 코드 유효 기간이 만료되었습니다.',
+                '인증 코드가 일치하지 않습니다.',
+                '비밀번호는 영문자,숫자,특수문자로 길이 5이상의 조건이 충족되어야 합니다.',
+            ]
+            message.innerText = message_list[Number(response_json.non_field_errors)]
         }
     }
 }

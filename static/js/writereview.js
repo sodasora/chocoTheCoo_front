@@ -1,5 +1,5 @@
 
-import { writeReviewAPI, showReviewDetailViewAPI, editReviewViewAPI, BACK_BASE_URL, FRONT_BASE_URL, payload } from './api.js';
+import { writeReviewAPI, showReviewDetailViewAPI, editReviewViewAPI, FRONT_BASE_URL, payload } from './api.js';
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('product_id');
 
@@ -29,10 +29,6 @@ export async function writeReview() {
         formdata.append('feedback_evaluation', feedback_evaluation)
         if (image) {
             formdata.append('image', image)
-        }
-
-        for (const pair of formdata.entries()) {
-            console.log(pair[0] + ':', pair[1]);
         }
 
         try {

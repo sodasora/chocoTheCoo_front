@@ -14,17 +14,14 @@ const user_id = payload_parse.user_id //로그인한 유저id
 
 // 로그인한 판매자의 전체 상품 목록 불러오기
 const seller_products = await getAllProductListAPIView(user_id)
-// console.log('seller_products', seller_products)
 
 // 로그인한 판매자의 전체 주문 목록 불러오기
 const seller_orders = await getSellerOrderListView()
-// console.log('seller_orders', seller_orders)
 
 // 로그인한 판매자의 전체 주문 목록에서 발송대기중인 상태 필터
 const seller_orders_unsent = seller_orders.filter(function (order) {
     return 1 < order.order_status.id && order.order_status.id <= 3;
 });
-// console.log('seller_orders_unsent', seller_orders_unsent)
 
 
 //########## ↓ 정보 정의 ↓ ##########//
@@ -104,7 +101,6 @@ async function sellerProfile() {
     const user_id = payload_parse.user_id //로그인한 유저id
 
     const seller_data = await getSellerPermissionAPIView(user_id)
-    // console.log("판매자정보", seller_data)
 
     const firstday = seller_data["created_at"].substr(0, 10)
 
@@ -114,15 +110,14 @@ async function sellerProfile() {
     let month = String(today.getMonth() + 1).padStart(2, '0'); //두자리되도록 앞에0채우기
     let date = String(today.getDate()).padStart(2, '0'); //두자리되도록 앞에0채우기
     today = `${year}-${month}-${date}`;
-    // console.log("today", today)
 
     // 판매자등록부터 오늘까지의 일수 차이
     let startDate = new Date(firstday);
     let endDate = new Date(today);
     let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
     const term = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
-    console.log(seller_data)
 
+    
     document.getElementById('seller_wish').innerText = seller_data["followings_count"]
     document.getElementById("total_profit").innerText = seller_data["total_profit"].toLocaleString({ style: 'currency', currency: 'KRW' })
     document.getElementById("month_profits").innerText = seller_data["month_profits"].toLocaleString({ style: 'currency', currency: 'KRW' })
@@ -158,8 +153,6 @@ sellerProfile()
 function listView_product(product, type) {
     const contents = document.getElementById(`${type}_under-column-dox`);
     contents.innerHTML = '';
-    // console.log("상품확인", product);
-    // console.log("type", type);
 
     const makeContent = (id) => {
         if (!product[id].image) {
@@ -168,7 +161,6 @@ function listView_product(product, type) {
         const content = document.createElement("div");
         content.setAttribute("class", 'under-column');
         content.addEventListener("click", () => productDetail(product[id].id));
-        console.log(product[id].id)
 
         // type에 따른 분기 type: [sells, likes, stars]
         if (type === 'sells') {
@@ -232,7 +224,6 @@ function listView_product(product, type) {
 function listView_order(order, type) {
     const contents = document.getElementById(`${type}_under-column-dox`);
     contents.innerHTML = '';
-    // console.log("주문확인", order);
 
     const makeContent = (id) => {
         if (!order[id].image) {
@@ -256,6 +247,13 @@ function listView_order(order, type) {
         contents.appendChild(makeContent(index));
     }
 }
+
+
+// 상품등록 버튼
+document.getElementById("add-product-button").addEventListener("click", function() {
+    window.location.href = `${FRONT_BASE_URL}/productregistration.html`;
+});
+
 
 
 // 상품리스트 불러오기

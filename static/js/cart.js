@@ -1,10 +1,9 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, getCartList, deleteCartItem, changeCartItemAmount, payload } from './api.js'
+import { FRONT_BASE_URL, getCartList, deleteCartItem, changeCartItemAmount, payload } from './api.js'
 
 
 
 async function renderCartList() {
     const cartItems = await getCartList();
-    console.log(cartItems)
     const cartBox = document.querySelector('#cartList');
     cartItems.forEach(e => {
         const cartItemDiv = document.createElement('div');
@@ -87,7 +86,6 @@ async function renderCartList() {
 
         amountDiv.value = e.amount;
 
-        // console.log(amountDiv);
 
         const hr = document.createElement('hr');
 
@@ -148,7 +146,7 @@ async function renderCartList() {
             checkboxInput.setAttribute("disabled", "")
             amountDiv.setAttribute("disabled", "")
         }
-        
+
         // 삭제(6)표시
         if (e.product.item_state == 6) {
             // 상품이미지 삭제표시
@@ -203,19 +201,15 @@ async function renderCartList() {
 
 async function renderTotals() {
     const sumPrice = document.querySelectorAll('.sum-price')
-    // console.log(sumPrice);
 
     let totalPrice = 0;
     let totalDeliveryFee = 0;
 
     sumPrice.forEach(e => {
-        // console.log(e);
         totalPrice += parseInt(e.dataset.price);
         // totalDeliveryFee += parseInt(e.dataset.deliveryfee);
     })
 
-    // console.log(totalPrice);
-    // console.log(totalDeliveryFee);
 
     const totals = document.getElementById('totals');
 
@@ -255,9 +249,7 @@ async function renderTotals() {
 
         if (cart_id_list.length > 0) {
             const params = new URLSearchParams();
-            console.log(params)
             params.set('cart_id', cart_id_list.join(","));
-            console.log(cart_id_list);
             const queryString = params.toString();
             window.location.href = `${FRONT_BASE_URL}/ordercheck.html?` + `${queryString}`;
         }

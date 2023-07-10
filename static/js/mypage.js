@@ -1,5 +1,5 @@
 import {
-    BACK_BASE_URL, FRONT_BASE_URL, getPointView, getPointStaticView,
+    FRONT_BASE_URL, getPointView, getPointStaticView,
     postPointAttendanceView, getUserProfileAPIView,
     getSubscribeView, patchSubscribeView, payload, sellerFollowAPI, productDetail
 } from "./api.js";
@@ -89,11 +89,9 @@ async function Choicelist() {
 
     const response_point = await getPointView(day)
     const point = await response_point.json()
-    //console.log(response_point_json)
 
     const response_point_statistic = await getPointStaticView(day)
     const response_point_statistic_json = await response_point_statistic.json()
-    //console.log(response_point_statistic_json)
 
     const newlist = document.getElementById('points-list')
     const newcheck = document.getElementById('checkpoint')
@@ -258,7 +256,6 @@ async function getToday() {
 
     const response_point_statistic = await getPointStaticView(nowday)
     const response_point_statistic_json = await response_point_statistic.json()
-    //console.log(response_point_statistic_json)
 
     const newlist = document.getElementById('points-list')
     const newcheck = document.getElementById('checkpoint')
@@ -426,7 +423,6 @@ async function getToday() {
 // 출석인증
 async function attendancePoint() {
     const response = await postPointAttendanceView()
-    //console.log(response)
     if (response.status == 201) {
         alert("인증완료")
         window.location.reload()
@@ -504,7 +500,7 @@ async function pagination_wish(wish) {
             // 투명화
             newCard.style.opacity = 0.7
         }
-        
+
         // 삭제(6)표시
         if (wish[id].item_state == 6) {
             // 상품이미지 삭제표시
@@ -621,7 +617,6 @@ async function gosubinfo() {
 
 async function subscription_info() {
     const subscription_data = await getSubscribeView()
-    //console.log(subscription_data)
 
     const newcard = document.getElementById("subscription-card")
 
@@ -715,6 +710,10 @@ export async function sellerFollow(element) {
     const response = await sellerFollowAPI(element.user.id);
     if (response.status == 404) {
         alert("판매자 정보가 삭제되었거나, 로그인이 필요합니다.")
+    } else if (response.status == 422) {
+        alert("판매자 사용자만 팔로우 할 수 있습니다.")
+    } else if (response.status == 400) {
+        alert("스스로를 팔로우 할 수 없습니다.")
     } else if (response.status == 401) {
         alert("로그인이 필요합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
@@ -734,7 +733,6 @@ export async function goSellerPage(user_id) {
 
 
 export async function getMyFollowList(seller_information) {
-    // console.log(seller_information)
     const bookmarkList = document.getElementById("bookmarkList");
     const buttons = document.getElementById("bookmark-buttons");
 

@@ -1,4 +1,4 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, getPointStaticView, getUserProfileAPIView } from './api.js'
+import { FRONT_BASE_URL, getPointStaticView, getUserProfileAPIView } from './api.js'
 
 /* 헤더 가져오기 */
 async function injectHeader() {
@@ -48,11 +48,8 @@ async function injectHeader() {
         mobileLogout.addEventListener("click", function () {
             handleLogout()
         })
-        // console.log(payload_parse)
-        // console.log(payload_parse.user_id)
         const user_id = payload_parse.user_id
         const seller = await getUserProfileAPIView(user_id)
-        // console.log(seller.is_seller)
         // 판매자가 아니라면 판매자페이지 숨기기
         if (!seller.is_seller) {
             const sellerpage = document.getElementById("sellerpage")

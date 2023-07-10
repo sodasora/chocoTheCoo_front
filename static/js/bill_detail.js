@@ -67,7 +67,6 @@ async function renderBillOrders(bill) {
             img.src = '/static/images/초콜릿.jpg'
         }
         imgDiv.appendChild(img);
-        console.log(e)
         img.addEventListener('click',() => productDetail(e.product_id));
         img.style.cursor = 'pointer';
 
@@ -189,7 +188,6 @@ async function gosubinfo() {
 
 async function subscription_info() {
     const subscription_data = await getSubscribeView()
-    //console.log(subscription_data)
 
     const newcard = document.getElementById("subscription-card")
 

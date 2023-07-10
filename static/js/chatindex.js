@@ -1,5 +1,5 @@
 import {
-    BACK_BASE_URL, FRONT_BASE_URL, postChatindexAPI, getChatindexAPI, payload, deleteChatroom,
+    FRONT_BASE_URL, postChatindexAPI, getChatindexAPI, payload, deleteChatroom, checkPasswordAPI
 } from "./api.js";
 
 async function pagination_chatlist(chat) {
@@ -19,10 +19,11 @@ async function pagination_chatlist(chat) {
 
         const newname = document.createElement("li")
         newname.setAttribute("class", "chatname")
-        newname.innerText = "▫️ " + chat[id].name
-        newname.onclick = function () {
-            gochat(chat[id].id)
-        };
+        if (chat[id].password != null) {
+            newname.innerText = "🔒 " + chat[id].name
+        } else {
+            newname.innerText = "▫️ " + chat[id].name
+        }
 
         const chatdesc = document.createElement("span")
         chatdesc.setAttribute("class", "chatdesc")
@@ -30,9 +31,18 @@ async function pagination_chatlist(chat) {
 
         const chatbutton = document.createElement("button")
         chatbutton.setAttribute("class", "gobutton")
+        chatbutton.setAttribute("data-bs-toggle", "modal")
+        chatbutton.setAttribute("data-bs-target", "#staticBackdrop2")
         chatbutton.innerText = "입장"
         chatbutton.onclick = function () {
-            gochat(chat[id].id)
+            if (chat[id].password != null) {
+                const submit = document.getElementById("chatbutton2")
+                submit.onclick = function () {
+                    checkpassword(chat[id].id)
+                }
+            } else {
+                gochat(chat[id].id)
+            }
         };
 
         const user_id = payload.user_id
@@ -130,13 +140,17 @@ async function pagination_chatlist(chat) {
 
 }
 
-
 async function makechat() {
     const newinfo = document.getElementById("room-name")
     const newdesc = document.getElementById("room-desc")
+    const newpassword = document.getElementById("room-password")
     const roomname = newinfo.value
     const roomdesc = newdesc.value
-    const result = await postChatindexAPI(roomname, roomdesc);
+    let roompassword = newpassword.value.replace(/\s/g, '')
+    if (roompassword == "") {
+        roompassword = null
+    }
+    const result = await postChatindexAPI(roomname, roomdesc, roompassword);
 
     if (result == 201) {
         alert("등록완료")
@@ -154,14 +168,25 @@ function gochat(id) {
 }
 
 
+async function checkpassword(id) {
+    const passwordinput = document.getElementById("room-password-check")
+    const password = passwordinput.value.replace(/\s/g, '')
+    const response = await checkPasswordAPI(id, password)
+    if (response == 200) {
+        gochat(id)
+    } else {
+        alert("비밀번호가 틀립니다.")
+    }
+}
+
 async function deletechat(id) {
     const response = await deleteChatroom(id)
     if (response == 204) {
         alert("삭제완료")
         window.location.reload();
-    } else if (response == 403) {
+    } else if (response == 400) {
         alert("접속유저가 존재합니다. 잠시 후 실행해주세요.")
-    } else {
+    } else if (response == 403) {
         alert("삭제권한이 없습니다.")
     }
 }
@@ -199,7 +224,6 @@ window.onload = async function () {
     });
 
     const chat = await getChatindexAPI();
-    // console.log(chat)
     pagination_chatlist(chat);
 
     const button = document.getElementById("chatbutton")
