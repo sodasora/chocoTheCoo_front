@@ -17,24 +17,31 @@ if (!sellerId) { // 판매자가 자신의 스토어를 조회할 때
 // 판매자 정보 보기
 export async function sellerProfileView() {
   const seller = await getSellerPermissionAPIView(sellerId);
-  const follow_button = document.getElementById("seller-follow-button");
-  // 팔로우 유무에 따라 표시
-  seller.is_like == false ? follow_button.innerText = "Follow" : follow_button.innerText = "Unfollow"
-  // 스토어 이미지 없을 시 기본 이미지
-  const company_img = seller.company_img == null ? "/static/images/store.gif" : seller.company_img;
-  const sellerProfile = document.getElementById("user-image");
-  sellerProfile.setAttribute("src", `${company_img}`);
-  const name = seller.business_owner_name;
-  const brand = seller.company_name;
-  const contact = seller.contact_number;
-  const following = seller.followings_count;
-  document.getElementById("user-name").innerText = name;
-  document.getElementById("user-brand").innerText = brand;
-  document.getElementById("user-contact").innerText = contact;
-  document.getElementById("user-follow").innerText = following;
-  follow_button.addEventListener("click", function () {
-    sellerFollow(sellerId)
-  });
+  if (seller.status == 404) {
+    // 없는 사용자이거나, 해당 사용자가 판매자가 아닌 경우
+    alert("판매자 정보를 찾을 수 없습니다.")
+    window.location.replace(`${FRONT_BASE_URL}/index.html`)
+  } else {
+    console.log(seller)
+    const follow_button = document.getElementById("seller-follow-button");
+    // 팔로우 유무에 따라 표시
+    seller.is_like == false ? follow_button.innerText = "Follow" : follow_button.innerText = "Unfollow"
+    // 스토어 이미지 없을 시 기본 이미지
+    const company_img = seller.company_img == null ? "/static/images/store.gif" : seller.company_img;
+    const sellerProfile = document.getElementById("user-image");
+    sellerProfile.setAttribute("src", `${company_img}`);
+    const name = seller.business_owner_name;
+    const brand = seller.company_name;
+    const contact = seller.contact_number;
+    const following = seller.followings_count;
+    document.getElementById("user-name").innerText = name;
+    document.getElementById("user-brand").innerText = brand;
+    document.getElementById("user-contact").innerText = contact;
+    document.getElementById("user-follow").innerText = following;
+    follow_button.addEventListener("click", function () {
+      sellerFollow(sellerId)
+    });
+  }
 }
 
 export async function sellerFollow(user_id) {
@@ -45,7 +52,7 @@ export async function sellerFollow(user_id) {
   } else if (response.status == 401) {
     alert("로그인이 필요합니다.")
     window.location.replace(`${FRONT_BASE_URL}/login.html`)
-  } else if (response.status == 423) {
+  } else if (response.status == 422) {
     alert("판매자 사용자만 팔로우 할 수 있습니다.")
   } else if (response.status == 400) {
     alert("스스로를 팔로우 할 수 없습니다.")
