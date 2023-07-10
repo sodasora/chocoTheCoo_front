@@ -83,28 +83,11 @@ async function injectHeader() {
         // 비로그인 상태에서 장바구니,마이페이지,판매자페이지,로그아웃 숨기기
         // 비로그인 상태에서 내 포인트,포인트충전 숨기기
         const cart = document.getElementById("cart");
-        const mypage = document.getElementById("mypage");
         const point = document.getElementById("point");
-        const charge = document.getElementById("charge");
-        const chats = document.getElementById("chatting");
-        const CBTI = document.getElementById("CBTI");
-        const onlyseller = document.getElementById("seller");
-
         logout.style.display = "none"
         mobileLogout.style.display = "none"
         point.remove()
         cart.remove()
-
-        function login() {
-            window.location.href = "login.html"
-        }
-
-        mypage.addEventListener("click", login)
-        charge.addEventListener("click", login)
-        chats.addEventListener("click", login)
-        CBTI.addEventListener("click", login)
-        onlyseller.addEventListener("click", login)
-
     }
     setNavBarCurrent();
 }

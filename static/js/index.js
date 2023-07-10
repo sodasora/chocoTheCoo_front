@@ -287,7 +287,6 @@ function applySelectedOptions() {
     const orderingChoice = document.getElementById("orderingChoice")
     const urlParams = new URLSearchParams(window.location.search);
     const ordering = urlParams.get("ordering");
-    console.log(ordering)
     if (ordering == null) {
         orderingChoice.innerText = "최신순"
     } else {
