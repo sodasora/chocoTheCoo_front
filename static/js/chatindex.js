@@ -25,10 +25,6 @@ async function pagination_chatlist(chat) {
             newname.innerText = "▫️ " + chat[id].name
         }
 
-        newname.onclick = function () {
-            gochat(chat[id].id)
-        };
-
         const chatdesc = document.createElement("span")
         chatdesc.setAttribute("class", "chatdesc")
         chatdesc.innerText = chat[id].desc
