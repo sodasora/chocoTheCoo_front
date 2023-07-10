@@ -1,5 +1,5 @@
 import {
-    BACK_BASE_URL, FRONT_BASE_URL, getPointView, getPointStaticView,
+    FRONT_BASE_URL, getPointView, getPointStaticView,
     postPointAttendanceView, getUserProfileAPIView,
     getSubscribeView, patchSubscribeView, payload, sellerFollowAPI, productDetail
 } from "./api.js";
@@ -500,7 +500,7 @@ async function pagination_wish(wish) {
             // 투명화
             newCard.style.opacity = 0.7
         }
-        
+
         // 삭제(6)표시
         if (wish[id].item_state == 6) {
             // 상품이미지 삭제표시

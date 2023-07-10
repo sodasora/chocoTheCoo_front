@@ -1,4 +1,4 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, getCategoryView, registProductAPIView, getProductDetailAPIView, editProductDetailAPIView, getSellerPermissionAPIView, payload } from './api.js'
+import { FRONT_BASE_URL, getCategoryView, registProductAPIView, getProductDetailAPIView, editProductDetailAPIView, payload } from './api.js'
 
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('product_id');
@@ -33,7 +33,7 @@ export async function registProduct() {
     const category = document.getElementById("category-select").value;
 
     // 유효성 검사 추가
-    if (!name || !content || !price || !amount ) {
+    if (!name || !content || !price || !amount) {
         alert("모든 필드를 입력하셔야합니다! 입력 안한 부분은 없는지 확인해주세요~❤");
         return;
     }

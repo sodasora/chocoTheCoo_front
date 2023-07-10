@@ -1,4 +1,4 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, getPointStaticView, getUserProfileAPIView } from './api.js'
+import { FRONT_BASE_URL, getPointStaticView } from './api.js'
 
 
 // 현재 내 포인트 확인 함수

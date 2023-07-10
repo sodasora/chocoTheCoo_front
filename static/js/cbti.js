@@ -1,4 +1,4 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, searchProductAPI } from './api.js'
+import { FRONT_BASE_URL, searchProductAPI } from './api.js'
 
 
 

@@ -3,7 +3,6 @@ import {
   viewProductslist,
   getSellerProductListAPIView,
   sellerFollowAPI,
-  BACK_BASE_URL,
   FRONT_BASE_URL,
   getSellerPermissionAPIView,
   payload,
@@ -70,13 +69,13 @@ export async function sellerPageAPI() {
     if (!seller_id || seller_id == payload.user_id) { // 판매자가 자신의 스토어를 조회할 때
       seller_id = payload.user_id // 로그인한 유저id
       // 상품등록 버튼
-      document.getElementById("add-product-button").addEventListener("click", function() {
-          window.location.href = "productregistration.html";
+      document.getElementById("add-product-button").addEventListener("click", function () {
+        window.location.href = "productregistration.html";
       });
-     } else {
+    } else {
       document.getElementById("add-product-button").style.display = "none";
     }
-  
+
     const product = await getSellerProductListAPIView(seller_id);
     if (product.count != 0) {
       if ((product.next == null) & (product.previous == null)) {

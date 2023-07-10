@@ -1,4 +1,4 @@
-import { BACK_BASE_URL, FRONT_BASE_URL, payload, patchSubscribeView, getSubscribeView, getUserProfileAPIView, getBillList, billToCart } from './api.js'
+import { FRONT_BASE_URL, payload, patchSubscribeView, getSubscribeView, getUserProfileAPIView, getBillList, billToCart } from './api.js'
 
 let today = new Date();
 

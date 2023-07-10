@@ -933,7 +933,7 @@ export async function submitVerificationNumbersAPI(information) {
 
 
 //채팅방 만들기
-export async function postChatindexAPI(name, desc) {
+export async function postChatindexAPI(name, desc, password) {
 	const response = await fetch(`${BACK_BASE_URL}/chat/room/`, {
 		headers: {
 			'content-type': 'application/json',
@@ -942,7 +942,8 @@ export async function postChatindexAPI(name, desc) {
 		method: 'POST',
 		body: JSON.stringify({
 			"name": name,
-			"desc": desc
+			"desc": desc,
+			"password": password
 		})
 	})
 	return response.status
@@ -1714,6 +1715,7 @@ export async function refusalOfSalesActivityAPI(information) {
 	});
 	return response
 }
+
 export async function salesActivityApprovalAPI(seller_id) {
 	// 관리자 권한으로 판매 활동 승인
 
@@ -1724,4 +1726,14 @@ export async function salesActivityApprovalAPI(seller_id) {
 		method: "PATCH",
 	});
 	return response
+}
+
+export async function checkPasswordAPI(id, password) {
+	//채팅방 비밀번호 확인하기
+	const response = await fetch(`${BACK_BASE_URL}/chat/room/${id}/${password}/`, {
+		headers: {
+			"Authorization": `Bearer ${access_token}`,
+		},
+	})
+	return response.status
 }
