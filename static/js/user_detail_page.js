@@ -215,8 +215,8 @@ export async function addressUpdate() {
                 // 사용자 정보를 찾을 수 없음 (로그인 필요)
                 alert("로그인이 필요 합니다.")
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
-            } else if (response.status == 401) {
-                // 로그인을 하지 않았거나, 올바르지 않은 접근 방법
+            } else if (response.status == 403) {
+                // 올바르지 않은 접근 방법
                 alert("로그인이 필요 합니다.")
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
             } else if (response.status == 400) {
@@ -250,8 +250,8 @@ export async function addressDelete() {
         addressMessageBox.style.display = "flex"
         if (response.status == 404) {
             addressMessageBox.innerText = "배송 정보를 찾을 수 없습니다."
-        } else if (response.status == 401) {
-            // 로그인을 하지 않았거나 올바르지 않은 접근 방법
+        } else if (response.status == 403) {
+            // 권한이 없는 사용자의 접근
             alert("로그인이 필요 합니다.")
             window.location.replace(`${FRONT_BASE_URL}/login.html`)
         } else {
@@ -308,7 +308,7 @@ export async function createSellerInformation() {
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 400) {
         sellerMessageBox.innerText = "입력값에 오류가 있습니다. 너무 긴 입력값은 없는지 확인해 주세요."
-    } else if (response.status == 423) {
+    } else if (response.status == 409) {
         sellerMessageBox.innerText = "이미 판매자 정보가 있습니다."
     }
 }
@@ -338,7 +338,7 @@ export async function updateSellerInformation() {
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else if (response.status == 400) {
         sellerMessageBox.innerText = "입력값에 오류가 있습니다. 너무 긴 입력값은 없는지 확인해 주세요."
-    } else if (response.status == 423) {
+    } else if (response.status == 409) {
         sellerMessageBox.innerText = "수정할 판매자 정보가 없습니다."
     }
 }
@@ -364,7 +364,7 @@ export async function deleteSellerInformation() {
         // 로그인 필요
         alert("로그인이 필요 합니다.")
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
-    } else if (response.status == 423) {
+    } else if (response.status == 409) {
         sellerMessageBox.innerText = "삭제할 판매자 정보가 없습니다."
     }
 }
@@ -514,7 +514,7 @@ export async function getEmailVerificationCode() {
                 // 로그인 필요
                 alert("로그인이 필요 합니다.")
                 window.location.replace(`${FRONT_BASE_URL}/login.html`)
-            } else if (response.status == 403) {
+            } else if (response.status == 409) {
                 phoneMessageBox.innerText = `${email}로 가입된 계정이 존재합니다.`
             } else {
                 const response_json = await response.json()
