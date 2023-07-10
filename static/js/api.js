@@ -61,30 +61,6 @@ export async function postPointAttendanceView() {
 	return response_point
 }
 
-//텍스트리뷰 포인트
-export async function postTextPointView() {
-	const response_point = await fetch(`${BACK_BASE_URL}/api/users/text/`, {
-		headers: {
-			'content-type': 'application/json',
-			"Authorization": `Bearer ${access_token}`,
-		},
-		method: 'POST',
-	})
-	return response_point;
-}
-
-//포토리뷰 포인트
-export async function postPhotoPointView() {
-	const response_point = await fetch(`${BACK_BASE_URL}/api/users/photo/`, {
-		headers: {
-			'content-type': 'application/json',
-			"Authorization": `Bearer ${access_token}`,
-		},
-		method: 'POST',
-	})
-	return response_point;
-}
-
 // 포인트 충전 checkoutview
 export async function postPointCheckoutView(amount, type) {
 	const response_point = await fetch(`${BACK_BASE_URL}/api/users/payment/checkout/`, {
@@ -162,18 +138,6 @@ export async function patchSubscribeView() {
 // 첫 구독하기
 export async function postSubscribeView() {
 	const response_data = await fetch(`${BACK_BASE_URL}/api/users/subscribe/`, {
-		headers: {
-			'content-type': 'application/json',
-			"Authorization": `Bearer ${access_token}`,
-		},
-		method: 'POST',
-	})
-	return response_data.status;
-}
-
-// 구독결제포인트
-export async function postPointServiceView() {
-	const response_data = await fetch(`${BACK_BASE_URL}/api/users/service/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`,
@@ -959,22 +923,6 @@ export async function getChatindexAPI() {
 		method: 'GET',
 	})
 	return response.json()
-}
-
-//채팅방 내용 불러오기
-export async function getChatroom(room_id) {
-	const response = await fetch(`${BACK_BASE_URL}/chat/room/${room_id}/`, {
-		headers: {
-			'content-type': 'application/json',
-			"Authorization": `Bearer ${access_token}`
-		},
-		method: 'DELETE',
-	})
-	if (response.status != 200) {
-		alert("로그인이 필요 합니다.")
-		window.location.replace(`${FRONT_BASE_URL}/login.html`)
-	}
-	return response.status
 }
 
 
