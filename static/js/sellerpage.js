@@ -24,7 +24,7 @@ export async function sellerProfileView() {
   } else {
     const follow_button = document.getElementById("seller-follow-button");
     // 팔로우 유무에 따라 표시
-    seller.is_like == false ? follow_button.innerText = "Follow" : follow_button.innerText = "Unfollow"
+    seller.is_follow == false ? follow_button.innerText = "Follow" : follow_button.innerText = "Unfollow"
     // 스토어 이미지 없을 시 기본 이미지
     const company_img = seller.company_img == null ? "/static/images/store.gif" : seller.company_img;
     const sellerProfile = document.getElementById("user-image");
@@ -32,7 +32,7 @@ export async function sellerProfileView() {
     const name = seller.business_owner_name;
     const brand = seller.company_name;
     const contact = seller.contact_number;
-    const following = seller.followings_count;
+    const following = seller.follower_count
     document.getElementById("user-name").innerText = name;
     document.getElementById("user-brand").innerText = brand;
     document.getElementById("user-contact").innerText = contact;
