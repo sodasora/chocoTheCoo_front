@@ -50,7 +50,7 @@ export async function setSellerInformation(information) {
     document.getElementById("seller-company_name").innerText = information.company_name
     document.getElementById("seller-business_owner_name").innerText = information.business_owner_name
     document.getElementById("seller-contact_number").innerText = information.contact_number
-    document.getElementById("followerCount").innerText = `follower : ${information.followings_count}`
+    document.getElementById("followerCount").innerText = `follower : ${information.follower_count}`
     information.is_follow == false ? follow_button.innerText = "Follow" : follow_button.innerText = "Unfollow"
 
     sellerProfile.addEventListener("click", function () {

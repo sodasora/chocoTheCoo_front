@@ -707,7 +707,7 @@ export async function setEventListener() {
 }
 
 export async function sellerFollow(element) {
-    const response = await sellerFollowAPI(element.user.id);
+    const response = await sellerFollowAPI(element.user);
     if (response.status == 404) {
         alert("판매자 정보가 삭제되었거나, 로그인이 필요합니다.")
     } else if (response.status == 422) {
@@ -719,7 +719,7 @@ export async function sellerFollow(element) {
         window.location.replace(`${FRONT_BASE_URL}/login.html`)
     } else {
         const response_json = await response.json()
-        document.getElementById(`followingCount_${element.user.id}`).innerText = `follower : ${response_json.followings}`
+        document.getElementById(`followerCount_${element.user}`).innerText = `follower : ${response_json.followings}`
         const follow_button = document.getElementById(`sellerFollowButton_${element.user.id}`)
         response.status == 200 ? follow_button.innerText = "Follow" : follow_button.innerText = "Un Follow"
     }
@@ -775,18 +775,18 @@ export async function getMyFollowList(seller_information) {
         sellergoButton.classList.add('seller-go');
         sellergoButton.textContent = 'Go';
         sellergoButton.onclick = function () {
-            goSellerPage(element.user.id)
+            goSellerPage(element.user)
         }
 
-        const followingCount = document.createElement('span');
-        followingCount.id = `followingCount_${element.user.id}`;
-        followingCount.textContent = `following: ${element.followings_count}`;
+        const followerCount = document.createElement('span');
+        followerCount.id = `followerCount_${element.user}`;
+        followerCount.textContent = `follower: ${element.followings}`;
 
         sellerInformationBox.appendChild(companyName);
         sellerInformationBox.appendChild(contactNumber);
         sellerInformationBox.appendChild(sellerFollowButton);
         sellerInformationBox.appendChild(sellergoButton);
-        sellerInformationBox.appendChild(followingCount);
+        sellerInformationBox.appendChild(followerCount);
 
         sellerCardBox.appendChild(sellerImgBox);
         sellerCardBox.appendChild(sellerInformationBox);
@@ -890,11 +890,11 @@ window.onload = async function () {
         }
         subscription_info();
         setEventListener();
-        if (profile_data.seller_information == "") {
+        if (profile_data.followings.length == 0) {
             const bookmark_box = document.querySelector(".my-bookmark-none")
             bookmark_box.innerText = "팔로우하는 스토어가 없습니다."
         } else {
-            await getMyFollowList(profile_data.seller_information)
+            await getMyFollowList(profile_data.followings)
         }
     }
 }  
