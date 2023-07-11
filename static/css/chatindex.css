@@ -94,7 +94,6 @@ button {
 .chatname {
     font-size: 2vw;
     font-weight: bold;
-    cursor: pointer;
 }
 
 .chatdesc {

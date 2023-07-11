@@ -118,7 +118,7 @@ export async function searchAnythingAPI_mobile() {
 
     const orderingBox = document.getElementById("orderingBox");
     const order = orderingBox.value;
-
+    
     let url = "";
 
     // 카테고리 클릭시, categoryId가 매개변수로 불러와짐 

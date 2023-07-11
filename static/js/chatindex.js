@@ -25,10 +25,6 @@ async function pagination_chatlist(chat) {
             newname.innerText = "▫️ " + chat[id].name
         }
 
-        newname.onclick = function () {
-            gochat(chat[id].id)
-        };
-
         const chatdesc = document.createElement("span")
         chatdesc.setAttribute("class", "chatdesc")
         chatdesc.innerText = chat[id].desc
@@ -188,9 +184,9 @@ async function deletechat(id) {
     if (response == 204) {
         alert("삭제완료")
         window.location.reload();
-    } else if (response == 403) {
+    } else if (response == 400) {
         alert("접속유저가 존재합니다. 잠시 후 실행해주세요.")
-    } else {
+    } else if (response == 403) {
         alert("삭제권한이 없습니다.")
     }
 }

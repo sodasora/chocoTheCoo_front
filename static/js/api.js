@@ -1,4 +1,4 @@
-export const FRONT_BASE_URL = "http://127.0.0.1:5501"
+export const FRONT_BASE_URL = "http://127.0.0.1:5500"
 export const BACK_BASE_URL = "http://127.0.0.1:8000"
 // export const BACK_BASE_URL = "http://127.0.0.1"
 // export const BACK_BASE_URL = "https://backend.chocothecoo.com"
@@ -59,30 +59,6 @@ export async function postPointAttendanceView() {
 		method: 'POST',
 	})
 	return response_point
-}
-
-//텍스트리뷰 포인트
-export async function postTextPointView() {
-	const response_point = await fetch(`${BACK_BASE_URL}/api/users/text/`, {
-		headers: {
-			'content-type': 'application/json',
-			"Authorization": `Bearer ${access_token}`,
-		},
-		method: 'POST',
-	})
-	return response_point;
-}
-
-//포토리뷰 포인트
-export async function postPhotoPointView() {
-	const response_point = await fetch(`${BACK_BASE_URL}/api/users/photo/`, {
-		headers: {
-			'content-type': 'application/json',
-			"Authorization": `Bearer ${access_token}`,
-		},
-		method: 'POST',
-	})
-	return response_point;
 }
 
 // 포인트 충전 checkoutview
@@ -162,18 +138,6 @@ export async function patchSubscribeView() {
 // 첫 구독하기
 export async function postSubscribeView() {
 	const response_data = await fetch(`${BACK_BASE_URL}/api/users/subscribe/`, {
-		headers: {
-			'content-type': 'application/json',
-			"Authorization": `Bearer ${access_token}`,
-		},
-		method: 'POST',
-	})
-	return response_data.status;
-}
-
-// 구독결제포인트
-export async function postPointServiceView() {
-	const response_data = await fetch(`${BACK_BASE_URL}/api/users/service/`, {
 		headers: {
 			'content-type': 'application/json',
 			"Authorization": `Bearer ${access_token}`,
@@ -497,7 +461,8 @@ export async function deleteCartItemAll(queryString, bill_id) {
 		}
 	})
 	if (response.status == 204) {
-		window.location.href = "/bill_detail.html" + "?ordered=true" + `&bill_id=${bill_id}`;
+		alert("주문이 완료되었습니다. 구매포인트 적립은 구매확정 후 이루어집니다.");
+		window.location.href = `/bill_detail.html?bill_id=${bill_id}`;
 	}
 	else {
 		console.log(response.status);
@@ -959,22 +924,6 @@ export async function getChatindexAPI() {
 		method: 'GET',
 	})
 	return response.json()
-}
-
-//채팅방 내용 불러오기
-export async function getChatroom(room_id) {
-	const response = await fetch(`${BACK_BASE_URL}/chat/room/${room_id}/`, {
-		headers: {
-			'content-type': 'application/json',
-			"Authorization": `Bearer ${access_token}`
-		},
-		method: 'DELETE',
-	})
-	if (response.status != 200) {
-		alert("로그인이 필요 합니다.")
-		window.location.replace(`${FRONT_BASE_URL}/login.html`)
-	}
-	return response.status
 }
 
 
